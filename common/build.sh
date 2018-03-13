@@ -19,7 +19,7 @@
 DOCKER_REPOSITORY="oehrlis"
 DOCKER_IMAGE_NAME="$(basename $(cd $(dirname $0); pwd -P))"
 DOCKERFILE="$(dirname $0)/Dockerfile"
-DOCKER_BUILD_DIR="$(cd $(dirname $0)/.. 2>&1 >/dev/null; pwd -P)"
+DOCKER_BUILD_DIR="$(cd $(dirname $0) 2>&1 >/dev/null; pwd -P)"
 
 if [ ! -f "${DOCKERFILE}" ]; then
     echo " ERROR : Can not build ${DOCKER_IMAGE_NAME}. Please run build.sh "

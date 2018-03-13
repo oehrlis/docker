@@ -5,13 +5,13 @@
 # -----------------------------------------------------------------------------
 # Name.......: buildDockerImage.sh
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
-# Editor.....: 
-# Date.......: 
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.03.13
 # Revision...: 
 # Purpose....: Build script for docker OUD images 
 # Notes......: --
-# Reference..: --
-# License....: CDDL 1.0 + GPL 2.0
+# Reference..: https://github.com/oehrlis/docker
+# License....: GPL-3.0+
 # -----------------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates

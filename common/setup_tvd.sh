@@ -7,9 +7,6 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2017.09.22
-# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
-# Editor.....: Stefan Oehrli
-# Date.......: 2017.12.04
 # Revision...: 
 # Purpose....: Setup script for oracle environment to build docker OUD image 
 # Notes......: OUD Base scripts are downloaded from github

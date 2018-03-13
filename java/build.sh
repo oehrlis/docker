@@ -1,1 +1,1 @@
-../scripts/build.sh
+../common/build.sh
