@@ -34,7 +34,7 @@ ARG ORACLE_BASE
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
 ENV DOWNLOAD="/tmp/download" \
-    DOCKER_SCRIPTS="/opt/docker/bin" \
+    DOCKER_SCRIPTS="/opt/docker/bin/" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01}
 
@@ -45,6 +45,8 @@ ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
 
 # copy all setup scripts to DOCKER_BIN
 COPY scripts ${DOCKER_SCRIPTS}
+# get common scripts from github
+ADD https://raw.githubusercontent.com/oehrlis/docker/master/common/setup_tvd.sh ${DOCKER_SCRIPTS}
 
 # image setup via shell script to reduce layers and optimize final disk usage
 RUN ${DOCKER_SCRIPTS}/setup_tvd.sh
