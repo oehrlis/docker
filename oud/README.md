@@ -286,6 +286,6 @@ Please file your bug reports, enhancement requests, questions and other support 
 * [submit new issue](https://github.com/oehrlis/docker-oud/issues/new)
 
 ## License
-*docker-oud* is licensed under the Apache License, Version 2.0. You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>.
+*docker-oud* is 
 
 To download and run Oracle Unifified Directory, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page. See [OTN Developer License Terms](http://www.oracle.com/technetwork/licenses/standard-license-152015.html) and [Oracle Database Licensing Information User Manual](https://docs.oracle.com/database/122/DBLIC/Licensing-Information.htm#DBLIC-GUID-B6113390-9586-46D7-9008-DCC9EDA45AB4)
