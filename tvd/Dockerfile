@@ -47,7 +47,7 @@ COPY scripts ${DOCKER_SCRIPTS}
 ADD https://raw.githubusercontent.com/oehrlis/docker/master/common/setup_tvd.sh ${DOCKER_SCRIPTS}
 
 # image setup via shell script to reduce layers and optimize final disk usage
-RUN chmod 755 ${DOCKER_SCRIPTS}/*.sh && sleep 1 && \
+RUN chmod 755 ${DOCKER_SCRIPTS}/*.sh && sync && \
     ${DOCKER_SCRIPTS}/setup_tvd.sh
 
 # Oracle data volume
