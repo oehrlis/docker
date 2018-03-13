@@ -1,0 +1,2 @@
+#!/bin/bash
+cp -r $DOCKERFILE_PATH/../scripts $DOCKERFILE_PATH/

@@ -59,7 +59,7 @@ ENV PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SC
 
 # copy all setup scripts to DOCKER_BIN
 COPY scripts ${DOCKER_SCRIPTS}
-COPY software ${DOWNLOAD}
+COPY oud/software ${DOWNLOAD}
 
 # Java and OUD base environment setup via shell script to reduce layers and 
 # optimize final disk usage

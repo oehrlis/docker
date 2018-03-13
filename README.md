@@ -22,6 +22,6 @@ There is no official support for the Dockerfiles and build scripts within this r
 
 For support and certification information, please consult the documentation for each product. eg. [Oracle Unified Directory 12.2.1.3.0](https://https://docs.oracle.com/middleware/12213/oud/docs.htm) and [Oracle Directory Server Enterprise Edition](https://docs.oracle.com/cd/E29127_01/index.htm) Alternatiely you may visit the [OTN Community OUD & ODSEE Space](https://community.oracle.com/community/fusion_middleware/identity_management/oracle_directory_server_enterprise_edition_sun_dsee) to get community support. Official Oracle product support is available through [My Oracle Support](https://support.oracle.com/). 
 
-##License
+## License
 
 To download and run Oracle Unified Directory, Oracle Directory Server Enterprise Edition and Oracle JDK, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page.
