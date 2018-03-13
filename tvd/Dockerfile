@@ -9,13 +9,11 @@
 # Revision...: 
 # Purpose....: Dockerfile to build a base image for oud, wls and oudsm
 # Notes......: --
-# Reference..: --
-# License....: Apache License, Version 2.
+# Reference..: https://github.com/oehrlis/docker
+# License....: GPL-3.0+
 # ----------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates
-# TODO.......:
-# - add oud or base env
 # ----------------------------------------------------------------------
 
 # Pull base image
@@ -34,7 +32,7 @@ ARG ORACLE_BASE
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
 ENV DOWNLOAD="/tmp/download" \
-    DOCKER_SCRIPTS="/opt/docker/bin/" \
+    DOCKER_SCRIPTS="/opt/docker/bin" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01}
 
@@ -49,7 +47,8 @@ COPY scripts ${DOCKER_SCRIPTS}
 ADD https://raw.githubusercontent.com/oehrlis/docker/master/common/setup_tvd.sh ${DOCKER_SCRIPTS}
 
 # image setup via shell script to reduce layers and optimize final disk usage
-RUN ${DOCKER_SCRIPTS}/setup_tvd.sh
+RUN chmod 755 ${DOCKER_SCRIPTS}/*.sh && \
+    ${DOCKER_SCRIPTS}/setup_tvd.sh
 
 # Oracle data volume
 VOLUME ["${ORACLE_DATA}"]
@@ -59,3 +58,4 @@ WORKDIR "${ORACLE_BASE}"
 
 # Define bash as default command 
 CMD ["bash", "--login"]
+# --- EOF --------------------------------------------------------------
