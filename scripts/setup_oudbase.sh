@@ -10,12 +10,11 @@
 # Revision...: 
 # Purpose....: Setup script for oracle environment to build docker OUD image 
 # Notes......: OUD Base scripts are downloaded from github
-# Reference..: --
-# License....: CDDL 1.0 + GPL 2.0
+# Reference..: https://github.com/oehrlis/docker
+# License....: GPL-3.0+
 # ----------------------------------------------------------------------
 # Modified...: 
 # see git revision history for more information on changes/updates
-# TODO.......: 
 # ----------------------------------------------------------------------
 
 # Download URL for oud base package

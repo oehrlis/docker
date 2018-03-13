@@ -51,7 +51,7 @@ DOCKER_BIN           | `/opt/docker/bin`                       | no           | 
 In general it does not make sense to change all possible variables.
 
 ### Scripts to Build and Setup
-The following scripts are used either during Docker image build or while setting up and starting the container.
+The following scripts are used either during Docker image build or while setting up and starting the container. The scripts itself are located in the repository root folder [scripts](). Due to this the build context must be the repository root.
 
 | Script                    | Purpose
 | ------------------------- | ----------------------------------------------------------------------------

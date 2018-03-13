@@ -7,15 +7,17 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2017.09.22
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2017.12.04
 # Revision...: 
-# Purpose....: Setup script for docker base image 
-# Notes......: --
-# Reference..: --
-# License....: CDDL 1.0 + GPL 2.0
+# Purpose....: Setup script for oracle environment to build docker OUD image 
+# Notes......: OUD Base scripts are downloaded from github
+# Reference..: https://github.com/oehrlis/docker
+# License....: GPL-3.0+
 # ----------------------------------------------------------------------
 # Modified...: 
 # see git revision history for more information on changes/updates
-# TODO.......: 
 # ----------------------------------------------------------------------
 
 # ignore secure linux (not available on slim linux
