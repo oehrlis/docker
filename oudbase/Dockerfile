@@ -10,7 +10,7 @@
 # Purpose....: Dockerfile to build oudbase image
 # Notes......: --
 # Reference..: --
-# License....: CDDL 1.0 + GPL 2.0
+# License....: GPL-3.0+
 # ----------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates
@@ -34,7 +34,7 @@ ARG ORACLE_BASE
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
 ENV DOWNLOAD="/tmp/download" \
-    DOCKER_SCRIPTS="/opt/docker/bin" \
+    DOCKER_SCRIPTS="/opt/docker/bin/" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01}
 
@@ -45,8 +45,8 @@ ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle}
 ENV PATH=${PATH}:"${ORACLE_BASE}/local/bin:${DOCKER_SCRIPTS}"
 
 # copy all setup scripts to DOCKER_BIN
-COPY scripts ${DOCKER_SCRIPTS}
-COPY software ${DOWNLOAD}
+COPY scripts/setup_oudbase.sh oudbase/build.sh ${DOCKER_SCRIPTS}
+COPY oudbase/software ${DOWNLOAD}
 
 # OUD base environment setup via shell script to reduce layers and 
 # optimize final disk usage
