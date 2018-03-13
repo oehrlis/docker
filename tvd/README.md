@@ -1,6 +1,6 @@
 # Docker Base Image for Trivadis Engineering
 Trivadis Docker base image for Oracle Instance Clients, Oracle Databases, Unified Directory, WebLogic and more.
-
+Trivadis Docker base image for Oracle Clients, Databases, Unified Directory, WebLogic and more.
 ## Content
 
 This docker image is based on the official Oracle Linux slim image ([oraclelinux](https://hub.docker.com/r/_/oraclelinux/)). It has been extended with the following Linux packages and configuration:
