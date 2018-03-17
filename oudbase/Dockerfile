@@ -43,7 +43,7 @@ ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle}
 ENV PATH=${PATH}:"${ORACLE_BASE}/local/bin:${DOCKER_SCRIPTS}"
 
 # copy all setup scripts to DOCKER_BIN
-COPY scripts ${DOCKER_SCRIPTS}
+#COPY scripts ${DOCKER_SCRIPTS}
 COPY software ${DOWNLOAD}
 
 # get common scripts from github
