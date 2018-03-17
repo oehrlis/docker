@@ -2,7 +2,6 @@
 Docker base image used for miscellaneous Oracle Directory Service engineering.
 
 ## Content
-
 This docker image is based on the official Oracle Linux slim image ([oraclelinux](https://hub.docker.com/r/_/oraclelinux/)). It has been extended with the following Linux packages and configuration:
 
 * Upgrade of all installed packages to the latest release (yum upgrade)
