@@ -3,7 +3,7 @@
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ---------------------------------------------------------------------------
-# Name.......: start_OUD_Instance.sh 
+# Name.......: start_oud_instance.sh 
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2017.12.04
@@ -84,7 +84,7 @@ elif [ ${CREATE_INSTANCE} -eq 1 ]; then
     echo "   Create OUD instance (${OUD_INSTANCE}):"
     echo "---------------------------------------------------------------"
     # CREATE_INSTANCE is true, therefore we will create new OUD instance
-    ${DOCKER_SCRIPTS}/create_OUD_Instance.sh
+    ${DOCKER_SCRIPTS}/create_oud_instance.sh
     
     if [ $? -eq 0 ]; then
         # restart OUD instance
@@ -99,7 +99,7 @@ else
 fi
 
 # Check whether OUD instance is up and running
-${DOCKER_SCRIPTS}/check_OUD_Instance.sh >/dev/null 2>&1
+${DOCKER_SCRIPTS}/check_oud_instance.sh >/dev/null 2>&1
 if [ $? -eq 0 ]; then
     echo "---------------------------------------------------------------"
     echo "   OUD instance is ready to use:"

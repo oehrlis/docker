@@ -2,10 +2,11 @@
 
 This repository contains Dockerfiles and samples to build Docker images mainly for Oracle Directory Server products and open source projects. The different Dockerfiles and build scripts are maintained by [OraDBA](http://www.oradba.ch) respectively [Trivadis AG](http://www.trivadis.com) and *do not* represent official Oracle Build scripts. Oracle has its own official repository for [Oracle Docker images](https://github.com/oracle/docker-images) on GitHub. 
 
- - [Oracle Unified Directory](https://github.com/oehrlis/docker/tree/master/oud)
- - [Oracle Unified Directory Server Manager](https://github.com/oehrlis/docker/tree/master/oudsm)
- - [Oracle Directory Server Enterprise Edition](https://github.com/oehrlis/docker/tree/master/odsee)
- - [Oracle Java](https://github.com/oehrlis/docker/tree/master/java)
+This project offers Dockerfiles to build Docker images for:
+* Standalone Oracle Unified Directory 12.2.1.3.0 to setup and run Oracle Unified Directory [OUD](https://github.com/oehrlis/docker/tree/master/oud).
+* Collocated Oracle Unified Directory 12.2.1.3.0 and Oracle Fusion Middleware Infrastructure 12.2.1.3.0 to setup and run an Oracle Unified Directory Server Manager [OUDSM](https://github.com/oehrlis/docker/tree/master/oudsm).
+* Oracle Directory Server Enterprise Edition 11.1.1.7.2 to setup and run Oracle Directory Server Enterprise Edition [ODSEE](https://github.com/oehrlis/docker/tree/master/odsee).
+* Oracle Java Server JRE 1.8.0 u162 (which includes necessary JDK bits for backend Java based solutions) [Java](https://github.com/oehrlis/docker/tree/master/java)
 
 And Open Source projects:
 

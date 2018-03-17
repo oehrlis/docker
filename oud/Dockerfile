@@ -40,8 +40,8 @@ ARG ORACLE_BASE
 # -------------------------------------------------------------
 ENV DOWNLOAD="/tmp/download" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
-    START_SCRIPT="start_OUD_Instance.sh" \
-    CHECK_SCRIPT="check_OUD_Instance.sh" \
+    START_SCRIPT="start_oud_instance.sh" \
+    CHECK_SCRIPT="check_oud_instance.sh" \
     ORACLE_HOME_NAME="fmw12.2.1.3.0" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01} \

@@ -3,7 +3,7 @@
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ---------------------------------------------------------------------------
-# Name.......: create_OUD_instance.sh 
+# Name.......: create_oud_instance.sh 
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2017.12.04
@@ -148,7 +148,7 @@ ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/oud-setup \
         echo "--- Successfully created OUD instance (${OUD_INSTANCE}) ------------------------"
         # Execute custom provided setup scripts
         
-        ${DOCKER_SCRIPTS}/config_OUD_Instance.sh ${OUD_INSTANCE_INIT}
+        ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
     else
         echo "--- ERROR creating OUD instance (${OUD_INSTANCE}) ------------------------------"
         exit 1
