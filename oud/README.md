@@ -16,7 +16,7 @@ The resulting Docker images are based on the official Oracle Linux slim image ([
 osoper (gid 1020), osbackupdba (gid 1030), oskmdba (gid 1040), osdgdba (gid 1050)
 * [OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)
 * Oracle OFA Directories see below
-* Install Oracle Server JRE 8 update 162
+* Install Oracle Server JRE 8 update 152
 * Install Oracle Fusion Middleware Infrastructure 12c 12.2.1.3.0 (only the collocated image)
 * Install Oracle Unified Directory 12c 12.2.1.3.0 (standalone or collocated)
 

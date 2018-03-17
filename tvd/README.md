@@ -30,7 +30,7 @@ The following scripts are used either during Docker image build or while setting
 
 | Script                    | Purpose
 | ------------------------- | ----------------------------------------------------------------------------
-| ``build.sh```             | Build helper script for docker tvd image
+| ```build.sh```             | Build helper script for docker tvd image
 | ```setup_tvd.sh```        | Setup script for the Oracle environment when creating Docker images
 
 ## Installation and build
