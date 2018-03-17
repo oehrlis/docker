@@ -31,8 +31,8 @@ ARG ORACLE_BASE
 
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
-ENV DOWNLOAD="/tmp/download" \
-    DOCKER_SCRIPTS="/opt/docker/bin" \
+ENV DOWNLOAD="/tmp/download/" \
+    DOCKER_SCRIPTS="/opt/docker/bin/" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01}
 
@@ -43,7 +43,7 @@ ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle}
 ENV PATH=${PATH}:"${ORACLE_BASE}/local/bin:${DOCKER_SCRIPTS}"
 
 # copy all setup scripts to DOCKER_BIN
-#COPY scripts ${DOCKER_SCRIPTS}
+COPY scripts ${DOCKER_SCRIPTS}
 COPY software ${DOWNLOAD}
 
 # get common scripts from github
