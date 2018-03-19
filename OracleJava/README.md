@@ -13,6 +13,13 @@ Build it:
 $ cd java-8
 $ docker build -t oracle/serverjre:8 .
 ```
+
+Alternatively you may use the shell script `build.sh`:
+
+```
+$ cd java-8
+$ ./build.sh
+```
 ## License
 
 To download and run Oracle Java, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page.
