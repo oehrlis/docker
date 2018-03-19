@@ -2,5 +2,6 @@
 **/*.jar
 **/*.zip
 **/*.tar.gz
+**/*.netrc
+**/*.DS_Store
 .idea/
-.DS_Store
