@@ -1,2 +1,0 @@
-#!/bin/bash
-docker build --build-arg MOS_USER=$MOS_USER --build-arg MOS_PASSWORD=$MOS_PASSWORD -f $DOCKERFILE_PATH -t $IMAGE_NAME .
