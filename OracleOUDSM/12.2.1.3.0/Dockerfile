@@ -1,0 +1,169 @@
+# ----------------------------------------------------------------------
+# Trivadis AG, Infrastructure Managed Services
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# ----------------------------------------------------------------------
+# Name.......: Dockerfile 
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.03.19
+# Revision...: 1.0
+# Purpose....: This Dockerfile is to build Oracle Unifid Directory Server 
+#              Manager OUDSM
+# Notes......: --
+# Reference..: --
+# License....: Licensed under the Universal Permissive License v 1.0 as 
+#              shown at http://oss.oracle.com/licenses/upl.
+# ----------------------------------------------------------------------
+# Modified...:
+# see git revision history for more information on changes/updates
+# ----------------------------------------------------------------------
+
+# Pull base image
+# ----------------------------------------------------------------------
+FROM oracle/serverjre:8
+
+# Maintainer
+# ----------------------------------------------------------------------
+LABEL maintainer="stefan.oehrli@trivadis.com"
+
+# Arguments for a local download URL
+ARG URL
+
+# Arguments for Oracle Installation
+ARG ORACLE_ROOT
+ARG ORACLE_DATA
+ARG ORACLE_BASE
+
+# Environment variables required for this build (do NOT change)
+# -------------------------------------------------------------
+ENV DOWNLOAD="/tmp/download" \
+    DOCKER_SCRIPTS="/opt/docker/bin" \
+    START_SCRIPT="start_oudsm_domain.sh" \
+    CHECK_SCRIPT="check_oudsm_domain.sh" \
+    USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
+    ORACLE_HOME_NAME="fmw12.2.1.3.0" \
+    ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
+    ORACLE_DATA=${ORACLE_DATA:-/u01} \
+    DOMAIN_NAME=${DOMAIN_NAME:-oudsm_domain} \
+    PORT=${PORT:-7001} \
+    PORT_SSL=${PORT_SSL:-7002}
+
+# Use second ENV so that variable get substituted
+ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
+    OUDSM_DOMAIN_BASE=${OUDSM_DOMAIN_BASE:-$ORACLE_DATA/domains} \
+    DOMAIN_HOME=${DOMAIN_HOME:-$ORACLE_DATA/domains/$DOMAIN_NAME} \
+    OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-$ORACLE_DATA/admin/$OUD_INSTANCE}
+
+# same same but third ENV so that variable get substituted
+ENV PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}"
+
+# same same but different...
+# third ENV so that variable get substituted
+ENV PATH=${PATH}:"${DOMAIN_HOME}/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}"
+
+#USER root    
+# Create group and oracle user and setup subdirectory to install OUD
+# package and container-scripts
+# -----------------------------------------------------------------  
+RUN groupadd --gid 1000 oracle && \
+    groupadd --gid 1010 oinstall && \
+    useradd --create-home --gid oracle --groups oracle,oinstall \
+        --shell /bin/bash oracle && \
+    install --owner oracle --group oracle --mode=775 --verbose --directory \
+        ${ORACLE_ROOT} \
+        ${ORACLE_BASE} \
+        ${ORACLE_DATA} \
+        ${DOWNLOAD} \
+        ${DOCKER_SCRIPTS} && \
+    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d
+
+# copy all setup scripts to DOCKER_BIN
+COPY scripts/* "${DOCKER_SCRIPTS}/"
+
+# Environment variables required for this build (do NOT change)
+# -------------------------------------------------------------
+ENV FMW_OUD_PKG=p26270957_122130_Generic.zip \
+    FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar \
+    FMW_PKG=p26269885_122130_Generic.zip \
+    FMW_JAR=fmw_12.2.1.3.0_infrastructure.jar \
+    WLS_PKG=p27438258_122130_Generic.zip \
+    WLS_PSU=27438258
+
+# COPY software (fmw, oud and psu's) and response files
+COPY ${FMW_OUD_PKG}* ${FMW_PKG}* ${WLS_PKG}* install.rsp oraInst.loc "${DOWNLOAD}/"
+
+# install mandatory software and adjust the permissions 
+RUN yum install -y libaio && \
+    rm -rf /var/cache/yum
+
+# Switch to user oracle, oracle software as to be installed with regular user
+USER oracle
+
+# Install FMW but check if a local software package is available otherwise 
+# try to download it from URL. The URL has to be provided as build argument
+RUN if [ -s "${DOWNLOAD}/${FMW_PKG}" ]; then \
+        echo "== Proceed with local ${FMW_PKG}";\
+    elif [ -n "${URL}" ]; then \ 
+        echo " == Download ${FMW_PKG} from ${URL}" && \
+        curl --location-trusted ${URL}/${FMW_PKG} -o ${DOWNLOAD}/${FMW_PKG}; \
+    else \
+        echo " == Missing ${FMW_PKG} installation will fail"; \
+    fi && \
+    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_PKG} && cd - && \
+    $JAVA_HOME/bin/java -jar ${DOWNLOAD}/${FMW_JAR} -silent \
+        -responseFile ${DOWNLOAD}/install.rsp \
+        -invPtrLoc ${DOWNLOAD}/oraInst.loc \
+        -ignoreSysPrereqs -force \
+        -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
+        INSTALL_TYPE="WebLogic Server" && \
+    rm -rf ${DOWNLOAD}/${FMW_PKG} ${DOWNLOAD}/${FMW_JAR} /tmp/OraInstall*
+
+# Install WLS Patch but check if a local software package is available otherwise 
+# try to download it from URL. The URL has to be provided as build argument
+RUN if [ -s "${DOWNLOAD}/${WLS_PKG}" ]; then \
+        echo "== Proceed with local ${WLS_PKG}";\
+    elif [ -n "${URL}" ]; then \ 
+        echo " == Download ${WLS_PKG} from ${URL}" && \
+        curl --location-trusted ${URL}/${WLS_PKG} -o ${DOWNLOAD}/${WLS_PKG}; \
+    else \
+        echo " == Missing ${WLS_PKG} installation will fail"; \
+    fi && \
+    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${WLS_PKG} && cd ${DOWNLOAD}/${WLS_PSU} && \
+    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
+    rm -rf ${DOWNLOAD}/${WLS_PKG} ${DOWNLOAD}/${WLS_PSU} /tmp/OraInstall*
+
+# Install OUD but check if a local software package is available otherwise 
+# try to download it from URL. The URL has to be provided as build argument
+RUN if [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ]; then \
+        echo "== Proceed with local ${FMW_OUD_PKG}";\
+    elif [ -n "${URL}" ]; then \ 
+        echo " == Download ${FMW_OUD_PKG} from ${URL}" && \
+        curl --location-trusted ${URL}/${FMW_OUD_PKG} -o ${DOWNLOAD}/${FMW_OUD_PKG}; \
+    else \
+        echo " == Missing ${FMW_PKG} installation will fail"; \
+    fi && \
+    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_OUD_PKG} && cd - && \
+    $JAVA_HOME/bin/java -jar ${DOWNLOAD}/${FMW_OUD_JAR} -silent \
+        -responseFile ${DOWNLOAD}/install.rsp \
+        -invPtrLoc ${DOWNLOAD}/oraInst.loc \
+        -ignoreSysPrereqs -force \
+        -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}  \
+        INSTALL_TYPE="Collocated Oracle Unified Directory Server (Managed through WebLogic server)" && \
+    rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} ${DOWNLOAD}/${FMW_OUD_JAR} /tmp/OraInstall*
+
+# expose the OUDSM http and https ports
+EXPOSE ${PORT} ${PORT_SSL}
+
+# run container health check
+HEALTHCHECK --interval=1m --start-period=5m \
+   CMD "${DOCKER_SCRIPTS}/${CHECK_SCRIPT}" >/dev/null || exit 1
+
+# Oracle data volume for OUDSM domain and configuration files
+VOLUME ["${ORACLE_DATA}"]
+
+# set workding directory
+WORKDIR "${ORACLE_BASE}"
+
+# Define default command to start OUDSM domain
+CMD exec "${DOCKER_SCRIPTS}/${START_SCRIPT}"
+# --- EOF --------------------------------------------------------------
