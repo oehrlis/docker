@@ -110,8 +110,17 @@ RUN if [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ]; then \
         -invPtrLoc ${DOWNLOAD}/oraInst.loc \
         -ignoreSysPrereqs -force \
         -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} && \
-    rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} ${DOWNLOAD}/${FMW_OUD_JAR} /tmp/OraInstall*
+    rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} ${DOWNLOAD}/${FMW_OUD_JAR} /tmp/OraInstall* \
+        ${ORACLE_HOME}/.patch_storage \
+        ${ORACLE_HOME}/inventory \
+        ${ORACLE_HOME}/OPatch \
+        ${ORACLE_HOME}/oui \
+        ${ORACLE_HOME}/em \
+        ${ORACLE_HOME}/wlserver \
+        ${ORACLE_HOME}/root.sh
 
+#guess nogo... 
+#${ORACLE_HOME}/oracle_common \
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} ${PORT_REP} ${PORT_ADMIN}
 

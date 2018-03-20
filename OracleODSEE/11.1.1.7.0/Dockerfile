@@ -19,7 +19,7 @@
 
 # Pull base image
 # ----------------------------------------------------------------------
-FROM oracle/serverjre:8
+FROM oraclelinux:7-slim
 
 # Maintainer
 # ----------------------------------------------------------------------
@@ -37,28 +37,26 @@ ARG ORACLE_BASE
 # -------------------------------------------------------------
 ENV DOWNLOAD="/tmp/download" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
-    START_SCRIPT="start_oud_instance.sh" \
-    CHECK_SCRIPT="check_oud_instance.sh" \
+    START_SCRIPT="start_odsee_instance.sh" \
+    CHECK_SCRIPT="check_odsee_instance.sh" \
     USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
-    ORACLE_HOME_NAME="fmw12.2.1.3.0" \
+    ORACLE_HOME_NAME="dsee7" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01} \
-    OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
+    ODSEE_INSTANCE=${ODSEE_INSTANCE:-dsDocker} \
     PORT=${PORT:-1389} \
-    PORT_SSL=${PORT_SSL:-1636} \
-    PORT_REP=${PORT_REP:-8989} \
-    PORT_ADMIN=${PORT_ADMIN:-4444}
+    PORT_SSL=${PORT_SSL:-1636}
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
     OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
-    OUD_INSTANCE_HOME=${OUD_INSTANCE_HOME:-$ORACLE_DATA/instances/$OUD_INSTANCE} \
-    OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-$ORACLE_DATA/admin/$OUD_INSTANCE}
+    ODSEE_INSTANCE_HOME=${ODSEE_INSTANCE_HOME:-$ORACLE_DATA/instances/$ODSEE_INSTANCE} \
+    OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-$ORACLE_DATA/admin/$ODSEE_INSTANCE}
 
 # same same but different...
 # third ENV so that variable get substituted
-ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
-    ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
+ENV PATH=${PATH}:"${ODSEE_INSTANCE_HOME}/OUD/bin:${ODSEE_HOME}/bin:${DOCKER_SCRIPTS}" \
+    ODSEE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
 #USER root    
 # Create group and oracle user and setup subdirectory to install OUD
@@ -81,39 +79,42 @@ COPY scripts/* "${DOCKER_SCRIPTS}/"
 
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
-ENV FMW_OUD_PKG=p26270957_122130_Generic.zip \
-    FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar
+ENV FMW_ODSEE_PKG=p26724938_111170_Linux-x86-64.zip \
+    FMW_ODSEE_TAR=dsee.11.1.1.7.171017.Redhat5-opt-64.full.zip.tar.gz \
+    FMW_ODSEE=sun-dsee7.zip
 
 # COPY oud/software and response files
-COPY ${FMW_OUD_PKG}* install.rsp oraInst.loc "${DOWNLOAD}/"
+COPY ${FMW_ODSEE_PKG}* "${DOWNLOAD}/"
 
 # install mandatory software and adjust the permissions 
-RUN yum install -y libaio && \
+RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
+    yum upgrade -y && \
+    yum install -y unzip zip gzip tar procps-ng libstdc++.i686 glibc.i686 zlib.i686 && \
     rm -rf /var/cache/yum
 
 # Switch to user oracle, oracle software as to be installed with regular user
 USER oracle
 
-# Install OUD but check if a local software package is available otherwise 
+# Install ODSEE but check if a local software package is available otherwise 
 # try to download it from URL. The URL has to be provided as build argument
-RUN if [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ]; then \
-        echo "== Proceed with local ${FMW_OUD_PKG}";\
+RUN if [ -s "${DOWNLOAD}/${FMW_ODSEE_PKG}" ]; then \
+        echo "== Proceed with local ${FMW_ODSEE_PKG}";\
     elif [ -n "${URL}" ]; then \ 
-        echo " == Download ${FMW_OUD_PKG} from ${URL}" && \
-        curl --location-trusted ${URL}/${FMW_OUD_PKG} -o ${DOWNLOAD}/${FMW_OUD_PKG}; \
+        echo " == Download ${FMW_ODSEE_PKG} from ${URL}" && \
+        curl --location-trusted ${URL}/${FMW_ODSEE_PKG} -o ${DOWNLOAD}/${FMW_ODSEE_PKG}; \
     else \
-        echo " == Missing ${FMW_OUD_PKG} installation will fail"; \
+        echo " == Missing ${FMW_ODSEE_PKG} installation will fail"; \
     fi && \
-    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_OUD_PKG} && cd - && \
-    $JAVA_HOME/bin/java -jar ${DOWNLOAD}/$FMW_OUD_JAR -silent \
-        -responseFile ${DOWNLOAD}/install.rsp \
-        -invPtrLoc ${DOWNLOAD}/oraInst.loc \
-        -ignoreSysPrereqs -force \
-        -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} && \
-    rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} ${DOWNLOAD}/${FMW_OUD_JAR} /tmp/OraInstall*
+    cd ${DOWNLOAD} && \
+    unzip -o ${DOWNLOAD}/${FMW_ODSEE_PKG} && \
+    tar zxvf ${DOWNLOAD}/${FMW_ODSEE_TAR} && \
+    unzip -o ${DOWNLOAD}/${FMW_ODSEE} -d ${ORACLE_BASE}/product/ && \
+    rm -rf ${DOWNLOAD}/${FMW_ODSEE_PKG} ${DOWNLOAD}/${FMW_ODSEE_TAR} \
+        ${DOWNLOAD}/${FMW_ODSEE} ${DOWNLOAD}/readme.html \
+        ${DOWNLOAD}/idsktune
 
 # expose the OUD admin, replication and ldap ports
-EXPOSE ${PORT} ${PORT_SSL} ${PORT_REP} ${PORT_ADMIN}
+EXPOSE ${PORT} ${PORT_SSL} 
 
 # run container health check
 HEALTHCHECK --interval=1m --start-period=5m \

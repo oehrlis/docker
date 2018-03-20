@@ -95,7 +95,7 @@ elif [ ${CREATE_DOMAIN} -eq 1 ]; then
     echo "   Create Oracle WebLogic Server Domain (${DOMAIN_NAME}):"
     echo "---------------------------------------------------------------"
     # CREATE_DOMAIN is true, therefore we will create new OUDSM domain
-    /opt/docker/bin/create_oudsm_Domain.sh
+    /opt/docker/bin/create_oudsm_domain.sh
     
     # start OUDSM instance
     echo "---------------------------------------------------------------"

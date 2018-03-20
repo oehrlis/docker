@@ -5,3 +5,4 @@
 **/*.netrc
 **/*.DS_Store
 .idea/
+/.pydevproject

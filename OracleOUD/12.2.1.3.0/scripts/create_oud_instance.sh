@@ -28,6 +28,7 @@ export OUD_INSTANCE=${OUD_INSTANCE:-oud_docker}
 
 # Default values for the instance home and admin directory
 export OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-${ORACLE_DATA}/admin/${OUD_INSTANCE}}
+export OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-"$ORACLE_DATA/instances"}
 export OUD_INSTANCE_HOME=${OUD_INSTANCE_HOME:-"${OUD_INSTANCE_BASE}/${OUD_INSTANCE}"}
 
 # Default values for host and ports
@@ -57,42 +58,16 @@ for i in admin backup etc instances domains log scripts; do
 done
 mkdir -v -p ${OUD_INSTANCE_ADMIN}/etc
 
-# Here should be the OUD Base Stuff....
-# create oudtab file
-#OUDTAB=${ORACLE_DATA}/etc/oudtab
-#echo "# OUD Config File"                                        > ${OUDTAB}
-#echo "#  1 : OUD Instance Name"                                 >>${OUDTAB}
-#echo "#  2 : OUD LDAP Port"                                     >>${OUDTAB}
-#echo "#  3 : OUD LDAPS Port"                                    >>${OUDTAB}
-#echo "#  4 : OUD Admin Port"                                    >>${OUDTAB}
-#echo "#  5 : OUD Replication Port"                              >>${OUDTAB}
-#echo "#  6 : Directory type eg OUD, OID, ODSEE or OUDSM"        >>${OUDTAB}
-#echo "#---------------------------------------------"           >>${OUDTAB}
-#echo "${OUD_INSTANCE}:${PORT}:${PORT_SSL}:${PORT_ADMIN}:${PORT_REP}:OUD" >>${OUDTAB}
-
-# Create default config file in ETC_BASE in case they are not yet available...
-#for i in oud._DEFAULT_.conf oudenv_custom.conf oudenv.conf oudtab; do
-#    if [ ! -f "${ORACLE_DATA}/etc/${i}" ]; then
-#        cp ${ORACLE_BASE}/templates/etc/${i} ${ORACLE_DATA}/etc
-#    fi
-#done
-
-# create also some soft links from ETC_CORE to ETC_BASE
-#for i in oudenv.conf oudtab; do
-#    if [ ! -f "${ORACLE_DATA}/etc/${i}" ]; then
-#        ln -sf ${ORACLE_DATA}/etc/${i} ${ORACLE_BASE}/etc/${i}
-#    fi
-#done
-
-# Load OUD environment for this instance
-#. ${ORACLE_BASE}/local/bin/oudenv.sh ${OUD_INSTANCE} SILENT
+# create oudtab file for OUD Base
+OUDTAB=${ORACLE_DATA}/etc/oudtab
+echo "${OUD_INSTANCE}:${PORT}:${PORT_SSL}:${PORT_ADMIN}:${PORT_REP}:OUD" >>${OUDTAB}
 
 # generate a password
 if [ -z ${ADMIN_PASSWORD} ]; then
     # Auto generate Oracle WebLogic Server admin password
     while true; do
-        s=$(cat /dev/urandom | tr -dc "A-Za-z0-9" | fold -w 8 | head -n 1)
-        if [[ ${#s} -ge 8 && "$s" == *[A-Z]* && "$s" == *[a-z]* && "$s" == *[0-9]*  ]]; then
+        s=$(cat /dev/urandom | tr -dc "A-Za-z0-9" | fold -w 10 | head -n 1)
+        if [[ ${#s} -ge 10 && "$s" == *[A-Z]* && "$s" == *[a-z]* && "$s" == *[0-9]*  ]]; then
             break
         else
             echo "Password does not Match the criteria, re-generating..."

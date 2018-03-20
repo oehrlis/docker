@@ -59,7 +59,8 @@ ENV PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SC
 
 # same same but different...
 # third ENV so that variable get substituted
-ENV PATH=${PATH}:"${DOMAIN_HOME}/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}"
+ENV PATH=${PATH}:"${DOMAIN_HOME}/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
+    ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
 #USER root    
 # Create group and oracle user and setup subdirectory to install OUD
