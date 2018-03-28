@@ -128,17 +128,8 @@ RUN if [ -s "${DOWNLOAD}/${FMW_PKG}" ]; then \
     fi && \
     cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${WLS_PKG} && cd ${DOWNLOAD}/${WLS_PSU} && \
     ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
-    rm -rf ${DOWNLOAD}/${WLS_PKG} ${DOWNLOAD}/${WLS_PSU} /tmp/OraInstall* \
-        ${ORACLE_HOME}/.patch_storage \
-        ${ORACLE_HOME}/inventory \
-        ${ORACLE_HOME}/OPatch \
-        ${ORACLE_HOME}/oui \
-        ${ORACLE_HOME}/em \
-        ${ORACLE_HOME}/root.sh
-
-# Install OUD but check if a local software package is available otherwise 
-# try to download it from URL. The URL has to be provided as build argument
-RUN if [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ]; then \
+    rm -rf ${DOWNLOAD}/${WLS_PKG} ${DOWNLOAD}/${WLS_PSU} /tmp/OraInstall* && \
+    if [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ]; then \
         echo "== Proceed with local ${FMW_OUD_PKG}";\
     elif [ -n "${URL}" ]; then \ 
         echo " == Download ${FMW_OUD_PKG} from ${URL}" && \
@@ -146,14 +137,20 @@ RUN if [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ]; then \
     else \
         echo " == Missing ${FMW_PKG} installation will fail"; \
     fi && \
-    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_OUD_PKG} && cd - && \
+    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_OUD_PKG} && \
     $JAVA_HOME/bin/java -jar ${DOWNLOAD}/${FMW_OUD_JAR} -silent \
         -responseFile ${DOWNLOAD}/install.rsp \
         -invPtrLoc ${DOWNLOAD}/oraInst.loc \
         -ignoreSysPrereqs -force \
         -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}  \
         INSTALL_TYPE="Collocated Oracle Unified Directory Server (Managed through WebLogic server)" && \
-    rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} ${DOWNLOAD}/${FMW_OUD_JAR} /tmp/OraInstall*
+    rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} ${DOWNLOAD}/${FMW_OUD_JAR} /tmp/OraInstall* \
+        ${ORACLE_HOME}/.patch_storage \
+        ${ORACLE_HOME}/inventory \
+        ${ORACLE_HOME}/OPatch \
+        ${ORACLE_HOME}/oui \
+        ${ORACLE_HOME}/em \
+        ${ORACLE_HOME}/root.sh
 
 # expose the OUDSM http and https ports
 EXPOSE ${PORT} ${PORT_SSL}
