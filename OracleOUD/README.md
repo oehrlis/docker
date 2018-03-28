@@ -15,7 +15,7 @@ They base image has been extended with the following Linux packages and configur
     - *libaio* Linux-native asynchronous I/O access library
 * Operating system user *oracle* (uid 1000)
 * Dedicated groups for user *oracle*, oracle (gid 1000), oinstall (gid 1010)
-* => tbd [OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)
+* ~~[OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)~~
 * Oracle OFA Directories see below
 * Install Oracle Unified Directory 12c 12.2.1.3.0 (standalone)
 
