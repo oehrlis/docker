@@ -26,9 +26,6 @@ FROM oracle/serverjre:8
 # ----------------------------------------------------------------------
 LABEL maintainer="stefan.oehrli@trivadis.com"
 
-# Arguments for a local download URL
-ARG URL
-
 # Arguments for Oracle Installation
 ARG ORACLE_ROOT
 ARG ORACLE_DATA
@@ -46,7 +43,13 @@ ENV DOWNLOAD="/tmp/download" \
     ORACLE_DATA=${ORACLE_DATA:-/u01} \
     DOMAIN_NAME=${DOMAIN_NAME:-oudsm_domain} \
     PORT=${PORT:-7001} \
-    PORT_SSL=${PORT_SSL:-7002}
+    PORT_SSL=${PORT_SSL:-7002} \
+    FMW_OUD_PKG=p26270957_122130_Generic.zip \
+    FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar \
+    FMW_PKG=p26269885_122130_Generic.zip \
+    FMW_JAR=fmw_12.2.1.3.0_infrastructure.jar \
+    WLS_PKG=p27438258_122130_Generic.zip \
+    WLS_PSU=27438258
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
@@ -62,10 +65,14 @@ ENV PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SC
 ENV PATH=${PATH}:"${DOMAIN_HOME}/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
     ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
-#USER root    
-# Create group and oracle user and setup subdirectory to install OUD
-# package and container-scripts
-# -----------------------------------------------------------------  
+# RUN as user root    
+# - create group oracle and oinstall
+# - create user oracle
+# - setup subdirectory to install OUDpackage and container-scripts
+# - create softlink for the OUD setup scripts
+# - install libaia
+# - remove yum cache
+# -----------------------------------------------------------------
 RUN groupadd --gid 1000 oracle && \
     groupadd --gid 1010 oinstall && \
     useradd --create-home --gid oracle --groups oracle,oinstall \
@@ -76,81 +83,58 @@ RUN groupadd --gid 1000 oracle && \
         ${ORACLE_DATA} \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
-    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d
+    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
+    yum install -y libaio && \
+    rm -rf /var/cache/yum
 
 # copy all setup scripts to DOCKER_BIN
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 
-# Environment variables required for this build (do NOT change)
-# -------------------------------------------------------------
-ENV FMW_OUD_PKG=p26270957_122130_Generic.zip \
-    FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar \
-    FMW_PKG=p26269885_122130_Generic.zip \
-    FMW_JAR=fmw_12.2.1.3.0_infrastructure.jar \
-    WLS_PKG=p27438258_122130_Generic.zip \
-    WLS_PSU=27438258
-
 # COPY software (fmw, oud and psu's) and response files
 COPY ${FMW_OUD_PKG}* ${FMW_PKG}* ${WLS_PKG}* install.rsp oraInst.loc "${DOWNLOAD}/"
-
-# install mandatory software and adjust the permissions 
-RUN yum install -y libaio && \
-    rm -rf /var/cache/yum
 
 # Switch to user oracle, oracle software as to be installed with regular user
 USER oracle
 
-# Install FMW but check if a local software package is available otherwise 
-# try to download it from URL. The URL has to be provided as build argument
-RUN if [ -s "${DOWNLOAD}/${FMW_PKG}" ]; then \
-        echo "== Proceed with local ${FMW_PKG}";\
-    elif [ -n "${URL}" ]; then \ 
-        echo " == Download ${FMW_PKG} from ${URL}" && \
-        curl --location-trusted ${URL}/${FMW_PKG} -o ${DOWNLOAD}/${FMW_PKG}; \
-    else \
-        echo " == Missing ${FMW_PKG} installation will fail"; \
-    fi && \
-    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_PKG} && cd - && \
+# RUN as user oracle    
+# - check if FMW software has been copied [ -s ... ] alternatively download 
+#   from orarepo using curl
+# - unpack software using jar
+# - silent install of FMW
+# - check if WLS patch has been copied [ -s ... ] alternatively download 
+#   from orarepo using curl
+# - install WLS PSU
+# - check if OUD software has been copied [ -s ... ] alternatively download 
+#   from orarepo using curl
+# - clean up and remove unused stuff
+# -----------------------------------------------------------------  
+RUN cd ${DOWNLOAD} && \
+    [ -s "${DOWNLOAD}/${FMW_PKG}" ] || \
+    curl -f http://orarepo/${FMW_PKG} -o ${DOWNLOAD}/${FMW_PKG} && \
+    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${FMW_PKG} && \
     $JAVA_HOME/bin/java -jar ${DOWNLOAD}/${FMW_JAR} -silent \
         -responseFile ${DOWNLOAD}/install.rsp \
         -invPtrLoc ${DOWNLOAD}/oraInst.loc \
         -ignoreSysPrereqs -force \
         -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
         INSTALL_TYPE="WebLogic Server" && \
-    rm -rf ${DOWNLOAD}/${FMW_PKG} ${DOWNLOAD}/${FMW_JAR} /tmp/OraInstall*
-
-# Install WLS Patch but check if a local software package is available otherwise 
-# try to download it from URL. The URL has to be provided as build argument
-RUN if [ -s "${DOWNLOAD}/${WLS_PKG}" ]; then \
-        echo "== Proceed with local ${WLS_PKG}";\
-    elif [ -n "${URL}" ]; then \ 
-        echo " == Download ${WLS_PKG} from ${URL}" && \
-        curl --location-trusted ${URL}/${WLS_PKG} -o ${DOWNLOAD}/${WLS_PKG}; \
-    else \
-        echo " == Missing ${WLS_PKG} installation will fail"; \
-    fi && \
-    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${WLS_PKG} && cd ${DOWNLOAD}/${WLS_PSU} && \
+    [ -s "${DOWNLOAD}/${WLS_PKG}" ] || \
+    curl -f http://orarepo/${WLS_PKG} -o ${DOWNLOAD}/${WLS_PKG} && \
+    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${WLS_PKG} && \
+    cd ${DOWNLOAD}/${WLS_PSU} && \
     ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
-    rm -rf ${DOWNLOAD}/${WLS_PKG} ${DOWNLOAD}/${WLS_PSU} /tmp/OraInstall*
-
-# Install OUD but check if a local software package is available otherwise 
-# try to download it from URL. The URL has to be provided as build argument
-RUN if [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ]; then \
-        echo "== Proceed with local ${FMW_OUD_PKG}";\
-    elif [ -n "${URL}" ]; then \ 
-        echo " == Download ${FMW_OUD_PKG} from ${URL}" && \
-        curl --location-trusted ${URL}/${FMW_OUD_PKG} -o ${DOWNLOAD}/${FMW_OUD_PKG}; \
-    else \
-        echo " == Missing ${FMW_PKG} installation will fail"; \
-    fi && \
-    cd ${DOWNLOAD} && $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_OUD_PKG} && cd - && \
+    [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ] || \
+    curl -f http://orarepo/${FMW_OUD_PKG} -o ${DOWNLOAD}/${FMW_OUD_PKG} && \
+    cd ${DOWNLOAD} && \
+    $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_OUD_PKG} && \
     $JAVA_HOME/bin/java -jar ${DOWNLOAD}/${FMW_OUD_JAR} -silent \
         -responseFile ${DOWNLOAD}/install.rsp \
         -invPtrLoc ${DOWNLOAD}/oraInst.loc \
         -ignoreSysPrereqs -force \
         -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}  \
         INSTALL_TYPE="Collocated Oracle Unified Directory Server (Managed through WebLogic server)" && \
-    rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} ${DOWNLOAD}/${FMW_OUD_JAR} /tmp/OraInstall*
+    rm -rf /tmp/OraInstall*\
+        ${DOWNLOAD}
 
 # expose the OUDSM http and https ports
 EXPOSE ${PORT} ${PORT_SSL}

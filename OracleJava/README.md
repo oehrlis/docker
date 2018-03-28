@@ -29,6 +29,7 @@ Create a `.netrc` file containing the credentials for *login.oracle.com* to auto
     $ cd java-8
     $ echo "machine login.oracle.com login <MOS_USER> password <MOS_PASSWORD>" >.netrc
     $ ./build.sh
+    $ rm .netrc
 ```
 
 ## License

@@ -1,156 +1,171 @@
-# Docker Base Image for Trivadis Engineering
-Docker base image used for miscellaneous Oracle Directory Enterprise Edition engineering .
+# Oracle Directory Server Enterprise Edition on Docker
+Docker base image used for miscellaneous Oracle Directory Server Enterprise Edition engineering .
+Docker build files to facilitate installation, configuration, and environment setup for Docker DevOps users. For more information about Oracle Directory Server Enterprise Edition please see the [Oracle Directory Server Enterprise Edition 11.1.1.7.2 Online Documentation](https://docs.oracle.com/cd/E29127_01/index.htm).
 
 ## Content
 
 This docker image is based on the official Oracle Linux slim image ([oraclelinux](https://hub.docker.com/r/_/oraclelinux/)). It has been extended with the following Linux packages and configuration:
-
-* Upgrade of all installed packages to the latest release (yum upgrade)
 * Install the following additional packages including there dependencies:
-
-    * *hostname* Utility to set/show the host name or domain name
-    * *which* Displays where a particular program in your path is located
-    * *unzip* A utility for unpacking zip files
-    * *zip* A file compression and packaging utility compatible with PKZIP
-    * *tar* A GNU file archiving program
-    * *gzip* The GNU data compression program
-    * *procps-ng* System and process monitoring utilities
-    * *libstdc++.i686* GNU Standard C++ Library for i686
+    - *unzip* A utility for unpacking zip files
+    - *zip* A file compression and packaging utility compatible with PKZIP
+    - *tar* A GNU file archiving program
+    - *gzip* The GNU data compression program
+    - *procps-ng* System and process monitoring utilities
+    - *libstdc++.i686* GNU Standard C++ Library for i686
+    - *libstdc++.x86_64* GNU Standard C++ Library for x86_64
     * *glibc.i686* The GNU libc libraries for i686
     * *zlib.i686* The compression and decompression library for i686
-* Dedicated groups for user *oracle*, oinstall (gid 1000), osdba (gid 1010), osoper (gid 1020), osbackupdba (gid 1030), oskmdba (gid 1040), osdgdba (gid 1050)
 * Operating system user *oracle* (uid 1000)
-* Add oracle to the sudoers *ALL=(ALL)*
-* Create of Oracle OFA Directories see below
-* Install OUD Base environment scripts from (www.oradba.ch) 
-
-The purpose of this image is provide base image do ODSEE engineering 
-
-   * [oehrlis/docker-oud](https://github.com/oehrlis/docker-oud)
-   * [oehrlis/docker-oudsm](https://github.com/oehrlis/docker-oudsm)
+* Dedicated groups for user *oracle*, oracle (gid 1000), oinstall (gid 1010)
+* ~~[OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)~~
+* Oracle OFA Directories see below
+* Oracle Directory Server Enterprise Edition 11.1.1.7.171017
 
 ### Environment Variable and Directories
-The following environment variable have been used for the installation. In particular it is possible to modify the variables ORACLE_ROOT, ORACLE_DATA and ORACLE_BASE via *build-arg* during image build to have a different directory structure. All other parameters are only relevant for the creation of the container. They may be modify via `docker run` environment variables.
+Based on the idea of OFA (Oracle Flexible Architecture) we try to separate the data from the binaries. This means that the OUD instance as well as configuration files are explicitly stored in a separate directory. Ideally, a volume is assigned to this directory when a container is created. This ensures data persistence over the lifetime of a container. OUD Base supports the setup and operation of the environment based on OFA. See also [OraDBA](http://www.oradba.ch/category/oudbase/).
 
-Environment variable | Value / Directories                    | Modifiable   | Comment
--------------------- | -------------------------------------- | -------------| ---------------
-ORACLE_ROOT          | `/u00`                                 | docker build | Root directory for all the Oracle software
-ORACLE_BASE          | `$ORACLE_ROOT/app/oracle`              | docker build | Oracle base directory
-n/a                  | `$ORACLE_BASE/product`                 | no           | Oracle product base directory
-ORACLE_HOME_NAME     | `fmw12.2.1.3.0`                        | no           | Name of the Oracle Home, used to create to PATH to ORACLE_HOME eg. *$ORACLE_BASE/product/$ORACLE_HOME_NAME*
-ORACLE_DATA          | `/u01`                                 | docker build | Root directory for the persistent data eg. OUD instances, OUDSM domain etc. A docker volumes must be defined for */u01*
-INSTANCE_BASE        | `$ORACLE_DATA/instances`               | no           | Base directory for OUD instances
-OUD_INSTANCE         | `oud_docker`                           | docker run   | Default name for OUD instance
-OUD_INSTANCE_HOME    | `${INSTANCE_BASE}/${OUD_INSTANCE}` | docker run   |
-CREATE_INSTANCE      | `TRUE`                                 | docker run   | Flag to create OUD instance on first start of the container
-OUD_PROXY            | `FALSE`                                | docker run   | Flag to create proxy instance. Not yet implemented.
-OUD_INSTANCE_INIT    | `$ORACLE_DATA/scripts`                 | docker run   | Directory for the instance configuration scripts
-LDAP_PORT            | `1389`                                 | docker run   | Default LDAP port for the OUD instance
-LDAPS_PORT           | `1636`                                 | docker run   | Default LDAPS port for the OUD instance
-REP_PORT             | `8989`                                 | docker run   | Default replication port for the OUD instance
-ADMIN_PORT           | `4444` or `7001`                       | docker run   | Default admin port for the OUD instance (4444) or the OUDSM domain (7001)
-ADMIN_SSLPORT        | `7002`                                 | docker run   | Default admin SSL port for the OUDSM domain
-ADMIN_USER           | `cn=Directory Manager` or `weblogic`   | docker run   | Default admin user for OUD instance or OUDSM domain
-ADMIN_PASSWORD       |  n/a                                   | docker run   | No default password. Password will be autogenerated when not defined.
-BASEDN               | `dc=postgasse,dc=org`                  | docker run   | Default directory base DN
-SAMPLE_DATA          | `TRUE`                                 | docker run   | Flag to load sample data. Not yet implemented.
-DOMAIN_BASE          | `$ORACLE_DATA/domains`                 | no           | Base directory for OUDSM domain
-DOMAIN_NAME          | `oudsm_domain`                         | docker run   | Default name for OUDSM domain
-DOMAIN_HOME          | `${DOMAIN_BASE}/${DOMAIN_NAME}`        | docker run   | Default OUDSM domain home directory
-CREATE_DOMAIN        | `TRUE`                                 | docker run   | Flag to create OUDSM domain on first start of the container
-ETC_BASE             | `$ORACLE_DATA/etc`                     | no           | Oracle etc directory with configuration files
-LOG_BASE             | `$ORACLE_DATA/log`                     | no           | Oracle log directory with log files
-DOWNLOAD             | `/tmp/download`                        | no           | Temporary download directory, will be removed after build
-DOCKER_BIN           | `/opt/docker/bin`                      | no           | Docker build and setup scripts
-JAVA_DIR             | `/usr/java`                            | no           | Base directory for java home location
-JAVA_HOME            | `$JAVA_DIR/jdk1.8.0_152`               | no           | Java home directory
+The following environment variables have been used for the installation. In particular it is possible to modify the variables ORACLE_ROOT, ORACLE_DATA and ORACLE_BASE via *build-arg* during image build to have a different directory structure. All other parameters are only relevant for the creation of the container. They may be modify via ```docker run``` environment variables.
 
-In general it does not make sense to change all possible variables. Although *BASEDN* and *ADMIN_PASSWORD* are good candidates for customization.
+
+export ODSEE_INSTANCE=${:-dsDocker}
+
+# Flag to create instance on first boot
+export CREATE_INSTANCE=${CREATE_INSTANCE:-'TRUE'}
+
+# ODSEE instance base directory
+export OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-"$ORACLE_DATA/instances"}
+
+# ODSEE instance home directory
+export ODSEE_INSTANCE_HOME=${OUD_INSTANCE_BASE}/${ODSEE_INSTANCE}
+export ODSEE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
+
+
+Environment variable | Value / Directories                      | Modifiable   | Comment
+-------------------- | ---------------------------------------- | -------------| ---------------
+ORACLE_ROOT          | ```/u00```                               | docker build | Root directory for all the Oracle software
+ORACLE_BASE          | ```$ORACLE_ROOT/app/oracle```            | docker build | Oracle base directory
+n/a                  | ```$ORACLE_BASE/product```               | no           | Oracle product base directory
+ORACLE_HOME_NAME     | ```dsee7```                              | no           | Name of the Oracle Home, used to create to PATH to ORACLE_HOME eg. *$ORACLE_BASE/product/$ORACLE_HOME_NAME*
+ORACLE_DATA          | ```/u01```                               | docker build | Root directory for the persistent data eg. ODSEE instances, etc. A docker volumes must be defined for */u01*
+INSTANCE_BASE        | ```$ORACLE_DATA/instances```             | no           | Base directory for ODSEE instances
+ODSEE_INSTANCE       | ```dsDocker```                           | docker run   | Default name for ODSEE instance
+ODSEE_INSTANCE_HOME  | ```${INSTANCE_BASE}/${ODSEE_INSTANCE}``` | docker run   |
+CREATE_INSTANCE      | ```TRUE```                               | docker run   | Flag to create ODSEE instance on first start of the container
+OUD_INSTANCE_INIT    | ```$ORACLE_DATA/scripts```               | docker run   | Directory for the instance configuration scripts
+PORT                 | ```1389```                               | docker run   | Default LDAP port for the OUD instance
+PORT_SSL             | ```1636```                               | docker run   | Default LDAPS port for the OUD instance
+ADMIN_USER           | ```cn=Directory Manager```               | docker run   | Default admin user for OUD instance
+ADMIN_PASSWORD       |  n/a                                     | docker run   | No default password. Password will be autogenerated when not defined.
+BASEDN               | ```dc=postgasse,dc=org```                | docker run   | Default directory base DN
+SAMPLE_DATA          | ```TRUE```                               | docker run   | Flag to load sample data. Not yet implemented.
+ETC_BASE             | ```$ORACLE_DATA/etc```                   | no           | Oracle etc directory with configuration files
+LOG_BASE             | ```$ORACLE_DATA/log```                   | no           | Oracle log directory with log files
+DOWNLOAD             | ```/tmp/download```                      | no           | Temporary download directory, will be removed after build
+DOCKER_BIN           | ```/opt/docker/bin```                    | no           | Docker build and setup scripts
+other minor release.
+
+In general it does not make sense to change all possible variables. Although *BASEDN* and *ADMIN_PASSWORD* are good candidates for customization. all other variables can generally easily be ignored.
 
 ### Scripts to Build and Setup
 The following scripts are used either during Docker image build or while setting up and starting the container.
 
-| Script                    | Purpose
-| ------------------------- | ----------------------------------------------------------------------------
-| `build.sh`                 | Build helper script for docker ODSEE image
-| `check_ODSEE_Instance.sh`   | Check the status of the ODSEE instance for Docker HEALTHCHECK
-| `config_ODSEE_Instance.sh`  | Configure ODSEE instance using custom scripts
-| `create_ODSEE_Instance.sh`  | Script to create the ODSEE instance
-| `setup_ODSEE.sh`           | Setup script for the ODSEE environment when creating Docker images
-| `start_ODSEE_Instance.sh`   | Script to start the ODSEE domain
+| Script                       | Purpose
+| ---------------------------- | ----------------------------------------------------------------------------
+| ```check_odsee_instance.sh```  | Check the status of the ODSEE instance for Docker HEALTHCHECK
+| ```config_odsee_instance.sh``` | Configure ODSEE instance using custom scripts
+| ```create_odsee_instance.sh``` | Script to create the ODSEE instance
+| ```start_odsee_instance.sh```  | Script to start the ODSEE instance
 
 ## Installation and build
-The docker image can be build manually based on [oehrlis/docker-odsee](https://github.com/oehrlis/docker-oudbase) from GitHub To assist in building the images, you can use the [buildDockerImage.sh](scripts/build.sh) script. See below for instructions and usage. The `build.sh` script is just a utility shell script to setup the `docker build` command and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their preferred set of parameters.
-
-Due to license restrictions from Oracle, the Docker images can not provided on a public Docker repository (see [OTN Developer License Terms](http://www.oracle.com/technetwork/licenses/standard-license-152015.html)). The required Software has to be downloaded prior image build. Alternatively it is possible to specify MOS credentials in `scripts/.netrc` or via build arguments. Using MOS download during image build will lead into smaller images, since the software will not be part of an intermediate intermediate container.
+The Docker images have to be build manually based on [oehrlis/docker](https://github.com/oehrlis/docker) from GitHub. The required software has to be downloaded prior image build and must be part of the build context or made available in a local HTTP server. See [Build with local HTTP server](#build-with-local-http-server) below. When providing a local HTTP server to download the required software during image build will lead into smaller images, since the software will not be part of an intermediate intermediate container. The procedure was briefly described in the blog post [Smaller Oracle Docker images](http://www.oradba.ch/2018/03/smaller-oracle-docker-images/).
 
 ### Obtaining Product Distributions
-The Oracle Software required to setup an Oracle Directory Server Enterprise Edition Docker image is basically not public available. It is subject to Oracle's license terms. For this reason a valid license is required (eg. [OTN Developer License Terms](http://www.oracle.com/technetwork/licenses/standard-license-152015.html)). In addition, Oracle's license terms and conditions must be accepted before downloading.
+The Oracle Software required to setup an Oracle Unified Directory Docker image is basically not public available. It is subject to Oracle's license terms. For this reason a valid license is required (eg. [OTN Developer License Terms](http://www.oracle.com/technetwork/licenses/standard-license-152015.html)). In addition, Oracle's license terms and conditions must be accepted before downloading.
 
-The following software is required for the Oracle Directory Server Enterprise Edition image:
+The following software is required for the Oracle Unified Directory Docker image:
 * Oracle Directory Server Enterprise Edition 11.1.1.7.0. Alternatively you may use the latest patch release via MOS Patch ID [26724938](https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=26724938)
 
-The software can either be downloaded from [My Oracle Support (MOS)](https://support.oracle.com), [Oracle Technology Network (OTN)](http://www.oracle.com/technetwork/index.html) or [Oracle Software Delivery Cloud (OSDC)](http://edelivery.oracle.com). The following steps will refer to the MOS software download to simplify the build process.
+The software can either be downloaded from [My Oracle Support (MOS)](https://support.oracle.com), [Oracle Technology Network (OTN)](http://www.oracle.com/technetwork/index.html) or [Oracle Software Delivery Cloud (OSDC)](http://edelivery.oracle.com). The following links refer to the MOS software download to simplify the build process.
 
-### Manual Download Software
-Currently there is no installation method provided for Oracle Directory Server Enterprise Edition. Therefore the software has to be manually extracted into the Docker build context in the folder `software`. It will then be added to the container at build time.
+The corresponding links and checksum can be found in `*.download` files. Alternatively the Oracle Support Download Links:
+* Oracle Directory Server Enterprise Edition 11.1.1.7.0 [Patch 26724938](https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=26724938) or [direct](https://updates.oracle.com/Orion/Services/download/p26724938_111170_Linux-x86-64.zip?aru=21522204&patch_file=p26724938_111170_Linux-x86-64.zip)
 
-        cd /tmp
-        unzip p26724938_111170_Linux-x86-64.zip
-        tar zxvf dsee.11.1.1.7.171017.Redhat5-opt-64.full.zip.tar.gz
-        cp sun-dsee7.zip <BUILD CONTEXT>/software/ 
-        cd <BUILD CONTEXT>/software/ 
-        unzip sun-dsee7.zip
-        rm sun-dsee7.zip
-        
-        optional slim down dsee7/jre
+### Build using COPY
+Simplest method to build the ODSEE image is to manually download the required software and put it into the build folder respectively context. However this will lead to bigger Docker images, since the software is copied during build, which temporary blow up the container file-system.
 
-* Manual build the image based on the source from GitHub ([oehrlis/docker-odsee](https://github.com/oehrlis/docker-odsee)).
+Copy all files to the `OracleODSEE/11.1.1.7.0` folder.
 
-        docker build -t oehrlis/odsee .
+        cp p26724938_111170_Linux-x86-64.zip OracleODSEE/11.1.1.7.0
 
-* Create a new named container and run it interactive (-i -t)
+Build the docker image using `docker build`.
 
-        docker run -v [<host mount point>:]/u01 -P -h odsee --name odsee oehrlis/odsee
+        cd OracleODSEE/11.1.1.7.0
+        docker build -t oracle/odsee:11.1.1.7.0 .
+
+### Build with local HTTP server
+Alternatively the software can also be downloaded from a local HTTP server during build. For this a Docker image for an HTTP server is required eg. official Apache HTTP server Docker image based on alpine. 
+
+Start a local HTTP server. httpd:alpine will be pulled from Docker Hub:
+
+        docker run -dit --hostname orarepo --name orarepo \
+            -p 8080:80 \
+            -v /Data/vm/docker/volumes/orarepo:/usr/local/apache2/htdocs/ \
+            httpd:alpine
+
+Make sure, that the software is not copied to the volume folder not in the build context any more:
+
+        cd OracleODSEE/11.1.1.7.0
+        cp p26724938_111170_Linux-x86-64.zip /Data/vm/docker/volumes/orarepo
+        rm p26724938_111170_Linux-x86-64.zip
+
+Get the IP address of the local HTTP server:
+
+        orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
+
+Build the docker image using `docker build` and provide the HTTP server.
+
+        docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.0 .
+
+The _RUN_ command in the Dockerfile will check if the software is part of the build context. If not, it will use the host _orarepo_ to download the software. This way the OUD Docker image will be about 400MB smaller.
 
 ## Running the Docker Images
 ### Setup an Oracle Directory Server Enterprise Edition Container
-Creating a ODSEE container is straight forward with **docker run** command. The script `start_ODSEE_Instance.sh` will make sure, that a new ODSEE instance is created, when the container is started the first time.  The instance is created using predefined values. (see below). If an ODSEE instance already exists, the script simply starts it.
+Creating a ODSEE container is straight forward with **docker run** command. The script `start_odsee_instance.sh` will make sure, that a new ODSEE instance is created, when the container is started the first time.  The instance is created using predefined values. (see below). If an ODSEE instance already exists, the script simply starts it.
 
 The creation of the ODSEE instance can be influenced by the following environment variables. You only have to set them with option -e when executing "docker run":
 
 * **ADMIN_PASSWORD** ODSEE admin password (default *autogenerated*)
-* **ADMIN_USER**  OUD admin user name (default *cn=Directory Manager*)
+* **ADMIN_USER**  ODSEE admin user name (default *cn=Directory Manager*)
 * **BASEDN** Directory base DN (default *dc=postgasse,dc=org*)
 * **LDAPS_PORT** SSL LDAP port (default *1636*)
 * **LDAP_PORT** Regular LDAP port (default *1389*)
-* **ODSEE_INSTANCE** OUD instance name (default *oud_docker*)
-* **ODSEE_INSTANCE_HOME** OUD home path (default */u01/instances/oud_docker*)
-* **ODSEE_INSTANCE_INIT** default folder for OUD instance init scripts. These scripts are used to modify and adjust the new OUD instance.
+* **ODSEE_INSTANCE** ODSEE instance name (default *oud_docker*)
+* **ODSEE_INSTANCE_HOME** ODSEE home path (default */u01/instances/oud_docker*)
+* **ODSEE_INSTANCE_INIT** default folder for ODSEE instance init scripts. These scripts are used to modify and adjust the new ODSEE instance.
 
-Run your Oracle Unified Directory Docker image use the **docker run** command as follows:
+Run your Oracle Directory Server Enterprise Edition Docker image use the **docker run** command as follows:
 
     docker run --name odsee <container name> \
     --hostname <container hostname> -P \
-    -e OUD_INSTANCE=<your odsee instance name> \
+    -e ODSEE_INSTANCE=<your odsee instance name> \
     --volume [<host mount point>:]/u01 \
     --volume [<host mount point>:]/u01/scripts \
-    oehrlis/odsee
+    oracle/odsee:11.1.1.7.0
 
     Parameters:
-    --name:           The name of the container (default: auto generated)
-    -p:               The port mapping of the host port to the container port.
-                      for ports are exposed: 1389 (LDAP), 1636 (LDAPS), 4444 (Admin Port), 8989 (Replication Port)
-    -P:               Map all exposed ports
+    --name:            The name of the container (default: auto generated)
+    -p:                The port mapping of the host port to the container port.
+                       for ports are exposed: 1389 (LDAP), 1636 (LDAPS), 4444 (Admin Port), 8989 (Replication Port)
+    -P:                Map all exposed ports
     -e ODSEE_INSTANCE: The Oracle Database SYS, SYSTEM and PDB_ADMIN password (default: auto generated)
-    -e <Variables>   Other environment variable according "Environment Variable and Directories"
+    -e <Variables>     Other environment variable according "Environment Variable and Directories"
     -v /u01
-                  The data volume to use for the OUD instance.
-                  Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
-                  If omitted the OUD instance will not be persisted over container recreation.
+                       The data volume to use for the OUD instance.
+                       Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
+                       If omitted the OUD instance will not be persisted over container recreation.
     -v /u01/app/oracle/scripts | /docker-entrypoint-initdb.d
-                  Optional: A volume with custom scripts to be run after OUD instance setup.
-                  For further details see the "Running scripts after setup" section below.
+                       Optional: A volume with custom scripts to be run after OUD instance setup.
+                       For further details see the "Running scripts after setup" section below.
 
 There are four ports that are exposed in this image:
 * 1389 which is the regular LDAP port to connect to the ODSEE instance.
@@ -159,24 +174,28 @@ There are four ports that are exposed in this image:
 On the first startup of the container a random password will be generated for the ODSEE instance if not provided. You can find this password in the output line:
 If you need to find the passwords at a later time, grep for "password" in the Docker logs generated during the startup of the container. To look at the Docker Container logs run:
 
-    docker logs --details oud|grep -i password
+        docker logs --details oud|grep -i password
 
 #### Running Bash in a Docker container
 Access your ODSEE container via bash.
-    docker exec -u oracle -it oud bash --login
+
+        docker exec -u oracle -it oud bash --login
 
 #### Running scripts after setup
 The ODSEE Docker image can be configured to run scripts after setup. Currently `sh` and `ldif` extensions are supported. For post-setup scripts just create a folder `scripts/setup` in generic volume `/u01`, mount a dedicated volume `/u01/scripts/setup` or extend the image to include scripts in this directory. The location is also represented under the symbolic link `/docker-entrypoint-initdb.d`. This is done to provide synergy with other Docker images. The user is free to decide whether he wants to put his setup scripts under `/u01/scripts/setup` or `/docker-entrypoint-initdb.d`.
 
 After the ODSEE instance is setup the scripts in those folders will be executed against the instance in the container. LDIF files (`ldif`) will be loaded using `ldapmodify` as *cn=Directory Manager* (ADMIN_USER). Shell scripts will be executed as the current user (oracle). To ensure proper order it is recommended to prefix your scripts with a number. For example `01_instance.sh`, `02_schema_extention.ldif`, etc.
 
+## Frequently asked questions
+Please see [FAQ.md](./FAQ.md) for frequently asked questions.
+
 ## Issues
 Please file your bug reports, enhancement requests, questions and other support requests within [Github's issue tracker](https://help.github.com/articles/about-issues/):
 
-* [Existing issues](https://github.com/oehrlis/docker-odsee/issues)
-* [submit new issue](https://github.com/oehrlis/docker-odsee/issues/new)
+* [Existing issues](https://github.com/oehrlis/docker/issues)
+* [submit new issue](https://github.com/oehrlis/docker/issues/new)
 
 ## License
-docker-odsee is licensed under the Apache License, Version 2.0. You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>.
+oehrlis/docker is licensed under the GNU General Public License v3.0. You may obtain a copy of the License at <https://www.gnu.org/licenses/gpl.html>.
 
-To download and run Oracle Directory Server Enteprise Edition, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page. See [OTN Developer License Terms](http://www.oracle.com/technetwork/licenses/standard-license-152015.html) and [Oracle Database Licensing Information User Manual](https://docs.oracle.com/database/122/DBLIC/Licensing-Information.htm#DBLIC-GUID-B6113390-9586-46D7-9008-DCC9EDA45AB4)
+To download and run Oracle Unified Directory, Oracle Directory Server Enterprise Edition or any other Oracle product, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page. See [OTN Developer License Terms](http://www.oracle.com/technetwork/licenses/standard-license-152015.html) and [Oracle Database Licensing Information User Manual](https://docs.oracle.com/database/122/DBLIC/Licensing-Information.htm#DBLIC-GUID-B6113390-9586-46D7-9008-DCC9EDA45AB4)

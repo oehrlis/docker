@@ -2,226 +2,133 @@
 Docker build files to facilitate installation, configuration, and environment setup for Docker DevOps users. For more information about Oracle Unified Directory please see the [Oracle Unified Directory 12.2.1.3.0 Online Documentation](https://docs.oracle.com/middleware/12213/oud/).
 
 ### Docker Images Content
-The resulting Docker images are based on the official Oracle Linux slim image ([oraclelinux](https://hub.docker.com/r/_/oraclelinux/)). They have been extended with the following Linux packages and configuration:
-* Upgrade of all installed packages to the latest release (yum upgrade)
+The resulting Docker images are based on the official Oracle Java image for Java 8 u162 (_oracle/serverjre:8_). It has either be build manually using the [official](https://github.com/oracle/docker-images/tree/master/OracleJava) or [my unofficial](https://github.com/oehrlis/docker/tree/master/OracleJava) Oracle Docker build scripts or pulled from [Docker Store](https://store.docker.com/images/oracle-serverjre-8). If you pull the java image from the docker store you may have to tag it to _oracle/serverjre:8_.
+
+```
+docker login
+docker pull store/oracle/serverjre:8
+docker tag store/oracle/serverjre:8 oracle/serverjre:8
+```
+
+They base image has been extended with the following Linux packages and configuration:
 * Install the following additional packages including there dependencies:
-    - *hostname* Utility to set/show the host name or domain name
-    - *which* Displays where a particular program in your path is located
-    - *unzip* A utility for unpacking zip files
-    - *tar* A GNU file archiving program
-    - *gzip* A file compression and packaging utility compatible with PKZIP
-    - *procps-ng* System and process monitoring utilities
+    - *libaio* Linux-native asynchronous I/O access library
 * Operating system user *oracle* (uid 1000)
-* Dedicated groups for user *oracle*, oinstall (gid 1000), osdba (gid 1010),
-osoper (gid 1020), osbackupdba (gid 1030), oskmdba (gid 1040), osdgdba (gid 1050)
-* [OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)
+* Dedicated groups for user *oracle*, oracle (gid 1000), oinstall (gid 1010)
+* ~~[OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)~~
 * Oracle OFA Directories see below
-* Install Oracle Server JRE 8 update 152
-* Install Oracle Fusion Middleware Infrastructure 12c 12.2.1.3.0 (only the collocated image)
-* Install Oracle Unified Directory 12c 12.2.1.3.0 (standalone or collocated)
+* Install Oracle Fusion Middleware Infrastructure 12c 12.2.1.3.0
+* Install January 2018 PSU for WLS 27438258
+* Install Oracle Unified Directory 12c 12.2.1.3.0 (collocated)
 
 ### Environment Variable and Directories
-Based on the idea of OFA (Oracle Flexible Architecture) we try to separate the data from the binaries. This means that the OUD and ODSEE instances, OUDSM domain as well as configuration files are explicitly stored in a separate directory. Ideally, a volume is assigned to this directory when a container is created. This ensures data persistence over the lifetime of a container. OUD Base supports the setup and operation of the environment based on OFA. See also [OraDBA](http://www.oradba.ch/category/oudbase/).
+Based on the idea of OFA (Oracle Flexible Architecture) we try to separate the data from the binaries. This means that the OUDSM domain as well as configuration files are explicitly stored in a separate directory. Ideally, a volume is assigned to this directory when a container is created. This ensures data persistence over the lifetime of a container. OUD Base supports the setup and operation of the environment based on OFA. See also [OraDBA](http://www.oradba.ch/category/oudbase/).
 
 The following environment variables have been used for the installation. In particular it is possible to modify the variables ORACLE_ROOT, ORACLE_DATA and ORACLE_BASE via *build-arg* during image build to have a different directory structure. All other parameters are only relevant for the creation of the container. They may be modify via ```docker run``` environment variables.
 
-Environment variable | Value / Directories                    | Modifiable   | Comment
--------------------- | -------------------------------------- | -------------| ---------------
-ORACLE_ROOT          | ```/u00```                             | docker build | Root directory for all the Oracle software
-ORACLE_BASE          | ```$ORACLE_ROOT/app/oracle```          | docker build | Oracle base directory
-n/a                  | ```$ORACLE_BASE/product`               | no           | Oracle product base directory
-ORACLE_HOME_NAME     | ```fmw12.2.1.3.0```                    | no           | Name of the Oracle Home, used to create to PATH to ORACLE_HOME eg. *$ORACLE_BASE/product/$ORACLE_HOME_NAME*
-ORACLE_DATA          | ```/u01```                             | docker build | Root directory for the persistent data eg. OUD instances, etc. A docker volumes must be defined for */u01*
-INSTANCE_BASE        | ```$ORACLE_DATA/instances```           | no           | Base directory for OUD instances
-OUD_INSTANCE         | ```oud_docker```                       | docker run   | Default name for OUD instance
-OUD_INSTANCE_HOME    | ```${INSTANCE_BASE}/${OUD_INSTANCE}``` | docker run   |
-CREATE_INSTANCE      | ```TRUE```                             | docker run   | Flag to create OUD instance on first start of the container
-OUD_PROXY            | ```FALSE```                            | docker run   | Flag to create proxy instance. Not yet implemented.
-OUD_INSTANCE_INIT    | ```$ORACLE_DATA/scripts```             | docker run   | Directory for the instance configuration scripts
-PORT                 | ```1389```                             | docker run   | Default LDAP port for the OUD instance
-PORT_SSL             | ```1636```                             | docker run   | Default LDAPS port for the OUD instance
-PORT_REP             | ```8989```                             | docker run   | Default replication port for the OUD instance
-PORT_ADMIN           | ```4444```                             | docker run   | Default admin port for the OUD instance (4444)
-ADMIN_USER           | ```cn=Directory Manager```             | docker run   | Default admin user for OUD instance
-ADMIN_PASSWORD       |  n/a                                   | docker run   | No default password. Password will be autogenerated when not defined.
-BASEDN               | ```dc=postgasse,dc=org```              | docker run   | Default directory base DN
-SAMPLE_DATA          | ```TRUE```                             | docker run   | Flag to load sample data. Not yet implemented.
-ETC_BASE             | ```$ORACLE_DATA/etc```                 | no           | Oracle etc directory with configuration files
-LOG_BASE             | ```$ORACLE_DATA/log```                 | no           | Oracle log directory with log files
-DOWNLOAD             | ```/tmp/download```                    | no           | Temporary download directory, will be removed after build
-DOCKER_BIN           | ```/opt/docker/bin```                  | no           | Docker build and setup scripts
-JAVA_DIR             | ```/usr/java```                        | no           | Base directory for java home location
-JAVA_HOME            | ```$JAVA_DIR/jdk1.8.0_162```           | no           | Java home directory
+Environment variable | Value / Directories                       | Modifiable   | Comment
+-------------------- | ----------------------------------------- | -------------| ---------------
+ORACLE_ROOT          | ```/u00```                                | docker build | Root directory for all the Oracle software
+ORACLE_BASE          | ```$ORACLE_ROOT/app/oracle```             | docker build | Oracle base directory
+n/a                  | ```$ORACLE_BASE/product```                | no           | Oracle product base directory
+ORACLE_HOME_NAME     | ```fmw12.2.1.3.0```                       | no           | Name of the Oracle Home, used to create to PATH to ORACLE_HOME eg. *$ORACLE_BASE/product/$ORACLE_HOME_NAME*
+ORACLE_DATA          | ```/u01```                                | docker build | Root directory for the persistent data eg. OUD instances, etc. A docker volumes must be defined for */u01*
 
-In general it does not make sense to change all possible variables. Although *BASEDN* and *ADMIN_PASSWORD* are good candidates for customization.
+* **ADMIN_USER**  Weblogic admin user name (default *weblogic*)
+* **CREATE_DOMAIN** Flag to create OUDS instance on first startup (default *TRUE*)
+* **DOMAIN_HOME** Domain home path (default */u01/domains/oudsm_domain*)
+* **DOMAIN_NAME** OUDSM
+
+OUDSM_DOMAIN_BASE    | ```$ORACLE_DATA/domains```                | no           | Base directory for OUDSM Domain
+DOMAIN_NAME          | ```oudsm_domain```                        | docker run   | Default name for OUDSM domain
+DOMAIN_HOME          | ```${OUDSM_DOMAIN_BASE}/${DOMAIN_NAME}``` | docker run   |
+CREATE_DOMAIN        | ```TRUE```                                | docker run   | Flag to create OUD instance on first start of the container
+PORT                 | ```7001```                                | docker run   | Default HTTP port for the OUDSM domain
+PORT_SSL             | ```7002```                                | docker run   | Default HTTPS port for the OUDSM domain
+ADMIN_USER           | ```weblogic```                            | docker run   | Default admin user for OUDSM domain
+ADMIN_PASSWORD       |  n/a                                      | docker run   | No default password. Password will be autogenerated when not defined.
+ETC_BASE             | ```$ORACLE_DATA/etc```                    | no           | Oracle etc directory with configuration files
+LOG_BASE             | ```$ORACLE_DATA/log```                    | no           | Oracle log directory with log files
+DOWNLOAD             | ```/tmp/download```                       | no           | Temporary download directory, will be removed after build
+DOCKER_BIN           | ```/opt/docker/bin```                     | no           | Docker build and setup scripts
+JAVA_DIR             | ```/usr/java```                           | no           | Base directory for java home location
+JAVA_HOME            | ```$JAVA_DIR/jdk1.8.0_162```              | no           | Java home directory when build manually. The official docker image may have an other minor release.
+
+In general it does not make sense to change all possible variables. Although *BASEDN* and *ADMIN_PASSWORD* are good candidates for customization. all other variables can generally easily be ignored.
 
 ### Scripts to Build and Setup
 The following scripts are used either during Docker image build or while setting up and starting the container.
 
 | Script                       | Purpose
 | ---------------------------- | ----------------------------------------------------------------------------
-| ```buildDockerImage.sh```    | Build helper script for docker OUD and OUDSM images
-| ```check_oud_Instance.sh```  | Check the status of the OUD instance for Docker HEALTHCHECK
-| ```config_oud_instance.sh``` | Configure OUD instance using custom scripts
-| ```create_oud_instance.sh``` | Script to create the OUD instance
-| ```setup_java.sh```          | Setup script for OS update and Java installation when creating Docker images
-| ```setup_oud.sh```           | Setup script for OUD standalone installation when creating Docker images
-| ```setup_oudbase.sh```       | Setup script for the Oracle environment when creating Docker images
-| ```start_oud_instance.sh```  | Script to start the OUDSM domain
+| ```check_oudsm_console.sh``` | Check the status of the OUDSM domain for Docker HEALTHCHECK
+| ```create_oudsm_domain.py``` | WLST / phyton script to create the OUDSM domain
+| ```create_oudsm_domain.sh``` | Script to create the OUDSM domain
+| ```start_oudsm_domain.sh```  | Script to start the OUDSM domain
 
 ## Installation and Build
-The Docker images have to be build manually based on [oehrlis/docker](https://github.com/oehrlis/docker) from GitHub. To assist in building the images, you can use the [buildDockerImage.sh](https://github.com/oehrlis/docker/blob/master/common/buildDockerImage.sh) script. See below for instructions and usage. The `buildDockerImage.sh`  script is just a utility shell script to setup the `docker build` command and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their preferred set of parameters.
-
-Usage of `buildDockerImage.sh`:
-
-    buildDockerImage.sh [-hv] [-t <TYPE>] [-o <DOCKER_BUILD_OPTION>]
-    -h                        Usage (this message)
-    -v                        Enable verbose mode
-    -t <TYPE>                 OUD image and installation type to build. Possible types are:
-                              OUD   : Standalone Oracle Unified Directory Server
-                              OUDSM : Collocated Oracle Unified Directory Server.
-                              Default is type is OUD.
-    -o <DOCKER_BUILD_OPTION>  Passes on Docker build option
-
-    Logfile : buildDockerImage.log
-
-Due to license restrictions from Oracle, the Docker images can not provided on a public Docker repository (see [OTN Developer License Terms](http://www.oracle.com/technetwork/licenses/standard-license-152015.html)). The required Software has to be downloaded prior image build. Alternatively it is possible to specify MOS credentials in `scripts/.netrc` or via build arguments. Additionally it is also possible to specify a local web server via build arguments to download the software. Using MOS or local download during image build will lead into smaller images, since the software will not be part of an intermediate intermediate container.
+The Docker images have to be build manually based on [oehrlis/docker](https://github.com/oehrlis/docker) from GitHub. The required software has to be downloaded prior image build and must be part of the build context or made available in a local HTTP server. See [Build with local HTTP server](#build-with-local-http-server) below. When providing a local HTTP server to download the required software during image build will lead into smaller images, since the software will not be part of an intermediate intermediate container. The procedure was briefly described in the blog post [Smaller Oracle Docker images](http://www.oradba.ch/2018/03/smaller-oracle-docker-images/).
 
 ### Obtaining Product Distributions
 The Oracle Software required to setup an Oracle Unified Directory Docker image is basically not public available. It is subject to Oracle's license terms. For this reason a valid license is required (eg. [OTN Developer License Terms](http://www.oracle.com/technetwork/licenses/standard-license-152015.html)). In addition, Oracle's license terms and conditions must be accepted before downloading.
 
 The following software is required for the Oracle Unified Directory Docker image:
-* Oracle Java Development Kit (JDK) 1.8 (1.8u162)
-* Oracle Unified Directory 12.2.1.3.0
+* Oracle Fusion Middleware 12.2.1.3.0 Fusion Middleware Infrastructure
+* January 2018 WLS PATCH SET UPDATE 12.2.1.3.180116 Oracle WebLogic Server 12.2.1.3.0
+* Oracle Fusion Middleware 12.2.1.3.0 Oracle Unified Directory
 
-The software can either be downloaded from [My Oracle Support (MOS)](https://support.oracle.com), [Oracle Technology Network (OTN)](http://www.oracle.com/technetwork/index.html) or [Oracle Software Delivery Cloud (OSDC)](http://edelivery.oracle.com). The following steps will refer to the MOS software download to simplify the build process.
+The software can either be downloaded from [My Oracle Support (MOS)](https://support.oracle.com), [Oracle Technology Network (OTN)](http://www.oracle.com/technetwork/index.html) or [Oracle Software Delivery Cloud (OSDC)](http://edelivery.oracle.com). The following links refer to the MOS software download to simplify the build process.
 
-### Manual Download Software
-Simplest method to build the OUD image is to manually download the required software. However this will lead to bigger docker images, since the software is copied during build, which temporary blow up the container file-system. But its more safe because you do not have to store any MOS credentials.
+The corresponding links and checksum can be found in `*.download` files. Alternatively the Oracle Support Download Links:
+* Oracle Fusion Middleware 12.2.1.3.0 Fusion Middleware Infrastructure [Patch 26269885](https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=26269885) or [direct](https://updates.oracle.com/Orion/Services/download/p26269885_122130_Generic.zip?aru=21502041&patch_file=p26269885_122130_Generic.zip)
+* Oracle WLS PATCH SET UPDATE 12.2.1.3.180116 Oracle WebLogic Server 12.2.1.3.0 [Patch 27438258](https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=27438258) or [direct](https://updates.oracle.com/Orion/Services/download/p27438258_122130_Generic.zip?aru=21899283&patch_file=p27438258_122130_Generic.zip)
+* Oracle Fusion Middleware 12.2.1.3.0 Oracle Unified Directory [Patch 26270957](https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=26270957) or [direct](https://updates.oracle.com/Orion/Services/download/p26270957_122130_Generic.zip?aru=21504981&patch_file=p26270957_122130_Generic.zip)
 
-The corresponding links and checksum can be found in `*.download` files in the `software` folder. Alternatively the Oracle Support Download Links:
-* Oracle Java Server JRE 8 update 162 [Patch 27217289](https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=27217289) or [direct](https://updates.oracle.com/Orion/Services/download/p27217289_180162_Linux-x86-64.zip?aru=21855272&patch_file=p27217289_180162_Linux-x86-64.zip)
-* Oracle Unified Directory 12.2.1.3.0 [Patch 26270957](https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=26270957) or [direct](https://updates.oracle.com/Orion/Services/download/p26270957_122130_Generic.zip?aru=21504981&patch_file=p26270957_122130_Generic.zip)
+### Build using COPY
+Simplest method to build the OUDSM image is to manually download the required software and put it into the build folder respectively context. However this will lead to bigger Docker images, since the software is copied during build, which temporary blow up the container file-system.
 
-Copy all files to the `oud/software` folder.
+Copy all files to the `OracleOUDSM/12.2.1.3.0` folder.
 
-    cp p27217289_180162_Linux-x86-64.zip docker/oud/software
-    cp p26270957_122130_Generic.zip docker/oud/software
+        cp p26270957_122130_Generic.zip OracleOUDSM/12.2.1.3.0
+        cp p27438258_122130_Generic.zip OracleOUDSM/12.2.1.3.0
+        cp p26270957_122130_Generic.zip OracleOUDSM/12.2.1.3.0
 
-Build the docker image either by using `docker build` or `buildDockerImage.sh`.
+Build the docker image using `docker build`.
 
-        cd oud
-        docker build -t oehrlis/oud .
+        cd OracleOUDSM/12.2.1.3.0
+        docker build -t oracle/oudsm:12.2.1.3.0 .
 
-        ./oud/build.sh
-        ./oud/buildDockerImage.sh -v -t OUD
+### Build with local HTTP server
+Alternatively the software can also be downloaded from a local HTTP server during build. For this a Docker image for an HTTP server is required eg. official Apache HTTP server Docker image based on alpine. 
 
-### Automatic download with .netrc
-The advantage of an automatic software download during build is the reduced image size. No additional image layers are created for the software and the final docker image is several 100MB smaller. But the setup script (`setup_oud.sh`) requires the MOS credentials to download the software with [curl](https://linux.die.net/man/1/curl). Curl does read the credentials from the `.netrc` file in `scripts` folder. The `.netrc` file will be copied to `/opt/docker/bin/.netrc`, but it will be removed at the end of the build.
+Start a local HTTP server. httpd:alpine will be pulled from Docker Hub:
 
-Create a `.netrc` file with the credentials for *login.oracle.com*.
+        docker run -dit --hostname orarepo --name orarepo \
+            -p 8080:80 \
+            -v /Data/vm/docker/volumes/orarepo:/usr/local/apache2/htdocs/ \
+            httpd:alpine
 
-    echo "machine login.oracle.com login <MOS_USER> password <MOS_PASSWORD>" >docker/oud/scripts/.netrc
+Make sure, that the software is not copied to the volume folder not in the build context any more:
 
-Build the docker image either by using `docker build` or `buildDockerImage.sh`.
+        cd OracleOUDSM/12.2.1.3.0
+        cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo
+        cp p27438258_122130_Generic.zip /Data/vm/docker/volumes/orarepo
+        cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo 
+        rm p26270957_122130_Generic.zip p27438258_122130_Generic.zip p26270957_122130_Generic.zip
 
-        cd oud
-        docker build -t oehrlis/oud .
+Get the IP address of the local HTTP server:
 
-        ./oud/build.sh
-        ./oud/buildDockerImage.sh -v -t OUD
+        orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
 
-### Automatic download with Build Arguments
-This method is similar to the automatic download with `.netrc` file. Instead of manually creating a `.netrc` file it will created based on build parameters. Also with this method the `.netrc` file is deleted at the end.
+Build the docker image using `docker build` and provide the HTTP server.
 
-Build the docker image with MOS credentials as arguments.
+        docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.0 .
 
-        docker build --build-arg MOS_USER=<MOS_USER> \
-          --build-arg MOS_PASSWORD=<MOS_PASSWORD> \
-          -t oehrlis/oud -f Dockerfile.oud .
-
-        scripts/buildDockerImage.sh -v -t OUD \
-          -o "--build-arg MOS_PASSWORD=<MOS_PASSWORD> --build-arg MOS_USER=<MOS_USER>"
-
-Build the docker image localhost URL as arguments. With this method it is no need to access MOS. URL just have to be available from the build container.
-
-        docker build --build-arg LOCALHOST=<URL> \
-          -t oehrlis/oud -f Dockerfile.oud .
-
-        scripts/buildDockerImage.sh -v -t OUD \
-          -o "--build-arg LOCALHOST=<URL>"
+The _RUN_ command in the Dockerfile will check if the software is part of the build context. If not, it will use the host _orarepo_ to download the software. This way the OUDSM Docker image will be about 400MB smaller.
 
 ## Running the Docker Images
-### Setup an Oracle Unified Directory Container
-Creating a OUD container is straight forward with **docker run** command. The script `start_oud_instance.sh` will make sure, that a new OUD instance is created, when the container is started the first time.  The instance is created using predefined values. (see below). If an OUD instance already exists, the script simply starts it.
-
-The creation of the OUD instance can be influenced by the following environment variables. You only have to set them with option -e when executing "docker run":
-
-* **ADMIN_PASSWORD** OUD admin password (default *autogenerated*)
-* **PORT_ADMIN** OUD admin port (default *4444*)
-* **ADMIN_USER**  OUD admin user name (default *cn=Directory Manager*)
-* **BASEDN** Directory base DN (default *dc=postgasse,dc=org*)
-* **CREATE_DOMAIN** Flag to create OUDS instance on first startup (default *TRUE*)
-* **PORT_SSL** SSL LDAP port (default *1636*)
-* **PORT** Regular LDAP port (default *1389*)
-* **OUD_INSTANCE** OUD instance name (default *oud_docker*)
-* **OUD_INSTANCE_HOME** OUD home path (default */u01/instances/oud_docker*)
-* **OUD_INSTANCE_INIT** default folder for OUD instance init scripts. These scripts are used to modify and adjust the new OUD instance.
-* **OUD_PROXY** Flag to create proxy instance (default *FALSE*) Not yet implemented.
-* **PORT_REP** OUD replication port (default *8989*)
-* **SAMPLE_DATA** Flag to load sample data (default *TRUE*) Not yet implemented.
-
-Run your Oracle Unified Directory Docker image use the **docker run** command as follows:
-
-    docker run --name oud <container name> \
-    --hostname <container hostname> \
-    -p 1389:1389 -p 1636:1636 -p 4444:4444 \
-    -e OUD_INSTANCE=<your oud instance name> \
-    --volume [<host mount point>:]/u01 \
-    --volume [<host mount point>:]/u01/scripts \
-    oehrlis/oud
-
-    Parameters:
-    --name:           The name of the container (default: auto generated)
-    -p:               The port mapping of the host port to the container port.
-                      for ports are exposed: 1389 (LDAP), 1636 (LDAPS), 4444 (Admin Port), 8989 (Replication Port)
-    -e OUD_INSTANCE: The Oracle Database SYS, SYSTEM and PDB_ADMIN password (default: auto generated)
-    -e <Variables>   Other environment variable according "Environment Variable and Directories"
-    -v /u01
-                  The data volume to use for the OUD instance.
-                  Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
-                  If omitted the OUD instance will not be persisted over container recreation.
-    -v /u01/app/oracle/scripts | /docker-entrypoint-initdb.d
-                  Optional: A volume with custom scripts to be run after OUD instance setup.
-                  For further details see the "Running scripts after setup" section below.
-
-There are four ports that are exposed in this image:
-* 1389 which is the regular LDAP port to connect to the OUD instance.
-* 1636 which is the SSL LDAP port to connect to the OUD instance.
-* 4444 which is the admin port to connect and configure the OUD instance using dsconfig.
-* 8989 which is the replication port of the OUD instance.
-
-On the first startup of the container a random password will be generated for the OUD instance if not provided. You can find this password in the output line:
-If you need to find the passwords at a later time, grep for "password" in the Docker logs generated during the startup of the container. To look at the Docker Container logs run:
-
-    docker logs --details oud|grep -i password
-
-#### Running Bash in a Docker container
-Access your OUD container via bash.
-    docker exec -u oracle -it oud bash --login
-
-#### Running dsconfig in a Docker container
-Execute `dsconfig` within the OUD container.
-
-    docker exec -u oracle -it oud dsconfig
-
-#### Running scripts after setup
-The OUD Docker image can be configured to run scripts after setup. Currently `sh`, `ldif` and `conf` extensions are supported. For post-setup scripts just create a folder `scripts/setup` in generic volume `/u01`, mount a dedicated volume `/u01/scripts/setup` or extend the image to include scripts in this directory. The location is also represented under the symbolic link `/docker-entrypoint-initdb.d`. This is done to provide synergy with other Docker images. The user is free to decide whether he wants to put his setup scripts under `/u01/scripts/setup` or `/docker-entrypoint-initdb.d`.
-
-After the OUD instance is setup the scripts in those folders will be executed against the instance in the container. LDIF files (`ldif`) will be loaded using `ldapmodify` as *cn=Directory Manager* (ADMIN_USER). CONF files (`conf`) are interpreted as `dsconfig` batch files and will be executed accordingly. Shell scripts will be executed as the current user (oracle). To ensure proper order it is recommended to prefix your scripts with a number. For example `01_instance.conf`, `02_schema_extention.ldif`, etc.
-
 ### Setup an Oracle Unified Directory Server Manager Container
-Creating a OUDSM container is straight forward with **docker run** command. The script `start_OUDSM_Domain.sh` will make sure, that a new OUDSM domain is created, when the container is started the first time.  The instance is created using predefined values. (see below). If an OUDSM domain already exists, the script simply starts it.
+Creating a OUDSM container is straight forward with **docker run** command. The script `start_oudsm_domain.sh` will make sure, that a new OUDSM domain is created, when the container is started the first time.  The domain is created using predefined values. (see below). If an OUDSM domain already exists, the script simply starts it.
 
 The creation of the OUDSM domain can be influenced by the following environment variables. You only have to set them with option -e when executing "docker run":
 
@@ -240,7 +147,7 @@ Run your Oracle Unified Directory Docker image use the **docker run** command as
     -p 7001:7001 -p 7002:7002 \
     -e <Variables>=<values> \
     --volume [<host mount point>:]/u01 \
-    oehrlis/oudsm
+    oracle/oudsm:12.2.1.3.0
 
     Parameters:
     --name:           The name of the container (default: auto generated)
@@ -248,9 +155,9 @@ Run your Oracle Unified Directory Docker image use the **docker run** command as
                       for ports are exposed: 7001 (WLS Console), 7002 (WLS Console SSL)
     -e <Variables>    Other environment variable according "Environment Variable and Directories"
     -v /u01
-                  The data volume to use for the OUD instance.
-                  Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
-                  If omitted the OUD instance will not be persisted over container recreation.
+                      The data volume to use for the OUD instance.
+                      Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
+                      If omitted the OUD instance will not be persisted over container recreation.
 
 There are two ports that are exposed in this image:
 * 7001 which is the regular LDAP port to connect to the OUD instance.

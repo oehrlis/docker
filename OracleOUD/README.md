@@ -28,7 +28,7 @@ Environment variable | Value / Directories                    | Modifiable   | C
 -------------------- | -------------------------------------- | -------------| ---------------
 ORACLE_ROOT          | ```/u00```                             | docker build | Root directory for all the Oracle software
 ORACLE_BASE          | ```$ORACLE_ROOT/app/oracle```          | docker build | Oracle base directory
-n/a                  | ```$ORACLE_BASE/product`               | no           | Oracle product base directory
+n/a                  | ```$ORACLE_BASE/product```             | no           | Oracle product base directory
 ORACLE_HOME_NAME     | ```fmw12.2.1.3.0```                    | no           | Name of the Oracle Home, used to create to PATH to ORACLE_HOME eg. *$ORACLE_BASE/product/$ORACLE_HOME_NAME*
 ORACLE_DATA          | ```/u01```                             | docker build | Root directory for the persistent data eg. OUD instances, etc. A docker volumes must be defined for */u01*
 INSTANCE_BASE        | ```$ORACLE_DATA/instances```           | no           | Base directory for OUD instances
@@ -50,7 +50,7 @@ LOG_BASE             | ```$ORACLE_DATA/log```                 | no           | O
 DOWNLOAD             | ```/tmp/download```                    | no           | Temporary download directory, will be removed after build
 DOCKER_BIN           | ```/opt/docker/bin```                  | no           | Docker build and setup scripts
 JAVA_DIR             | ```/usr/java```                        | no           | Base directory for java home location
-JAVA_HOME            | ```$JAVA_DIR/jdk1.8.0_162```           | no           | Java home directory when build manually. The official docker image will have an other update.
+JAVA_HOME            | ```$JAVA_DIR/jdk1.8.0_162```           | no           | Java home directory when build manually. The official docker image may have an other minor release.
 
 In general it does not make sense to change all possible variables. Although *BASEDN* and *ADMIN_PASSWORD* are good candidates for customization. all other variables can generally easily be ignored.
 
@@ -62,7 +62,7 @@ The following scripts are used either during Docker image build or while setting
 | ```check_oud_instance.sh```  | Check the status of the OUD instance for Docker HEALTHCHECK
 | ```config_oud_instance.sh``` | Configure OUD instance using custom scripts
 | ```create_oud_instance.sh``` | Script to create the OUD instance
-| ```start_oud_instance.sh```  | Script to start the OUDSM domain
+| ```start_oud_instance.sh```  | Script to start the OUD instance
 
 ## Installation and Build
 The Docker images have to be build manually based on [oehrlis/docker](https://github.com/oehrlis/docker) from GitHub. The required software has to be downloaded prior image build and must be part of the build context or made available in a local HTTP server. See [Build with local HTTP server](#build-with-local-http-server) below. When providing a local HTTP server to download the required software during image build will lead into smaller images, since the software will not be part of an intermediate intermediate container. The procedure was briefly described in the blog post [Smaller Oracle Docker images](http://www.oradba.ch/2018/03/smaller-oracle-docker-images/).
@@ -75,7 +75,7 @@ The following software is required for the Oracle Unified Directory Docker image
 
 The software can either be downloaded from [My Oracle Support (MOS)](https://support.oracle.com), [Oracle Technology Network (OTN)](http://www.oracle.com/technetwork/index.html) or [Oracle Software Delivery Cloud (OSDC)](http://edelivery.oracle.com). The following links refer to the MOS software download to simplify the build process.
 
-The corresponding links and checksum can be found in `*.download` files in the `software` folder. Alternatively the Oracle Support Download Links:
+The corresponding links and checksum can be found in `*.download` files. Alternatively the Oracle Support Download Links:
 * Oracle Unified Directory 12.2.1.3.0 [Patch 26270957](https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=26270957) or [direct](https://updates.oracle.com/Orion/Services/download/p26270957_122130_Generic.zip?aru=21504981&patch_file=p26270957_122130_Generic.zip)
 
 ### Build using COPY
@@ -144,7 +144,7 @@ Run your Oracle Unified Directory Docker image use the **docker run** command as
     -e OUD_INSTANCE=<your oud instance name> \
     --volume [<host mount point>:]/u01 \
     --volume [<host mount point>:]/u01/scripts \
-    oehrlis/oud
+    oracle/oud:12.2.1.3.0
 
     Parameters:
     --name:           The name of the container (default: auto generated)
