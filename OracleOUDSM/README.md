@@ -33,12 +33,6 @@ ORACLE_BASE          | ```$ORACLE_ROOT/app/oracle```             | docker build 
 n/a                  | ```$ORACLE_BASE/product```                | no           | Oracle product base directory
 ORACLE_HOME_NAME     | ```fmw12.2.1.3.0```                       | no           | Name of the Oracle Home, used to create to PATH to ORACLE_HOME eg. *$ORACLE_BASE/product/$ORACLE_HOME_NAME*
 ORACLE_DATA          | ```/u01```                                | docker build | Root directory for the persistent data eg. OUD instances, etc. A docker volumes must be defined for */u01*
-
-* **ADMIN_USER**  Weblogic admin user name (default *weblogic*)
-* **CREATE_DOMAIN** Flag to create OUDS instance on first startup (default *TRUE*)
-* **DOMAIN_HOME** Domain home path (default */u01/domains/oudsm_domain*)
-* **DOMAIN_NAME** OUDSM
-
 OUDSM_DOMAIN_BASE    | ```$ORACLE_DATA/domains```                | no           | Base directory for OUDSM Domain
 DOMAIN_NAME          | ```oudsm_domain```                        | docker run   | Default name for OUDSM domain
 DOMAIN_HOME          | ```${OUDSM_DOMAIN_BASE}/${DOMAIN_NAME}``` | docker run   |
