@@ -88,41 +88,44 @@ The corresponding links and checksum can be found in `*.download` files. Alterna
 Simplest method to build the OUDSM image is to manually download the required software and put it into the build folder respectively context. However this will lead to bigger Docker images, since the software is copied during build, which temporary blow up the container file-system.
 
 Copy all files to the `OracleOUDSM/12.2.1.3.0` folder.
-
-        cp p26270957_122130_Generic.zip OracleOUDSM/12.2.1.3.0
-        cp p27438258_122130_Generic.zip OracleOUDSM/12.2.1.3.0
-        cp p26270957_122130_Generic.zip OracleOUDSM/12.2.1.3.0
-
+```
+cp p26270957_122130_Generic.zip OracleOUDSM/12.2.1.3.0
+cp p27438258_122130_Generic.zip OracleOUDSM/12.2.1.3.0
+cp p26270957_122130_Generic.zip OracleOUDSM/12.2.1.3.0
+```
 Build the docker image using `docker build`.
-
-        cd OracleOUDSM/12.2.1.3.0
-        docker build -t oracle/oudsm:12.2.1.3.0 .
-
+```
+cd OracleOUDSM/12.2.1.3.0
+docker build -t oracle/oudsm:12.2.1.3.0 .
+```
 ### Build with local HTTP server
-Alternatively the software can also be downloaded from a local HTTP server during build. For this a Docker image for an HTTP server is required eg. official Apache HTTP server Docker image based on alpine. 
+Alternatively the software can also be downloaded from a local HTTP server during build. For this a Docker image for an HTTP server is required eg. official Apache HTTP server Docker image based on alpine.
 
 Start a local HTTP server. httpd:alpine will be pulled from Docker Hub:
-
-        docker run -dit --hostname orarepo --name orarepo \
-            -p 8080:80 \
-            -v /Data/vm/docker/volumes/orarepo:/usr/local/apache2/htdocs/ \
-            httpd:alpine
+```
+docker run -dit --hostname orarepo --name orarepo \
+    -p 8080:80 \
+    -v /Data/vm/docker/volumes/orarepo:/usr/local/apache2/htdocs/ \
+    httpd:alpine
+```
 
 Make sure, that the software is not copied to the volume folder not in the build context any more:
-
-        cd OracleOUDSM/12.2.1.3.0
-        cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo
-        cp p27438258_122130_Generic.zip /Data/vm/docker/volumes/orarepo
-        cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo 
-        rm p26270957_122130_Generic.zip p27438258_122130_Generic.zip p26270957_122130_Generic.zip
-
+```
+cd OracleOUDSM/12.2.1.3.0
+cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo
+cp p27438258_122130_Generic.zip /Data/vm/docker/volumes/orarepo
+cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo
+rm p26270957_122130_Generic.zip p27438258_122130_Generic.zip p26270957_122130_Generic.zip
+```
 Get the IP address of the local HTTP server:
-
-        orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
-
+```
+orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
+```
 Build the docker image using `docker build` and provide the HTTP server.
 
-        docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.0 .
+```
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.0 .
+```
 
 The _RUN_ command in the Dockerfile will check if the software is part of the build context. If not, it will use the host _orarepo_ to download the software. This way the OUDSM Docker image will be about 400MB smaller.
 
@@ -141,23 +144,24 @@ The creation of the OUDSM domain can be influenced by the following environment 
 * **DOMAIN_NAME** OUDSM weblogic domain name (default *oudsm_domain*)
 
 Run your Oracle Unified Directory Docker image use the **docker run** command as follows:
+```
+docker run --name oudsm <container name> \
+--hostname <container hostname> \
+-p 7001:7001 -p 7002:7002 \
+-e <Variables>=<values> \
+--volume [<host mount point>:]/u01 \
+oracle/oudsm:12.2.1.3.0
 
-    docker run --name oudsm <container name> \
-    --hostname <container hostname> \
-    -p 7001:7001 -p 7002:7002 \
-    -e <Variables>=<values> \
-    --volume [<host mount point>:]/u01 \
-    oracle/oudsm:12.2.1.3.0
-
-    Parameters:
-    --name:           The name of the container (default: auto generated)
-    -p:               The port mapping of the host port to the container port.
-                      for ports are exposed: 7001 (WLS Console), 7002 (WLS Console SSL)
-    -e <Variables>    Other environment variable according "Environment Variable and Directories"
-    -v /u01
-                      The data volume to use for the OUD instance.
-                      Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
-                      If omitted the OUD instance will not be persisted over container recreation.
+Parameters:
+--name:           The name of the container (default: auto generated)
+-p:               The port mapping of the host port to the container port.
+                  for ports are exposed: 7001 (WLS Console), 7002 (WLS Console SSL)
+-e <Variables>    Other environment variable according "Environment Variable and Directories"
+-v /u01
+                  The data volume to use for the OUD instance.
+                  Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
+                  If omitted the OUD instance will not be persisted over container recreation.
+```
 
 There are two ports that are exposed in this image:
 * 7001 which is the regular LDAP port to connect to the OUD instance.
@@ -166,7 +170,9 @@ There are two ports that are exposed in this image:
 On the first startup of the container a random password will be generated for the OUDSM domain if not provided. You can find this password in the output line:
 If you need to find the passwords at a later time, grep for "password" in the Docker logs generated during the startup of the container. To look at the Docker Container logs run:
 
-    docker logs --details oudsm|grep -i password
+```
+docker logs --details oudsm|grep -i password
+```
 
 ## Frequently asked questions
 Please see [FAQ.md](./FAQ.md) for frequently asked questions.
