@@ -82,12 +82,14 @@ The corresponding links and checksum can be found in `*.download` files. Alterna
 Simplest method to build the OUDSM image is to manually download the required software and put it into the build folder respectively context. However this will lead to bigger Docker images, since the software is copied during build, which temporary blow up the container file-system.
 
 Copy all files to the `OracleOUDSM/12.2.1.3.0` folder.
+
 ```
 cp p26270957_122130_Generic.zip OracleOUDSM/12.2.1.3.0
 cp p27438258_122130_Generic.zip OracleOUDSM/12.2.1.3.0
 cp p26270957_122130_Generic.zip OracleOUDSM/12.2.1.3.0
 ```
 Build the docker image using `docker build`.
+
 ```
 cd OracleOUDSM/12.2.1.3.0
 docker build -t oracle/oudsm:12.2.1.3.0 .
@@ -96,6 +98,7 @@ docker build -t oracle/oudsm:12.2.1.3.0 .
 Alternatively the software can also be downloaded from a local HTTP server during build. For this a Docker image for an HTTP server is required eg. official Apache HTTP server Docker image based on alpine.
 
 Start a local HTTP server. httpd:alpine will be pulled from Docker Hub:
+
 ```
 docker run -dit --hostname orarepo --name orarepo \
     -p 8080:80 \
@@ -103,7 +106,8 @@ docker run -dit --hostname orarepo --name orarepo \
     httpd:alpine
 ```
 
-Make sure, that the software is not copied to the volume folder not in the build context any more:
+Make sure, that the software is know copied to the volume folder not part of the build context any more:
+
 ```
 cd OracleOUDSM/12.2.1.3.0
 cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo
@@ -112,6 +116,7 @@ cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo
 rm p26270957_122130_Generic.zip p27438258_122130_Generic.zip p26270957_122130_Generic.zip
 ```
 Get the IP address of the local HTTP server:
+
 ```
 orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
 ```
@@ -138,6 +143,7 @@ The creation of the OUDSM domain can be influenced by the following environment 
 * **DOMAIN_NAME** OUDSM weblogic domain name (default *oudsm_domain*)
 
 Run your Oracle Unified Directory Docker image use the **docker run** command as follows:
+
 ```
 docker run --name oudsm <container name> \
 --hostname <container hostname> \

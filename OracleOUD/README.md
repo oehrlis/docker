@@ -83,36 +83,46 @@ Simplest method to build the OUD image is to manually download the required soft
 
 Copy all files to the `OracleOUD/12.2.1.3.0` folder.
 
-        cp p26270957_122130_Generic.zip OracleOUD/12.2.1.3.0
+```
+cp p26270957_122130_Generic.zip OracleOUD/12.2.1.3.0
+```
 
 Build the docker image using `docker build`.
 
-        cd OracleOUD/12.2.1.3.0
-        docker build -t oracle/oud:12.2.1.3.0 .
+```
+cd OracleOUD/12.2.1.3.0
+docker build -t oracle/oud:12.2.1.3.0 .
+```
 
 ### Build with local HTTP server
 Alternatively the software can also be downloaded from a local HTTP server during build. For this a Docker image for an HTTP server is required eg. official Apache HTTP server Docker image based on alpine. 
 
 Start a local HTTP server. httpd:alpine will be pulled from Docker Hub:
 
-        docker run -dit --hostname orarepo --name orarepo \
-            -p 8080:80 \
-            -v /Data/vm/docker/volumes/orarepo:/usr/local/apache2/htdocs/ \
-            httpd:alpine
+```
+docker run -dit --hostname orarepo --name orarepo \
+    -p 8080:80 \
+    -v /Data/vm/docker/volumes/orarepo:/usr/local/apache2/htdocs/ \
+    httpd:alpine
+```
+Make sure, that the software is know copied to the volume folder not part of the build context any more:
 
-Make sure, that the software is not copied to the volume folder not in the build context any more:
-
-        cd OracleOUD/12.2.1.3.0
-        cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo
-        rm p26270957_122130_Generic.zip
+```
+cd OracleOUD/12.2.1.3.0
+cp p26270957_122130_Generic.zip /Data/vm/docker/volumes/orarepo
+rm p26270957_122130_Generic.zip
+```
 
 Get the IP address of the local HTTP server:
 
-        orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
-
+```
+orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
+```
 Build the docker image using `docker build` and provide the HTTP server.
 
-        docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.0 .
+```
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.0 .
+```
 
 The _RUN_ command in the Dockerfile will check if the software is part of the build context. If not, it will use the host _orarepo_ to download the software. This way the OUD Docker image will be about 400MB smaller.
 
@@ -138,27 +148,29 @@ The creation of the OUD instance can be influenced by the following environment 
 
 Run your Oracle Unified Directory Docker image use the **docker run** command as follows:
 
-    docker run --name oud <container name> \
-    --hostname <container hostname> \
-    -p 1389:1389 -p 1636:1636 -p 4444:4444 \
-    -e OUD_INSTANCE=<your oud instance name> \
-    --volume [<host mount point>:]/u01 \
-    --volume [<host mount point>:]/u01/scripts \
-    oracle/oud:12.2.1.3.0
+```
+docker run --name oud <container name> \
+--hostname <container hostname> \
+-p 1389:1389 -p 1636:1636 -p 4444:4444 \
+-e OUD_INSTANCE=<your oud instance name> \
+--volume [<host mount point>:]/u01 \
+--volume [<host mount point>:]/u01/scripts \
+oracle/oud:12.2.1.3.0
 
-    Parameters:
-    --name:           The name of the container (default: auto generated)
-    -p:               The port mapping of the host port to the container port.
-                      for ports are exposed: 1389 (LDAP), 1636 (LDAPS), 4444 (Admin Port), 8989 (Replication Port)
-    -e OUD_INSTANCE:  The Oracle Database SYS, SYSTEM and PDB_ADMIN password (default: auto generated)
-    -e <Variables>    Other environment variable according "Environment Variable and Directories"
-    -v /u01
-                      The data volume to use for the OUD instance.
-                      Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
-                      If omitted the OUD instance will not be persisted over container recreation.
-    -v /u01/app/oracle/scripts | /docker-entrypoint-initdb.d
-                      Optional: A volume with custom scripts to be run after OUD instance setup.
-                      For further details see the "Running scripts after setup" section below.
+Parameters:
+--name:           The name of the container (default: auto generated)
+-p:               The port mapping of the host port to the container port.
+                  for ports are exposed: 1389 (LDAP), 1636 (LDAPS), 4444 (Admin Port), 8989 (Replication Port)
+-e OUD_INSTANCE:  The Oracle Database SYS, SYSTEM and PDB_ADMIN password (default: auto generated)
+-e <Variables>    Other environment variable according "Environment Variable and Directories"
+-v /u01
+                  The data volume to use for the OUD instance.
+                  Has to be writable by the Unix "oracle" (uid: 1000) user inside the container!
+                  If omitted the OUD instance will not be persisted over container recreation.
+-v /u01/app/oracle/scripts | /docker-entrypoint-initdb.d
+                  Optional: A volume with custom scripts to be run after OUD instance setup.
+                  For further details see the "Running scripts after setup" section below.
+```
 
 There are four ports that are exposed in this image:
 * 1389 which is the regular LDAP port to connect to the OUD instance.
@@ -168,17 +180,23 @@ There are four ports that are exposed in this image:
 
 On the first startup of the container a random password will be generated for the OUD instance if not provided. You can find this password in the output line. If you need to find the passwords at a later time, grep for "password" in the Docker logs generated during the startup of the container. To look at the Docker Container logs run:
 
-    docker logs --details oud|grep -i password
+```
+docker logs --details oud|grep -i password
+```
 
 #### Running Bash in a Docker container
 Access your OUD container via bash.
-    docker exec -u oracle -it oud bash --login
+
+```
+docker exec -u oracle -it oud bash --login
+```
 
 #### Running dsconfig in a Docker container
 Execute `dsconfig` within the OUD container.
 
-    docker exec -u oracle -it oud dsconfig
-
+```
+docker exec -u oracle -it oud dsconfig
+```
 #### Running scripts after setup
 The OUD Docker image can be configured to run scripts after setup. Currently `sh`, `ldif` and `conf` extensions are supported. For post-setup scripts just create a folder `scripts/setup` in generic volume `/u01`, mount a dedicated volume `/u01/scripts/setup` or extend the image to include scripts in this directory. The location is also represented under the symbolic link `/docker-entrypoint-initdb.d`. This is done to provide synergy with other Docker images. The user is free to decide whether he wants to put his setup scripts under `/u01/scripts/setup` or `/docker-entrypoint-initdb.d`.
 
