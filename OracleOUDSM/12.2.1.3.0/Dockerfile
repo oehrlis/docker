@@ -84,7 +84,7 @@ RUN groupadd --gid 1000 oracle && \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    yum install -y libaio && \
+    yum install -y libaio unzip zip gzip tar procps-ng  && \
     rm -rf /var/cache/yum
 
 # copy all setup scripts to DOCKER_BIN

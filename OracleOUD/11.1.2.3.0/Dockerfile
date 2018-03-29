@@ -37,7 +37,7 @@ ENV DOWNLOAD="/tmp/download" \
     START_SCRIPT="start_oud_instance.sh" \
     CHECK_SCRIPT="check_oud_instance.sh" \
     USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
-    ORACLE_HOME_NAME="fmw12.2.1.3.0" \
+    ORACLE_HOME_NAME="fmw11.1.2.3.0" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01} \
     OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
@@ -45,8 +45,9 @@ ENV DOWNLOAD="/tmp/download" \
     PORT_SSL=${PORT_SSL:-1636} \
     PORT_REP=${PORT_REP:-8989} \
     PORT_ADMIN=${PORT_ADMIN:-4444} \
-    FMW_OUD_PKG=p26270957_122130_Generic.zip \
-    FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar
+    FMW_OUD_OTN=ofm_oud_generic_11.1.2.3.0_disk1_1of1.zip \
+    OUD_PSU=p26540481_111230_Generic.zip \
+    OUD_PSU_ID=26540481
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
@@ -78,14 +79,14 @@ RUN groupadd --gid 1000 oracle && \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    yum install -y libaio unzip zip gzip tar procps-ng && \
+    yum install -y libaio unzip zip gzip tar procps-ng util-linux && \
     rm -rf /var/cache/yum
 
 # copy all setup scripts to DOCKER_BIN
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 
 # COPY oud/software and response files
-COPY ${FMW_OUD_PKG}* install.rsp oraInst.loc "${DOWNLOAD}/"
+COPY ${FMW_OUD_OTN}* install.rsp oraInst.loc "${DOWNLOAD}/"
 
 # Switch to user oracle, oracle software as to be installed with regular user
 USER oracle
@@ -98,25 +99,27 @@ USER oracle
 # - clean up and remove unused stuff
 # -----------------------------------------------------------------  
 RUN cd ${DOWNLOAD} && \
-    [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ] || \
-    curl -f http://orarepo/${FMW_OUD_PKG} -o ${DOWNLOAD}/${FMW_OUD_PKG} && \
-    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${FMW_OUD_PKG} && \
-    $JAVA_HOME/bin/java -jar ${DOWNLOAD}/$FMW_OUD_JAR -silent \
-        -responseFile ${DOWNLOAD}/install.rsp \
-        -invPtrLoc ${DOWNLOAD}/oraInst.loc \
+    [ -s "${DOWNLOAD}/${FMW_OUD_OTN}" ] || \
+    curl -f http://orarepo/${FMW_OUD_OTN} -o ${DOWNLOAD}/${FMW_OUD_OTN} && \
+    unzip ${DOWNLOAD}/${FMW_OUD_OTN} && \
+    ${DOWNLOAD}/Disk1/runInstaller -silent \
+        -jreLoc $JAVA_HOME \
+        -waitforcompletion \
         -ignoreSysPrereqs -force \
-        -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} && \
-    rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} \
-        ${DOWNLOAD}/${FMW_OUD_JAR} \
-        /tmp/OraInstall*
-
-RUN OUDBASE_PKG="oudbase_install.sh" && \
-    OUDBASE_URL="https://github.com/oehrlis/oudbase/raw/master/build/oudbase_install.sh" && \
-    [ -s "${DOWNLOAD}/${OUDBASE_PKG}" ] || \
-    curl -f --cookie-jar ${DOWNLOAD}/cookie-jar.txt \
-    --location-trusted ${OUDBASE_URL} -o ${DOWNLOAD}/${OUDBASE_PKG} && \
-    chmod 755 ${DOWNLOAD}/${OUDBASE_PKG} && \
-    ${DOWNLOAD}/${OUDBASE_PKG} -va -b ${ORACLE_BASE} -m ${ORACLE_HOME} -d ${ORACLE_DATA}
+        -response ${DOWNLOAD}/install.rsp \
+        -invPtrLoc ${DOWNLOAD}/oraInst.loc \
+        ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} && \
+    [ -s "${DOWNLOAD}/${OUD_PSU}" ] || \
+    curl -f http://orarepo/${OUD_PSU} -o ${DOWNLOAD}/${OUD_PSU} && \
+    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${OUD_PSU} && \
+    cd ${DOWNLOAD}/${OUD_PSU_ID} && \
+    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
+    rm -rf /tmp/OraInstall* \
+        ${DOWNLOAD}/${FMW_OUD_OTN} \
+        ${DOWNLOAD}/Disk1 \
+        ${DOWNLOAD}/${OUD_PSU} \
+        ${DOWNLOAD}/${OUD_PSU_ID} \
+        ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/.patch_storage
 
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} ${PORT_REP} ${PORT_ADMIN}
