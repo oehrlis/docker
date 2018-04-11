@@ -135,8 +135,13 @@ RUN cd ${DOWNLOAD} && \
         -ignoreSysPrereqs -force \
         -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}  \
         INSTALL_TYPE="Collocated Oracle Unified Directory Server (Managed through WebLogic server)" && \
-    rm -rf /tmp/OraInstall*\
-        ${DOWNLOAD}
+    rm -rf /tmp/OraInstall* \
+        ${DOWNLOAD}/${FMW_PKG} \
+        ${DOWNLOAD}/${FMW_JAR} \
+        ${DOWNLOAD}/${WLS_PKG} \
+        ${DOWNLOAD}/${WLS_PSU} \
+        ${DOWNLOAD}/${FMW_OUD_PKG} \
+        ${DOWNLOAD}/${FMW_OUD_JAR}
 
 # get the latest OUD base from GitHub and install it
 RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
