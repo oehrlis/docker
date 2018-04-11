@@ -2,6 +2,7 @@
 **/*.jar
 **/*.zip
 **/*.tar.gz
+**/*.tgz
 **/*.netrc
 **/*.DS_Store
 .idea/

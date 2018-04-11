@@ -29,10 +29,12 @@ LABEL maintainer="stefan.oehrli@trivadis.com"
 ARG ORACLE_ROOT
 ARG ORACLE_DATA
 ARG ORACLE_BASE
+ARG ORAREPO
 
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
-ENV DOWNLOAD="/tmp/download" \
+ENV ORAREPO=${ORAREPO:-orarepo} \
+    DOWNLOAD="/tmp/download" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
     START_SCRIPT="start_oud_instance.sh" \
     CHECK_SCRIPT="check_oud_instance.sh" \
@@ -119,7 +121,11 @@ RUN cd ${DOWNLOAD} && \
         ${DOWNLOAD}/Disk1 \
         ${DOWNLOAD}/${OUD_PSU} \
         ${DOWNLOAD}/${OUD_PSU_ID} \
+        /tmp/OraInstall* \
         ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/.patch_storage
+
+# get the latest OUD base from GitHub and install it
+RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
 
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} ${PORT_REP} ${PORT_ADMIN}

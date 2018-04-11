@@ -30,10 +30,12 @@ LABEL maintainer="stefan.oehrli@trivadis.com"
 ARG ORACLE_ROOT
 ARG ORACLE_DATA
 ARG ORACLE_BASE
+ARG ORAREPO
 
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
-ENV DOWNLOAD="/tmp/download" \
+ENV ORAREPO=${ORAREPO:-orarepo} \
+    DOWNLOAD="/tmp/download" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
     START_SCRIPT="start_oudsm_domain.sh" \
     CHECK_SCRIPT="check_oudsm_domain.sh" \
@@ -135,6 +137,9 @@ RUN cd ${DOWNLOAD} && \
         INSTALL_TYPE="Collocated Oracle Unified Directory Server (Managed through WebLogic server)" && \
     rm -rf /tmp/OraInstall*\
         ${DOWNLOAD}
+
+# get the latest OUD base from GitHub and install it
+RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
 
 # expose the OUDSM http and https ports
 EXPOSE ${PORT} ${PORT_SSL}

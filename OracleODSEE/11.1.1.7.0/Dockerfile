@@ -29,10 +29,12 @@ LABEL maintainer="stefan.oehrli@trivadis.com"
 ARG ORACLE_ROOT
 ARG ORACLE_DATA
 ARG ORACLE_BASE
+ARG ORAREPO
 
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
-ENV DOWNLOAD="/tmp/download" \
+ENV ORAREPO=${ORAREPO:-orarepo} \
+    DOWNLOAD="/tmp/download" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
     START_SCRIPT="start_odsee_instance.sh" \
     CHECK_SCRIPT="check_odsee_instance.sh" \
@@ -111,6 +113,9 @@ RUN cd ${DOWNLOAD} && \
         ${DOWNLOAD}/${FMW_ODSEE} \
         ${DOWNLOAD}/readme.html \
         ${DOWNLOAD}/idsktune
+
+# get the latest OUD base from GitHub and install it
+RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
 
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} 

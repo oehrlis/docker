@@ -66,7 +66,7 @@ ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_H
 # - create softlink for the OUD setup scripts
 # - install libaia
 # - remove yum cache
-# -----------------------------------------------------------------
+# -----------------------------------------------------------------  
 RUN groupadd --gid 1000 oracle && \
     groupadd --gid 1010 oinstall && \
     useradd --create-home --gid oracle --groups oracle,oinstall \
@@ -78,7 +78,7 @@ RUN groupadd --gid 1000 oracle && \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    yum install -y libaio && \
+    yum install -y libaio unzip zip gzip tar procps-ng && \
     rm -rf /var/cache/yum
 
 # copy all setup scripts to DOCKER_BIN
@@ -96,9 +96,10 @@ USER oracle
 # - unpack software using jar
 # - silent install of OUD
 # - clean up and remove unused stuff
-RUN [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ] || \
+# -----------------------------------------------------------------  
+RUN cd ${DOWNLOAD} && \
+    [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ] || \
     curl -f http://orarepo/${FMW_OUD_PKG} -o ${DOWNLOAD}/${FMW_OUD_PKG} && \
-    cd ${DOWNLOAD} && \
     $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${FMW_OUD_PKG} && \
     $JAVA_HOME/bin/java -jar ${DOWNLOAD}/$FMW_OUD_JAR -silent \
         -responseFile ${DOWNLOAD}/install.rsp \
@@ -116,6 +117,9 @@ RUN [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ] || \
         ${ORACLE_HOME}/em \
         ${ORACLE_HOME}/wlserver \
         ${ORACLE_HOME}/root.sh
+
+# get the latest OUD base from GitHub and install it
+RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
 
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} ${PORT_REP} ${PORT_ADMIN}

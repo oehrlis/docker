@@ -142,6 +142,9 @@ RUN cd ${DOWNLOAD} && \
         ${ORACLE_HOME}/em \
         ${ORACLE_HOME}/root.sh
 
+# get the latest OUD base from GitHub and install it
+RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
+        
 # expose the OUDSM http and https ports
 EXPOSE ${PORT} ${PORT_SSL}
 

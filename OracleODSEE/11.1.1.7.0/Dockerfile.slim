@@ -83,6 +83,9 @@ RUN groupadd --gid 1000 oracle && \
     yum install -y unzip zip gzip tar procps-ng libstdc++.i686 glibc.i686 zlib.i686 && \
     rm -rf /var/cache/yum
 
+# get the latest OUD base from GitHub and install it
+RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
+
 # copy all setup scripts to DOCKER_BIN
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 

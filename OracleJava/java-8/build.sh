@@ -62,7 +62,7 @@ elif [ -f "${DOCKER_BUILD_DIR}/.netrc" ]; then
         --location-trusted ${JAVA_URL} -o ${JAVA_PKG} && unzip -o ${JAVA_PKG}
     rm -f cookie-jar.txt
 else
-    echo "Missing Server JRE 8u${JAVA_UPDATE} package. "
+    echo "Missing Server JRE 8u${JAVA_UPDATE} package."
     echo "Fallback to ${JAVA_PKG} or MOS download failed"
     echo "Can not build docker image ${DOCKER_REPOSITORY}/${DOCKER_IMAGE_NAME}"
     exit 1
