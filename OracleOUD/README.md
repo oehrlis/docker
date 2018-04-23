@@ -95,7 +95,7 @@ docker build -t oracle/oud:12.2.1.3.0 .
 ```
 
 ### Build with local HTTP server
-Alternatively the software can also be downloaded from a local HTTP server during build. For this a Docker image for an HTTP server is required eg. official Apache HTTP server Docker image based on alpine. 
+Alternatively the software can also be downloaded from a local HTTP server during build. For this a Docker image for an HTTP server is required eg. official Apache HTTP server Docker image based on alpine. See also [Smaller Oracle Docker images](http://www.oradba.ch/2018/03/smaller-oracle-docker-images/).
 
 Start a local HTTP server. httpd:alpine will be pulled from Docker Hub:
 
