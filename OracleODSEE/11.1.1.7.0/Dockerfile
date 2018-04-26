@@ -81,7 +81,7 @@ RUN groupadd --gid 1000 oracle && \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
     echo "%_install_langs   en" >/etc/rpm/macros.lang && \
-    yum install -y unzip zip gzip tar procps-ng \
+    yum install -y unzip zip gzip tar \
         libstdc++.x86_64 libstdc++.i686 \
         glibc.i686 zlib.i686 && \
     rm -rf /var/cache/yum

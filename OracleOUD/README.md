@@ -12,7 +12,9 @@ docker tag store/oracle/serverjre:8 oracle/serverjre:8
 
 They base image has been extended with the following Linux packages and configuration:
 * Install the following additional packages including there dependencies:
-    - *libaio* Linux-native asynchronous I/O access library
+    * *libaio* Linux-native asynchronous I/O access library
+    * *tar* A GNU file archiving program
+    * *gzip* The GNU data compression program
 * Operating system user *oracle* (uid 1000)
 * Dedicated groups for user *oracle*, oracle (gid 1000), oinstall (gid 1010)
 * ~~[OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)~~
@@ -125,6 +127,24 @@ docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.0 .
 ```
 
 The _RUN_ command in the Dockerfile will check if the software is part of the build context. If not, it will use the host _orarepo_ to download the software. This way the OUD Docker image will be about 400MB smaller.
+
+### Build old OUD Images
+
+Dockerfiles for older patch releases are as well part of the GitHub repository. eg. with the *Dockerfile.12.2.1.3.0* one can build the base release OUD 12.2.1.3.0. If a dedicate Dockerfile should be use, it has to be specified with -f.
+
+```
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.0 -f Dockerfile.12.2.1.3.0 .
+```
+
+Non-exhaustive overview of docker files
+
+| Dockerfile                                                                                                                  | Version    | Patch Release         |
+|-----------------------------------------------------------------------------------------------------------------------------|------------|-----------------------|
+| [Dockerfile](https://github.com/oehrlis/docker/blob/master/OracleOUD/11.1.2.3.0/Dockerfile)                                 | 11.1.2.3.0 | latest PSU            |
+| [Dockerfile.11.1.2.3.180116](https://github.com/oehrlis/docker/blob/master/OracleOUD/11.1.2.3.0/Dockerfile.11.1.2.3.180116) | 11.1.2.3.0 | PSU 180116            |
+| [Dockerfile.11.1.2.3.0](https://github.com/oehrlis/docker/blob/master/OracleOUD/11.1.2.3.0/Dockerfile.11.1.2.3.0)           | 11.1.2.3.0 | base release / no PSU |
+| [Dockerfile](https://github.com/oehrlis/docker/blob/master/OracleOUD/12.2.1.3.0/Dockerfile)                                 | 12.2.1.3.0 | latest PSU            |
+| [Dockerfile.12.2.1.3.0](https://github.com/oehrlis/docker/blob/master/OracleOUD/12.2.1.3.0/Dockerfile.12.2.1.3.0)           | 12.2.1.3.0 | base release / no PSU |
 
 ## Running the Docker Images
 ### Setup an Oracle Unified Directory Container

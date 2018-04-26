@@ -48,7 +48,9 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     PORT_REP=${PORT_REP:-8989} \
     PORT_ADMIN=${PORT_ADMIN:-4444} \
     FMW_OUD_PKG=p26270957_122130_Generic.zip \
-    FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar
+    FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar \
+    OUD_PSU=p27742743_122130_Generic.zip \
+    OUD_PSU_ID=27742743
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
@@ -66,7 +68,7 @@ ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_H
 # - create user oracle
 # - setup subdirectory to install OUDpackage and container-scripts
 # - create softlink for the OUD setup scripts
-# - install libaia
+# - install libaio
 # - remove yum cache
 # -----------------------------------------------------------------  
 RUN groupadd --gid 1000 oracle && \
@@ -80,7 +82,8 @@ RUN groupadd --gid 1000 oracle && \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    yum install -y libaio unzip zip gzip tar procps-ng && \
+    echo "%_install_langs   en" >/etc/rpm/macros.lang && \
+    yum install -y libaio gzip tar && \
     rm -rf /var/cache/yum
 
 # copy all setup scripts to DOCKER_BIN
@@ -108,8 +111,16 @@ RUN cd ${DOWNLOAD} && \
         -invPtrLoc ${DOWNLOAD}/oraInst.loc \
         -ignoreSysPrereqs -force \
         -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} && \
+    [ -s "${DOWNLOAD}/${OUD_PSU}" ] || \
+    curl -f http://orarepo/${OUD_PSU} -o ${DOWNLOAD}/${OUD_PSU} && \
+    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${OUD_PSU} && \
+    cd ${DOWNLOAD}/${OUD_PSU_ID} && \
+    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
     rm -rf ${DOWNLOAD}/${FMW_OUD_PKG} \
         ${DOWNLOAD}/${FMW_OUD_JAR} \
+        ${DOWNLOAD}/${OUD_PSU} \
+        ${DOWNLOAD}/${OUD_PSU_ID} \
+        ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/.patch_storage \
         /tmp/OraInstall*
 
 # get the latest OUD base from GitHub and install it

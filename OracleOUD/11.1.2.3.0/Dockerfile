@@ -8,7 +8,7 @@
 # Date.......: 2018.03.19
 # Revision...: 1.0
 # Purpose....: This Dockerfile is to build Oracle Unifid Directory
-# Notes......: --
+# Notes......: Build OUD 11.1.2.3.0 with PSU 180116 (26540481)
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as 
 #              shown at http://oss.oracle.com/licenses/upl.
@@ -67,7 +67,7 @@ ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_H
 # - create user oracle
 # - setup subdirectory to install OUDpackage and container-scripts
 # - create softlink for the OUD setup scripts
-# - install libaia
+# - install libaio
 # - remove yum cache
 # -----------------------------------------------------------------  
 RUN groupadd --gid 1000 oracle && \
@@ -81,7 +81,8 @@ RUN groupadd --gid 1000 oracle && \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    yum install -y libaio unzip zip gzip tar procps-ng util-linux && \
+    echo "%_install_langs   en" >/etc/rpm/macros.lang && \
+    yum install -y libaio zip unzip gzip tar && \
     rm -rf /var/cache/yum
 
 # copy all setup scripts to DOCKER_BIN

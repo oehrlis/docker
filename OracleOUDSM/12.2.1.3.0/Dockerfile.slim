@@ -84,6 +84,7 @@ RUN groupadd --gid 1000 oracle && \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
+    echo "%_install_langs   en" >/etc/rpm/macros.lang && \
     yum install -y libaio && \
     rm -rf /var/cache/yum
 

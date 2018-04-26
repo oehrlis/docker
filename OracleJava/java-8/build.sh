@@ -22,21 +22,27 @@
 # -----------------------------------------------------------------------------
 
 # - Customization -----------------------------------------------------------
-# copy past the latest java download url
-JAVA_URL="https://updates.oracle.com/Orion/Services/download/p27217289_180162_Linux-x86-64.zip?aru=21855272&patch_file=p27217289_180162_Linux-x86-64.zip"
 DOCKER_REPOSITORY="oracle"
-DOCKER_IMAGE_NAME="serverjre:8"
+DOCKER_MAJOR_IMAGE_NAME="serverjre:8"
 # - End of Customization ----------------------------------------------------
 
 # - Default Values ----------------------------------------------------------
 DOCKERFILE="$(dirname $0)/Dockerfile"
 DOCKER_BUILD_DIR="$(cd $(dirname $0) 2>&1 >/dev/null; pwd -P)"
+# get the latest download file
+DOWNLOAD=$(find ${DOCKER_BUILD_DIR} -name "*_Linux-x86-64.zip.download"|sort|tail -1)
+# get the download URL from file
+JAVA_URL=$(grep -i "# Direct Download" ./p27412890_180172_Linux-x86-64.zip.download|cut -d' ' -f7)
 # get java package name from download url
 JAVA_PKG=${JAVA_URL#*patch_file=}
+# get java version from java package name
+JAVA_UPDATE=$(echo $JAVA_PKG|sed 's/.*[0-9]\{3\}\([0-9]\{3\}\)_.*/\1/')
 # get java update from java package name
-JAVA_UPDATE=$(echo $JAVA_PKG|sed 's/.*180\([0-9]\{3\}\)_.*/\1/')
+JAVA_VERSION=$(echo $JAVA_PKG|sed 's/.*\([0-9]\)\([0-9]\)\([0-9]\)[0-9]\{3\}_.*/\1\.\2\.\3/')
 # define server jre package name 
 SERVER_JRE_PACKAGE="server-jre-8u${JAVA_UPDATE}-linux-x64.tar.gz"
+# define image name based on Java version and update
+DOCKER_IMAGE_NAME="serverjre:${JAVA_VERSION}_${JAVA_UPDATE}"
 
 if [ ! -f "${DOCKERFILE}" ]; then
     echo " ERROR : Can not build ${DOCKER_IMAGE_NAME}. Please run build.sh "
@@ -46,7 +52,8 @@ fi
 echo "--------------------------------------------------------------------------------"
 echo " Build docker image ${DOCKER_REPOSITORY}/${DOCKER_IMAGE_NAME} using"
 echo " Dockerfile             : ${DOCKERFILE}"
-echo " Docker build directory : ${DOCKER_BUILD_DIR}" 
+echo " Docker build directory : ${DOCKER_BUILD_DIR}"
+echo " Java Version           : $JAVA_VERSION u$JAVA_UPDATE"
 echo "--------------------------------------------------------------------------------"
 
 # check if there is a server jre package
@@ -67,5 +74,8 @@ else
     echo "Can not build docker image ${DOCKER_REPOSITORY}/${DOCKER_IMAGE_NAME}"
     exit 1
 fi
+docker rmi ${DOCKER_REPOSITORY}/${DOCKER_MAJOR_IMAGE_NAME} 2>/dev/null||echo "No image ${DOCKER_REPOSITORY}/${DOCKER_MAJOR_IMAGE_NAME} to remove"
 
 docker build -t ${DOCKER_REPOSITORY}/${DOCKER_IMAGE_NAME} -f "${DOCKERFILE}" "${DOCKER_BUILD_DIR}"
+
+docker tag ${DOCKER_REPOSITORY}/${DOCKER_IMAGE_NAME} ${DOCKER_REPOSITORY}/${DOCKER_MAJOR_IMAGE_NAME}

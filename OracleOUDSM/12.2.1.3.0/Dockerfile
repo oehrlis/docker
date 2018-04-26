@@ -50,8 +50,10 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar \
     FMW_PKG=p26269885_122130_Generic.zip \
     FMW_JAR=fmw_12.2.1.3.0_infrastructure.jar \
-    WLS_PKG=p27438258_122130_Generic.zip \
-    WLS_PSU=27438258
+    WLS_PKG=p27342434_122130_Generic.zip \
+    WLS_PSU=27342434 \
+    OUD_PSU=p27742743_122130_Generic.zip \
+    OUD_PSU_ID=27742743
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
@@ -86,7 +88,8 @@ RUN groupadd --gid 1000 oracle && \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    yum install -y libaio unzip zip gzip tar procps-ng  && \
+    echo "%_install_langs   en" >/etc/rpm/macros.lang && \
+    yum install -y libaio unzip zip gzip tar && \
     rm -rf /var/cache/yum
 
 # copy all setup scripts to DOCKER_BIN
@@ -135,13 +138,22 @@ RUN cd ${DOWNLOAD} && \
         -ignoreSysPrereqs -force \
         -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}  \
         INSTALL_TYPE="Collocated Oracle Unified Directory Server (Managed through WebLogic server)" && \
+    [ -s "${DOWNLOAD}/${OUD_PSU}" ] || \
+    curl -f http://orarepo/${OUD_PSU} -o ${DOWNLOAD}/${OUD_PSU} && \
+    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${OUD_PSU} && \
+    cd ${DOWNLOAD}/${OUD_PSU_ID} && \
+    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
     rm -rf /tmp/OraInstall* \
         ${DOWNLOAD}/${FMW_PKG} \
         ${DOWNLOAD}/${FMW_JAR} \
         ${DOWNLOAD}/${WLS_PKG} \
         ${DOWNLOAD}/${WLS_PSU} \
+        ${DOWNLOAD}/${OUD_PSU} \
+        ${DOWNLOAD}/${OUD_PSU_ID} \
         ${DOWNLOAD}/${FMW_OUD_PKG} \
-        ${DOWNLOAD}/${FMW_OUD_JAR}
+        ${DOWNLOAD}/${FMW_OUD_JAR} \
+        ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/.patch_storage \
+        /tmp/OraInstall*
 
 # get the latest OUD base from GitHub and install it
 RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh

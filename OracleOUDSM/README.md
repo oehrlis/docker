@@ -128,6 +128,22 @@ docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.0 .
 
 The _RUN_ command in the Dockerfile will check if the software is part of the build context. If not, it will use the host _orarepo_ to download the software. This way the OUDSM Docker image will be about 400MB smaller.
 
+
+### Build old OUD Images
+
+Dockerfiles for older patch releases are as well part of the GitHub repository. eg. with the *Dockerfile.12.2.1.3.180116* one can build OUDSM with the PSU 180116 for WLS and the base release OUD 12.2.1.3.0, since there has no PSU 180116 for OUD. If a dedicate Dockerfile should be use, it has to be specified with -f.
+
+```
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.180116 -f Dockerfile.12.2.1.3.180116 .
+```
+
+Non-exhaustive overview of docker files
+
+| Dockerfile                                                                                                                    | Version    | Patch Release (WLS/OUD) |
+|-------------------------------------------------------------------------------------------------------------------------------|------------|-------------------------|
+| [Dockerfile](https://github.com/oehrlis/docker/blob/master/OracleOUDSM/12.2.1.3.0/Dockerfile)                                 | 12.2.1.3.0 | latest PSU              |
+| [Dockerfile.12.2.1.3.180116](https://github.com/oehrlis/docker/blob/master/OracleOUDSM/12.2.1.3.0/Dockerfile.12.2.1.3.180116) | 12.2.1.3.0 | PSU 180116              |
+
 ## Running the Docker Images
 ### Setup an Oracle Unified Directory Server Manager Container
 Creating a OUDSM container is straight forward with **docker run** command. The script `start_oudsm_domain.sh` will make sure, that a new OUDSM domain is created, when the container is started the first time.  The domain is created using predefined values. (see below). If an OUDSM domain already exists, the script simply starts it.
