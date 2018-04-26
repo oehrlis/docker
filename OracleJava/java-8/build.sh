@@ -27,8 +27,9 @@ DOCKER_MAJOR_IMAGE_NAME="serverjre:8"
 # - End of Customization ----------------------------------------------------
 
 # - Default Values ----------------------------------------------------------
-DOCKERFILE="$(dirname $0)/Dockerfile"
 DOCKER_BUILD_DIR="$(cd $(dirname $0) 2>&1 >/dev/null; pwd -P)"
+DOCKERFILE="$DOCKER_BUILD_DIR/Dockerfile"
+cd $DOCKER_BUILD_DIR
 # get the latest download file
 DOWNLOAD=$(find ${DOCKER_BUILD_DIR} -name "*_Linux-x86-64.zip.download"|sort|tail -1)
 # get the download URL from file

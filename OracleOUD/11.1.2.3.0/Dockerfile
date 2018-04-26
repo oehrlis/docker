@@ -67,8 +67,6 @@ ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_H
 # - create user oracle
 # - setup subdirectory to install OUDpackage and container-scripts
 # - create softlink for the OUD setup scripts
-# - install libaio
-# - remove yum cache
 # -----------------------------------------------------------------  
 RUN groupadd --gid 1000 oracle && \
     groupadd --gid 1010 oinstall && \
@@ -80,9 +78,16 @@ RUN groupadd --gid 1000 oracle && \
         ${ORACLE_DATA} \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
-    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    echo "%_install_langs   en" >/etc/rpm/macros.lang && \
-    yum install -y libaio zip unzip gzip tar && \
+    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d
+
+# Fallback if the base image does not provide libaio, tar and gzip
+# This yum command will only be executed, if one of the file is not
+# available. Otherwise it will just create the *.lang file and remove the
+# yum cache which is anyway not there.
+# -----------------------------------------------------------------  
+RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
+    [ -f /usr/bin/tar -a -f /usr/bin/gzip -a -f /lib64/libaio.so.? ] || \
+    yum install -y libaio gzip tar && \
     rm -rf /var/cache/yum
 
 # copy all setup scripts to DOCKER_BIN
@@ -104,7 +109,8 @@ USER oracle
 RUN cd ${DOWNLOAD} && \
     [ -s "${DOWNLOAD}/${FMW_OUD_OTN}" ] || \
     curl -f http://orarepo/${FMW_OUD_OTN} -o ${DOWNLOAD}/${FMW_OUD_OTN} && \
-    unzip ${DOWNLOAD}/${FMW_OUD_OTN} && \
+    $JAVA_HOME/bin/jar xvf  ${DOWNLOAD}/${FMW_OUD_OTN} && \
+    chmod -R u+x ${DOWNLOAD}/Disk1 && \
     ${DOWNLOAD}/Disk1/runInstaller -silent \
         -jreLoc $JAVA_HOME \
         -waitforcompletion \

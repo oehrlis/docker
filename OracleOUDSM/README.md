@@ -2,7 +2,7 @@
 Docker build files to facilitate installation, configuration, and environment setup for Docker DevOps users. For more information about Oracle Unified Directory please see the [Oracle Unified Directory 12.2.1.3.0 Online Documentation](https://docs.oracle.com/middleware/12213/oud/).
 
 ### Docker Images Content
-The resulting Docker images are based on the official Oracle Java image for Java 8 u162 (_oracle/serverjre:8_). It has either be build manually using the [official](https://github.com/oracle/docker-images/tree/master/OracleJava) or [my unofficial](https://github.com/oehrlis/docker/tree/master/OracleJava) Oracle Docker build scripts or pulled from [Docker Store](https://store.docker.com/images/oracle-serverjre-8). If you pull the java image from the docker store you may have to tag it to _oracle/serverjre:8_.
+The resulting Docker images are based on the official Oracle Java image for Java 8 u172 (_oracle/serverjre:8_). It has either be build manually using the [official](https://github.com/oracle/docker-images/tree/master/OracleJava) or [my unofficial](https://github.com/oehrlis/docker/tree/master/OracleJava) Oracle Docker build scripts or pulled from [Docker Store](https://store.docker.com/images/oracle-serverjre-8). If you pull the java image from the docker store you may have to tag it to _oracle/serverjre:8_.
 
 ```
 docker login
@@ -10,9 +10,11 @@ docker pull store/oracle/serverjre:8
 docker tag store/oracle/serverjre:8 oracle/serverjre:8
 ```
 
-They base image has been extended with the following Linux packages and configuration:
+They base image should provide some additional linux package for tar, gzip and libaio. If not yet available the following Linux packages and configuration:
 * Install the following additional packages including there dependencies:
-    - *libaio* Linux-native asynchronous I/O access library
+    * *libaio* Linux-native asynchronous I/O access library
+    * *tar* A GNU file archiving program
+    * *gzip* The GNU data compression program
 * Operating system user *oracle* (uid 1000)
 * Dedicated groups for user *oracle*, oracle (gid 1000), oinstall (gid 1010)
 * ~~[OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)~~

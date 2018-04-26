@@ -7,7 +7,7 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.04.11
-# Revision...:  
+# Revision...: 
 # Purpose....: Script to download and install latest version of oudbase
 # Notes......: The script does download the latest version of OUD Base from
 #              GitHub and install it in ${ORACLE_BASE}
@@ -23,7 +23,7 @@
 DOWNLOAD="/tmp/download"
 # oudbase install script
 OUDBASE_PKG="oudbase_install.sh"
-# OUD base GitHub download URL
+# OUD base GitHub download URL user latest release v1.4.3
 OUDBASE_URL=$(curl -s https://api.github.com/repos/oehrlis/oudbase/releases/latest \
         | grep "browser_download_url.*${OUDBASE_PKG}" \
         | cut -d: -f 2,3 \

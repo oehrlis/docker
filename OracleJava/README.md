@@ -4,6 +4,11 @@ Build a Docker image containing Oracle Java (Server JRE specifically).
 
 The Oracle Java Server JRE provides the same features as Oracle Java JDK commonly required for Server-side Applications (i.e. Java EE application servers). For more information about Server JRE, visit the [Understanding the Server JRE](https://blogs.oracle.com/java-platform-group/understanding-the-server-jre) blog entry from the Java Product Management team.
 
+Since the image is used as base image for Oracle Unified Directory it will also add a few common unix package. In particular the following additional packages including there dependencies will be installed:
+    * *libaio* Linux-native asynchronous I/O access library
+    * *tar* A GNU file archiving program
+    * *gzip* The GNU data compression program
+
 ## Java 8
 [Download Server JRE 8](http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html) `.tar.gz` file and drop it inside folder `java-8`. If you download Java 1.8 with the latest update from MOS (see Doc ID [1439822.1](https://support.oracle.com/epmos/faces/DocumentDisplay?id=1439822.1)), make sure to first unzip the `p<PATCHID>_180<UPDATE>_Linux-x86-64.zip` file. This Dockerfile expects the Java package in the form `server-jre-8u<UPDATE>-linux-x64.tar.gz`.
 
