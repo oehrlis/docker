@@ -2,6 +2,8 @@
 
 This repository contains Dockerfiles and samples to build Docker images mainly for Oracle Directory Server products and open source projects. The different Dockerfiles and build scripts are maintained by [OraDBA](http://www.oradba.ch) respectively [Trivadis AG](http://www.trivadis.com) and *do not* represent official Oracle Build scripts. Oracle has its own official repository for [Oracle Docker images](https://github.com/oracle/docker-images) on GitHub. 
 
+Just to clarify these Docker build scripts are **unofficial** Oracle Build scripts. See [Oracle Docker images](https://github.com/oracle/docker-images) on GitHub for the official Oracle Docker build scripts.
+
 This project offers Dockerfiles to build Docker images for:
 * Standalone Oracle Unified Directory 12.2.1.3.0 to setup and run Oracle Unified Directory [OUD](https://github.com/oehrlis/docker/tree/master/oud).
 * Collocated Oracle Unified Directory 12.2.1.3.0 and Oracle Fusion Middleware Infrastructure 12.2.1.3.0 to setup and run an Oracle Unified Directory Server Manager [OUDSM](https://github.com/oehrlis/docker/tree/master/oudsm).

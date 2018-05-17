@@ -2,6 +2,8 @@
 Docker base image used for miscellaneous Oracle Directory Server Enterprise Edition engineering .
 Docker build files to facilitate installation, configuration, and environment setup for Docker DevOps users. For more information about Oracle Directory Server Enterprise Edition please see the [Oracle Directory Server Enterprise Edition 11.1.1.7.2 Online Documentation](https://docs.oracle.com/cd/E29127_01/index.htm).
 
+Just to clarify these Docker build scripts are **unofficial** Oracle Build scripts. See [Oracle Docker images](https://github.com/oracle/docker-images) on GitHub for the official Oracle Docker build scripts.
+
 ## Content
 
 This docker image is based on the official Oracle Linux slim image ([oraclelinux](https://hub.docker.com/r/_/oraclelinux/)). It has been extended with the following Linux packages and configuration:

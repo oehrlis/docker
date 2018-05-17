@@ -1,6 +1,8 @@
 # Oracle Unified Directory on Docker
 Docker build files to facilitate installation, configuration, and environment setup for Docker DevOps users. For more information about Oracle Unified Directory please see the [Oracle Unified Directory 12.2.1.3.0 Online Documentation](https://docs.oracle.com/middleware/12213/oud/).
 
+Just to clarify these Docker build scripts are **unofficial** Oracle Build scripts. See [Oracle Docker images](https://github.com/oracle/docker-images) on GitHub for the official Oracle Docker build scripts.
+
 ### Docker Images Content
 The resulting Docker images are based on the official Oracle Java image for Java 8 u172 (_oracle/serverjre:8_). It has either be build manually using the [official](https://github.com/oracle/docker-images/tree/master/OracleJava) or [my unofficial](https://github.com/oehrlis/docker/tree/master/OracleJava) Oracle Docker build scripts or pulled from [Docker Store](https://store.docker.com/images/oracle-serverjre-8). If you pull the java image from the docker store you may have to tag it to _oracle/serverjre:8_.
 
