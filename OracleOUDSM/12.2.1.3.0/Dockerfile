@@ -39,6 +39,7 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     DOCKER_SCRIPTS="/opt/docker/bin" \
     START_SCRIPT="start_oudsm_domain.sh" \
     CHECK_SCRIPT="check_oudsm_domain.sh" \
+    INSTALL_SCRIPT="setup_oudsm.sh" \
     USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
     ORACLE_HOME_NAME="fmw12.2.1.3.0" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
@@ -46,23 +47,16 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     DOMAIN_NAME=${DOMAIN_NAME:-oudsm_domain} \
     PORT=${PORT:-7001} \
     PORT_SSL=${PORT_SSL:-7002} \
-    FMW_OUD_PKG=p26270957_122130_Generic.zip \
-    FMW_OUD_JAR=fmw_12.2.1.3.0_oud.jar \
-    FMW_PKG=p26269885_122130_Generic.zip \
-    FMW_JAR=fmw_12.2.1.3.0_infrastructure.jar \
-    WLS_PKG=p27342434_122130_Generic.zip \
-    WLS_PSU=27342434 \
-    OUD_PSU=p27742743_122130_Generic.zip \
-    OUD_PSU_ID=27742743
+    FMW_OUD_PKG="p26270957_122130_Generic.zip" \
+    FMW_PKG="p26269885_122130_Generic.zip" \
+    WLS_PATCH="p27342434_122130_Generic.zip" \
+    OUD_PATCH="p27742743_122130_Generic.zip"
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
     OUDSM_DOMAIN_BASE=${OUDSM_DOMAIN_BASE:-$ORACLE_DATA/domains} \
     DOMAIN_HOME=${DOMAIN_HOME:-$ORACLE_DATA/domains/$DOMAIN_NAME} \
     OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-$ORACLE_DATA/admin/$OUD_INSTANCE}
-
-# same same but third ENV so that variable get substituted
-ENV PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}"
 
 # same same but different...
 # third ENV so that variable get substituted
@@ -74,8 +68,7 @@ ENV PATH=${PATH}:"${DOMAIN_HOME}/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/
 # - create user oracle
 # - setup subdirectory to install OUDpackage and container-scripts
 # - create softlink for the OUD setup scripts
-# - install libaia
-# - remove yum cache
+# - adjust owner ship of download folder
 # -----------------------------------------------------------------
 RUN groupadd --gid 1000 oracle && \
     groupadd --gid 1010 oinstall && \
@@ -87,7 +80,8 @@ RUN groupadd --gid 1000 oracle && \
         ${ORACLE_DATA} \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
-    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d
+    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
+    chown oracle:oinstall ${DOWNLOAD}
 
 # Fallback if the base image does not provide libaio, tar and gzip
 # This yum command will only be executed, if one of the file is not
@@ -103,67 +97,14 @@ RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 
 # COPY software (fmw, oud and psu's) and response files
-COPY ${FMW_OUD_PKG}* ${FMW_PKG}* ${WLS_PKG}* install.rsp oraInst.loc "${DOWNLOAD}/"
+COPY *zip* install.rsp oraInst.loc "${DOWNLOAD}/"
 
 # Switch to user oracle, oracle software as to be installed with regular user
 USER oracle
-
-# RUN as user oracle    
-# - check if FMW software has been copied [ -s ... ] alternatively download 
-#   from orarepo using curl
-# - unpack software using jar
-# - silent install of FMW
-# - check if WLS patch has been copied [ -s ... ] alternatively download 
-#   from orarepo using curl
-# - install WLS PSU
-# - check if OUD software has been copied [ -s ... ] alternatively download 
-#   from orarepo using curl
-# - clean up and remove unused stuff
-# -----------------------------------------------------------------  
-RUN cd ${DOWNLOAD} && \
-    [ -s "${DOWNLOAD}/${FMW_PKG}" ] || \
-    curl -f http://orarepo/${FMW_PKG} -o ${DOWNLOAD}/${FMW_PKG} && \
-    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${FMW_PKG} && \
-    $JAVA_HOME/bin/java -jar ${DOWNLOAD}/${FMW_JAR} -silent \
-        -responseFile ${DOWNLOAD}/install.rsp \
-        -invPtrLoc ${DOWNLOAD}/oraInst.loc \
-        -ignoreSysPrereqs -force \
-        -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
-        INSTALL_TYPE="WebLogic Server" && \
-    [ -s "${DOWNLOAD}/${WLS_PKG}" ] || \
-    curl -f http://orarepo/${WLS_PKG} -o ${DOWNLOAD}/${WLS_PKG} && \
-    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${WLS_PKG} && \
-    cd ${DOWNLOAD}/${WLS_PSU} && \
-    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
-    [ -s "${DOWNLOAD}/${FMW_OUD_PKG}" ] || \
-    curl -f http://orarepo/${FMW_OUD_PKG} -o ${DOWNLOAD}/${FMW_OUD_PKG} && \
-    cd ${DOWNLOAD} && \
-    $JAVA_HOME/bin/jar xf ${DOWNLOAD}/${FMW_OUD_PKG} && \
-    $JAVA_HOME/bin/java -jar ${DOWNLOAD}/${FMW_OUD_JAR} -silent \
-        -responseFile ${DOWNLOAD}/install.rsp \
-        -invPtrLoc ${DOWNLOAD}/oraInst.loc \
-        -ignoreSysPrereqs -force \
-        -novalidation ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}  \
-        INSTALL_TYPE="Collocated Oracle Unified Directory Server (Managed through WebLogic server)" && \
-    [ -s "${DOWNLOAD}/${OUD_PSU}" ] || \
-    curl -f http://orarepo/${OUD_PSU} -o ${DOWNLOAD}/${OUD_PSU} && \
-    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${OUD_PSU} && \
-    cd ${DOWNLOAD}/${OUD_PSU_ID} && \
-    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
-    rm -rf /tmp/OraInstall* \
-        ${DOWNLOAD}/${FMW_PKG} \
-        ${DOWNLOAD}/${FMW_JAR} \
-        ${DOWNLOAD}/${WLS_PKG} \
-        ${DOWNLOAD}/${WLS_PSU} \
-        ${DOWNLOAD}/${OUD_PSU} \
-        ${DOWNLOAD}/${OUD_PSU_ID} \
-        ${DOWNLOAD}/${FMW_OUD_PKG} \
-        ${DOWNLOAD}/${FMW_OUD_JAR} \
-        ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/.patch_storage \
-        /tmp/OraInstall*
+RUN "${DOCKER_SCRIPTS}/${INSTALL_SCRIPT}" ${FMW_OUD_PKG} ${FMW_PKG} ${WLS_PATCH} ${OUD_PATCH}
 
 # get the latest OUD base from GitHub and install it
-RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
+RUN "${DOCKER_SCRIPTS}/setup_oudbase.sh"
 
 # expose the OUDSM http and https ports
 EXPOSE ${PORT} ${PORT_SSL}
@@ -172,12 +113,12 @@ EXPOSE ${PORT} ${PORT_SSL}
 HEALTHCHECK --interval=1m --start-period=5m \
    CMD "${DOCKER_SCRIPTS}/${CHECK_SCRIPT}" >/dev/null || exit 1
 
-# Oracle data volume for OUDSM domain and configuration files
+# Oracle data volume for OUD instance and configuration files
 VOLUME ["${ORACLE_DATA}"]
 
 # set workding directory
 WORKDIR "${ORACLE_BASE}"
 
-# Define default command to start OUDSM domain
+# Define default command to start OUD instance
 CMD exec "${DOCKER_SCRIPTS}/${START_SCRIPT}"
 # --- EOF --------------------------------------------------------------

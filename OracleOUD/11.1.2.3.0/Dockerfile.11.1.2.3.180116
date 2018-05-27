@@ -38,6 +38,7 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     DOCKER_SCRIPTS="/opt/docker/bin" \
     START_SCRIPT="start_oud_instance.sh" \
     CHECK_SCRIPT="check_oud_instance.sh" \
+    INSTALL_SCRIPT="setup_oud.sh" \
     USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
     ORACLE_HOME_NAME="fmw11.1.2.3.0" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
@@ -47,9 +48,8 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     PORT_SSL=${PORT_SSL:-1636} \
     PORT_REP=${PORT_REP:-8989} \
     PORT_ADMIN=${PORT_ADMIN:-4444} \
-    FMW_OUD_OTN=ofm_oud_generic_11.1.2.3.0_disk1_1of1.zip \
-    OUD_PSU=p26540481_111230_Generic.zip \
-    OUD_PSU_ID=26540481
+    FMW_OUD_PKG="ofm_oud_generic_11.1.2.3.0_disk1_1of1.zip" \
+    OUD_PATCH="p26540481_111230_Generic.zip"
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
@@ -67,8 +67,7 @@ ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_H
 # - create user oracle
 # - setup subdirectory to install OUDpackage and container-scripts
 # - create softlink for the OUD setup scripts
-# - install libaio
-# - remove yum cache
+# - adjust owner ship of download folder
 # -----------------------------------------------------------------  
 RUN groupadd --gid 1000 oracle && \
     groupadd --gid 1010 oinstall && \
@@ -80,7 +79,8 @@ RUN groupadd --gid 1000 oracle && \
         ${ORACLE_DATA} \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
-    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d
+    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
+    chown oracle:oinstall ${DOWNLOAD}
 
 # Fallback if the base image does not provide libaio, tar and gzip
 # This yum command will only be executed, if one of the file is not
@@ -96,45 +96,14 @@ RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 
 # COPY oud/software and response files
-COPY ${FMW_OUD_OTN}* install.rsp oraInst.loc "${DOWNLOAD}/"
+COPY *zip* install.rsp oraInst.loc "${DOWNLOAD}/"
 
 # Switch to user oracle, oracle software as to be installed with regular user
 USER oracle
-
-# RUN as user oracle    
-# - check if software has been copied [ -s ... ]
-# - alternatively download software with curl from orarepo
-# - unpack software using jar
-# - silent install of OUD
-# - clean up and remove unused stuff
-# -----------------------------------------------------------------  
-RUN cd ${DOWNLOAD} && \
-    [ -s "${DOWNLOAD}/${FMW_OUD_OTN}" ] || \
-    curl -f http://orarepo/${FMW_OUD_OTN} -o ${DOWNLOAD}/${FMW_OUD_OTN} && \
-    $JAVA_HOME/bin/jar xvf  ${DOWNLOAD}/${FMW_OUD_OTN} && \
-    chmod -R u+x ${DOWNLOAD}/Disk1 && \
-    ${DOWNLOAD}/Disk1/runInstaller -silent \
-        -jreLoc $JAVA_HOME \
-        -waitforcompletion \
-        -ignoreSysPrereqs -force \
-        -response ${DOWNLOAD}/install.rsp \
-        -invPtrLoc ${DOWNLOAD}/oraInst.loc \
-        ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} && \
-    [ -s "${DOWNLOAD}/${OUD_PSU}" ] || \
-    curl -f http://orarepo/${OUD_PSU} -o ${DOWNLOAD}/${OUD_PSU} && \
-    $JAVA_HOME/bin/jar xvf ${DOWNLOAD}/${OUD_PSU} && \
-    cd ${DOWNLOAD}/${OUD_PSU_ID} && \
-    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/opatch apply -silent && \
-    rm -rf /tmp/OraInstall* \
-        ${DOWNLOAD}/${FMW_OUD_OTN} \
-        ${DOWNLOAD}/Disk1 \
-        ${DOWNLOAD}/${OUD_PSU} \
-        ${DOWNLOAD}/${OUD_PSU_ID} \
-        /tmp/OraInstall* \
-        ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/.patch_storage
+RUN "${DOCKER_SCRIPTS}/${INSTALL_SCRIPT}" ${FMW_OUD_PKG} ${OUD_PATCH}
 
 # get the latest OUD base from GitHub and install it
-RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
+RUN "${DOCKER_SCRIPTS}/setup_oudbase.sh"
 
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} ${PORT_REP} ${PORT_ADMIN}

@@ -46,14 +46,17 @@ echo "### Build OUD 11.1.2.3.0 #################################################
 cd $DOCKER_BUILD_DIR/OracleOUD/11.1.2.3.0
 docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.180116 -f Dockerfile.11.1.2.3.180116 .
 docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.0 -f Dockerfile.11.1.2.3.0 .
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.0.slim -f Dockerfile.slim .
 
 echo "### Build OUD 12.2.1.3.0 #######################################################"
 cd $DOCKER_BUILD_DIR/OracleOUD/12.2.1.3.0
 docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.180322 .
 docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.0 -f Dockerfile.12.2.1.3.0 .
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.0.slim -f Dockerfile.slim .
 
 # build OUDSM
 echo "### Build OUDSM 12.2.1.3.0 #####################################################"
 cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
 docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.180417 .
 docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.180116 -f Dockerfile.12.2.1.3.180116 .
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.0.slim -f Dockerfile.slim .
