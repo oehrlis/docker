@@ -44,10 +44,10 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01} \
     OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
-    PORT=${PORT:-1389} \
-    PORT_SSL=${PORT_SSL:-1636} \
-    PORT_REP=${PORT_REP:-8989} \
-    PORT_ADMIN=${PORT_ADMIN:-4444} \
+    PORT="${PORT:-1389}" \
+    PORT_SSL="${PORT_SSL:-1636}" \
+    PORT_REP="${PORT_REP:-8989}" \
+    PORT_ADMIN="${PORT_ADMIN:-4444}" \
     FMW_OUD_PKG="p26270957_122130_Generic.zip"
 
 # Use second ENV so that variable get substituted
