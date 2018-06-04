@@ -32,7 +32,7 @@ ARG ORACLE_BASE
 ARG ORAREPO
 
 # Environment variables required for this build (do NOT change)
-# -------------------------------------------------------------
+# ----------------------------------------------------------------------
 ENV ORAREPO=${ORAREPO:-orarepo} \
     DOWNLOAD="/tmp/download" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
@@ -60,7 +60,8 @@ ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
 ENV PATH=${PATH}:"${ODSEE_INSTANCE_HOME}/OUD/bin:${ODSEE_HOME}/bin:${DOCKER_SCRIPTS}" \
     ODSEE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
-# RUN as user root    
+# RUN as user root
+# ----------------------------------------------------------------------
 # - create group oracle and oinstall
 # - create user oracle
 # - setup subdirectory to install OUD package and container-scripts
@@ -68,7 +69,7 @@ ENV PATH=${PATH}:"${ODSEE_INSTANCE_HOME}/OUD/bin:${ODSEE_HOME}/bin:${DOCKER_SCRI
 # - limit instal language / local to english
 # - install unzip zip gzip tar procps-ng libstdc++.i686 glibc.i686 zlib.i686
 # - remove yum cache     yum upgrade -y && \
-# -----------------------------------------------------------------  
+# ----------------------------------------------------------------------
 RUN groupadd --gid 1000 oracle && \
     groupadd --gid 1010 oinstall && \
     useradd --create-home --gid oracle --groups oracle,oinstall \
@@ -86,16 +87,19 @@ RUN groupadd --gid 1000 oracle && \
         glibc.i686 zlib.i686 && \
     rm -rf /var/cache/yum
 
+# Copy scripts and software
+# ----------------------------------------------------------------------
 # copy all setup scripts to DOCKER_BIN
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 
 # COPY oud/software and response files
 COPY ${FMW_ODSEE_PKG}* "${DOWNLOAD}/"
 
+# RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
+# ----------------------------------------------------------------------
 USER oracle
 
-# RUN as user oracle    
 # - check if software has been copied [ -s ... ]
 # - alternatively download software with curl from orarepo
 # - unpack software using unzip, tar
@@ -117,6 +121,8 @@ RUN cd ${DOWNLOAD} && \
 # get the latest OUD base from GitHub and install it
 RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
 
+# Finalize image
+# ----------------------------------------------------------------------
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} 
 

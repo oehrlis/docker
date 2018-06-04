@@ -2,7 +2,7 @@
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ----------------------------------------------------------------------
-# Name.......: Dockerfile 
+# Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.03.19
@@ -10,7 +10,7 @@
 # Purpose....: This Dockerfile is to build Oracle Unifid Directory
 # Notes......: --
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
+# License....: Licensed under the Universal Permissive License v 1.0 as
 #              shown at http://oss.oracle.com/licenses/upl.
 # ----------------------------------------------------------------------
 # Modified...:
@@ -44,10 +44,10 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01} \
     OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
-    PORT=${PORT:-1389} \
-    PORT_SSL=${PORT_SSL:-1636} \
-    PORT_REP=${PORT_REP:-8989} \
-    PORT_ADMIN=${PORT_ADMIN:-4444} \
+    PORT="${PORT:-1389}" \
+    PORT_SSL="${PORT_SSL:-1636}" \
+    PORT_REP="${PORT_REP:-8989}" \
+    PORT_ADMIN="${PORT_ADMIN:-4444}" \
     FMW_OUD_PKG="p26270957_122130_Generic.zip" \
     OUD_PATCH="p27742743_122130_Generic.zip"
 
@@ -62,13 +62,14 @@ ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
 ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
     ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
-# RUN as user root    
+# RUN as user root
+# ----------------------------------------------------------------------
 # - create group oracle and oinstall
 # - create user oracle
 # - setup subdirectory to install OUDpackage and container-scripts
 # - create softlink for the OUD setup scripts
 # - adjust owner ship of download folder
-# -----------------------------------------------------------------  
+# -----------------------------------------------------------------
 RUN groupadd --gid 1000 oracle && \
     groupadd --gid 1010 oinstall && \
     useradd --create-home --gid oracle --groups oracle,oinstall \
@@ -86,25 +87,31 @@ RUN groupadd --gid 1000 oracle && \
 # This yum command will only be executed, if one of the file is not
 # available. Otherwise it will just create the *.lang file and remove the
 # yum cache which is anyway not there.
-# -----------------------------------------------------------------  
+# -----------------------------------------------------------------
 RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
     [ -f /usr/bin/tar -a -f /usr/bin/gzip -a -f /lib64/libaio.so.? ] || \
     yum install -y libaio gzip tar && \
     rm -rf /var/cache/yum
 
+# Copy scripts and software
+# ----------------------------------------------------------------------
 # copy all setup scripts to DOCKER_BIN
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 
 # COPY oud/software and response files
 COPY *zip* install.rsp oraInst.loc "${DOWNLOAD}/"
 
+# RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
+# ----------------------------------------------------------------------
 USER oracle
 RUN "${DOCKER_SCRIPTS}/${INSTALL_SCRIPT}" ${FMW_OUD_PKG} ${OUD_PATCH}
 
 # get the latest OUD base from GitHub and install it
 RUN "${DOCKER_SCRIPTS}/setup_oudbase.sh"
 
+# Finalize image
+# ----------------------------------------------------------------------
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} ${PORT_REP} ${PORT_ADMIN}
 

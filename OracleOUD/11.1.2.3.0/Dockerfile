@@ -62,7 +62,8 @@ ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
 ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
     ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
-# RUN as user root    
+# RUN as user root
+# ----------------------------------------------------------------------
 # - create group oracle and oinstall
 # - create user oracle
 # - setup subdirectory to install OUDpackage and container-scripts
@@ -92,19 +93,25 @@ RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
     yum install -y libaio gzip tar && \
     rm -rf /var/cache/yum
 
+# Copy scripts and software
+# ----------------------------------------------------------------------
 # copy all setup scripts to DOCKER_BIN
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 
 # COPY oud/software and response files
 COPY *zip* install.rsp oraInst.loc "${DOWNLOAD}/"
 
+# RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
+# ----------------------------------------------------------------------
 USER oracle
 RUN "${DOCKER_SCRIPTS}/${INSTALL_SCRIPT}" ${FMW_OUD_PKG} ${OUD_PATCH}
 
 # get the latest OUD base from GitHub and install it
 RUN "${DOCKER_SCRIPTS}/setup_oudbase.sh"
 
+# Finalize image
+# ----------------------------------------------------------------------
 # expose the OUD admin, replication and ldap ports
 EXPOSE ${PORT} ${PORT_SSL} ${PORT_REP} ${PORT_ADMIN}
 
