@@ -31,7 +31,7 @@ export OUDSM_DOMAIN_BASE=${OUDSM_DOMAIN_BASE:-"$ORACLE_DATA/domains"}
 export DOMAIN_HOME=${OUDSM_DOMAIN_BASE}/${DOMAIN_NAME}
 
 # Default values for host and ports
-export HOST=$(hostname 2>/dev/null ||echo $HOSTNAME)    # Hostname
+export HOST=$(hostname 2>/dev/null ||cat /etc/hostname ||echo $HOSTNAME)   # Hostname
 export PORT=${PORT:-7001}                               # Default HTTP port
 export PORT_SSL=${PORT_SSL:-7002}                       # Default HTTPS port
 

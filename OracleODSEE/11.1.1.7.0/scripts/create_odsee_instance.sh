@@ -35,7 +35,7 @@ export ODSEE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 export OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-${ORACLE_DATA}/admin/${ODSEE_INSTANCE}}
 
 # Default values for host and ports
-export HOST=$(hostname 2>/dev/null ||echo $HOSTNAME)    # Hostname
+export HOST=$(hostname 2>/dev/null ||cat /etc/hostname ||echo $HOSTNAME)    # Hostname
 export PORT=${PORT:-1389}                               # Default LDAP port
 export PORT_SSL=${PORT_SSL:-1636}                       # Default LDAPS port
 

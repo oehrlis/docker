@@ -35,7 +35,7 @@ export OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-${ORACLE_DATA}/admin/${OUD_INSTA
 export OUD_INSTANCE_HOME=${OUD_INSTANCE_HOME:-"${OUD_INSTANCE_BASE}/${OUD_INSTANCE}"}
 
 # Default values for host and ports
-export HOST=$(hostname 2>/dev/null ||echo $HOSTNAME)    # Hostname
+export HOST=$(hostname 2>/dev/null ||cat /etc/hostname ||echo $HOSTNAME)   # Hostname
 export PORT=${PORT:-1389}                               # Default LDAP port
 export PORT_ADMIN=${PORT_ADMIN:-4444}                   # Default admin port
 

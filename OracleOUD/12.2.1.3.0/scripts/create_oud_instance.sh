@@ -32,7 +32,7 @@ export OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-"$ORACLE_DATA/instances"}
 export OUD_INSTANCE_HOME=${OUD_INSTANCE_HOME:-"${OUD_INSTANCE_BASE}/${OUD_INSTANCE}"}
 
 # Default values for host and ports
-export HOST=$(hostname 2>/dev/null ||echo $HOSTNAME)    # Hostname
+export HOST=$(hostname 2>/dev/null ||cat /etc/hostname ||echo $HOSTNAME)   # Hostname
 export PORT=${PORT:-1389}                               # Default LDAP port
 export PORT_SSL=${PORT_SSL:-1636}                       # Default LDAPS port
 export PORT_REP=${PORT_REP:-8989}                       # Default replication port
@@ -49,6 +49,26 @@ export OUD_PROXY=${OUD_PROXY:-'FALSE'}                  # Flag to create proxy i
 # default folder for OUD instance init scripts
 export OUD_INSTANCE_INIT=${OUD_INSTANCE_INIT:-$ORACLE_DATA/scripts}
 # - EOF Environment Variables -----------------------------------------------
+
+# Normalize CREATE_INSTANCE
+export OUD_PROXY=$(echo $OUD_PROXY| sed 's/^false$/0/gi')
+export OUD_PROXY=$(echo $OUD_PROXY| sed 's/^true$/1/gi')
+
+# Normalize SAMPLE_DATA and DIRECTORY_DATA
+DIRECTORY_DATA="--addBaseEntry"
+if [ -z ${SAMPLE_DATA} ]; then
+    echo "SAMPLE_DATA is not set. Create base entry $BASEDN"
+    DIRECTORY_DATA="--addBaseEntry"
+elif [[ "${SAMPLE_DATA}" =~ ^[0-9]+$ ]]; then
+    echo "SAMPLE_DATA is set to a number. Creating $SAMPLE_DATA sample entries"
+    DIRECTORY_DATA="--sampleData $SAMPLE_DATA"
+elif [[ "${SAMPLE_DATA^^}" =~ ^TRUE$ ]]; then
+    echo "SAMPLE_DATA is true. Creating 100 sample entries"
+    DIRECTORY_DATA="--sampleData 100"
+else
+    echo "SAMPLE_DATA is undefined. Create base entry $BASEDN"
+    DIRECTORY_DATA="--addBaseEntry"
+fi
 
 echo "--- Setup OUD environment on volume ${ORACLE_DATA} ----------------------"
 # create instance directories on volume
@@ -111,12 +131,9 @@ echo "  PORT_REP           = ${PORT_REP}"
 echo "  PORT_ADMIN         = ${PORT_ADMIN}"
 echo "  ADMIN_USER         = ${ADMIN_USER}"
 echo "  BASEDN             = ${BASEDN}"
+echo "  SAMPLE_DATA        = ${SAMPLE_DATA}"
 echo "  OUD_PROXY          = ${OUD_PROXY}"
 echo ""
-
-# Normalize CREATE_INSTANCE
-export OUD_PROXY=$(echo $OUD_PROXY| sed 's/^false$/0/gi')
-export OUD_PROXY=$(echo $OUD_PROXY| sed 's/^true$/1/gi')
 
 if [ ${OUD_PROXY} -eq 0 ]; then
 # Create an directory
@@ -131,7 +148,7 @@ ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/oud-setup \
     --generateSelfSignedCertificate \
     --hostname ${HOST} \
     --baseDN ${BASEDN} \
-    --addBaseEntry \
+    ${DIRECTORY_DATA} \
     --serverTuning jvm-default \
     --offlineToolsTuning autotune \
     --no-prompt \

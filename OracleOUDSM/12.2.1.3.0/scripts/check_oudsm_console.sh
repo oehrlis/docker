@@ -24,7 +24,7 @@
 # - Set default values for environment variables if not yet defined. 
 # ---------------------------------------------------------------------------
 # Default values for host and ports
-export HOST=$(hostname 2>/dev/null ||echo $HOSTNAME)    # Hostname
+export HOST=$(hostname 2>/dev/null ||cat /etc/hostname ||echo $HOSTNAME)   # Hostname
 export PORT=${PORT:-7001}                               # Default HTTP port
 # - EOF Environment Variables -----------------------------------------------
 
