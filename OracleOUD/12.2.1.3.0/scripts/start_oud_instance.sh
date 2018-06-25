@@ -67,7 +67,7 @@ function kill_oud() {
 kill -9 $childPID
 }
 
-# Set SIGTERM handler
+# Set SIGINT handler
 trap int_oud SIGINT
 
 # Set SIGTERM handler
