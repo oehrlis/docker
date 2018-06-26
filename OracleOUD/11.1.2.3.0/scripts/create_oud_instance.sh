@@ -42,7 +42,7 @@ export PORT_ADMIN=${PORT_ADMIN:-4444}                   # Default admin port
 export ADMIN_USER=${ADMIN_USER:-'cn=Directory Manager'} # Default directory admin user
 export ADMIN_PASSWORD=${ADMIN_PASSWORD:-""}             # Default directory admin password
 export PWD_FILE=${PWD_FILE:-${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt}
-export BASEDN=${BASEDN:-'dc=postgasse,dc=org'}          # Default directory base DN
+export BASEDN=${BASEDN:-'dc=example,dc=com'}          # Default directory base DN
 export SAMPLE_DATA=${SAMPLE_DATA:-'TRUE'}               # Flag to load sample data
 export OUD_PROXY=${OUD_PROXY:-'FALSE'}                  # Flag to create proxy instance
 
