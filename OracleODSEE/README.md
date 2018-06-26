@@ -36,7 +36,7 @@ ORACLE_DATA          | ```/u01```                               | docker build |
 INSTANCE_BASE        | ```$ORACLE_DATA/instances```             | no           | Base directory for ODSEE instances
 ODSEE_INSTANCE       | ```dsDocker```                           | docker run   | Default name for ODSEE instance
 ODSEE_INSTANCE_HOME  | ```$INSTANCE_BASE/$ODSEE_INSTANCE```     | docker run   |
-OUD_INSTANCE_ADMIN   | ```$ORACLE_DATA/admin/$ODSEE_INSTANCE``` | no           | Instance admin directory for custom scripts, config and logs
+ODSEE_INSTANCE_ADMIN | ```$ORACLE_DATA/admin/$ODSEE_INSTANCE``` | no           | Instance admin directory for custom scripts, config and logs
 CREATE_INSTANCE      | ```TRUE```                               | docker run   | Flag to create ODSEE instance on first start of the container
 OUD_INSTANCE_INIT    | ```$ORACLE_DATA/scripts```               | docker run   | Default directory for the instance configuration scripts
 PORT                 | ```1389```                               | docker run   | Default LDAP port for the OUD instance

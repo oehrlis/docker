@@ -164,7 +164,7 @@ if [ ${OUD_PROXY} -eq 0 ]; then
         echo "--- ERROR creating regular OUD instance (${OUD_INSTANCE}) --------------"
         exit 1
     fi
-elif [ ${OUD_PROXY} -eq 1 ]; 
+elif [ ${OUD_PROXY} -eq 1 ]; then
     echo "--- Create OUD proxy instance (${OUD_INSTANCE}) ------------------------------"
     ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/oud-proxy-setup \
         --cli \

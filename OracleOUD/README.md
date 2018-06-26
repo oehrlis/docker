@@ -21,7 +21,7 @@ They base image should provide some additional linux package for tar, gzip and l
 * Dedicated groups for user *oracle*, oracle (gid 1000), oinstall (gid 1010)
 * ~~[OUD Base](https://github.com/oehrlis/oudbase) environment developed by [ORAdba](www.oradba.ch)~~
 * Oracle OFA Directories see below
-* Install Oracle Unified Directory 12c 12.2.1.3.0 (standalone)
+* Install Oracle Unified Directory 12c 12.2.1.3.0 (standalone) or Oracle Unified Directory 11g 11.1.2.3.0
 
 ### Environment Variable and Directories
 Based on the idea of OFA (Oracle Flexible Architecture) we try to separate the data from the binaries. This means that the OUD instance as well as configuration files are explicitly stored in a separate directory. Ideally, a volume is assigned to this directory when a container is created. This ensures data persistence over the lifetime of a container. OUD Base supports the setup and operation of the environment based on OFA. See also [OraDBA](http://www.oradba.ch/category/oudbase/).
@@ -37,7 +37,8 @@ ORACLE_HOME_NAME     | ```fmw12.2.1.3.0```                    | no           | N
 ORACLE_DATA          | ```/u01```                             | docker build | Root directory for the persistent data eg. OUD instances, etc. A docker volumes must be defined for */u01*
 INSTANCE_BASE        | ```$ORACLE_DATA/instances```           | no           | Base directory for OUD instances
 OUD_INSTANCE         | ```oud_docker```                       | docker run   | Default name for OUD instance
-OUD_INSTANCE_HOME    | ```${INSTANCE_BASE}/${OUD_INSTANCE}``` | docker run   |
+OUD_INSTANCE_HOME    | ```$INSTANCE_BASE/$OUD_INSTANCE```     | docker run   |
+OUD_INSTANCE_ADMIN   | ```$ORACLE_DATA/admin/$OUD_INSTANCE``` | no           | Instance admin directory for custom scripts, config and logs
 CREATE_INSTANCE      | ```TRUE```                             | docker run   | Flag to create OUD instance on first start of the container
 OUD_PROXY            | ```FALSE```                            | docker run   | Flag to create proxy instance. Not yet implemented.
 OUD_INSTANCE_INIT    | ```$ORACLE_DATA/scripts```             | docker run   | Directory for the instance configuration scripts
@@ -67,6 +68,8 @@ The following scripts are used either during Docker image build or while setting
 | ```config_oud_instance.sh``` | Configure OUD instance using custom scripts
 | ```create_oud_instance.sh``` | Script to create the OUD instance
 | ```start_oud_instance.sh```  | Script to start the OUD instance
+| ```setup_oud.sh```           | Script to install OUD binaries and patch
+| ```setup_oudbase.sh```       | Script to install OUD base
 
 ## Installation and Build
 The Docker images have to be build manually based on [oehrlis/docker](https://github.com/oehrlis/docker) from GitHub. The required software has to be downloaded prior image build and must be part of the build context or made available in a local HTTP server. See [Build with local HTTP server](#build-with-local-http-server) below. When providing a local HTTP server to download the required software during image build will lead into smaller images, since the software will not be part of an intermediate intermediate container. The procedure was briefly described in the blog post [Smaller Oracle Docker images](http://www.oradba.ch/2018/03/smaller-oracle-docker-images/).
