@@ -59,6 +59,11 @@ if [ -d "${SCRIPTS_ROOT}" ] && [ -n "$(ls -A ${SCRIPTS_ROOT})" ]; then
 
 # Loop over the files in the current directory
     for f in $(find ${SCRIPTS_ROOT} -maxdepth 1 -type f|sort); do
+        # Skip ldif file if a bash script with same name exists
+        if [ -f "$(basename $f .ldif).sh" ]; then
+            echo "skip file $f, bash script with same name exists."
+            continue
+        fi
         case "$f" in
             *.sh)     echo "$0: running $f"; . "$f" ;;
             *.ldif)   echo "$0: running $f"; echo "exit" | ${ODSEE_HOME}/dsrk/bin/ldapmodify -h $HOST -p ${PORT} -D "${ADMIN_USER}" -j ${PWD_FILE} -f "$f"; echo ;;
