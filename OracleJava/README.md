@@ -40,5 +40,4 @@ Create a `.netrc` file containing the credentials for *login.oracle.com* to auto
 ```
 
 ## License
-
 To download and run Oracle Java, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page.
