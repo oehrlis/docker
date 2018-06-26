@@ -43,7 +43,7 @@ export PORT_SSL=${PORT_SSL:-1636}                       # Default LDAPS port
 export ADMIN_USER=${ADMIN_USER:-'cn=Directory Manager'} # Default directory admin user
 export PWD_FILE=${PWD_FILE:-${OUD_INSTANCE_ADMIN}/etc/${ODSEE_INSTANCE}_pwd.txt}
 export ADMIN_PASSWORD=${ADMIN_PASSWORD:-""}             # Default directory admin password
-export BASEDN=${BASEDN:-'dc=postgasse,dc=org'}          # Default directory base DN
+export BASEDN=${BASEDN:-'dc=example,dc=com'}          # Default directory base DN
 export SAMPLE_DATA=${SAMPLE_DATA:-'TRUE'}               # Flag to load sample data
 
 # default folder for OUD instance init scripts
@@ -120,7 +120,7 @@ if [ $? -eq 0 ]; then
     echo "--- Successfully created ODSEE instance (${ODSEE_INSTANCE}) -------------------"
     # Execute custom provided setup scripts
     ${ODSEE_HOME}/bin/dsadm start ${ODSEE_INSTANCE_HOME}
-    ${DOCKER_SCRIPTS}/config_odsee_instance.sh ${ODSEE_INSTANCE_INIT}/setup
+    ${DOCKER_SCRIPTS}/config_odsee_instance.sh ${ODSEE_INSTANCE_INIT}
 else
     echo "--- ERROR creating ODSEE instance (${ODSEE_INSTANCE}) -------------------------"
     exit 1
