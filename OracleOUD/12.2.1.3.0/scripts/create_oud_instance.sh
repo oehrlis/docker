@@ -137,29 +137,55 @@ echo ""
 
 if [ ${OUD_PROXY} -eq 0 ]; then
 # Create an directory
-${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/oud-setup \
-    --cli \
-    --instancePath ${OUD_INSTANCE_HOME}/OUD \
-    --adminConnectorPort ${PORT_ADMIN} \
-    --rootUserDN "${ADMIN_USER}" \
-    --rootUserPasswordFile ${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt \
-    --ldapPort ${PORT} \
-    --ldapsPort ${PORT_SSL} \
-    --generateSelfSignedCertificate \
-    --hostname ${HOST} \
-    --baseDN ${BASEDN} \
-    ${DIRECTORY_DATA} \
-    --serverTuning jvm-default \
-    --offlineToolsTuning autotune \
-    --no-prompt \
-    --noPropertiesFile
+    echo "--- Create regular OUD instance (${OUD_INSTANCE}) ----------------------"
+    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/oud-setup \
+        --cli \
+        --instancePath "${OUD_INSTANCE_HOME}/OUD" \
+        --rootUserDN "${ADMIN_USER}" \
+        --rootUserPasswordFile "${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt" \
+        --adminConnectorPort ${PORT_ADMIN} \
+        --ldapPort ${PORT} \
+        --ldapsPort ${PORT_SSL} \
+        --generateSelfSignedCertificate \
+        --enableStartTLS \
+        --hostname ${HOST} \
+        --baseDN "${BASEDN}" \
+        ${DIRECTORY_DATA} \
+        --serverTuning jvm-default \
+        --offlineToolsTuning autotune \
+        --no-prompt \
+        --noPropertiesFile
     if [ $? -eq 0 ]; then
-        echo "--- Successfully created OUD instance (${OUD_INSTANCE}) ----------------------"
+        echo "--- Successfully created regular OUD instance (${OUD_INSTANCE}) --------"
         # Execute custom provided setup scripts
         
         ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
     else
-        echo "--- ERROR creating OUD instance (${OUD_INSTANCE}) ----------------------------"
+        echo "--- ERROR creating regular OUD instance (${OUD_INSTANCE}) --------------"
+        exit 1
+    fi
+elif [ ${OUD_PROXY} -eq 1 ]; 
+    echo "--- Create OUD proxy instance (${OUD_INSTANCE}) ------------------------------"
+    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/oud-proxy-setup \
+        --cli \
+        --instancePath "${OUD_INSTANCE_HOME}/OUD" \
+        --rootUserDN "${ADMIN_USER}" \
+        --rootUserPasswordFile "${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt" \
+        --adminConnectorPort ${PORT_ADMIN} \
+        --ldapPort ${PORT} \
+        --ldapsPort ${PORT_SSL} \
+        --generateSelfSignedCertificate \
+        --enableStartTLS \
+        --hostname ${HOST} \
+        --no-prompt \
+        --noPropertiesFile
+    if [ $? -eq 0 ]; then
+        echo "--- Successfully created OUD proxy instance (${OUD_INSTANCE}) ----------------"
+        # Execute custom provided setup scripts
+        
+        ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
+    else
+        echo "--- ERROR creating OUD proxy instance (${OUD_INSTANCE}) ----------------------"
         exit 1
     fi
 fi
