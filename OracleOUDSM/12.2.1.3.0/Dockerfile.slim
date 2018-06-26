@@ -38,7 +38,7 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     DOWNLOAD="/tmp/download" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
     START_SCRIPT="start_oudsm_domain.sh" \
-    CHECK_SCRIPT="check_oudsm_domain.sh" \
+    CHECK_SCRIPT="check_oudsm_console.sh" \
     INSTALL_SCRIPT="setup_oudsm.sh" \
     USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
     ORACLE_HOME_NAME="fmw12.2.1.3.0" \
