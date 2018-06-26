@@ -35,6 +35,7 @@ export OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-"$ORACLE_DATA/instances"}
 
 # OUD instance home directory
 export OUD_INSTANCE_HOME=${OUD_INSTANCE_BASE}/${OUD_INSTANCE}
+# OUD 11g instance name and installation path
 export INSTANCE_NAME="../../../../..${OUD_INSTANCE_HOME}"
 # - EOF Environment Variables -----------------------------------------------
 
@@ -68,7 +69,7 @@ function kill_oud() {
 kill -9 $childPID
 }
 
-# Set SIGTERM handler
+# Set SIGINT handler
 trap int_oud SIGINT
 
 # Set SIGTERM handler
