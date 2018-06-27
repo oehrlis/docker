@@ -59,29 +59,34 @@ fi
 # Execute custom provided files (only if directory exists and has files in it)
 if [ -d "${SCRIPTS_ROOT}" ] && [ -n "$(ls -A ${SCRIPTS_ROOT})" ]; then
     echo "";
-    echo "--- Executing user defined scripts --------------------------------------"
+    echo "--- Executing user defined scripts -------------------------------------"
 
 # Loop over the files in the current directory
     for f in $(find ${SCRIPTS_ROOT} -maxdepth 1 -type f|sort); do
         # Skip ldif and conf file if a bash script with same name exists
-        if [ -f "$(basename $f .ldif).sh" ]; then
-            echo "skip file $f, bash script with same name exists."
+        if [ -f "$(dirname $f)/$(basename $f .ldif).sh" ]; then
+            echo "INFO: skip file $f, bash script with same name exists."
             continue
-        elif [ -f "$(basename $f .conf).sh" ]; then
-            echo "skip file $f, bash script with same name exists."
+        elif [ -f "$(dirname $f)/$(basename $f .conf).sh" ]; then
+            echo "INFO: skip file $f, bash script with same name exists."
             continue
+        elif [ -f "$(dirname $f)/$(basename $f .sh).sh" ]; then
+            echo "INFO: bash script $f."
+        else
+            echo "INFO: no bash script for file $f."
         fi
+        echo "--- --------------------------------------------------------------------"
         case "$f" in
-            *.sh)     echo "$0: running $f"; . "$f" ;;
-            *.ldif)   echo "$0: running $f"; echo "exit" | ${OUD_INSTANCE_HOME}/OUD/bin/ldapmodify --defaultAdd --hostname ${HOST} --port ${PORT} --bindDN "${ADMIN_USER}" --bindPasswordFile ${PWD_FILE} --filename "$f"; echo ;;
-            *.conf)   echo "$0: running $f"; echo "exit" | ${OUD_INSTANCE_HOME}/OUD/bin/dsconfig --hostname ${HOST}  --port ${PORT_ADMIN} --bindDN "${ADMIN_USER}" --bindPasswordFile ${PWD_FILE} --trustAll --no-prompt -F "$f"; echo ;;
-            *)        echo "$0: ignoring $f" ;;
+            *.sh)     echo "INFO: running $f"; "$f" ;;
+            *.ldif)   echo "INFO: running $f"; echo "exit" | ${OUD_INSTANCE_HOME}/OUD/bin/ldapmodify --defaultAdd --hostname ${HOST} --port ${PORT} --bindDN "${ADMIN_USER}" --bindPasswordFile ${PWD_FILE} --filename "$f"; echo ;;
+            *.conf)   echo "INFO: running $f"; echo "exit" | ${OUD_INSTANCE_HOME}/OUD/bin/dsconfig --hostname ${HOST}  --port ${PORT_ADMIN} --bindDN "${ADMIN_USER}" --bindPasswordFile ${PWD_FILE} --trustAll --no-prompt -F "$f"; echo ;;
+            *)        echo "INFO: skip file $f" ;;
         esac
         echo "";
     done
-    echo "--- Successfully executed user defined ----------------------------------"
+    echo "--- Successfully executed user defined ---------------------------------"
   echo ""
 else
-    echo "--- no user defined scripts to execute ----------------------------------"
+    echo "--- no user defined scripts to execute ---------------------------------"
 fi
 # --- EOF -------------------------------------------------------------------

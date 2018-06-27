@@ -45,6 +45,7 @@ export PWD_FILE=${PWD_FILE:-${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt}
 export BASEDN=${BASEDN:-'dc=example,dc=com'}          # Default directory base DN
 export SAMPLE_DATA=${SAMPLE_DATA:-'TRUE'}               # Flag to load sample data
 export OUD_PROXY=${OUD_PROXY:-'FALSE'}                  # Flag to create proxy instance
+export OUD_CUSTOM=${OUD_CUSTOM:-'FALSE'}                # Flag to create custom instance
 
 # OUD 11g instance name and home path for installation
 export INSTANCE_NAME=${INSTANCE_NAME:-"../../../../..${OUD_INSTANCE_HOME}"}
@@ -55,6 +56,10 @@ export OUD_INSTANCE_INIT=${OUD_INSTANCE_INIT:-$ORACLE_DATA/scripts}
 # Normalize CREATE_INSTANCE
 export OUD_PROXY=$(echo $OUD_PROXY| sed 's/^false$/0/gi')
 export OUD_PROXY=$(echo $OUD_PROXY| sed 's/^true$/1/gi')
+
+# Normalize CREATE_INSTANCE
+export OUD_CUSTOM=$(echo $OUD_CUSTOM| sed 's/^false$/0/gi')
+export OUD_CUSTOM=$(echo $OUD_CUSTOM| sed 's/^true$/1/gi')
 
 # Normalize SAMPLE_DATA and DIRECTORY_DATA
 DIRECTORY_DATA="--addBaseEntry"
@@ -72,7 +77,7 @@ else
     DIRECTORY_DATA="--addBaseEntry"
 fi
 
-echo "--- Setup OUD environment on volume ${ORACLE_DATA} ----------------------"
+echo "--- Setup OUD environment on volume ${ORACLE_DATA} ---------------------"
 # create instance directories on volume
 mkdir -v -p ${ORACLE_DATA}
 for i in admin backup etc instances domains log scripts; do
@@ -80,10 +85,23 @@ for i in admin backup etc instances domains log scripts; do
 done
 mkdir -v -p ${OUD_INSTANCE_ADMIN}/etc
 
-# create oudtab file for OUD Base
+# create oudtab file for OUD Base, comment is just for documenttion..
 OUDTAB=${ORACLE_DATA}/etc/oudtab
-echo "${OUD_INSTANCE}:${PORT}:${PORT_SSL}:${PORT_ADMIN}:${PORT_REP}:OUD" >>${OUDTAB}
+echo "# OUD Config File"                                                     >${OUDTAB}
+echo "#  1: OUD Instance Name"                                              >>${OUDTAB}
+echo "#  2: OUD LDAP Port"                                                  >>${OUDTAB}
+echo "#  3: OUD LDAPS Port"                                                 >>${OUDTAB}
+echo "#  4: OUD Admin Port"                                                 >>${OUDTAB}
+echo "#  5: OUD Replication Port"                                           >>${OUDTAB}
+echo "#  6: Directory type eg. OUD, OID, ODSEE or OUDSM"                    >>${OUDTAB}
+echo "# -----------------------------------------------"                    >>${OUDTAB}
+echo "${OUD_INSTANCE}:${PORT}:${PORT_SSL}:${PORT_ADMIN}:${PORT_REP}:OUD"    >>${OUDTAB}
 
+# reuse existing password file
+if [ -f "$PWD_FILE" ]; then
+    echo "    found password file $PWD_FILE"
+    export ADMIN_PASSWORD=$(cat $PWD_FILE)
+fi
 # generate a password
 if [ -z ${ADMIN_PASSWORD} ]; then
     # Auto generate Oracle WebLogic Server admin password
@@ -95,23 +113,24 @@ if [ -z ${ADMIN_PASSWORD} ]; then
             echo "Password does not Match the criteria, re-generating..."
         fi
     done
-    echo "---------------------------------------------------------------"
+    echo "------------------------------------------------------------------------"
     echo "    Oracle Unified Directory Server auto generated instance"
     echo "    admin password :"
     echo "    ----> Directory Admin : ${ADMIN_USER} "
     echo "    ----> Admin password  : $s"
-    echo "---------------------------------------------------------------"
+    echo "------------------------------------------------------------------------"
 else
     s=${ADMIN_PASSWORD}
-    echo "---------------------------------------------------------------"
-    echo "    Oracle Unified Directory Server auto generated instance"
+    echo "------------------------------------------------------------------------"
+    echo "    Oracle Unified Directory Server use pre defined instance"
     echo "    admin password :"
     echo "    ----> Directory Admin : ${ADMIN_USER} "
     echo "    ----> Admin password  : $s"
-    echo "---------------------------------------------------------------"
+    echo "------------------------------------------------------------------------"
 fi
 
 # write password file
+mkdir -p "${OUD_INSTANCE_ADMIN}/etc/"
 echo "$s" > ${PWD_FILE}
 
 # set instant init location create folder if it does exists
@@ -121,7 +140,7 @@ else
     OUD_INSTANCE_INIT="${OUD_INSTANCE_INIT}/setup"
 fi
 
-echo "--- Create OUD instance ---------------------------------------"
+echo "--- Create OUD instance ------------------------------------------------"
 echo "  OUD_INSTANCE       = ${OUD_INSTANCE}"
 echo "  OUD_INSTANCE_BASE  = ${OUD_INSTANCE_BASE}"
 echo "  OUD_INSTANCE_ADMIN = ${OUD_INSTANCE_ADMIN}"
@@ -133,24 +152,25 @@ echo "  PORT_REP           = ${PORT_REP}"
 echo "  PORT_ADMIN         = ${PORT_ADMIN}"
 echo "  ADMIN_USER         = ${ADMIN_USER}"
 echo "  BASEDN             = ${BASEDN}"
+echo "  SAMPLE_DATA        = ${SAMPLE_DATA}"
 echo "  OUD_PROXY          = ${OUD_PROXY}"
 echo ""
 
-# Normalize CREATE_INSTANCE
-export OUD_PROXY=$(echo $OUD_PROXY| sed 's/^false$/0/gi')
-export OUD_PROXY=$(echo $OUD_PROXY| sed 's/^true$/1/gi')
-
-if [ ${OUD_PROXY} -eq 0 ]; then
-    # Create an directory
+if  [ ${OUD_CUSTOM} -eq 1 ]; then
+    echo "--- Create OUD instance (${OUD_INSTANCE}) using custom scripts ---------"
+    ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
+elif [ ${OUD_PROXY} -eq 0 ]; then
+# Create an directory
     echo "--- Create regular OUD instance (${OUD_INSTANCE}) ----------------------"
     ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud-setup \
         --cli \
-        --adminConnectorPort ${PORT_ADMIN} \
         --rootUserDN "${ADMIN_USER}" \
-        --rootUserPasswordFile ${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt \
+        --rootUserPasswordFile "${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt" \
+        --adminConnectorPort ${PORT_ADMIN} \
         --ldapPort ${PORT} \
         --ldapsPort ${PORT_SSL} \
         --generateSelfSignedCertificate \
+        --enableStartTLS \
         --hostname ${HOST} \
         --baseDN "${BASEDN}" \
         ${DIRECTORY_DATA} \
@@ -161,16 +181,16 @@ if [ ${OUD_PROXY} -eq 0 ]; then
     if [ $? -eq 0 ]; then
         echo "--- Successfully created regular OUD instance (${OUD_INSTANCE}) --------"
         # Execute custom provided setup scripts
+        
         ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
     else
         echo "--- ERROR creating regular OUD instance (${OUD_INSTANCE}) --------------"
         exit 1
     fi
 elif [ ${OUD_PROXY} -eq 1 ]; then
-    echo "--- Create OUD proxy instance (${OUD_INSTANCE}) ------------------------------"
-    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/oud-proxy-setup \
+    echo "--- Create OUD proxy instance (${OUD_INSTANCE}) ------------------------"
+    ${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud-proxy-setup \
         --cli \
-        --instancePath "${OUD_INSTANCE_HOME}/OUD" \
         --rootUserDN "${ADMIN_USER}" \
         --rootUserPasswordFile "${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt" \
         --adminConnectorPort ${PORT_ADMIN} \
@@ -182,11 +202,12 @@ elif [ ${OUD_PROXY} -eq 1 ]; then
         --no-prompt \
         --noPropertiesFile
     if [ $? -eq 0 ]; then
-        echo "--- Successfully created OUD proxy instance (${OUD_INSTANCE}) ----------------"
+        echo "--- Successfully created OUD proxy instance (${OUD_INSTANCE}) ----------"
         # Execute custom provided setup scripts
+        
         ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
     else
-        echo "--- ERROR creating OUD proxy instance (${OUD_INSTANCE}) ----------------------"
+        echo "--- ERROR creating OUD proxy instance (${OUD_INSTANCE}) -----------------"
         exit 1
     fi
 fi
