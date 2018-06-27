@@ -49,9 +49,7 @@ ENV DOWNLOAD="/tmp/download" \
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
-    OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
-    ODSEE_INSTANCE_HOME=${ODSEE_INSTANCE_HOME:-$ORACLE_DATA/instances/$ODSEE_INSTANCE} \
-    OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-$ORACLE_DATA/admin/$ODSEE_INSTANCE}
+    OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances}
 
 # same same but different...
 # third ENV so that variable get substituted

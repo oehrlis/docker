@@ -54,9 +54,7 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
-    OUDSM_DOMAIN_BASE=${OUDSM_DOMAIN_BASE:-$ORACLE_DATA/domains} \
-    DOMAIN_HOME=${DOMAIN_HOME:-$ORACLE_DATA/domains/$DOMAIN_NAME} \
-    OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-$ORACLE_DATA/admin/$OUD_INSTANCE}
+    OUDSM_DOMAIN_BASE=${OUDSM_DOMAIN_BASE:-$ORACLE_DATA/domains}
 
 # same same but different...
 # third ENV so that variable get substituted

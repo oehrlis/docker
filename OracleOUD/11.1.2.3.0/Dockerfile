@@ -2,7 +2,7 @@
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ----------------------------------------------------------------------
-# Name.......: Dockerfile 
+# Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.03.19
@@ -10,7 +10,7 @@
 # Purpose....: This Dockerfile is to build Oracle Unifid Directory
 # Notes......: Build OUD 11.1.2.3.0 with PSU 180116 (26540481)
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
+# License....: Licensed under the Universal Permissive License v 1.0 as
 #              shown at http://oss.oracle.com/licenses/upl.
 # ----------------------------------------------------------------------
 # Modified...:
@@ -53,9 +53,7 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
-    OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
-    OUD_INSTANCE_HOME=${OUD_INSTANCE_HOME:-$ORACLE_DATA/instances/$OUD_INSTANCE} \
-    OUD_INSTANCE_ADMIN=${OUD_INSTANCE_ADMIN:-$ORACLE_DATA/admin/$OUD_INSTANCE}
+    OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances}
 
 # same same but different...
 # third ENV so that variable get substituted
@@ -69,7 +67,8 @@ ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_H
 # - setup subdirectory to install OUDpackage and container-scripts
 # - create softlink for the OUD setup scripts
 # - adjust owner ship of download folder
-# -----------------------------------------------------------------  
+# - relax java.security and allow 3DES_EDE_CBC
+# -----------------------------------------------------------------
 RUN groupadd --gid 1000 oracle && \
     groupadd --gid 1010 oinstall && \
     useradd --create-home --gid oracle --groups oracle,oinstall \
@@ -81,13 +80,14 @@ RUN groupadd --gid 1000 oracle && \
         ${DOWNLOAD} \
         ${DOCKER_SCRIPTS} && \
     ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    chown oracle:oinstall ${DOWNLOAD}
+    chown oracle:oinstall ${DOWNLOAD} && \
+    sed -i 's/, 3DES_EDE_CBC//' $(find /usr/java -name java.security)
 
 # Fallback if the base image does not provide libaio, tar and gzip
 # This yum command will only be executed, if one of the file is not
 # available. Otherwise it will just create the *.lang file and remove the
 # yum cache which is anyway not there.
-# -----------------------------------------------------------------  
+# -----------------------------------------------------------------
 RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
     [ -f /usr/bin/tar -a -f /usr/bin/gzip -a -f /lib64/libaio.so.? ] || \
     yum install -y libaio gzip tar && \
