@@ -29,7 +29,7 @@ echo " Build all image from $DOCKER_BUILD_DIR...."
 orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
 
 # first build java
-      --------------------------------------------------------------------------------
+echo "--------------------------------------------------------------------------------"
 echo "### Build Java #################################################################"
 cd $DOCKER_BUILD_DIR/OracleJava
 $DOCKER_BUILD_DIR/OracleJava/java-8/build.sh
