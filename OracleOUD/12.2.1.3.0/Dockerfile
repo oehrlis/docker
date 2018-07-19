@@ -52,7 +52,7 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     PORT_ADMIN="${PORT_ADMIN:-4444}" \
     PORT_ADMIN_HTTP="${PORT_ADMIN_HTTP:-8444}" \
     FMW_OUD_PKG="p26270957_122130_Generic.zip" \
-    OUD_PATCH="p28245820J_122130_Generic.zip"
+    OUD_PATCH="p28245820_122130_Generic.zip"
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
