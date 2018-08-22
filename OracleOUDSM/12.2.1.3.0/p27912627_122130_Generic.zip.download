@@ -2,9 +2,9 @@
 #
 # The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
 # require a valid MOS Account to download Oracle Software from MOS.
-# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=27342434
-# Direct Download   : https://updates.oracle.com/Orion/Services/download/p27342434_122130_Generic.zip?aru=21933966&patch_file=p27342434_122130_Generic.zip
-# 
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=27912627
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p27912627_122130_Generic.zip?aru=22170259&patch_file=p27912627_122130_Generic.zip
+#
 # SHA-256                                                        File
 # -------------------------------------------------------------- ---------------------------------
-7A430796B9AC3275BC941C9B1C21E1B1D4FCC50FD75227C30BA6FE585CA477BF p27342434_122130_Generic.zip
+099B05BD2FAFF5E3063DB1715C1D884BB2F13780E88C4F39AFFFE3B40432D311 p27912627_122130_Generic.zip
