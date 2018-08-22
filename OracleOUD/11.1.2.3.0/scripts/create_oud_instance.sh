@@ -198,7 +198,6 @@ elif [ ${OUD_PROXY} -eq 1 ]; then
         --ldapsPort ${PORT_SSL} \
         --generateSelfSignedCertificate \
         --enableStartTLS \
-        --hostname ${HOST} \
         --no-prompt \
         --noPropertiesFile
     if [ $? -eq 0 ]; then

@@ -33,7 +33,7 @@ cd $DOCKER_BUILD_DIR
 # get the latest download file
 DOWNLOAD=$(find ${DOCKER_BUILD_DIR} -name "*_Linux-x86-64.zip.download"|sort|tail -1)
 # get the download URL from file
-JAVA_URL=$(grep -i "# Direct Download" ./p27412890_180172_Linux-x86-64.zip.download|cut -d' ' -f7)
+JAVA_URL=$(grep -i "# Direct Download" ./p27890736_180181_Linux-x86-64.zip.download|cut -d' ' -f7)
 # get java package name from download url
 JAVA_PKG=${JAVA_URL#*patch_file=}
 # get java version from java package name

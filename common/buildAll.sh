@@ -30,10 +30,10 @@ orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}
 
 # send build trigger to trivadisbds
 echo "### Send build trigger to trivadisbds ##########################################"
-curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "11.1.2.3.180116"}' -X POST https://registry.hub.docker.com/u/trivadisbds/oud/trigger/0266ebf2-cac2-414e-a1af-f6de992d7708/
-curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "12.2.1.3.180322"}' -X POST https://registry.hub.docker.com/u/trivadisbds/oud/trigger/0266ebf2-cac2-414e-a1af-f6de992d7708/
-curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "12.2.1.3.180417"}' -X POST https://registry.hub.docker.com/u/trivadisbds/oudsm/trigger/92f5b20b-4d03-4902-91e8-09ba8aaba04e/
-curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "11.1.1.7.171017"}' -X POST https://registry.hub.docker.com/u/trivadisbds/odsee/trigger/362c8a54-e5f7-43df-8e64-0dee4b4ca70c/
+#curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "11.1.2.3.180116"}' -X POST https://registry.hub.docker.com/u/trivadisbds/oud/trigger/0266ebf2-cac2-414e-a1af-f6de992d7708/
+#curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "12.2.1.3.180322"}' -X POST https://registry.hub.docker.com/u/trivadisbds/oud/trigger/0266ebf2-cac2-414e-a1af-f6de992d7708/
+#curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "12.2.1.3.180417"}' -X POST https://registry.hub.docker.com/u/trivadisbds/oudsm/trigger/92f5b20b-4d03-4902-91e8-09ba8aaba04e/
+#curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "11.1.1.7.171017"}' -X POST https://registry.hub.docker.com/u/trivadisbds/odsee/trigger/362c8a54-e5f7-43df-8e64-0dee4b4ca70c/
 
 # first build java
 echo "--------------------------------------------------------------------------------"
@@ -51,19 +51,19 @@ docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.171017 .
 # build OUD 11.1.2.3.0
 echo "### Build OUD 11.1.2.3.0 #######################################################"
 cd $DOCKER_BUILD_DIR/OracleOUD/11.1.2.3.0
-docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.180116 -f Dockerfile.11.1.2.3.180116 .
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.180717 -f Dockerfile.11.1.2.3.180717 .
 #docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.0 -f Dockerfile.11.1.2.3.0 .
 #docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.0.slim -f Dockerfile.slim .
 
 echo "### Build OUD 12.2.1.3.0 #######################################################"
 cd $DOCKER_BUILD_DIR/OracleOUD/12.2.1.3.0
-docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.180322 .
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.180626 .
 #docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.0 -f Dockerfile.12.2.1.3.0 .
 #docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.0.slim -f Dockerfile.slim .
 
 # build OUDSM
 echo "### Build OUDSM 12.2.1.3.0 #####################################################"
 cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
-docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.180417 .
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.180717 .
 #docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.180116 -f Dockerfile.12.2.1.3.180116 .
 #docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.0.slim -f Dockerfile.slim .

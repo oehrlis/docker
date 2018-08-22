@@ -50,7 +50,7 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     FMW_OUD_PKG="p26270957_122130_Generic.zip" \
     FMW_PKG="p26269885_122130_Generic.zip" \
     WLS_PATCH="p27342434_122130_Generic.zip" \
-    OUD_PATCH="p27742743_122130_Generic.zip"
+    OUD_PATCH="p28245820_122130_Generic.zip"
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
