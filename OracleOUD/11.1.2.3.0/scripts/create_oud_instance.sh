@@ -171,13 +171,13 @@ elif [ ${OUD_PROXY} -eq 0 ]; then
         --ldapsPort ${PORT_SSL} \
         --generateSelfSignedCertificate \
         --enableStartTLS \
-        --hostname ${HOST} \
         --baseDN "${BASEDN}" \
         ${DIRECTORY_DATA} \
         --serverTuning jvm-default \
         --offlineToolsTuning autotune \
         --no-prompt \
         --noPropertiesFile
+
     if [ $? -eq 0 ]; then
         echo "--- Successfully created regular OUD instance (${OUD_INSTANCE}) --------"
         # Execute custom provided setup scripts

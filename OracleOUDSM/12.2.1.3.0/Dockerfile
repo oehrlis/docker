@@ -2,16 +2,14 @@
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ----------------------------------------------------------------------
-# Name.......: Dockerfile 
+# Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.03.19
-# Revision...: 1.0
-# Purpose....: This Dockerfile is to build Oracle Unifid Directory Server 
-#              Manager OUDSM
+# Purpose....: This Dockerfile is to build Oracle Unifid Directory
 # Notes......: --
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
+# License....: Licensed under the Universal Permissive License v 1.0 as
 #              shown at http://oss.oracle.com/licenses/upl.
 # ----------------------------------------------------------------------
 # Modified...:
@@ -32,82 +30,77 @@ ARG ORACLE_DATA
 ARG ORACLE_BASE
 ARG ORAREPO
 
-# Environment variables required for this build (do NOT change)
-# ----------------------------------------------------------------------
-ENV ORAREPO=${ORAREPO:-orarepo} \
-    DOWNLOAD="/tmp/download" \
+# just my environment variable for the software repository host
+ENV ORAREPO=${ORAREPO:-orarepo}
+
+# Environment variables required for this build 
+# Change them carefully and wise!
+# -------------------------------------------------------------
+# Software stage area, repository, binary packages and patchs
+ENV DOWNLOAD="/tmp/download" \
+    SOFTWARE="/opt/stage" \
+    SOFTWARE_REPO="http://$ORAREPO" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
-    START_SCRIPT="start_oudsm_domain.sh" \
-    CHECK_SCRIPT="check_oudsm_console.sh" \
-    INSTALL_SCRIPT="setup_oudsm.sh" \
+    ORADBA_INIT="/opt/oradba/bin" \
+    OUD_BASE_PKG="p26270957_122130_Generic.zip" \
+    FMW_BASE_PKG="p26269885_122130_Generic.zip" \
+    OUD_PATCH_PKG="p28245820_122130_Generic.zip" \
+    FMW_PATCH_PKG="p27912627_122130_Generic.zip" \
+    OUD_OPATCH_PKG="p28186730_139400_Generic.zip"
+
+# scripts to build and run this container
+ENV SETUP_INIT="00_setup_oradba_init.sh" \
+    SETUP_OS="01_setup_os_oud.sh" \
+    SETUP_OUD="10_setup_oudsm_12c.sh" \
+    SETUP_OUDBASE="20_setup_oudbase.sh" \
+    START_SCRIPT="start_oud_instance.sh" \
+    CHECK_SCRIPT="check_oud_instance.sh" \
+    ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
+    ORACLE_DATA=${ORACLE_DATA:-/u01}
+
+# stuff to run an OUD instans
+ENV OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
     USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
     ORACLE_HOME_NAME="fmw12.2.1.3.0" \
-    ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
-    ORACLE_DATA=${ORACLE_DATA:-/u01} \
-    DOMAIN_NAME=${DOMAIN_NAME:-oudsm_domain} \
-    PORT=${PORT:-7001} \
-    PORT_SSL=${PORT_SSL:-7002} \
-    FMW_OUD_PKG="p26270957_122130_Generic.zip" \
-    FMW_PKG="p26269885_122130_Generic.zip" \
-    WLS_PATCH="p27342434_122130_Generic.zip" \
-    OUD_PATCH="p28245820_122130_Generic.zip"
+    PORT="${PORT:-7001}" \
+    PORT_SSL="${PORT_SSL:-7002}" 
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
-    OUDSM_DOMAIN_BASE=${OUDSM_DOMAIN_BASE:-$ORACLE_DATA/domains}
+    OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances}
 
 # same same but different...
 # third ENV so that variable get substituted
-ENV PATH=${PATH}:"${DOMAIN_HOME}/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
+ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
     ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
-
-# RUN as user root
-# ----------------------------------------------------------------------
-# - create group oracle and oinstall
-# - create user oracle
-# - setup subdirectory to install OUDpackage and container-scripts
-# - create softlink for the OUD setup scripts
-# - adjust owner ship of download folder
-# ----------------------------------------------------------------------
-RUN groupadd --gid 1000 oracle && \
-    groupadd --gid 1010 oinstall && \
-    useradd --create-home --gid oracle --groups oracle,oinstall \
-        --shell /bin/bash oracle && \
-    install --owner oracle --group oracle --mode=775 --verbose --directory \
-        ${ORACLE_ROOT} \
-        ${ORACLE_BASE} \
-        ${ORACLE_DATA} \
-        ${DOWNLOAD} \
-        ${DOCKER_SCRIPTS} && \
-    ln -s ${ORACLE_DATA}/scripts /docker-entrypoint-initdb.d && \
-    chown oracle:oinstall ${DOWNLOAD}
-
-# Fallback if the base image does not provide libaio, tar and gzip
-# This yum command will only be executed, if one of the file is not
-# available. Otherwise it will just create the *.lang file and remove the
-# yum cache which is anyway not there.
-# ----------------------------------------------------------------------
-RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
-    [ -f /usr/bin/tar -a -f /usr/bin/gzip -a -f /lib64/libaio.so.? ] || \
-    yum install -y libaio gzip tar && \
-    rm -rf /var/cache/yum
 
 # Copy scripts and software
 # ----------------------------------------------------------------------
 # copy all setup scripts to DOCKER_BIN
 COPY scripts/* "${DOCKER_SCRIPTS}/"
 
-# COPY software (fmw, oud and psu's) and response files
-COPY *zip* install.rsp oraInst.loc "${DOWNLOAD}/"
+# RUN as user root
+# ----------------------------------------------------------------------
+# get the OraDBA init script to setup the OS and later OUD
+RUN GITHUB_URL="https://github.com/oehrlis/oradba_init/raw/master/bin" && \
+    curl -Lsf ${GITHUB_URL}/${SETUP_INIT} -o ${DOCKER_SCRIPTS}/${SETUP_INIT} && \
+    chmod 755 ${DOCKER_SCRIPTS}/${SETUP_INIT} && \
+    ${DOCKER_SCRIPTS}/${SETUP_INIT}
+
+# Setup OS using OraDBA init script
+RUN ${ORADBA_INIT}/${SETUP_OS}
+
+# COPY oud software 
+COPY *zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
 # ----------------------------------------------------------------------
 USER oracle
-RUN "${DOCKER_SCRIPTS}/${INSTALL_SCRIPT}" ${FMW_OUD_PKG} ${FMW_PKG} ${WLS_PATCH} ${OUD_PATCH}
+RUN ${ORADBA_INIT}/${SETUP_OUD}
 
 # get the latest OUD base from GitHub and install it
-RUN "${DOCKER_SCRIPTS}/setup_oudbase.sh"
+RUN ${ORADBA_INIT}/${SETUP_OUDBASE}
 
 # Finalize image
 # ----------------------------------------------------------------------

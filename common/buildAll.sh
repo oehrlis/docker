@@ -51,7 +51,7 @@ docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.171017 .
 # build OUD 11.1.2.3.0
 echo "### Build OUD 11.1.2.3.0 #######################################################"
 cd $DOCKER_BUILD_DIR/OracleOUD/11.1.2.3.0
-docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.180717 -f Dockerfile.11.1.2.3.180717 .
+docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.180717 .
 #docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.0 -f Dockerfile.11.1.2.3.0 .
 #docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.0.slim -f Dockerfile.slim .
 

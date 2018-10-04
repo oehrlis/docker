@@ -83,11 +83,28 @@ export CREATE_INSTANCE=$(echo $CREATE_INSTANCE| sed 's/^true$/1/gi')
 echo "--- Seeking for an OUD environment on volume ${ORACLE_DATA} -------------"
 # check if config.ldif does exists
 if [ -f ${OUD_INSTANCE_HOME}/OUD/config/config.ldif ]; then
+    # check version of existing instance
+    echo "---------------------------------------------------------------"
+    echo "   OUD instance (${OUD_INSTANCE}) system info:"
+    echo "---------------------------------------------------------------"
+    ${OUD_INSTANCE_HOME}/OUD/bin/start-ds -F
+
     # Start existing OUD instance
     echo "---------------------------------------------------------------"
     echo "   Start OUD instance (${OUD_INSTANCE}):"
     echo "---------------------------------------------------------------"
-    ${OUD_INSTANCE_HOME}/OUD/bin/start-ds >/dev/null 2>&1
+    ${OUD_INSTANCE_HOME}/OUD/bin/start-ds
+    if [ $? -eq 1 ]; then
+        echo "---------------------------------------------------------------"
+        echo "   OUD instance (${OUD_INSTANCE}) needs to be upgraded first:"
+        echo "---------------------------------------------------------------"
+        ${OUD_INSTANCE_HOME}/OUD/bin/start-ds --upgrade
+        
+        echo "---------------------------------------------------------------"
+        echo "   Start OUD instance (${OUD_INSTANCE}) after upgrad:"
+        echo "---------------------------------------------------------------"
+        ${OUD_INSTANCE_HOME}/OUD/bin/start-ds
+    fi
 elif [ ${CREATE_INSTANCE} -eq 1 ]; then
     echo "---------------------------------------------------------------"
     echo "   Create OUD instance (${OUD_INSTANCE}):"
@@ -97,7 +114,7 @@ elif [ ${CREATE_INSTANCE} -eq 1 ]; then
     
     if [ $? -eq 0 ]; then
         # restart OUD instance
-        ${OUD_INSTANCE_HOME}/OUD/bin/stop-ds --restart >/dev/null 2>&1
+        ${OUD_INSTANCE_HOME}/OUD/bin/stop-ds --restart
     fi
 else
     echo "---------------------------------------------------------------"
@@ -108,7 +125,8 @@ else
 fi
 
 # Check whether OUD instance is up and running
-${DOCKER_SCRIPTS}/check_oud_Instance.sh >/dev/null 2>&1
+#${DOCKER_SCRIPTS}/check_oud_Instance.sh >/dev/null 2>&1
+${DOCKER_SCRIPTS}/check_oud_instance.sh
 if [ $? -eq 0 ]; then
     echo "---------------------------------------------------------------"
     echo "   OUD instance is ready to use:"
@@ -126,6 +144,9 @@ fi
 # Tail on server log and wait (otherwise container will exit)
 mkdir -p ${OUD_INSTANCE_HOME}/OUD/logs
 touch ${OUD_INSTANCE_HOME}/OUD/logs/server.out
+echo "---------------------------------------------------------------"
+echo "   Tail output of OUD (${OUD_INSTANCE}) server.out logfile:"
+echo "---------------------------------------------------------------"
 tail -f ${OUD_INSTANCE_HOME}/OUD/logs/server.out &
 
 childPID=$!
