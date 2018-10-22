@@ -1,10 +1,10 @@
-# OUD BUNDLE PATCH 11.1.2.3.180717 (Patch)
+# OUD BUNDLE PATCH 11.1.2.3.181016 (Patch)
 #
 # The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
 # require a valid MOS Account to download Oracle Software from MOS.
-# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=27925359
-# Direct Download   : https://updates.oracle.com/Orion/Services/download/p27925359_111230_Generic.zip?aru=22209277&patch_file=p27925359_111230_Generic.zip
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=28355703
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p28355703_111230_Generic.zip?aru=22376567&patch_file=p28355703_111230_Generic.zip
 #
 # SHA-256                                                        File
 # -------------------------------------------------------------- ---------------------------------
-3D59FBC0C829ABA1AFC6CED1A5F18DD983000DD3034126CA4F4A19842BA5027F p27925359_111230_Generic.zip
+081477F859DCA5E2A7508669AF632D4EDDBD3EDDB069B0050029509541E27947 p28355703_111230_Generic.zip

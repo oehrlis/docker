@@ -43,7 +43,7 @@ ENV DOWNLOAD="/tmp/download" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
     ORADBA_INIT="/opt/oradba/bin" \
     OUD_BASE_PKG="p26270957_122130_Generic.zip" \
-    OUD_PATCH_PKG="p28245820_122130_Generic.zip" \
+    OUD_PATCH_PKG="p28569189_122130_Generic.zip" \
     OUD_OPATCH_PKG="p28186730_139400_Generic.zip"
 
 # scripts to build and run this container

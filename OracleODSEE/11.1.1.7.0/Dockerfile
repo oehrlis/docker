@@ -45,8 +45,8 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     ODSEE_INSTANCE=${ODSEE_INSTANCE:-dsDocker} \
     PORT=${PORT:-1389} \
     PORT_SSL=${PORT_SSL:-1636} \
-    FMW_ODSEE_PKG=p26724938_111170_Linux-x86-64.zip \
-    FMW_ODSEE_TAR=dsee.11.1.1.7.171017.Redhat5-opt-64.full.zip.tar.gz \
+    FMW_ODSEE_PKG=p28773949_111170_Linux-x86-64.zip \
+    FMW_ODSEE_TAR=dsee.11.1.1.7.181016.Redhat5-opt-64.full.zip.tar.gz \
     FMW_ODSEE=sun-dsee7.zip
 
 # Use second ENV so that variable get substituted

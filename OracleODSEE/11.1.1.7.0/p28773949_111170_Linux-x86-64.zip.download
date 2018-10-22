@@ -1,11 +1,11 @@
-# Download ODSEE bundle patch 11.1.1.7.171017 Oracle Directory Server Enterprise Edition
+# Download ODSEE bundle patch 11.1.1.7.181016 Oracle Directory Server Enterprise Edition
 # Oracle Fusion Middleware 11.1.1.7.0 
 #
 # The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
 # require a valid MOS Account to download Oracle Software from MOS.
-# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=26724938
-# Direct Download   : https://updates.oracle.com/Orion/Services/download/p26724938_111170_Linux-x86-64.zip?aru=21522204&patch_file=p26724938_111170_Linux-x86-64.zip
-
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=28773949
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p28773949_111170_Linux-x86-64.zip?aru=22494943&patch_file=p28773949_111170_Linux-x86-64.zip
+#
 # SHA-256                                                        File
 # -------------------------------------------------------------- ---------------------------------
-a3c14f5aa0adae1834b0bfc86465b0a1b1044835f0ece4bd30948935e1c42894 p26724938_111170_Linux-x86-64.zip
+F25409E234B5A3D9703B2F1973E2BACE6BD4168F1AEA5D4EF393AAC3C73582EC p28773949_111170_Linux-x86-64.zip
