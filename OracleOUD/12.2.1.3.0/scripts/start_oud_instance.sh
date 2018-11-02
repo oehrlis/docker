@@ -3,18 +3,18 @@
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ---------------------------------------------------------------------------
-# Name.......: start_oud_instance.sh 
+# Name.......: start_oud_instance.sh
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2017.12.04
-# Revision...: 
-# Purpose....: Helper script to start the OUD instance 
+# Revision...:
+# Purpose....: Helper script to start the OUD instance
 # Notes......: Script does look for the config.ldif. If it does not exist
 #              it assume that the container is started the first time. A new
 #              OUD instance will be created. If CREATE_INSTANCE is set to false
 #              no instance will be created.
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
+# License....: Licensed under the Universal Permissive License v 1.0 as
 #              shown at http://oss.oracle.com/licenses/upl.
 # ---------------------------------------------------------------------------
 # Modified...:
@@ -22,7 +22,7 @@
 # ---------------------------------------------------------------------------
 
 # - Environment Variables ---------------------------------------------------
-# - Set default values for environment variables if not yet defined. 
+# - Set default values for environment variables if not yet defined.
 # ---------------------------------------------------------------------------
 # Default name for OUD instance
 export OUD_INSTANCE=${OUD_INSTANCE:-oud_docker}
@@ -64,7 +64,7 @@ function kill_oud() {
     echo "---------------------------------------------------------------"
     echo "SIGKILL received, shutting down OUD instance!"
     echo "---------------------------------------------------------------"
-kill -9 $childPID
+    kill -9 $childPID
 }
 
 # Set SIGINT handler
@@ -88,7 +88,7 @@ if [ -f ${OUD_INSTANCE_HOME}/OUD/config/config.ldif ]; then
     echo "   OUD instance (${OUD_INSTANCE}) system info:"
     echo "---------------------------------------------------------------"
     ${OUD_INSTANCE_HOME}/OUD/bin/start-ds -F
-
+    
     # Start existing OUD instance
     echo "---------------------------------------------------------------"
     echo "   Start OUD instance (${OUD_INSTANCE}):"
@@ -105,7 +105,7 @@ if [ -f ${OUD_INSTANCE_HOME}/OUD/config/config.ldif ]; then
         echo "---------------------------------------------------------------"
         ${OUD_INSTANCE_HOME}/OUD/bin/start-ds
     fi
-elif [ ${CREATE_INSTANCE} -eq 1 ]; then
+    elif [ ${CREATE_INSTANCE} -eq 1 ]; then
     echo "---------------------------------------------------------------"
     echo "   Create OUD instance (${OUD_INSTANCE}):"
     echo "---------------------------------------------------------------"
