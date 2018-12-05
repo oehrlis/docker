@@ -18,7 +18,7 @@
 
 # Pull base image
 # ----------------------------------------------------------------------
-FROM oracle/serverjre:8
+FROM oracle/serverjre:8 AS base
 
 # Maintainer
 # ----------------------------------------------------------------------
@@ -93,8 +93,12 @@ RUN GITHUB_URL="https://github.com/oehrlis/oradba_init/raw/master/bin" && \
 # Setup OS using OraDBA init script
 RUN ${ORADBA_INIT}/${SETUP_OS}
 
+# New stage for installing the oud binaries
+# ----------------------------------------------------------------------
+FROM base AS builder
+
 # COPY oud software 
-COPY *zip* "${SOFTWARE}/"
+COPY --chown=oracle:oinstall *zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
@@ -104,6 +108,20 @@ RUN ${ORADBA_INIT}/${SETUP_OUD}
 
 # get the latest OUD base from GitHub and install it
 RUN ${ORADBA_INIT}/${SETUP_OUDBASE}
+
+# New layer for database runtime
+# ----------------------------------------------------------------------
+FROM base
+
+USER oracle
+# copy binaries
+COPY --chown=oracle:oinstall --from=builder $ORACLE_BASE $ORACLE_BASE
+
+# copy oracle inventory
+COPY --chown=oracle:oinstall --from=builder $ORACLE_ROOT/app/oraInventory $ORACLE_ROOT/app/oraInventory
+
+# copy basenv profile stuff
+COPY --chown=oracle:oinstall --from=builder /home/oracle/.OUD_BASE /home/oracle/.bash_profile /home/oracle/
 
 # Finalize image
 # ----------------------------------------------------------------------
