@@ -44,10 +44,12 @@ RUN export JAVA_DIR=$(ls -1 -d /usr/java/*) && \
     alternatives --install /usr/bin/java java $JAVA_DIR/bin/java 20000 && \
     alternatives --install /usr/bin/javac javac $JAVA_DIR/bin/javac 20000 && \
     alternatives --install /usr/bin/jar jar $JAVA_DIR/bin/jar 20000
-    
+
 # Install tar, gzip and libaio for OUD stuff 
+# enable cipher legacy 3DES_EDE_CBC for Oracle EUS
 # ----------------------------------------------------------------------
-RUN echo "%_install_langs   en" >/etc/rpm/macros.lang && \
+RUN echo "%_install_langs  en" >/etc/rpm/macros.lang && \
     yum install -y libaio gzip tar && \
-    rm -rf /var/cache/yum
+    rm -rf /var/cache/yum && \
+    sed -i 's/3DES_EDE_CBC//' $(find $(dirname $(dirname $(realpath $(command -v java)))) -name java.security 2>/dev/null)
 # --- EOF --------------------------------------------------------------
