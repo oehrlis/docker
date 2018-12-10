@@ -7,7 +7,7 @@
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.12.10
 # Revision...: --
-# Purpose....: Simple compose file to create a 18.4 database
+# Purpose....: Simple compose file to create a 11.2 database
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
@@ -31,6 +31,6 @@ services:
       - "2112:1521"
     environment:
       ORADBA_TEMPLATE_PREFIX: custom_
-      ORADBA_TEMPLATE_PREFIX: /u01/config
+      INSTANCE_INIT: /u01/config
       ORACLE_SID: TDB112S
 # - EOF -----------------------------------------------------------------
