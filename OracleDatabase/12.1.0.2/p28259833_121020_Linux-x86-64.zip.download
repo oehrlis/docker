@@ -1,0 +1,10 @@
+# DATABASE PATCH SET UPDATE 12.1.0.2.181016 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=28259833
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p28259833_121020_Linux-x86-64.zip?aru=22488632&patch_file=p28259833_121020_Linux-x86-64.zip
+#
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+B7DD20A7FD3DB638693523BFB936BCF251D2E46F026DF6C4B0AD5C074FBEFCC2 p28259833_121020_Linux-x86-64.zip
