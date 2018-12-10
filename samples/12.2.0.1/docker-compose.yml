@@ -5,9 +5,9 @@
 # Name.......: docker-compose.yml
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2018.03.18
+# Date.......: 2018.12.10
 # Revision...: --
-# Purpose....: Create a couple of users and groups
+# Purpose....: Simple compose file to create a 12.2 database
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
@@ -20,21 +20,17 @@ version: '3'
 services:
   tdb122s:
     image: oracle/database:12.2.0.1
-    container_name: ttc122_sdb
-    hostname: ttc122_sdb
+    container_name: tdb122s
+    hostname: tdb122s
+    restart: unless-stopped
+    network_mode: bridge
     volumes:
-      - /data/docker/volumes/ttc122_sdb:/u01
-    networks:
-      trivadislabs.com:
-        aliases:
-          - ttc122_sdb.trivadislabs.com
+      - ${DOCKER_VOLUME_BASE}/tdb122s:/u01
+      - ./config:/u01/config
     ports:
-      - "1521"
+      - "2122:1521"
     environment:
       ORADBA_TEMPLATE_PREFIX: custom_
+      INSTANCE_INIT: /u01/config
       ORACLE_SID: TDB122S
-
-networks:
-  trivadislabs.com:
-    driver: bridge
 # - EOF -----------------------------------------------------------------
