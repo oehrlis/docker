@@ -1,0 +1,61 @@
+#!/bin/bash
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: 00_init_environment
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.03.20
+# Revision...: --
+# Purpose....: File for setting the instance-specific environment. 
+#              The setup scripts are based on the OUD Base environment. 
+#              If OUD Base is not used, you may have to adapt this file 
+#              and set the specific parameter in section "default 
+#              environment variables"
+# Notes......: --
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+# - default environment variables ---------------------------------------
+# The default environment variables are already set correctly by OUD Base 
+# and commented out at this point. It is important that the appropriate 
+# environment is set. If OUD Base is not used, the following variables 
+# must be set explicitly.
+# -----------------------------------------------------------------------
+#export ORACLE_BASE="/opt/oracle"
+#export ORACLE_HOME="${ORACLE_BASE}/product/oud12.2.1.3.0"
+#export OUD_INSTANCE=ouddd
+#export OUD_INSTANCE_ADMIN=${ORACLE_BASE}/admin/${OUD_INSTANCE}
+#export OUD_INSTANCE_HOME="${ORACLE_BASE}/instances/${OUD_INSTANCE_NAME}"
+#export PWD_FILE=${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt
+#export PORT_ADMIN=4444
+#export PORT=1389
+#export PORT_SSL=1636
+#export PORT_REP=8989
+# - End of default environment variables --------------------------------
+
+# - Customization -------------------------------------------------------
+# - Instance information
+export DIRMAN="cn=Directory Manager"
+export REPMAN=admin
+export BASEDN="dc=trivadislabs,dc=com"
+
+# group OU below base DN in active directory eg ou=groups,dc=postgasse,dc=org
+export GROUP_OU="ou=Groups,dc=trivadislabs,dc=com"
+# user OU below base DN in active directory eg ou=people,dc=postgasse,dc=org
+export USER_OU="ou=People,dc=trivadislabs,dc=com"
+
+# - Certificates and password
+export KEYSTOREFILE=${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_jks
+export KEYSTOREPIN=${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}.pin
+export NICKNAME="NICKNAME"
+export PIN="PIN"
+
+# - Hosts
+export DEFAULT_HOST=$(hostname 2>/dev/null ||cat /etc/hostname ||echo $HOSTNAME)   # Hostname
+export HOST=${HOST:-$DEFAULT_HOST}
+# - End of customization ------------------------------------------------

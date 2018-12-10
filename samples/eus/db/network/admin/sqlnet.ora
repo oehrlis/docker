@@ -1,0 +1,97 @@
+#=====================================================================
+# 
+# $Id: sqlnet.ora 839 2016-08-10 12:53:35Z zam $
+# $Name: $
+#
+# FILE:    sqlnet.ora
+#
+# PURPOSE: Template sqlnet.ora
+#
+# AUTHOR:  TRIVADIS AG, D.Wapenaar, 28-Aug-1998
+# AUTHOR:  TRIVADIS AG, M.Bracher,  2006-2014
+# AUTHOR:  TRIVADIS AG, M.Zarick,   2014-
+#
+#=====================================================================
+
+# Dead Connection Detection
+# interval in minutes for a probe to verify that connections are active
+SQLNET.EXPIRE_TIME = 10
+
+# Connect timeouts in seconds
+#SQLNET.INBOUND_CONNECT_TIMEOUT  = 10  # time for authentication of client
+#SQLNET.OUTBOUND_CONNECT_TIMEOUT = 3   # connect timeout to instance
+#TCP.CONNECT_TIMEOUT             = 3   # connect timeout to listener
+#NAMES.LDAP_CONN_TIMEOUT         = 3   # connect timeout to LDAP server
+
+# Default database domain
+NAMES.DEFAULT_DOMAIN=postgasse.org
+
+# Name resolution priority
+NAMES.DIRECTORY_PATH=(LDAP, TNSNAMES, EZCONNECT )
+
+##############################################################################
+# you need to disable ADR if you need to trace Oracle Net
+#DIAG_ADR_ENABLED=OFF
+##############################################################################
+
+##############################################################################
+# Logging, only apply if ADR is disabled
+##############################################################################
+LOG_DIRECTORY_CLIENT= /u00/app/oracle/network/log
+LOG_FILE_CLIENT=sqlnet_client.log
+LOG_DIRECTORY_SERVER= /u00/app/oracle/network/log
+LOG_FILE_SERVER=sqlnet_server.log
+
+##############################################################################
+# Tracing, only apply if ADR is disabled
+##############################################################################
+TRACE_LEVEL_CLIENT=OFF
+TRACE_DIRECTORY_CLIENT= /u00/app/oracle/network/trc
+TRACE_FILE_CLIENT=sqlnet_client.trc
+TRACE_LEVEL_SERVER=OFF
+TRACE_DIRECTORY_SERVER= /u00/app/oracle/network/trc
+TRACE_FILE_SERVER=sqlnet_server.trc
+
+# Security
+# restrict access to database via listener to specific nodes
+#TCP.VALIDNODE_CHECKING=yes
+#TCP.EXCLUDED_NODES=(badclient1,192.168.1.* )
+#TCP.INVITED_NODES=(client1,client2,client3,client4,192.168.2.* )
+
+# Oracle Net encryption 
+# avaiable encryption algorithms in favored priority (default all )
+#SQLNET.ENCRYPTION_TYPES_CLIENT = (AES256, RC4_256, AES192, AES128, RC4_128 )
+#SQLNET.ENCRYPTION_TYPES_SERVER = (AES256, RC4_256, AES192, AES128, RC4_128 )
+# additional less secure algorithms: 3DES168, 3DES112, RC4_56, DES, RC4_40, DES40
+# enable encryption by following parameters
+# ENCRYPTION_CLIENT and ENCRYPTION_SERVER can be set to
+# REJECTED, ACCEPTED (default), REQUESTED or REQUIRED
+#SQLNET.ENCRYPTION_CLIENT = REQUIRED
+#SQLNET.ENCRYPTION_SERVER = REQUIRED
+
+# Oracle Net checksumming for data integrity
+# avaiable checksumming algorithms in favored priority (default is SHA1, MD5, SHA512, SHA256, SHA384 )
+#SQLNET.CRYPTO_CHECKSUM_TYPES_CLIENT = (SHA512, SHA384, SHA256 )
+#SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER = (SHA512, SHA384, SHA256 )
+# additional less secure algorithms: SHA1, MD5
+# enable checksumming by following parameters
+# CRYPTO_CHECKSUM_CLIENT and CRYPTO_CHECKSUM_SERVER can be set to
+# REJECTED, ACCEPTED (default), REQUESTED or REQUIRED
+#SQLNET.CRYPTO_CHECKSUM_CLIENT = REQUIRED
+#SQLNET.CRYPTO_CHECKSUM_SERVER = REQUIRED
+
+# Wallet settings
+# for secure external password store
+# use "mkstore -wrl <wallet_location> -create" to create the wallet
+# use "mkstore -wrl <wallet_location> -createCredential <connect_string> <username>"
+# to create credentials
+#WALLET_LOCATION =
+#   (SOURCE =
+#     (METHOD = FILE)
+#     (METHOD_DATA =
+#       (DIRECTORY = /u00/app/oracle/network/admin)
+#     )
+#    )
+#SQLNET.WALLET_OVERRIDE = TRUE
+
+#================================================================= EOF
