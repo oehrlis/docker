@@ -7,7 +7,7 @@
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.03.18
 # Revision...: --
-# Purpose....: Create a couple of users and groups
+# Purpose....: Simple compose file to create a local orarepo web server
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
@@ -18,23 +18,15 @@
 # -----------------------------------------------------------------------
 version: '3'
 services:
-  tdb122s:
-    image: oracle/database:12.2.0.1
-    container_name: ttc122_sdb
-    hostname: ttc122_sdb
+  orarepo:
+    image: busybox
+    container_name: orarepo
+    hostname: orarepo
+    restart: always
+    network_mode: bridge
     volumes:
-      - /data/docker/volumes/ttc122_sdb:/u01
-    networks:
-      trivadislabs.com:
-        aliases:
-          - ttc122_sdb.trivadislabs.com
+      - ${DOCKER_VOLUME_BASE}/orarepo:/www
     ports:
-      - "1521"
-    environment:
-      ORADBA_TEMPLATE_PREFIX: custom_
-      ORACLE_SID: TDB122S
-
-networks:
-  trivadislabs.com:
-    driver: bridge
+      - "80:80"
+    command: httpd -fvvv -h /www
 # - EOF -----------------------------------------------------------------
