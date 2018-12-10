@@ -57,9 +57,7 @@ ENV SETUP_INIT="00_setup_oradba_init.sh" \
     CONFIG_SCRIPT="55_config_database.sh" \
     CHECK_SCRIPT="55_check_database.sh" \
     RUN_SCRIPT="50_run_database.sh" \
-    CREATE_SCRIPT="52_create_database.sh" \
-    ORADBA_RSP_FILE="dbca18.0.0.rsp.tmpl" \
-    ORADBA_DBC_FILE="dbca18.0.0.dbc.tmpl"
+    CREATE_SCRIPT="52_create_database.sh"
 
 # stuff to run a DB instance
 ENV ORACLE_SID=${ORACLE_SID:-"TDB183S"} \
