@@ -1,0 +1,40 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.03.18
+# Revision...: --
+# Purpose....: Create a couple of users and groups
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+  tdb122s:
+    image: oracle/database:12.2.0.1
+    container_name: ttc122_sdb
+    hostname: ttc122_sdb
+    volumes:
+      - /data/docker/volumes/ttc122_sdb:/u01
+    networks:
+      trivadislabs.com:
+        aliases:
+          - ttc122_sdb.trivadislabs.com
+    ports:
+      - "1521"
+    environment:
+      ORADBA_TEMPLATE_PREFIX: custom_
+      ORACLE_SID: TDB122S
+
+networks:
+  trivadislabs.com:
+    driver: bridge
+# - EOF -----------------------------------------------------------------
