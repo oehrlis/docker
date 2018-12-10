@@ -1,10 +1,20 @@
+# Software, Packages and other stuff not for git
 **/*.rpm
 **/*.jar
 **/*.zip
 **/*.tar.gz
 **/*.tgz
+**/*.gz
 **/*.netrc
+
+# MacOS fork files
 **/*.DS_Store
+
+# Project files
 .idea/
 /.pydevproject
 /.project
+
+# Not yet ready for git
+OracleDatabase/19.1.0.0/*
+# - EOF -----------------------------------------------------------------
