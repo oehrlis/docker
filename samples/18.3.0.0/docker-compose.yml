@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.12.10
+# Revision...: --
+# Purpose....: Simple compose file to create a 18.3 database
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+  tdb183s:
+    image: oracle/database:18.3.0.0
+    container_name: tdb183s
+    hostname: tdb183s
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/tdb183s:/u01
+      - ./config:/u01/config
+    ports:
+      - "2183:1521"
+    environment:
+      ORADBA_TEMPLATE_PREFIX: custom_
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB183S
+# - EOF -----------------------------------------------------------------
