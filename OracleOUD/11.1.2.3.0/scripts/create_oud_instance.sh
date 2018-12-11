@@ -49,8 +49,8 @@ export OUD_CUSTOM=${OUD_CUSTOM:-'FALSE'}                # Flag to create custom 
 
 # OUD 11g instance name and home path for installation
 export INSTANCE_NAME=${INSTANCE_NAME:-"../../../../..${OUD_INSTANCE_HOME}"}
-# default folder for OUD instance init scripts
-export OUD_INSTANCE_INIT=${OUD_INSTANCE_INIT:-$ORACLE_DATA/scripts}
+# default folder for DB instance init scripts
+export INSTANCE_INIT=${INSTANCE_INIT:-"${OUD_INSTANCE_ADMIN}/scripts"}
 # - EOF Environment Variables -----------------------------------------------
 
 # Normalize CREATE_INSTANCE
@@ -134,17 +134,15 @@ mkdir -p "${OUD_INSTANCE_ADMIN}/etc/"
 echo "$s" > ${PWD_FILE}
 
 # set instant init location create folder if it does exists
-if [ -d "${OUD_INSTANCE_ADMIN}/create" ]; then
-    OUD_INSTANCE_INIT="${OUD_INSTANCE_ADMIN}/create"
-else
-    OUD_INSTANCE_INIT="${OUD_INSTANCE_INIT}/setup"
+if [ ! -d "${INSTANCE_INIT}/setup" ]; then
+    INSTANCE_INIT="${ORACLE_BASE}/admin/${ORACLE_SID}/scripts"
 fi
 
 echo "--- Create OUD instance ------------------------------------------------"
 echo "  OUD_INSTANCE       = ${OUD_INSTANCE}"
 echo "  OUD_INSTANCE_BASE  = ${OUD_INSTANCE_BASE}"
 echo "  OUD_INSTANCE_ADMIN = ${OUD_INSTANCE_ADMIN}"
-echo "  OUD_INSTANCE_INIT  = ${OUD_INSTANCE_INIT}"
+echo "  INSTANCE_INIT      = ${INSTANCE_INIT}"
 echo "  OUD_INSTANCE_HOME  = ${OUD_INSTANCE_HOME}"
 echo "  PORT               = ${PORT}"
 echo "  PORT_SSL           = ${PORT_SSL}"
@@ -158,7 +156,7 @@ echo ""
 
 if  [ ${OUD_CUSTOM} -eq 1 ]; then
     echo "--- Create OUD instance (${OUD_INSTANCE}) using custom scripts ---------"
-    ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
+    ${DOCKER_SCRIPTS}/config_oud_instance.sh${INSTANCE_INIT}/setup
 elif [ ${OUD_PROXY} -eq 0 ]; then
 # Create an directory
     echo "--- Create regular OUD instance (${OUD_INSTANCE}) ----------------------"
@@ -182,7 +180,7 @@ elif [ ${OUD_PROXY} -eq 0 ]; then
         echo "--- Successfully created regular OUD instance (${OUD_INSTANCE}) --------"
         # Execute custom provided setup scripts
         
-        ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
+        ${DOCKER_SCRIPTS}/config_oud_instance.sh ${INSTANCE_INIT}/setup
     else
         echo "--- ERROR creating regular OUD instance (${OUD_INSTANCE}) --------------"
         exit 1
@@ -204,7 +202,7 @@ elif [ ${OUD_PROXY} -eq 1 ]; then
         echo "--- Successfully created OUD proxy instance (${OUD_INSTANCE}) ----------"
         # Execute custom provided setup scripts
         
-        ${DOCKER_SCRIPTS}/config_oud_instance.sh ${OUD_INSTANCE_INIT}
+        ${DOCKER_SCRIPTS}/config_oud_instance.sh ${INSTANCE_INIT}/setup
     else
         echo "--- ERROR creating OUD proxy instance (${OUD_INSTANCE}) -----------------"
         exit 1

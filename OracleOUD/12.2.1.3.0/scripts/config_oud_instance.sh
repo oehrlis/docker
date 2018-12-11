@@ -44,7 +44,7 @@ export ADMIN_USER=${ADMIN_USER:-'cn=Directory Manager'} # Default directory admi
 export PWD_FILE=${PWD_FILE:-${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt}
 
 # default folder for OUD instance init scripts
-export OUD_INSTANCE_INIT=${OUD_INSTANCE_INIT:-$ORACLE_DATA/scripts}
+export INSTANCE_INIT=${INSTANCE_INIT:-$ORACLE_DATA/config}
 # - EOF Environment Variables -----------------------------------------------
 
 # use parameter 1 as script root
