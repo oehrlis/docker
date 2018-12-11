@@ -1,3 +1,0 @@
-DIRECTORY_SERVERS=(oud.trivadislabs.com:1389:1636)
-DEFAULT_ADMIN_CONTEXT = "dc=trivadislabs,dc=com"
-DIRECTORY_SERVER_TYPE = OID
