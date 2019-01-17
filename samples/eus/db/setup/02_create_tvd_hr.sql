@@ -26,6 +26,12 @@ SET TRIMSPOOL ON
 SET TAB OFF
 SET PAGESIZE 100 
 
+-- Define the default values 
+DEFINE pass=tvd_hr
+DEFINE pass_sec=tvd_hr_sec;
+DEFINE tbs=USERS
+DEFINE ttbs=TEMP
+
 SPOOL 02_create_tvd_hr.log
 
 ----------------------------------------------------------------------------
@@ -37,6 +43,12 @@ SELECT count(1) INTO vcount FROM dba_users WHERE username = 'TVD_HR';
 IF vcount != 0 THEN
 EXECUTE IMMEDIATE ('DROP USER tvd_hr CASCADE');
 END IF;
+
+SELECT count(1) INTO vcount FROM dba_users WHERE username = 'TVD_HR_SEC';
+IF vcount != 0 THEN
+EXECUTE IMMEDIATE ('DROP USER tvd_hr_sec CASCADE');
+END IF;
+
 END;
 /
 
@@ -51,6 +63,15 @@ ALTER USER tvd_hr TEMPORARY TABLESPACE &ttbs;
 
 GRANT CREATE SESSION, CREATE VIEW, ALTER SESSION, CREATE SEQUENCE TO tvd_hr;
 GRANT CREATE SYNONYM, CREATE DATABASE LINK, RESOURCE , UNLIMITED TABLESPACE TO tvd_hr;
+
+CREATE USER tvd_hr_sec IDENTIFIED BY &pass_sec;
+
+ALTER USER tvd_hr_sec DEFAULT TABLESPACE &tbs
+    QUOTA UNLIMITED ON &tbs;
+
+ALTER USER tvd_hr_sec TEMPORARY TABLESPACE &ttbs;
+
+GRANT CREATE SESSION, RESOURCE, EXECUTE_CATALOG_ROLE TO tvd_hr_sec;
 
 ----------------------------------------------------------------------------
 -- grants from sys schema
@@ -756,4 +777,33 @@ EXECUTE dbms_stats.gather_schema_stats( -
 
 spool off
 exit
+
+----------------------------------------------------------------------------
+-- create VPD stuff
+CONNECT tvd_hr_sec/tvd_hr_sec
+CREATE OR REPLACE FUNCTION EMPLOYEE_RESTRICT (
+   SCHEMA   IN   VARCHAR2,
+   tab      IN   VARCHAR2
+)
+ RETURN VARCHAR2
+ IS
+  return_val VARCHAR2 (2000);
+BEGIN
+    return_val :=  '(department_id = sys_context(''SYS_LDAP_USER_DEFAULT'', ''DEPARTMENTNUMBER'') ) AND ( upper(last_name) = upper(sys_context(''SYS_LDAP_USER_DEFAULT'', ''UID'')) OR upper(sys_context(''SYS_LDAP_USER_DEFAULT'', ''TITLE'')) = ''MANAGER'')';
+    RETURN return_val;
+END employee_restrict;
+/
+
+BEGIN 
+  dbms_rls.add_policy
+   (
+    object_schema    =>'TVD_HR',
+    object_name      =>'EMPLOYEES',
+    policy_name      =>'EMPLOYEE_POLICY',
+    function_schema  =>'TVD_HR_SEC',
+    policy_function  =>'EMPLOYEE_RESTRICT'
+   );
+END;
+/
+
 -- EOF ---------------------------------------------------------------------

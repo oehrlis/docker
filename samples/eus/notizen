@@ -1,0 +1,90 @@
+dbca -silent -configureDatabase \
+-sourceDB $ORACLE_SID -sysDBAUserName sys -sysDBAPassword z9E8WkEEHq \
+-registerWithDirService true -dirServiceUserName "cn=eusadmin,cn=oraclecontext" \
+-dirServicePassword woAcBcQ5TK -walletPassword TVD04manager 
+
+dbca -silent -configureDatabase \
+-sourceDB $ORACLE_SID -sysDBAUserName sys -sysDBAPassword z9E8WkEEHq \
+-registerWithDirService true -dirServiceUserName "cn=Directory Manager" \
+-dirServicePassword Q7YR3j6Vc1 -walletPassword TVD04manager 
+
+oud_eus_pwd.txt
+
+
+
+JAVA_SECURITY=$(find $(dirname $(dirname $(realpath $(command -v java)))) -name java.security 2>/dev/null)
+if [ ! -z ${JAVA_SECURITY} ] && [ -f ${JAVA_SECURITY} ]; then
+    sed -i 's/3DES_EDE_CBC//' ${JAVA_SECURITY}
+fi
+
+
+
+aci: (targetattr="*") (version 3.0; acl "Allow OracleContextAdmins"; allow (all) groupdn="ldap:///cn=OracleContextAdmins,cn=Groups,cn=OracleContext,dc=trivadislabs,dc=com";)
+
+
+dsconfig set-access-control-handler-prop \
+--add global-aci:\(targetattr=\"*\"\)\ \(version\ 3.0\;\ acl\ \"Allow\ OracleContextAdmins\"\;\ allow\ \(all\)\
+groupdn=\"ldap:///cn=OracleContextAdmins,cn=Groups,cn=OracleContext,dc=trivadislabs,dc=com\"\;\) \
+          --hostname oud \
+          --port 4444 \
+          --portProtocol LDAP \
+          --trustAll \
+          --bindDN cn=Directory\ Manager \
+          --bindPasswordFile /u01/admin/oud_eus/etc/oud_eus_pwd.txt \
+          --no-prompt
+
+
+dsconfig set-access-control-handler-prop \
+    --add global-aci:\(targetcontrol=\"1.2.840.113556.1.4.805\"\)\ \(version\ 3.0;\ acl\ \"Allow\ OracleContextAdmins\ SubTree\ delete\ control\ access\";\ allow\(read\)\ groupdn=\"ldap:///cn=OracleContextAdmins,cn=Groups,cn=OracleContext,dc=trivadislabs,dc=com\"\;\) \
+    --hostname oud \
+    --port 4444 \
+    --portProtocol LDAP \
+    --trustAll \
+    --bindDN cn=Directory\ Manager \
+    --bindPasswordFile /u01/admin/oud_eus/etc/oud_eus_pwd.txt \
+    --no-prompt
+
+
+dsconfig set-access-control-handler-prop \
+--add global-aci:\(targetattr=\"*\"\)\ \(version\ 3.0\;\ acl\ \"Allow\ OracleContextAdmins\"\;\ allow\ \(all\)\ groupdn=\"ldap:///cn=OracleContextAdmins,cn=Groups,cn=OracleContext,dc=trivadislabs,dc=com\"\;\) \
+          --hostname oud \
+          --port 4444 \
+          --portProtocol LDAP \
+          --trustAll \
+          --bindDN cn=Directory\ Manager \
+          --bindPasswordFile /u01/admin/oud_eus/etc/oud_eus_pwd.txt \
+          --no-prompt
+
+The "global-aci" property has the following values:
+
+    *)  (extop="1.3.6.1.4.1.26027.1.6.1 || 1.3.6.1.4.1.26027.1.6.3 || 1.3.6.1.4.1.4203.1.11.1 ||              *)  (targetattr="audio||authPassword||description||displayName||givenName||homePhone||ho
+        1.3.6.1.4.1.1466.20037 || 1.3.6.1.4.1.4203.1.11.3") (version 3.0; acl "Anonymous extended                 mePostalAddress||initials||jpegPhoto||labeledURI||mobile||pager||postalAddress||post
+        operation access"; allow(read) userdn="ldap:///anyone";)                                                  alCode||preferredLanguage||telephoneNumber||userPassword")(version 3.0; acl "Self
+                                                                                                                  entry modification"; allow (write) userdn="ldap:///self";)
+    *)  "(target="ldap:///")(targetscope="base")(targetattr="objectClass||namingContexts||supportedAuthP      *)  "(targetattr="createTimestamp||creatorsName||modifiersName||modifyTimestamp||entryDN
+        asswordSchemes||supportedControl||supportedExtension||supportedFeatures||supportedLDAPVersion||s          ||entryUUID||subschemaSubentry||orclguid||nsuniqueid")(version 3.0; acl
+        upportedSASLMechanisms||vendorName||vendorVersion")(version 3.0; acl "User-Visible Root DSE               "User-Visible Operational Attributes"; allow (read,search,compare)
+        Operational Attributes"; allow (read,search,compare) userdn="ldap:///anyone";)"                           userdn="ldap:///anyone";)"
+    *)  (target="ldap:///cn=changelog")(targetattr="*")(version 3.0; acl "External changelog access";         *)  "(targetattr="userPassword||authPassword")(version 3.0; acl "Self entry read"; allow
+        deny (all) userdn="ldap:///anyone";)                                                                      (read,search,compare) userdn="ldap:///self";)"
+    *)  "(target="ldap:///cn=schema")(targetscope="base")(targetattr="objectClass||attributeTypes||dITCo      *)  (targetcontrol="1.3.6.1.1.12 || 1.3.6.1.1.13.1 || 1.3.6.1.1.13.2 ||
+        ntentRules||dITStructureRules||ldapSyntaxes||matchingRules||matchingRuleUse||nameForms||objectCl          1.2.840.113556.1.4.319 || 1.2.826.0.1.3344810.2.3 || 2.16.840.1.113730.3.4.18 ||
+        asses")(version 3.0; acl "User-Visible Schema Operational Attributes"; allow                              2.16.840.1.113730.3.4.9 || 1.2.840.113556.1.4.473 || 1.3.6.1.4.1.42.2.27.9.5.9")
+        (read,search,compare) userdn="ldap:///anyone";)"                                                          (version 3.0; acl "Authenticated users control access"; allow(read)
+                                                                                                                  userdn="ldap:///all";)
+    *)  "(target="ldap:///cn=subschemasubentry")(targetscope="base")(targetattr="objectClass||attributeT      *)  (targetcontrol="2.16.840.1.113730.3.4.2 || 2.16.840.1.113730.3.4.17 ||
+        ypes||dITContentRules||dITStructureRules||ldapSyntaxes||matchingRules||matchingRuleUse||nameForm          2.16.840.1.113730.3.4.19 || 1.3.6.1.4.1.4203.1.10.2 || 1.3.6.1.4.1.42.2.27.8.5.1 ||
+        s||objectClasses")(version 3.0; acl "User-Visible SubSchemaSubentry Operational Attributes";              2.16.840.1.113730.3.4.16 || 2.16.840.1.113894.1.8.31") (version 3.0; acl "Anonymous
+        allow (read,search,compare) userdn="ldap:///anyone";)"                                                    control access"; allow(read) userdn="ldap:///anyone";)
+    *)  (target="ldap:///dc=replicationchanges")(targetattr="*")(version 3.0; acl "Replication backend        *)  (targetcontrol="2.16.840.1.113894.1.8.16")(version 3.0; acl "Anonymous control
+        access"; deny (all) userdn="ldap:///anyone";)                                                             access"; allow(read) userdn="ldap:///anyone";)
+    *)  "(target="ldap:///dc=trivadislabs,dc=com")(targetattr!="userpassword||authpassword||aci")(target      *)  (targetcontrol="2.16.840.1.113894.1.8.2")(version 3.0; acl "Anonymous control
+        filter="(objectclass=orclContext)")(version 3.0; acl "Anonymous read access to subtree";allow             access"; allow(read) userdn="ldap:///anyone";)
+        (read,search,compare) userdn="ldap:///anyone";)"                                                          
+    *)  "(target="ldap:///dc=trivadislabs,dc=com")(targetattr="*")(version 3.0; acl "EUS reads                *)  (targetcontrol="2.16.840.1.113894.1.8.23")(version 3.0; acl "Anonymous access to GSL
+        authpassword"; allow (read,search,compare)                                                                certificate search ctrl"; allow(read) userdn="ldap:///anyone";)
+        userdn="ldap:///??sub?(&(objectclass=orclservice)(objectclass=orcldbserver))";)"                          
+    *)  "(target="ldap:///dc=trivadislabs,dc=com")(targetattr="orclaccountstatusevent")(version 3.0; acl          
+        "EUS write orclaccountstatusenabled"; allow (write)                                                       
+        userdn="ldap:///??sub?(&(objectclass=orclservice)(objectclass=orcldbserver))";)"                          
+

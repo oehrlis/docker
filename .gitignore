@@ -16,5 +16,6 @@
 /.project
 
 # Not yet ready for git
-OracleDatabase/19.1.0.0/*
+samples/legacy/*
+samples/19.1.0.0/*
 # - EOF -----------------------------------------------------------------

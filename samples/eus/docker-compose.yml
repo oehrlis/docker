@@ -16,16 +16,20 @@
 # Modified...:
 # see git revision history with git log for more information on changes
 # -----------------------------------------------------------------------
+
 version: '3'
 services:
+# Database service
   db:
-    image: oracle/database:18.4.0.0
+    image: oracle/database:${DOCKER_DB_VERSION}
     container_name: eusdb
     hostname: db
     restart: unless-stopped
-    network_mode: bridge
     depends_on:
       - oud
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
     volumes:
       - ${DOCKER_VOLUME_BASE}/eusdb:/u01
       - ./db:/u01/config
@@ -36,23 +40,25 @@ services:
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TEUS01
 
+# OUD LDAP service
   oud:
-    image: oracle/oud:12.2.1.3.180829
+    image: oracle/oud:${DOCKER_OUD_VERSION}
     container_name: eusoud
     hostname: oud
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
     restart: unless-stopped
-    network_mode: bridge
     volumes:
       - ${DOCKER_VOLUME_BASE}/eusoud:/u01
       - ./oud:/u01/config
     ports:
       - "6389:1389"
-      - "6636"
-      - "6444"
+      - "6636:1636"
+      - "6444:4444"
     environment:
       OUD_CUSTOM: 'TRUE'
       INSTANCE_INIT: /u01/config
       BASEDN: dc=trivadislabs,dc=com
       OUD_INSTANCE: oud_eus
-
 # - EOF -----------------------------------------------------------------

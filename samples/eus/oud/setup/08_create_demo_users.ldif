@@ -78,6 +78,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Ben King
 sn: King
+uid: king
 title: President
 givenName: Ben
 displayName: Ben King
@@ -93,6 +94,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Honey Rider
 sn: Rider
+uid: rider
 title: Manager
 manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
 givenName: Honey
@@ -109,6 +111,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Vesper Lynd
 sn: Lynd
+uid: lynd
 title: Clerk
 manager: cn=Honey Rider,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
 givenName: Vesper
@@ -125,6 +128,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Eugen Tanner
 sn: Tanner
+uid: tanner
 title: Administrator
 manager: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
 givenName: Eugen
@@ -141,6 +145,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Ian Fleming
 sn: Fleming
+uid: fleming
 title: Manager
 manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
 givenName: Ian
@@ -157,6 +162,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: John Gartner
 sn: Gartner
+uid: gartner
 title: Administrator
 manager: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
 givenName: John
@@ -173,6 +179,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Jim Clark
 sn: Clark
+uid: clark
 title: Manager
 manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
 givenName: Jim
@@ -189,6 +196,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: John Miller
 sn: Miller
+uid: miller
 title: Clerk
 manager: cn=Jim Clark,ou=Accounting,ou=People,dc=trivadislabs,dc=com
 givenName: John
@@ -205,6 +213,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Douglas Adams
 sn: Adams
+uid: adams
 title: Clerk
 manager: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
 givenName: Douglas
@@ -221,6 +230,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Ernst Blofeld
 sn: Blofeld
+uid: blofeld
 title: Manager
 manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
 givenName: Ernst
@@ -237,6 +247,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Ford Prefect
 sn: Prefect
+uid: prefect
 title: Analyst
 manager: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
 givenName: Ford
@@ -253,6 +264,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: James Scott
 sn: Scott
+uid: scott
 title: Engineer
 manager: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
 givenName: James
@@ -269,6 +281,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Paul Smith
 sn: Smith
+uid: smith
 title: Engineer
 manager: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
 givenName: Paul
@@ -285,6 +298,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Eve Moneypenny
 sn: Moneypenny
+uid: moneypenny
 title: Manager
 manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
 givenName: Eve
@@ -301,6 +315,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Monica Blake
 sn: Blake
+uid: blake
 title: Salesman
 manager: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
 givenName: Monica
@@ -317,6 +332,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Paul Ward
 sn: Ward
+uid: ward
 title: Salesman
 manager: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
 givenName: Paul
@@ -333,6 +349,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Arthur Dent
 sn: Dent
+uid: dent
 title: Salesman
 manager: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
 givenName: Arthur
@@ -349,6 +366,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Andy Renton
 sn: Renton
+uid: renton
 title: Clerk
 givenName: Andy
 manager: cn=Felix Leitner,ou=Operations,ou=People,dc=trivadislabs,dc=com
@@ -365,6 +383,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Felix Leitner
 sn: Leitner
+uid: leitner
 title: Manager
 manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
 givenName: Felix
@@ -381,6 +400,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: James Bond
 sn: Bond
+uid: bond
 title: Agent
 manager: cn=Felix Leitner,ou=Operations,ou=People,dc=trivadislabs,dc=com
 givenName: James
@@ -397,6 +417,7 @@ objectClass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Jason Walters
 sn: Walters
+uid: walters
 title: Agent
 manager: cn=Felix Leitner,ou=Operations,ou=People,dc=trivadislabs,dc=com
 givenName: Jason
@@ -497,4 +518,13 @@ uniqueMember: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
 uniqueMember: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
 displayName: Trivadis LAB Management
 
+dn: cn=Trivadis LAB HR,ou=Groups,dc=trivadislabs,dc=com
+changetype: add
+objectClass: top
+objectClass: groupOfUniqueNames
+objectClass: orclGroup
+cn: Trivadis LAB Management
+uniqueMember: cn=Honey Rider,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
+uniqueMember: cn=Vesper Lynd,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
+displayName: Trivadis LAB Human Resources
 # - EOF -----------------------------------------------------------------
