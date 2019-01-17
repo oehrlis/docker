@@ -5,7 +5,7 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2018.03.19
+# Date.......: 2019.01.17
 # Purpose....: This Dockerfile to build Oracle Database Containers
 # Notes......: --
 # Reference..: --
@@ -44,14 +44,14 @@ ENV DOWNLOAD="/tmp/download" \
     ORADBA_INIT="/opt/oradba/bin" \
     DB_BASE_PKG="LINUX.X64_180000_db_home.zip" \
     DB_EXAMPLE_PKG="LINUX.X64_180000_examples.zip" \
-    DB_PATCH_PKG="p28655784_180000_Linux-x86-64.zip" \
-    DB_OJVM_PKG="p28502229_180000_Linux-x86-64.zip" \
-    DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
+    DB_PATCH_PKG="p28790647_180000_Linux-x86-64.zip" \
+    DB_OJVM_PKG="p28790647_180000_Linux-x86-64.zip" \
+    DB_OPATCH_PKG="p6880880_180000_Linux-x86-64.zip"
 
 # scripts to build and run this container
 ENV SETUP_INIT="00_setup_oradba_init.sh" \
     SETUP_OS="01_setup_os_db.sh" \
-    SETUP_DB="10_setup_db_18.4.sh" \
+    SETUP_DB="10_setup_db_18.5.sh" \
     SETUP_BASENV="20_setup_basenv.sh" \
     START_SCRIPT="50_start_database.sh" \
     CONFIG_SCRIPT="55_config_database.sh" \
@@ -61,7 +61,7 @@ ENV SETUP_INIT="00_setup_oradba_init.sh" \
 
 # stuff to run a DB instance
 ENV ORACLE_SID=${ORACLE_SID:-"TDB183S"} \
-    ORACLE_HOME_NAME="18.4.0.0" \
+    ORACLE_HOME_NAME="18.5.0.0" \
     ORACLE_ROOT=${ORACLE_ROOT:-"/u00"} \
     ORACLE_DATA=${ORACLE_DATA:-"/u01"} \
     ORACLE_ARCH=${ORACLE_ARCH:-"/u01"} \
