@@ -1,0 +1,88 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.12.10
+# Revision...: --
+# Purpose....: Simple compose file to create a 18.4 database
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+
+# service for the catalog database TDB184R
+  tdb184r:
+    image: oracle/database:18.4.0.0
+    container_name: obr_tdb184r
+    hostname: tdb184r
+    restart: unless-stopped
+    networks:
+      obrnet:
+        aliases:
+          - catalog.trivadislabs.com
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/obr/tdb184r:/u01
+      - ./tdb184r:/u01/config
+      - ./lab:/u01/lab
+    ports:
+      - "5521:1521"
+    environment:
+      ORADBA_TEMPLATE_PREFIX: custom_
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB184R
+
+# service for a regular database TDB184A
+  tdb184a:
+    image: oracle/database:18.4.0.0
+    container_name: obr_tdb184a
+    hostname: tdb184a
+    restart: unless-stopped
+    networks:
+      obrnet:
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/obr/tdb184a:/u01
+      - ./tdb184a:/u01/config
+      - ./lab:/u01/lab
+    ports:
+      - "5522:1521"
+    environment:
+      ORADBA_TEMPLATE_PREFIX: custom_
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB184A
+
+# service for a container database TDB184C
+  tdb184c:
+    image: oracle/database:18.4.0.0
+    container_name: obr_tdb184c
+    hostname: tdb184c
+    restart: unless-stopped
+    networks:
+      obrnet:
+        aliases:
+          - tdb184c.trivadislabs.com
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/obr/tdb184c:/u01
+      - ./tdb184c:/u01/config
+      - ./lab:/u01/lab
+    ports:
+      - "5523:1521"
+    environment:
+      ORADBA_TEMPLATE_PREFIX: custom_
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB184C
+
+# local network for O-BR
+networks:
+  obrnet:
+    driver: bridge
+# - EOF -----------------------------------------------------------------
