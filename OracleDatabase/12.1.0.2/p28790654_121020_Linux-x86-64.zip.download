@@ -1,10 +1,10 @@
-# OJVM PATCH SET UPDATE 12.1.0.2.181016 (Patch)
+# OJVM PATCH SET UPDATE 12.1.0.2.190115 (Patch)
 #
 # The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
 # require a valid MOS Account to download Oracle Software from MOS.
 # Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=28440711
-# Direct Download   : https://updates.oracle.com/Orion/Services/download/p28440711_121020_Linux-x86-64.zip?aru=22440644&patch_file=p28440711_121020_Linux-x86-64.zip
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p28790654_121020_Linux-x86-64.zip?aru=22620251&patch_file=p28790654_121020_Linux-x86-64.zip
 #
 # SHA-256                                                        File
 # -------------------------------------------------------------- ---------------------------------
-7901565E458A8199DA59771EC1F07A9DEFDEAE9553F1451F9BD4C10FDF1F6B67 p28440711_121020_Linux-x86-64.zip
+5C2084D39867721A6B967D6DBBDC099FFBB16D4160AB6C92E736CFF78A82D779 p28790654_121020_Linux-x86-64.zip

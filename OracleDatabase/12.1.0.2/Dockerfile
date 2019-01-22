@@ -45,8 +45,8 @@ ENV DOWNLOAD="/tmp/download" \
     DB_BASE_PKG="linuxamd64_12102_database_1of2.zip" \
     DB_BASE2_PKG="linuxamd64_12102_database_2of2.zip" \
     DB_EXAMPLE_PKG="linuxamd64_12102_examples.zip" \
-    DB_PATCH_PKG="p28259833_121020_Linux-x86-64.zip" \
-    DB_OJVM_PKG="p28440711_121020_Linux-x86-64.zip" \
+    DB_PATCH_PKG="p28729169_121020_Linux-x86-64.zip" \
+    DB_OJVM_PKG="p28790654_121020_Linux-x86-64.zip" \
     DB_OPATCH_PKG="p6880880_121010_Linux-x86-64.zip"
 
 # scripts to build and run this container
