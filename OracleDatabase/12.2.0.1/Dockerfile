@@ -44,8 +44,8 @@ ENV DOWNLOAD="/tmp/download" \
     ORADBA_INIT="/opt/oradba/bin" \
     DB_BASE_PKG="linuxx64_12201_database.zip" \
     DB_EXAMPLE_PKG="linuxx64_12201_examples.zip" \
-    DB_PATCH_PKG="p28662603_122010_Linux-x86-64.zip" \
-    DB_OJVM_PKG="p28440725_122010_Linux-x86-64.zip" \
+    DB_PATCH_PKG="p28822515_122010_Linux-x86-64.zip" \
+    DB_OJVM_PKG="p28790651_122010_Linux-x86-64.zip" \
     DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
 
 # scripts to build and run this container
