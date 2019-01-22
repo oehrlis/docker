@@ -44,7 +44,7 @@ ENV DOWNLOAD="/tmp/download" \
     ORADBA_INIT="/opt/oradba/bin" \
     DB_BASE_PKG="LINUX.X64_180000_db_home.zip" \
     DB_EXAMPLE_PKG="LINUX.X64_180000_examples.zip" \
-    DB_PATCH_PKG="p28790647_180000_Linux-x86-64.zip" \
+    DB_PATCH_PKG="p28822489_180000_Linux-x86-64.zip" \
     DB_OJVM_PKG="p28790647_180000_Linux-x86-64.zip" \
     DB_OPATCH_PKG="p6880880_180000_Linux-x86-64.zip"
 
