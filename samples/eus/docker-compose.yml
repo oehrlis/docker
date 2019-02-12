@@ -61,4 +61,16 @@ services:
       INSTANCE_INIT: /u01/config
       BASEDN: dc=trivadislabs,dc=com
       OUD_INSTANCE: oud_eus
+
+  # Portainer
+  portainerservice:
+    image: portainer/portainer
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9000:9000"
+
+volumes:
+  portainer_data:
 # - EOF -----------------------------------------------------------------
