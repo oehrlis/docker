@@ -30,7 +30,7 @@ services:
     ports:
       - "2192:1521"
     environment:
-      ORADBA_TEMPLATE_PREFIX: custom_
+#      ORADBA_TEMPLATE_PREFIX: custom_
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TDB192S
 
@@ -46,7 +46,7 @@ services:
     ports:
       - "3192:1521"
     environment:
-      ORADBA_TEMPLATE_PREFIX: custom_
+#      ORADBA_TEMPLATE_PREFIX: custom_
       CONTAINER: 'TRUE'
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TDB192C
