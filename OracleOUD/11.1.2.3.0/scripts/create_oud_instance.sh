@@ -156,7 +156,7 @@ echo ""
 
 if  [ ${OUD_CUSTOM} -eq 1 ]; then
     echo "--- Create OUD instance (${OUD_INSTANCE}) using custom scripts ---------"
-    ${DOCKER_SCRIPTS}/config_oud_instance.sh${INSTANCE_INIT}/setup
+    ${DOCKER_SCRIPTS}/config_oud_instance.sh ${INSTANCE_INIT}/setup
 elif [ ${OUD_PROXY} -eq 0 ]; then
 # Create an directory
     echo "--- Create regular OUD instance (${OUD_INSTANCE}) ----------------------"
