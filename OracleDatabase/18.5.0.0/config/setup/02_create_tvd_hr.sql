@@ -789,7 +789,7 @@ CREATE OR REPLACE FUNCTION EMPLOYEE_RESTRICT (
  IS
   return_val VARCHAR2 (2000);
 BEGIN
-    return_val :=  '(department_id = sys_context(''SYS_LDAP_USER_DEFAULT'', ''DEPARTMENTNUMBER'') ) AND ( upper(last_name) = upper(sys_context(''SYS_LDAP_USER_DEFAULT'', ''UID'')) OR upper(sys_context(''SYS_LDAP_USER_DEFAULT'', ''TITLE'')) = ''MANAGER'') or (sys_context(''SYS_LDAP_USER_DEFAULT'', ''DEPARTMENTNUMBER'') = 70) or (sys_context(''SYS_LDAP_USER_DEFAULT'', ''DEPARTMENTNUMBER'') = 10)';
+    return_val :=  '(department_id = sys_context(''SYS_LDAP_USER_DEFAULT'', ''DEPARTMENTNUMBER'') ) AND ( upper(last_name) = upper(sys_context(''SYS_LDAP_USER_DEFAULT'', ''UID'')) OR upper(sys_context(''SYS_LDAP_USER_DEFAULT'', ''TITLE'')) = ''MANAGER'')';
     RETURN return_val;
 END employee_restrict;
 /

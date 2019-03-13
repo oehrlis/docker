@@ -21,7 +21,7 @@ version: '3'
 services:
 # Database service
   db:
-    image: oracle/database:${DOCKER_DB_VERSION}
+    image: ${DOCKER_USER}/${DOCKER_REPO}:${DOCKER_DB_VERSION}
     container_name: eusdb
     hostname: db
     restart: unless-stopped
@@ -61,16 +61,4 @@ services:
       INSTANCE_INIT: /u01/config
       BASEDN: dc=trivadislabs,dc=com
       OUD_INSTANCE: oud_eus
-
-  # Portainer
-  portainerservice:
-    image: portainer/portainer
-    volumes:
-      - portainer_data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "9000:9000"
-
-volumes:
-  portainer_data:
 # - EOF -----------------------------------------------------------------

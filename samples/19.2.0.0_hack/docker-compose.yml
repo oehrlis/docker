@@ -5,9 +5,9 @@
 # Name.......: docker-compose.yml
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.01.17
+# Date.......: 2018.12.10
 # Revision...: --
-# Purpose....: Simple compose file to create a 18.5 database
+# Purpose....: Simple compose file to create a 19.2 database
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
@@ -18,35 +18,19 @@
 # -----------------------------------------------------------------------
 version: '3'
 services:
-  tdb185s:
-    image: oracle/database:18.5.0.0
-    container_name: tdb185s
-    hostname: tdb185s
+  tdb184s:
+    image: oracle/database:18.4.0.0
+    container_name: tdb184s
+    hostname: tdb184s
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/tdb185s:/u01
+      - ${DOCKER_VOLUME_BASE}/tdb184s:/u01
       - ./config:/u01/config
     ports:
-      - "1521"
+      - "2192:1521"
     environment:
+#      ORADBA_TEMPLATE_PREFIX: custom_
       INSTANCE_INIT: /u01/config
-      ORACLE_SID: TDB185S
-
-  tdb185c:
-    image: oracle/database:18.5.0.0
-    container_name: tdb185c
-    hostname: tdb185c
-    restart: unless-stopped
-    network_mode: bridge
-    volumes:
-      - ${DOCKER_VOLUME_BASE}/tdb185c:/u01
-      - ./config:/u01/config
-    ports:
-      - "1521"
-    environment:
-      ORADBA_TEMPLATE_PREFIX: custom_
-      CONTAINER: 'TRUE'
-      INSTANCE_INIT: /u01/config
-      ORACLE_SID: TDB185C
+      ORACLE_SID: TDB184S
 # - EOF -----------------------------------------------------------------

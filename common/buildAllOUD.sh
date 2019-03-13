@@ -24,6 +24,7 @@
 # - Default Values ----------------------------------------------------------
 
 DOCKER_BUILD_DIR="$(cd $(dirname $0)/.. 2>&1 >/dev/null; pwd -P)"
+DOCKER_TAG=oracle
 echo "--------------------------------------------------------------------------------"
 echo " Build all image from $DOCKER_BUILD_DIR...."
 orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
@@ -53,11 +54,11 @@ docker pull oraclelinux:7-slim
 # build OUD 11.1.2.3.0
 echo "### Build OUD 11.1.2.3.0 #######################################################"
 cd $DOCKER_BUILD_DIR/OracleOUD/11.1.2.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.181016 .
+time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_TAG}/oud:11.1.2.3.181016 .
 
 echo "### Build OUD 12.2.1.3.0 #######################################################"
 cd $DOCKER_BUILD_DIR/OracleOUD/12.2.1.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.180829 .
+time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_TAG}/oud:12.2.1.3.180829 .
 docker image prune --force
 
 

@@ -18,7 +18,7 @@
 
 # Pull base image
 # ----------------------------------------------------------------------
-FROM oracle/serverjre:8 AS base
+FROM oracle/serverjre:7 AS base
 
 # Maintainer
 # ----------------------------------------------------------------------
@@ -54,7 +54,8 @@ ENV SETUP_INIT="00_setup_oradba_init.sh" \
     START_SCRIPT="start_oud_instance.sh" \
     CHECK_SCRIPT="check_oud_instance.sh" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
-    ORACLE_DATA=${ORACLE_DATA:-/u01}
+    ORACLE_DATA=${ORACLE_DATA:-/u01} \
+    OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true"
 
 # stuff to run an OUD instans
 ENV OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \

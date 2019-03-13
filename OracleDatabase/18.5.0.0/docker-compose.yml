@@ -18,23 +18,8 @@
 # -----------------------------------------------------------------------
 version: '3'
 services:
-  tdb185s:
-    image: oracle/database:18.5.0.0
-    container_name: tdb185s
-    hostname: tdb185s
-    restart: unless-stopped
-    network_mode: bridge
-    volumes:
-      - ${DOCKER_VOLUME_BASE}/tdb185s:/u01
-      - ./config:/u01/config
-    ports:
-      - "1521"
-    environment:
-      INSTANCE_INIT: /u01/config
-      ORACLE_SID: TDB185S
-
   tdb185c:
-    image: oracle/database:18.5.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.5.0.0
     container_name: tdb185c
     hostname: tdb185c
     restart: unless-stopped
@@ -45,7 +30,6 @@ services:
     ports:
       - "1521"
     environment:
-      ORADBA_TEMPLATE_PREFIX: custom_
       CONTAINER: 'TRUE'
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TDB185C

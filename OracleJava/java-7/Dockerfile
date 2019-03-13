@@ -29,7 +29,7 @@ LABEL maintainer="stefan.oehrli@trivadis.com"
 
 # Environment variables required for this build (do NOT change)
 # ----------------------------------------------------------------------
-ENV JAVA_PKG=server-jre-8u*-linux-x64.tar.gz \
+ENV JAVA_PKG=server-jre-7u*-linux-x64.tar.gz \
     JAVA_HOME=/usr/java/default
 
 # Copy Java packages to their default location
@@ -50,7 +50,6 @@ RUN export JAVA_DIR=$(ls -1 -d /usr/java/*) && \
 # ----------------------------------------------------------------------
 RUN echo "%_install_langs  en" >/etc/rpm/macros.lang && \
     yum install -y libaio gzip tar && \
-    rm -rf /var/cache/yum
-
-COPY java.security /usr/java/latest/jre/lib/security/java.security
+    rm -rf /var/cache/yum && \
+    sed -i 's/3DES_EDE_CBC//' $(find $(dirname $(dirname $(realpath $(command -v java)))) -name java.security 2>/dev/null)
 # --- EOF --------------------------------------------------------------

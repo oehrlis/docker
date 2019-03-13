@@ -50,10 +50,10 @@ export GROUP_OU="ou=Groups,dc=trivadislabs,dc=com"
 export USER_OU="ou=People,dc=trivadislabs,dc=com"
 
 # - Certificates and password
-export KEYSTOREFILE=${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_jks
-export KEYSTOREPIN=${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}.pin
-export NICKNAME="NICKNAME"
-export PIN="PIN"
+export KEYSTOREFILE=${OUD_INSTANCE_HOME}/OUD/config/keystore
+export KEYSTOREPIN=${OUD_INSTANCE_HOME}/OUD/config/keystore.pin
+#export NICKNAME="NICKNAME"
+#export PIN="PIN"
 
 # - Hosts
 export DEFAULT_HOST=$(hostname 2>/dev/null ||cat /etc/hostname ||echo $HOSTNAME)   # Hostname
