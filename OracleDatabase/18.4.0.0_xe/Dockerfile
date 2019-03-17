@@ -25,7 +25,10 @@ FROM oraclelinux:7-slim AS base
 LABEL maintainer="stefan.oehrli@trivadis.com"
 
 # Arguments for Oracle Installation
+ARG ORACLE_ROOT
 ARG ORACLE_DATA
+ARG ORACLE_ARCH
+ARG ORACLE_BASE
 ARG ORAREPO
 
 # just my environment variable for the software repository host
@@ -36,69 +39,71 @@ ENV ORAREPO=${ORAREPO:-orarepo}
 # -------------------------------------------------------------
 # Software stage area, repository, binary packages and patchs
 ENV DOWNLOAD="/tmp/download" \
-   SOFTWARE="/opt/stage" \
-   SOFTWARE_REPO="http://$ORAREPO" \
-   ORADBA_INIT="/opt/oradba/bin" \
-   ORACLE_BASE="/opt/oracle" \
-   ORACLE_HOME="/opt/oracle/product/18c/dbhomeXE" \
-   DB_BASE_PKG="oracle-database-xe-18c-1.0-1.x86_64.rpm" \
-   ORACLE_DOCKER_INSTALL="true"
+    SOFTWARE="/opt/stage" \
+    SOFTWARE_REPO="http://$ORAREPO" \
+    ORADBA_INIT="/opt/oradba/bin" \
+    DB_BASE_PKG="V981623-01.zip" \
+    DB_EXAMPLE_PKG="" \
+    DB_PATCH_PKG="" \
+    DB_OJVM_PKG="" \
+    DB_OPATCH_PKG=""
 
 # scripts to build and run this container
 ENV SETUP_INIT="00_setup_oradba_init.sh" \
-   SETUP_OS="01_setup_os_db.sh" \
-   SETUP_DB="10_setup_db_18.3.sh" \
-   SETUP_BASENV="20_setup_basenv.sh" \
-   START_SCRIPT="50_start_database.sh" \
-   CONFIG_SCRIPT="55_config_database.sh" \
-   CHECK_SCRIPT="55_check_database.sh" \
-   RUN_SCRIPT="50_run_database.sh" \
-   CREATE_SCRIPT="52_create_database.sh"
+    SETUP_OS="01_setup_os_db.sh" \
+    SETUP_DB="10_setup_db_19.2.sh" \
+    SETUP_BASENV="20_setup_basenv.sh" \
+    START_SCRIPT="50_start_database.sh" \
+    CONFIG_SCRIPT="55_config_database.sh" \
+    CHECK_SCRIPT="55_check_database.sh" \
+    RUN_SCRIPT="50_run_database.sh" \
+    CREATE_SCRIPT="52_create_database.sh"
 
 # stuff to run a DB instance
-ENV ORACLE_SID=${ORACLE_SID:-"TDB183S"} \
-   ORACLE_DATA=${ORACLE_DATA:-"/u01"} \
-   DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
-   PORT=${PORT:-1521} \
-   PORT_CONSOLE=${PORT_CONSOLE:-5500}
+ENV ORACLE_SID=${ORACLE_SID:-"TDB192S"} \
+    ORACLE_HOME_NAME="19.2.0.0" \
+    ORACLE_ROOT=${ORACLE_ROOT:-"/u00"} \
+    ORACLE_DATA=${ORACLE_DATA:-"/u01"} \
+    ORACLE_ARCH=${ORACLE_ARCH:-"/u01"} \
+    DEFAULT_DOMAIN=${ORACLE_ARCH:-"trivadislabs.com"}  \
+    PORT=${PORT:-1521} \
+    PORT_CONSOLE=${PORT_CONSOLE:-5500}
+
+# Use second ENV so that variable get substituted
+ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} 
 
 # same same but different ...
 # third ENV so that variable get substituted
-ENV PATH=${PATH}:"${ORACLE_HOME}/bin:${ORADBA_INIT}:${ORACLE_HOME}/OPatch/:/usr/sbin:$PATH" \
-    LD_LIBRARY_PATH="${ORACLE_HOME}/lib:/usr/lib" \
-    CLASSPATH="${ORACLE_HOME}/jlib:${ORACLE_HOME}/rdbms/jlib"
+ENV PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT}:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/:/usr/sbin:$PATH" \
+    ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
+    LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
+    CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
 
 # RUN as user root
 # ----------------------------------------------------------------------
 # get the OraDBA init script to setup the OS and later OUD
 RUN mkdir -p ${DOWNLOAD} && \
-   GITHUB_URL="https://github.com/oehrlis/oradba_init/raw/master/bin" && \
-   curl -Lsf ${GITHUB_URL}/${SETUP_INIT} -o ${DOWNLOAD}/${SETUP_INIT} && \
-   chmod 755 ${DOWNLOAD}/${SETUP_INIT} && \
-   ${DOWNLOAD}/${SETUP_INIT} && \
-   yum -y install which oracle-database-preinstall-18c file openssl && \
-   rm -rf /var/cache/yum
+    GITHUB_URL="https://github.com/oehrlis/oradba_init/raw/master/bin" && \
+    curl -Lsf ${GITHUB_URL}/${SETUP_INIT} -o ${DOWNLOAD}/${SETUP_INIT} && \
+    chmod 755 ${DOWNLOAD}/${SETUP_INIT} && \
+    ${DOWNLOAD}/${SETUP_INIT}
+
+# Setup OS using OraDBA init script
+RUN ${ORADBA_INIT}/${SETUP_OS}
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------
 FROM base AS builder
 
 # COPY database software if part of the build context
-COPY *zip* "${SOFTWARE}/"
-COPY *rpm* "${SOFTWARE}/"
-
-# RUN as user root
-# ----------------------------------------------------------------------
-RUN cd ${SOFTWARE} && \
-   yum -y install ${SOFTWARE}/$DB_BASE_PKG && \
-   rm -rf /var/cache/yum && \
-   mkdir -p /home/oracle && \
-   chown -R oracle:oinstall /home/oracle
+COPY --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
 # ----------------------------------------------------------------------
 USER oracle
+RUN ${ORADBA_INIT}/${SETUP_DB}
+
 # Install BasEnv
 RUN ${ORADBA_INIT}/${SETUP_BASENV}
 
@@ -110,19 +115,16 @@ USER oracle
 # copy binaries
 COPY --chown=oracle:oinstall --from=builder $ORACLE_BASE $ORACLE_BASE
 
+# copy oracle inventory
+COPY --chown=oracle:oinstall --from=builder $ORACLE_ROOT/app/oraInventory $ORACLE_ROOT/app/oraInventory
+
 # copy basenv profile stuff
 COPY --chown=oracle:oinstall --from=builder /home/oracle/.BE_HOME /home/oracle/.TVDPERL_HOME /home/oracle/.bash_profile /home/oracle/
 
 # RUN as root post install scripts
 USER root
-RUN mkdir -p $ORACLE_BASE/scripts/setup && \
-   mkdir $ORACLE_BASE/scripts/startup && \
-   ln -s $ORACLE_BASE/scripts /docker-entrypoint-initdb.d && \
-   mkdir -p ${ORACLE_DATA}/oradata && \
-   chown -R oracle:oinstall ${ORACLE_DATA}/oradata && \
-   cd $HOME && \
-   target_txt=$(cat /etc/security/limits.d/oracle-database-preinstall-18c.conf | grep -e 'oracle *hard *memlock*') && \
-   sed -i "/^$target_txt/ c#$target_txt" /etc/security/limits.d/oracle-database-preinstall-18c.conf
+RUN $ORACLE_ROOT/app/oraInventory/orainstRoot.sh && \
+    $ORACLE_HOME/root.sh
 
 # Finalize image
 # ----------------------------------------------------------------------

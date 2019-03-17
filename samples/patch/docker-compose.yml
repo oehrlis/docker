@@ -1,0 +1,35 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.12.10
+# Revision...: --
+# Purpose....: Simple compose file to create a 18.4 database
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+  tcpu01:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:${DOCKER_DB_VERSION}
+    container_name: tcpu01
+    hostname: tcpu01
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/tcpu01:/u01
+      - ./config:/u01/config
+    ports:
+      - "2184:1521"
+    environment:
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TCPU01
+# - EOF -----------------------------------------------------------------

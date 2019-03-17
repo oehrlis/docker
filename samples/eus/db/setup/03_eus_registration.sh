@@ -52,5 +52,4 @@ $ORACLE_HOME/bin/sqlplus -S -L /NOLOG <<EOFSQL
 CONNECT / AS SYSDBA
 ALTER USER system IDENTIFIED BY $(cat ${SYS_PWD_FILE}) ACCOUNT UNLOCK;
 EOFSQL
-
 # - EOF -----------------------------------------------------------------

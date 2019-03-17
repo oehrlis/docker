@@ -19,7 +19,7 @@
 version: '3'
 services:
   tdb185s:
-    image: oracle/database:18.5.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:${DOCKER_DB_VERSION}
     container_name: tdb185s
     hostname: tdb185s
     restart: unless-stopped
@@ -34,7 +34,7 @@ services:
       ORACLE_SID: TDB185S
 
   tdb185c:
-    image: oracle/database:18.5.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:${DOCKER_DB_VERSION}
     container_name: tdb185c
     hostname: tdb185c
     restart: unless-stopped

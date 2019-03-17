@@ -39,7 +39,7 @@ Run your Oracle Database Docker image use the **docker run** command as follows:
 ```bash
 docker run --name oud <container name> \
 --hostname <container hostname> -p 1521:1521 
--e ORACLE_SID=<your oud instance name> \
+-e ORACLE_SID=TDB121S \
 -e INSTANCE_INIT=/u01/config \
 --volume [<host mount point>:]/u01 \
 --volume [<host mount point>:]/u01/config \
@@ -49,5 +49,5 @@ oracle/database:12.1.0.2
 Alternatively you can use the provided Docker compose file.
 
 ```bash
-docker-compose up -d
+docker-compose up -d tdb121s
 ```

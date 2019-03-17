@@ -6,7 +6,7 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.03.19
-# Purpose....: This Dockerfile to build Oracle Database Containers
+# Purpose....: This Dockerfile to build Oracle Database 12.2 image
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
@@ -36,38 +36,44 @@ ENV ORAREPO=${ORAREPO:-orarepo}
 
 # Environment variables required for this build 
 # Change them carefully and wise!
+# Default Values:
+# DB_BASE_PKG="linuxx64_12201_database.zip"
+# DB_EXAMPLE_PKG="linuxx64_12201_examples.zip"
+# DB_PATCH_PKG="p28822515_122010_Linux-x86-64.zip"
+# DB_OJVM_PKG="p28790651_122010_Linux-x86-64.zip"
+# DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
 # -------------------------------------------------------------
 # Software stage area, repository, binary packages and patchs
 ENV DOWNLOAD="/tmp/download" \
-    SOFTWARE="/opt/stage" \
-    SOFTWARE_REPO="http://$ORAREPO" \
-    ORADBA_INIT="/opt/oradba/bin" \
-    DB_BASE_PKG="V981623-01.zip" \
-    DB_EXAMPLE_PKG="" \
-    DB_PATCH_PKG="" \
-    DB_OJVM_PKG="" \
-    DB_OPATCH_PKG=""
+   SOFTWARE="/opt/stage" \
+   SOFTWARE_REPO="http://$ORAREPO" \
+   ORADBA_INIT="/opt/oradba/bin" \
+   DB_BASE_PKG="linuxx64_12201_database.zip" \
+   DB_EXAMPLE_PKG="" \
+   DB_PATCH_PKG="p28822515_122010_Linux-x86-64.zip" \
+   DB_OJVM_PKG="p28790651_122010_Linux-x86-64.zip" \
+   DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
 
 # scripts to build and run this container
 ENV SETUP_INIT="00_setup_oradba_init.sh" \
-    SETUP_OS="01_setup_os_db.sh" \
-    SETUP_DB="10_setup_db_19.2.sh" \
-    SETUP_BASENV="20_setup_basenv.sh" \
-    START_SCRIPT="50_start_database.sh" \
-    CONFIG_SCRIPT="55_config_database.sh" \
-    CHECK_SCRIPT="55_check_database.sh" \
-    RUN_SCRIPT="50_run_database.sh" \
-    CREATE_SCRIPT="52_create_database.sh"
+   SETUP_OS="01_setup_os_db.sh" \
+   SETUP_DB="10_setup_db_12.2.sh" \
+   SETUP_BASENV="20_setup_basenv.sh" \
+   START_SCRIPT="50_start_database.sh" \
+   CONFIG_SCRIPT="55_config_database.sh" \
+   CHECK_SCRIPT="55_check_database.sh" \
+   RUN_SCRIPT="50_run_database.sh" \
+   CREATE_SCRIPT="52_create_database.sh"
 
 # stuff to run a DB instance
-ENV ORACLE_SID=${ORACLE_SID:-"TDB192S"} \
-    ORACLE_HOME_NAME="19.2.0.0" \
-    ORACLE_ROOT=${ORACLE_ROOT:-"/u00"} \
-    ORACLE_DATA=${ORACLE_DATA:-"/u01"} \
-    ORACLE_ARCH=${ORACLE_ARCH:-"/u01"} \
-    DEFAULT_DOMAIN=${ORACLE_ARCH:-"trivadislabs.com"}  \
-    PORT=${PORT:-1521} \
-    PORT_CONSOLE=${PORT_CONSOLE:-5500}
+ENV ORACLE_SID=${ORACLE_SID:-"TDB122S"} \
+   ORACLE_HOME_NAME="12.2.0.1" \
+   ORACLE_ROOT=${ORACLE_ROOT:-"/u00"} \
+   ORACLE_DATA=${ORACLE_DATA:-"/u01"} \
+   ORACLE_ARCH=${ORACLE_ARCH:-"/u01"} \
+   DEFAULT_DOMAIN=${ORACLE_ARCH:-"postgasse.org"}  \
+   PORT=${PORT:-1521} \
+   PORT_CONSOLE=${PORT_CONSOLE:-5500}
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} 
@@ -75,18 +81,18 @@ ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle}
 # same same but different ...
 # third ENV so that variable get substituted
 ENV PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT}:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/:/usr/sbin:$PATH" \
-    ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
-    LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
-    CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
+   ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
+   LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
+   CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
 
 # RUN as user root
 # ----------------------------------------------------------------------
 # get the OraDBA init script to setup the OS and later OUD
 RUN mkdir -p ${DOWNLOAD} && \
-    GITHUB_URL="https://github.com/oehrlis/oradba_init/raw/master/bin" && \
-    curl -Lsf ${GITHUB_URL}/${SETUP_INIT} -o ${DOWNLOAD}/${SETUP_INIT} && \
-    chmod 755 ${DOWNLOAD}/${SETUP_INIT} && \
-    ${DOWNLOAD}/${SETUP_INIT}
+   GITHUB_URL="https://github.com/oehrlis/oradba_init/raw/master/bin" && \
+   curl -Lsf ${GITHUB_URL}/${SETUP_INIT} -o ${DOWNLOAD}/${SETUP_INIT} && \
+   chmod 755 ${DOWNLOAD}/${SETUP_INIT} && \
+   ${DOWNLOAD}/${SETUP_INIT}
 
 # Setup OS using OraDBA init script
 RUN ${ORADBA_INIT}/${SETUP_OS}

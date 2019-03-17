@@ -96,7 +96,7 @@ RUN ${ORADBA_INIT}/${SETUP_OS}
 FROM base AS builder
 
 # COPY database software if part of the build context
-COPY --chown=oracle:oinstall *zip* "${SOFTWARE}/"
+COPY --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user

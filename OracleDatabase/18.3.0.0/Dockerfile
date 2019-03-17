@@ -42,16 +42,16 @@ ENV DOWNLOAD="/tmp/download" \
     SOFTWARE="/opt/stage" \
     SOFTWARE_REPO="http://$ORAREPO" \
     ORADBA_INIT="/opt/oradba/bin" \
-    DB_BASE_PKG="LINUX.X64_180000_db_home.zip" \
-    DB_EXAMPLE_PKG="LINUX.X64_180000_examples.zip" \
+    DB_BASE_PKG="V981623-01.zip" \
+    DB_EXAMPLE_PKG="" \
     DB_PATCH_PKG="" \
     DB_OJVM_PKG="" \
-    DB_OPATCH_PKG="p6880880_180000_Linux-x86-64.zip"
+    DB_OPATCH_PKG=""
 
 # scripts to build and run this container
 ENV SETUP_INIT="00_setup_oradba_init.sh" \
     SETUP_OS="01_setup_os_db.sh" \
-    SETUP_DB="10_setup_db_18.3.sh" \
+    SETUP_DB="10_setup_db_19.2.sh" \
     SETUP_BASENV="20_setup_basenv.sh" \
     START_SCRIPT="50_start_database.sh" \
     CONFIG_SCRIPT="55_config_database.sh" \
@@ -60,12 +60,12 @@ ENV SETUP_INIT="00_setup_oradba_init.sh" \
     CREATE_SCRIPT="52_create_database.sh"
 
 # stuff to run a DB instance
-ENV ORACLE_SID=${ORACLE_SID:-"TDB183S"} \
-    ORACLE_HOME_NAME="18.3.0.0" \
+ENV ORACLE_SID=${ORACLE_SID:-"TDB192S"} \
+    ORACLE_HOME_NAME="19.2.0.0" \
     ORACLE_ROOT=${ORACLE_ROOT:-"/u00"} \
     ORACLE_DATA=${ORACLE_DATA:-"/u01"} \
     ORACLE_ARCH=${ORACLE_ARCH:-"/u01"} \
-    DEFAULT_DOMAIN=${ORACLE_ARCH:-"postgasse.org"}  \
+    DEFAULT_DOMAIN=${ORACLE_ARCH:-"trivadislabs.com"}  \
     PORT=${PORT:-1521} \
     PORT_CONSOLE=${PORT_CONSOLE:-5500}
 
@@ -96,7 +96,7 @@ RUN ${ORADBA_INIT}/${SETUP_OS}
 FROM base AS builder
 
 # COPY database software if part of the build context
-COPY --chown=oracle:oinstall *zip* "${SOFTWARE}/"
+COPY --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user

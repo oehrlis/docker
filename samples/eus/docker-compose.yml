@@ -31,7 +31,7 @@ services:
       - SYS_PTRACE
       - SYS_ADMIN
     volumes:
-      - ${DOCKER_VOLUME_BASE}/eusdb:/u01
+      - ${DOCKER_VOLUME_BASE}/eus/db:/u01
       - ./db:/u01/config
       - ./oud:/u01/oud
     ports:
@@ -50,7 +50,7 @@ services:
       - SYS_ADMIN
     restart: unless-stopped
     volumes:
-      - ${DOCKER_VOLUME_BASE}/eusoud:/u01
+      - ${DOCKER_VOLUME_BASE}/eus/oud:/u01
       - ./oud:/u01/config
     ports:
       - "6389:1389"
