@@ -7,7 +7,7 @@
 # Editor.....: Stefan Oehrli
 # Date.......: 2019.03.16
 # Revision...: --
-# Purpose....: Simple compose file to create a 19.2 databases
+# Purpose....: Simple compose file to create a 11.2 database conatainer
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase

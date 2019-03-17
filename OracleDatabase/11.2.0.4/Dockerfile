@@ -6,7 +6,7 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.03.19
-# Purpose....: This Dockerfile to build Oracle Database Containers
+# Purpose....: This Dockerfile to build Oracle Database 11.2 image
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
