@@ -34,20 +34,27 @@ ARG ORAREPO
 # just my environment variable for the software repository host
 ENV ORAREPO=${ORAREPO:-orarepo}
 
-# Environment variables required for this build 
+# Environment variables required for this build
 # Change them carefully and wise!
+# Default Values:
+# DB_BASE_PKG="p13390677_112040_Linux-x86-64_1of7.zip"
+# DB_BASE2_PKG="p13390677_112040_Linux-x86-64_2of7.zip"
+# DB_EXAMPLE_PKG="p13390677_112040_Linux-x86-64_6of7.zip"
+# DB_PATCH_PKG="p28729262_112040_Linux-x86-64.zip"
+# DB_OJVM_PKG="p28790660_112040_Linux-x86-64.zip"
+# DB_OPATCH_PKG="p6880880_112000_Linux-x86-64.zip"
 # -------------------------------------------------------------
 # Software stage area, repository, binary packages and patchs
 ENV DOWNLOAD="/tmp/download" \
-    SOFTWARE="/opt/stage" \
-    SOFTWARE_REPO="http://$ORAREPO" \
-    ORADBA_INIT="/opt/oradba/bin" \
-    DB_BASE_PKG="p13390677_112040_Linux-x86-64_1of7.zip" \
-    DB_BASE2_PKG="p13390677_112040_Linux-x86-64_2of7.zip" \
-    DB_EXAMPLE_PKG="p13390677_112040_Linux-x86-64_6of7.zip" \
-    DB_PATCH_PKG="p28729262_112040_Linux-x86-64.zip" \
-    DB_OJVM_PKG="p28790660_112040_Linux-x86-64.zip" \
-    DB_OPATCH_PKG="p6880880_112000_Linux-x86-64.zip"
+   SOFTWARE="/opt/stage" \
+   SOFTWARE_REPO="http://$ORAREPO" \
+   ORADBA_INIT="/opt/oradba/bin" \
+   DB_BASE_PKG="p13390677_112040_Linux-x86-64_1of7.zip" \
+   DB_BASE2_PKG="p13390677_112040_Linux-x86-64_2of7.zip" \
+   DB_EXAMPLE_PKG="" \
+   DB_PATCH_PKG="p28729262_112040_Linux-x86-64.zip" \
+   DB_OJVM_PKG="p28790660_112040_Linux-x86-64.zip" \
+   DB_OPATCH_PKG="p6880880_112000_Linux-x86-64.zip"
 
 # scripts to build and run this container
 ENV SETUP_INIT="00_setup_oradba_init.sh" \
@@ -97,7 +104,7 @@ RUN ${ORADBA_INIT}/${SETUP_OS}
 FROM base AS builder
 
 # COPY database software if part of the build context
-COPY --chown=oracle:oinstall *zip* "${SOFTWARE}/"
+COPY --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
