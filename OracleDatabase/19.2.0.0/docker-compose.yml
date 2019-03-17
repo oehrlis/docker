@@ -32,7 +32,7 @@ services:
     ports:
       - "1521"
     environment:
-      CONTAINER: 'TRUE'
+      CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TDB192S
 

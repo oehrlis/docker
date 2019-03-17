@@ -7,7 +7,7 @@
 # Editor.....: Stefan Oehrli
 # Date.......: 2019.03.16
 # Revision...: --
-# Purpose....: Simple compose file to create a 19.2 databases
+# Purpose....: Simple compose file to create a 18.5 database conatainer
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
@@ -20,36 +20,36 @@ version: '3'
 services:
 
 # single tenant database
-  tdb192s:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.2.0.0
-    container_name: tdb192s
-    hostname: tdb192s
+  tdb185s:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.5.0.0
+    container_name: tdb185s
+    hostname: tdb185s
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/tdb192s:/u01
+      - ${DOCKER_VOLUME_BASE}/tdb185s:/u01
       - ./config:/u01/config
     ports:
       - "1521"
     environment:
-      CONTAINER: 'TRUE'
+      CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
-      ORACLE_SID: TDB192S
+      ORACLE_SID: TDB185S
 
 # multitenant tenant database
-  # tdb192c:
-  #   image: ${DOCKER_USER}/${DOCKER_REPO}:19.2.0.0
-  #   container_name: tdb192c
-  #   hostname: tdb192c
+  # tdb185c:
+  #   image: ${DOCKER_USER}/${DOCKER_REPO}:18.5.0.0
+  #   container_name: tdb185c
+  #   hostname: tdb185c
   #   restart: unless-stopped
   #   network_mode: bridge
   #   volumes:
-  #     - ${DOCKER_VOLUME_BASE}/tdb192c:/u01
+  #     - ${DOCKER_VOLUME_BASE}/tdb185c:/u01
   #     - ./config:/u01/config
   #   ports:
   #     - "1521"
   #   environment:
   #     CONTAINER: 'TRUE'
   #     INSTANCE_INIT: /u01/config
-  #     ORACLE_SID: TDB192C
+  #     ORACLE_SID: TDB185C
 # - EOF -----------------------------------------------------------------
