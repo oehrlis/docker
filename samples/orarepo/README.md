@@ -22,4 +22,3 @@ orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}
 ```bash
 docker build --add-host=orarepo:${orarepo_ip} -t oracle/database:18.4.0.0 .
 ```
-    
