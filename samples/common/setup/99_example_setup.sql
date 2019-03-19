@@ -2,7 +2,7 @@
 --  Trivadis AG, Infrastructure Managed Services
 --  Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 ----------------------------------------------------------------------------
---  Name......: 02_example_setup.sql
+--  Name......: 99_example_setup.sql
 --  Author....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 --  Editor....: Stefan Oehrli
 --  Date......: 2018.12.10
