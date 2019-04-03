@@ -78,9 +78,13 @@ GRANT CREATE SESSION, RESOURCE, EXECUTE_CATALOG_ROLE TO tvd_hr_sec;
 GRANT execute ON sys.dbms_stats TO tvd_hr;
 
 ----------------------------------------------------------------------------
+-- create tvd_hr roles
+CREATE ROLE tvd_hr_ro;
+CREATE ROLE tvd_hr_rw;
+
+----------------------------------------------------------------------------
 -- create tvd_hr schema objects
 ALTER SESSION SET CURRENT_SCHEMA=TVD_HR;
-
 ALTER SESSION SET NLS_LANGUAGE=American;
 ALTER SESSION SET NLS_TERRITORY=America;
 
@@ -768,15 +772,29 @@ column of the departments table';
 COMMIT;
 
 ----------------------------------------------------------------------------
+-- grant ro/rw on TVD_HR to TVD_HR role 
+GRANT READ ON tvd_hr.employees TO tvd_hr_ro;
+GRANT READ ON tvd_hr.jobs TO tvd_hr_ro;
+GRANT READ ON tvd_hr.job_history TO tvd_hr_ro;
+GRANT READ ON tvd_hr.locations TO tvd_hr_ro;
+GRANT READ ON tvd_hr.departments TO tvd_hr_ro;
+
+GRANT READ ON tvd_hr.regions TO tvd_hr_ro;
+GRANT READ ON tvd_hr.countries TO tvd_hr_ro;
+
+GRANT SELECT,INSERT,UPDATE,DELETE ON tvd_hr.employees TO tvd_hr_rw;
+GRANT SELECT,INSERT,UPDATE,DELETE ON tvd_hr.jobs TO tvd_hr_rw;
+GRANT SELECT,INSERT,UPDATE,DELETE ON tvd_hr.job_history TO tvd_hr_rw;
+GRANT SELECT,INSERT,UPDATE,DELETE ON tvd_hr.locations TO tvd_hr_rw;
+GRANT SELECT,INSERT,UPDATE,DELETE ON tvd_hr.departments TO tvd_hr_rw;
+
+----------------------------------------------------------------------------
 -- gather schema statistics
 EXECUTE dbms_stats.gather_schema_stats( -
         'TVD_HR'                        ,       -
         granularity => 'ALL'            ,       -
         cascade => TRUE                 ,       -
         block_sample => TRUE            );
-
-spool off
-exit
 
 ----------------------------------------------------------------------------
 -- create VPD stuff
@@ -806,4 +824,7 @@ BEGIN
 END;
 /
 
+
+spool off
+exit
 -- EOF ---------------------------------------------------------------------

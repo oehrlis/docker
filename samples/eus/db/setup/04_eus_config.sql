@@ -30,34 +30,19 @@ GRANT SELECT ON v_$session TO eus_users;
 
 -- enterprise role for common clerks
 CREATE ROLE common_clerk IDENTIFIED GLOBALLY;
-GRANT SELECT ON tvd_hr.employees TO common_clerk;
-GRANT SELECT ON tvd_hr.jobs TO common_clerk;
-GRANT SELECT ON tvd_hr.job_history TO common_clerk;
-GRANT SELECT ON tvd_hr.regions TO common_clerk;
-GRANT SELECT ON tvd_hr.countries TO common_clerk;
-GRANT SELECT ON tvd_hr.locations TO common_clerk;
-GRANT SELECT ON tvd_hr.departments TO common_clerk;
+GRANT tvd_hr_ro TO common_clerk;
 
 -- enterprise role for HR clerks
 CREATE ROLE hr_clerk IDENTIFIED GLOBALLY;
-GRANT SELECT ON tvd_hr.employees TO hr_clerk;
-GRANT SELECT ON tvd_hr.jobs TO hr_clerk;
-GRANT SELECT ON tvd_hr.job_history TO hr_clerk;
-GRANT SELECT ON tvd_hr.regions TO hr_clerk;
-GRANT SELECT ON tvd_hr.countries TO hr_clerk;
-GRANT SELECT ON tvd_hr.locations TO hr_clerk;
-GRANT SELECT ON tvd_hr.departments TO hr_clerk;
+GRANT tvd_hr_ro TO hr_clerk;
 
 -- enterprise role for common managers
 CREATE ROLE common_mgr IDENTIFIED GLOBALLY;
+GRANT tvd_hr_ro TO common_mgr;
 
 -- enterprise role for HR managers
 CREATE ROLE hr_mgr IDENTIFIED GLOBALLY;
-GRANT INSERT,UPDATE,DELETE ON tvd_hr.employees TO hr_mgr;
-GRANT INSERT,UPDATE,DELETE ON tvd_hr.jobs TO hr_mgr;
-GRANT INSERT,UPDATE,DELETE ON tvd_hr.job_history TO hr_mgr;
-GRANT INSERT,UPDATE,DELETE ON tvd_hr.locations TO hr_mgr;
-GRANT INSERT,UPDATE,DELETE ON tvd_hr.departments TO hr_mgr;
+GRANT tvd_hr_rw TO hr_mgr;
 
 -- grant proxy connect for enterprise users
 ALTER USER tvd_hr GRANT CONNECT THROUGH ENTERPRISE USERS;
