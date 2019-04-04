@@ -20,3 +20,4 @@ samples/legacy/*
 samples/19.1.0.0/*
 OracleDatabase/19.1.0.0/*
 # - EOF -----------------------------------------------------------------
+samples/eus/db/setup/02_create_tvd_hr.log
