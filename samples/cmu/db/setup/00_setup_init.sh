@@ -21,6 +21,18 @@
 # ---------------------------------------------------------------------------
 # - Customization -----------------------------------------------------------
 # - just add/update any kind of customized environment variable here
+# export KDC_DOMAIN_NAME="trivadislabs.com"                   # domain name of you KDC 
+# export KDC_HOSTNAME="ad"                                    # host name of KDC / AD domain controler
+# export KDC_DOMAIN_REALM="TRIVADISLABS.COM"                  # KDC realm name
+# export AD_BASEDN="dc=trivadislabs,dc=com"                   # AD base DN
+# export AD_USER_NAME="oracle18c"                             # AD user used for CMU
+# export AD_DISTINGUISH_NAME="cn=${AD_USER_NAME},cn=Users,${AD_BASEDN}" } # DN for AD user used for CMU
+# export AD_PASSWORD=""                                       # AD password for user used for CMU
+# export CONFIG_KRB5_KEYTAB="/u01/config/etc/keytab.cmudb"    # Path to keytab file exported from AD
+# export CONFIG_AD_ROOT_CERT="/u01/config/etc/ad_root.cer"    # Path to root certificate file exported from AD
+# - End of Customization ----------------------------------------------------
+
+# - Environment Variables ---------------------------------------------------
 # basic TNS configuration
 export ORACLE_ROOT=${ORACLE_ROOT:-"/u00"}   # root folder for ORACLE_BASE and binaries
 export ORACLE_DATA=${ORACLE_DATA:-"/u01"}   # Oracle data folder eg volume for docker
@@ -29,7 +41,7 @@ export TNS_ADMIN=${TNS_ADMIN:-${ORACLE_BASE}/network/admin}
 
 # sqlnet config file names
 export SQLNET_FILE=${SQLNET_FILE:-"sqlnet.ora"}
-export DSI_FILE=${DSI_FILE:-"sqlnet.ora"}
+export DSI_FILE=${DSI_FILE:-"dsi.ora"}
 
 # KDC configuration
 export KDC_DOMAIN_NAME=${KDC_DOMAIN_NAME:-"trivadislabs.com"}   # IP address of KDC / AD domain controler
@@ -51,9 +63,8 @@ export KRB5_KEYTAB=${KRB5_KEYTAB:-"keytab.cmudb"}                # default name 
 export KRB5_REALMS=${KRB5_REALMS:-"krb5.realms"}                # default name for krb5 realms file
 export KRB5_CC_NAME=${KRB5_CC_NAME:-"krb5.ccache"}              # default name for krb5 credential cache file
 
-# - End of Customization ----------------------------------------------------
-
-# - Environment Variables ---------------------------------------------------
+export CONFIG_KRB5_KEYTAB=${CONFIG_KRB5_KEYTAB:-${ORACLE_DATA}/config/etc/${KRB5_KEYTAB}}
+export CONFIG_AD_ROOT_CERT=${CONFIG_AD_ROOT_CERT:-${ORACLE_DATA}/config/etc/${AD_ROOT_CERT}}
 # - EOF Environment Variables -----------------------------------------------
 
 # check if script is sourced and return/exit
@@ -63,7 +74,6 @@ if [ "${BASH_SOURCE[0]}" != "${0}" ]; then
 fi
 
 # Still here, seems that script is executed
-# - call init script -----------------------------------------------
+# - call init script ---------------------------------------------------------
 echo " - Call init script ---------------------------------------------------"
-
 # --- EOF --------------------------------------------------------------------

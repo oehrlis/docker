@@ -23,6 +23,10 @@ services:
     image: ${DOCKER_USER}/${DOCKER_REPO}:${DOCKER_DB_VERSION}
     container_name: cmudb
     hostname: cmudb
+    networks:
+      default:
+        aliases: 
+          - cmudb.trivadislabs.com
     dns: 10.0.0.4
     dns_search: trivadislabs.com
     restart: unless-stopped
@@ -33,7 +37,7 @@ services:
       - ${DOCKER_VOLUME_BASE}/cmu/cmudb:/u01
       - ./db:/u01/config
     ports:
-      - "9521:1521"
+      - 1521
     environment:
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TCMU01

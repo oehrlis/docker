@@ -101,5 +101,7 @@ SQLNET.AUTHENTICATION_KERBEROS5_SERVICE = oracle
 SQLNET
 
 # copy the kerberos keytab file
-cp ${ORACLE_DATA}/config/network/admin/${KRB5_KEYTAB} ${TNS_ADMIN}/${KRB5_KEYTAB}
+cp ${CONFIG_KRB5_KEYTAB} ${TNS_ADMIN}/${KRB5_KEYTAB}
+
+oklist -e -k ${TNS_ADMIN}/${KRB5_KEYTAB}
 # --- EOF --------------------------------------------------------------------

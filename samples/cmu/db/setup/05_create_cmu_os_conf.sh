@@ -70,7 +70,7 @@ orapwd describe file=$ORACLE_HOME/dbs/orapw${ORACLE_SID}
 
 # - create dsi config file ---------------------------------------------
 if [ ! -f "${TNS_ADMIN}/${DSI_FILE}" ]; then
-    echo " - Create kerberos config file ${DSI_FILE} using:"
+    echo " - Create dsi config file ${DSI_FILE} using:"
     echo "      TNS_ADMIN   :   ${TNS_ADMIN}"
     echo "      DSI_FILE    :   ${DSI_FILE}"
     echo "      KDC_FQDN    :   ${KDC_FQDN}"
@@ -104,8 +104,8 @@ cat ${WALLET_PWD_FILE}| mkstore -wrl $ORACLE_BASE/admin/$ORACLE_SID/wallet -crea
 cat ${WALLET_PWD_FILE}| mkstore -wrl $ORACLE_BASE/admin/$ORACLE_SID/wallet -list
  
 # copy the root certificat and load it into the wallet
-cp ${ORACLE_DATA}/config/network/admin/${AD_ROOT_CERT} ${TNS_ADMIN}/${AD_ROOT_CERT}
-echo root
+cp ${CONFIG_AD_ROOT_CERT} ${TNS_ADMIN}/${AD_ROOT_CERT}
+
 orapki wallet add -wallet ${ORACLE_BASE}/admin/${ORACLE_SID}/wallet \
     -cert ${TNS_ADMIN}/${AD_ROOT_CERT} -trusted_cert \
     -pwd $(cat ${WALLET_PWD_FILE})
