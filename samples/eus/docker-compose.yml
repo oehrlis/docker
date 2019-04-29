@@ -40,6 +40,26 @@ services:
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TEUS01
 
+  # db192:
+  #   image: ${DOCKER_USER}/${DOCKER_REPO}:19.2.0.0
+  #   container_name: eusdb192
+  #   hostname: db192
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - oud
+  #   cap_add:
+  #     - SYS_PTRACE
+  #     - SYS_ADMIN
+  #   volumes:
+  #     - ${DOCKER_VOLUME_BASE}/eus/db192:/u01
+  #     - ./db:/u01/config
+  #     - ./oud:/u01/oud
+  #   ports:
+  #     - "7521:1521"
+  #   environment:
+  #     INSTANCE_INIT: /u01/config
+  #     ORACLE_SID: TEUS192
+
 # OUD LDAP service
   oud:
     image: oracle/oud:${DOCKER_OUD_VERSION}

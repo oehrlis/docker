@@ -29,6 +29,7 @@ export SYSTEM_PWD_FILE=${SYSTEM_PWD_FILE:-"${ORACLE_BASE}/admin/${ORACLE_SID}/et
 echo "Create Mappings for Database ${ORACLE_SID} in OUD using:"
 echo "  OUD_HOST            :   ${OUD_HOST}"
 echo "  OUD_PORT            :   ${OUD_PORT}"
+echo "  HOSTNAME            :   ${HOSTNAME}"
 echo "  BASEDN              :   ${BASEDN}"
 echo "  ORACLE_SID          :   ${ORACLE_SID}"
 echo "  EUS_ADMIN           :   ${EUS_ADMIN}"
@@ -89,21 +90,21 @@ echo " Add global roles HR Clerk and Management"
 eusm addGlobalRole enterprise_role="HR Clerk" \
     domain_name="OracleDefaultDomain" database_name="$ORACLE_SID" \
     global_role="hr_clerk" dbuser="system" dbuser_password=$(cat ${SYSTEM_PWD_FILE}) \
-    dbconnect_string="db:1521:$ORACLE_SID" \
+    dbconnect_string="${HOSTNAME}:1521:$ORACLE_SID" \
     realm_dn="${BASEDN}" ldap_host=${OUD_HOST} ldap_port=${OUD_PORT} \
     ldap_user_dn="${EUS_ADMIN}" ldap_user_password=$(cat ${EUS_PWD_FILE}) 
 
 eusm addGlobalRole enterprise_role="HR Management" \
     domain_name="OracleDefaultDomain" database_name="$ORACLE_SID" \
     global_role="hr_clerk" dbuser="system" dbuser_password=$(cat ${SYSTEM_PWD_FILE}) \
-    dbconnect_string="db:1521:$ORACLE_SID" \
+    dbconnect_string="${HOSTNAME}:1521:$ORACLE_SID" \
     realm_dn="${BASEDN}" ldap_host=${OUD_HOST} ldap_port=${OUD_PORT} \
     ldap_user_dn="${EUS_ADMIN}" ldap_user_password=$(cat ${EUS_PWD_FILE}) 
 
 eusm addGlobalRole enterprise_role="HR Management" \
     domain_name="OracleDefaultDomain" database_name="$ORACLE_SID" \
     global_role="hr_mgr" dbuser="system" dbuser_password=$(cat ${SYSTEM_PWD_FILE}) \
-    dbconnect_string="db:1521:$ORACLE_SID" \
+    dbconnect_string="${HOSTNAME}:1521:$ORACLE_SID" \
     realm_dn="${BASEDN}" ldap_host=${OUD_HOST} ldap_port=${OUD_PORT} \
     ldap_user_dn="${EUS_ADMIN}" ldap_user_password=$(cat ${EUS_PWD_FILE}) 
 
@@ -111,21 +112,21 @@ echo " Add global roles common Clerk and Management"
 eusm addGlobalRole enterprise_role="Common Clerk" \
     domain_name="OracleDefaultDomain" database_name="$ORACLE_SID" \
     global_role="common_clerk" dbuser="system" dbuser_password=$(cat ${SYSTEM_PWD_FILE}) \
-    dbconnect_string="db:1521:$ORACLE_SID" \
+    dbconnect_string="${HOSTNAME}:1521:$ORACLE_SID" \
     realm_dn="${BASEDN}" ldap_host=${OUD_HOST} ldap_port=${OUD_PORT} \
     ldap_user_dn="${EUS_ADMIN}" ldap_user_password=$(cat ${EUS_PWD_FILE}) 
 
 eusm addGlobalRole enterprise_role="Common Management" \
     domain_name="OracleDefaultDomain" database_name="$ORACLE_SID" \
     global_role="common_clerk" dbuser="system" dbuser_password=$(cat ${SYSTEM_PWD_FILE}) \
-    dbconnect_string="db:1521:$ORACLE_SID" \
+    dbconnect_string="${HOSTNAME}:1521:$ORACLE_SID" \
     realm_dn="${BASEDN}" ldap_host=${OUD_HOST} ldap_port=${OUD_PORT} \
     ldap_user_dn="${EUS_ADMIN}" ldap_user_password=$(cat ${EUS_PWD_FILE}) 
 
 eusm addGlobalRole enterprise_role="Common Management" \
     domain_name="OracleDefaultDomain" database_name="$ORACLE_SID" \
     global_role="common_mgr" dbuser="system" dbuser_password=$(cat ${SYSTEM_PWD_FILE}) \
-    dbconnect_string="db:1521:$ORACLE_SID" \
+    dbconnect_string="${HOSTNAME}:1521:$ORACLE_SID" \
     realm_dn="${BASEDN}" ldap_host=${OUD_HOST} ldap_port=${OUD_PORT} \
     ldap_user_dn="${EUS_ADMIN}" ldap_user_password=$(cat ${EUS_PWD_FILE}) 
 
