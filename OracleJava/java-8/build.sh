@@ -45,6 +45,9 @@ SERVER_JRE_PACKAGE="server-jre-8u${JAVA_UPDATE}-linux-x64.tar.gz"
 # define image name based on Java version and update
 DOCKER_IMAGE_NAME="serverjre:${JAVA_VERSION}_${JAVA_UPDATE}"
 
+#ORAREPO=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
+ORAREPO=localhost
+
 if [ ! -f "${DOCKERFILE}" ]; then
     echo " ERROR : Can not build ${DOCKER_IMAGE_NAME}. Please run build.sh "
     echo "         from a corresponding subdirectory."
@@ -70,10 +73,15 @@ elif [ -f "${DOCKER_BUILD_DIR}/.netrc" ]; then
         --location-trusted ${JAVA_URL} -o ${JAVA_PKG} && unzip -o ${JAVA_PKG}
     rm -f cookie-jar.txt
 else
-    echo "Missing Server JRE 8u${JAVA_UPDATE} package."
-    echo "Fallback to ${JAVA_PKG} or MOS download failed"
-    echo "Can not build docker image ${DOCKER_REPOSITORY}/${DOCKER_IMAGE_NAME}"
-    exit 1
+    echo "download ${JAVA_PKG} from orarepo (${ORAREPO})"
+    curl -f http://${ORAREPO}/${JAVA_PKG} -o ${JAVA_PKG}
+    unzip -o ${DOCKER_BUILD_DIR}/${JAVA_PKG}
+    if [ $? -ne 0 ]; then
+        echo "Missing Server JRE 8u${JAVA_UPDATE} package."
+        echo "Fallback to ${JAVA_PKG} or MOS download failed"
+        echo "Can not build docker image ${DOCKER_REPOSITORY}/${DOCKER_IMAGE_NAME}"
+        exit 1
+    fi
 fi
 docker rmi ${DOCKER_REPOSITORY}/${DOCKER_MAJOR_IMAGE_NAME} 2>/dev/null||echo "No image ${DOCKER_REPOSITORY}/${DOCKER_MAJOR_IMAGE_NAME} to remove"
 
