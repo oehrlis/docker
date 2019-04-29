@@ -20,19 +20,52 @@
 ALTER SESSION SET CONTAINER=cdb$root;
 
 -- Define a common credential
+
+DECLARE
+  vcount INTEGER :=0;
+BEGIN
+  SELECT count(1) INTO vcount FROM dba_credentials WHERE credential_name = 'GENERIC_PDB_OS_USER';
+  IF vcount != 0 THEN
+    dbms_credential.drop_credential(credential_name => 'GENERIC_PDB_OS_USER');
+  END IF;
+
+  SELECT count(1) INTO vcount FROM dba_credentials WHERE credential_name = 'PDB1_OS_USER';
+  IF vcount != 0 THEN
+    dbms_credential.drop_credential(credential_name => 'PDB1_OS_USER'); 
+  END IF;
+
+END;
+/
+
 BEGIN
     dbms_credential.create_credential(
       credential_name => 'GENERIC_PDB_OS_USER',
-      username => 'orapdb',
+      username => 'oracdb',
       password => 'manager');
 END;
 /
+
+BEGIN
+    dbms_credential.create_credential(
+      credential_name => 'PDB1_OS_USER',
+      username => 'orapdb1',
+      password => 'manager');
+END;
+/
+
+SHOW PARAMETER PDB_OS_CREDENTIAL
+SHUTDOWN IMMEDIATE;
+CREATE PFILE='/tmp/pfile.txt' FROM SPFILE;
+HOST echo "*.pdb_os_credential=GENERIC_PDB_OS_USER" >> /tmp/pfile.txt
+CREATE SPFILE FROM PFILE='/tmp/pfile.txt';
+STARTUP;
+SHOW PARAMETER PDB_OS_CREDENTIAL
 
 -- set the container to PDB1
 ALTER SESSION SET CONTAINER=pdb1;
 
 -- set PDB_OS_CREDENTIAL parameter
-ALTER SYSTEM SET PDB_OS_CREDENTIAL=GENERIC_PDB_OS_USER SCOPE=SPFILE; 
+ALTER SYSTEM SET PDB_OS_CREDENTIAL=PDB1_OS_USER SCOPE=SPFILE; 
 
 -- restart database
 startup force;
