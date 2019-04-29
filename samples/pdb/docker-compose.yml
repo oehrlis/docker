@@ -1,0 +1,75 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.12.11
+# Revision...: --
+# Purpose....: Docker compose file to create PDB Engineering DB container
+# Notes......: --
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+
+version: '3'
+services:
+# Database service
+  db122:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:12.2.0.1
+    container_name: db122
+    hostname: db122
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/eng/db122:/u01
+      - ./db:/u01/config
+    ports:
+      - 1521
+    environment:
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB122
+      CONTAINER: "TRUE"
+
+  db185:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.5.0.0
+    container_name: db185
+    hostname: db185
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/eng/db185:/u01
+      - ./db:/u01/config
+    ports:
+      - 1521
+    environment:
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB185
+      CONTAINER: "TRUE"
+
+  db192:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.2.0.0
+    container_name: db192
+    hostname: db192
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/eng/db192:/u01
+      - ./db:/u01/config
+    ports:
+      - 1521
+    environment:
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB192
+      CONTAINER: "TRUE"
+# - EOF -----------------------------------------------------------------
