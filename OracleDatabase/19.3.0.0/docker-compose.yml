@@ -7,7 +7,7 @@
 # Editor.....: Stefan Oehrli
 # Date.......: 2019.03.16
 # Revision...: --
-# Purpose....: Simple compose file to create a 19.2 databases
+# Purpose....: Simple compose file to create a 19.3 databases
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
@@ -38,7 +38,7 @@ services:
 
 # multitenant tenant database
   # tdb193c:
-  #   image: ${DOCKER_USER}/${DOCKER_REPO}:19.2.0.0
+  #   image: ${DOCKER_USER}/${DOCKER_REPO}:19.3.0.0
   #   container_name: tdb193c
   #   hostname: tdb193c
   #   restart: unless-stopped

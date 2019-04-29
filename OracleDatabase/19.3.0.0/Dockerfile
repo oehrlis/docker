@@ -37,7 +37,11 @@ ENV ORAREPO=${ORAREPO:-orarepo}
 # Environment variables required for this build 
 # Change them carefully and wise!
 # Default Values:
-# DB_BASE_PKG="V981623-01.zip"
+# DB_BASE_PKG="LINUX.X64_193000_db_home.zip"
+# DB_EXAMPLE_PKG=""
+# DB_PATCH_PKG=""
+# DB_OJVM_PKG=""
+# DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip"
 # -------------------------------------------------------------
 # Software stage area, repository, binary packages and patchs
 ENV DOWNLOAD="/tmp/download" \
@@ -48,7 +52,7 @@ ENV DOWNLOAD="/tmp/download" \
    DB_EXAMPLE_PKG="" \
    DB_PATCH_PKG="" \
    DB_OJVM_PKG="" \
-   DB_OPATCH_PKG=""
+   DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip"
 
 # scripts to build and run this container
 ENV SETUP_INIT="00_setup_oradba_init.sh" \
