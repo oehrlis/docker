@@ -1,0 +1,10 @@
+# OPatch 12.2.0.1.17 for DB 18.x releases (APR 2019)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=6880880
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p6880880_180000_Linux-x86-64.zip?aru=22870225&patch_file=p6880880_180000_Linux-x86-64.zip
+#
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+61DC54A49A913F5587521E2D4B3E53BA8D9E217F60DC3843F03EFE84C2186BEA p6880880_180000_Linux-x86-64.zip
