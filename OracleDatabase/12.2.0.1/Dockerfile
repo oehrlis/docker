@@ -39,8 +39,8 @@ ENV ORAREPO=${ORAREPO:-orarepo}
 # Default Values:
 # DB_BASE_PKG="linuxx64_12201_database.zip"
 # DB_EXAMPLE_PKG="linuxx64_12201_examples.zip"
-# DB_PATCH_PKG="p28822515_122010_Linux-x86-64.zip"
-# DB_OJVM_PKG="p28790651_122010_Linux-x86-64.zip"
+# DB_PATCH_PKG="p29314339_122010_Linux-x86-64.zip"
+# DB_OJVM_PKG="p29249637_122010_Linux-x86-64.zip"
 # DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
 # -------------------------------------------------------------
 # Software stage area, repository, binary packages and patchs
@@ -50,8 +50,8 @@ ENV DOWNLOAD="/tmp/download" \
    ORADBA_INIT="/opt/oradba/bin" \
    DB_BASE_PKG="linuxx64_12201_database.zip" \
    DB_EXAMPLE_PKG="" \
-   DB_PATCH_PKG="p28822515_122010_Linux-x86-64.zip" \
-   DB_OJVM_PKG="p28790651_122010_Linux-x86-64.zip" \
+   DB_PATCH_PKG="p29314339_122010_Linux-x86-64.zip" \
+   DB_OJVM_PKG="p29249637_122010_Linux-x86-64.zip" \
    DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
 
 # scripts to build and run this container
