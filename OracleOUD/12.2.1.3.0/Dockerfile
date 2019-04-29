@@ -98,7 +98,7 @@ RUN ${ORADBA_INIT}/${SETUP_OS}
 FROM base AS builder
 
 # COPY oud software 
-COPY --chown=oracle:oinstall *zip* "${SOFTWARE}/"
+COPY --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
