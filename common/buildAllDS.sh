@@ -62,5 +62,5 @@ time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.180829
 # build OUDSM
 echo "### Build OUDSM 12.2.1.3.0 #####################################################"
 cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.181016 .
+time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.190416 .
 docker image prune --force

@@ -24,8 +24,8 @@
 # - Default Values ----------------------------------------------------------
 
 DOCKER_BUILD_DIR="$(cd $(dirname $0)/.. 2>&1 >/dev/null; pwd -P)"
-DOCKER_USER=trivadis
-DOCKER_REPO=ora_db
+DOCKER_USER=oracle
+DOCKER_REPO=database
 echo "--------------------------------------------------------------------------------"
 echo " Build all image from $DOCKER_BUILD_DIR...."
 orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
@@ -38,9 +38,8 @@ cd $DOCKER_BUILD_DIR/OracleDatabase
 for version in 1?.?.?.?; do
     echo "### Build $version #######################################################"
     cd $DOCKER_BUILD_DIR/OracleDatabase/$version
-    time docker build --add-host=orarepo:${orarepo_ip} --force-rm -t ${DOCKER_USER}/${DOCKER_REPO}:$version .
-    time docker push ${DOCKER_USER}/${DOCKER_REPO}:$version
-    docker tag oracle/database:$version ${DOCKER_USER}/${DOCKER_REPO}:$version
+    #time docker build --add-host=orarepo:${orarepo_ip} --force-rm -t ${DOCKER_USER}/${DOCKER_REPO}:$version .
+    time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/${DOCKER_REPO}:$version .
     docker image prune --force
 done
 # --- EOF -------------------------------------------------------------------
