@@ -27,6 +27,13 @@ FROM oraclelinux:7-slim
 # ----------------------------------------------------------------------
 LABEL maintainer="stefan.oehrli@trivadis.com"
 
+# Install tar, gzip and libaio for OUD stuff 
+# enable cipher legacy 3DES_EDE_CBC for Oracle EUS
+# ----------------------------------------------------------------------
+RUN echo "%_install_langs  en" >/etc/rpm/macros.lang && \
+    yum install -y libaio gzip tar && \
+    rm -rf /var/cache/yum
+
 # Environment variables required for this build (do NOT change)
 # ----------------------------------------------------------------------
 ENV JAVA_PKG=server-jre-7u*-linux-x64.tar.gz \
@@ -45,11 +52,5 @@ RUN export JAVA_DIR=$(ls -1 -d /usr/java/*) && \
     alternatives --install /usr/bin/javac javac $JAVA_DIR/bin/javac 20000 && \
     alternatives --install /usr/bin/jar jar $JAVA_DIR/bin/jar 20000
 
-# Install tar, gzip and libaio for OUD stuff 
-# enable cipher legacy 3DES_EDE_CBC for Oracle EUS
-# ----------------------------------------------------------------------
-RUN echo "%_install_langs  en" >/etc/rpm/macros.lang && \
-    yum install -y libaio gzip tar && \
-    rm -rf /var/cache/yum && \
-    sed -i 's/3DES_EDE_CBC//' $(find $(dirname $(dirname $(realpath $(command -v java)))) -name java.security 2>/dev/null)
+COPY java.security /usr/java/latest/jre/lib/security/java.security
 # --- EOF --------------------------------------------------------------

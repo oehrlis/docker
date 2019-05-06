@@ -18,7 +18,7 @@
 
 # Pull base image
 # ----------------------------------------------------------------------
-FROM oracle/serverjre:8 AS base
+FROM oraclelinux:7-slim AS base
 
 # Maintainer
 # ----------------------------------------------------------------------
@@ -41,46 +41,19 @@ ENV DOWNLOAD="/tmp/download" \
     SOFTWARE="/opt/stage" \
     SOFTWARE_REPO="http://$ORAREPO" \
     DOCKER_SCRIPTS="/opt/docker/bin" \
-    ORADBA_INIT="/opt/oradba/bin" \
-    OUD_BASE_PKG="p26270957_122130_Generic.zip" \
-    OUD_PATCH_PKG="p28569189_122130_Generic.zip" \
-    OUD_OPATCH_PKG="p28186730_139400_Generic.zip"
+    ORADBA_INIT="/opt/oradba/bin"
 
 # scripts to build and run this container
 ENV SETUP_INIT="00_setup_oradba_init.sh" \
     SETUP_OS="01_setup_os_oud.sh" \
-    SETUP_OUD="10_setup_oud_12c.sh" \
-    SETUP_OUDBASE="20_setup_oudbase.sh" \
-    START_SCRIPT="start_oud_instance.sh" \
-    CHECK_SCRIPT="check_oud_instance.sh" \
+    SETUP_JAVA="01_setup_os_java.sh" \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
-    ORACLE_DATA=${ORACLE_DATA:-/u01}
-
-# stuff to run an OUD instans
-ENV OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
-    USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
-    ORACLE_HOME_NAME="fmw12.2.1.3.0" \
-    PORT="${PORT:-1389}" \
-    PORT_SSL="${PORT_SSL:-1636}" \
-    PORT_HTTP="${PORT_HTTP:-8080}" \
-    PORT_HTTPS="${PORT_HTTPS:-10443}" \
-    PORT_REP="${PORT_REP:-8989}" \
-    PORT_ADMIN="${PORT_ADMIN:-4444}" \
-    PORT_ADMIN_HTTP="${PORT_ADMIN_HTTP:-8444}"
+    ORACLE_DATA=${ORACLE_DATA:-/u01} \
+    JAVA_BASE="/usr/java/default"
 
 # Use second ENV so that variable get substituted
 ENV ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
-    OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances}
-
-# same same but different...
-# third ENV so that variable get substituted
-ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
-    ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
-
-# Copy scripts and software
-# ----------------------------------------------------------------------
-# copy all setup scripts to DOCKER_BIN
-COPY scripts/* "${DOCKER_SCRIPTS}/"
+    JAVA_HOME=${JAVA_BASE}
 
 # RUN as user root
 # ----------------------------------------------------------------------
@@ -92,6 +65,45 @@ RUN GITHUB_URL="https://github.com/oehrlis/oradba_init/raw/master/bin" && \
 
 # Setup OS using OraDBA init script
 RUN ${ORADBA_INIT}/${SETUP_OS}
+
+# Install Java
+# ----------------------------------------------------------------------
+# Setup JAVA using OraDBA init script
+ENV JAVA_PKG="p29565620_180212_Linux-x86-64.zip"
+RUN ${ORADBA_INIT}/${SETUP_JAVA}
+COPY java.security /usr/java/latest/jre/lib/security/java.security
+
+# Set Version specific stuff
+# ----------------------------------------------------------------------
+# scripts to build and run this container
+ENV SETUP_OUD="10_setup_oud_12c.sh" \
+    SETUP_OUDBASE="20_setup_oudbase.sh" \
+    START_SCRIPT="60_start_oud_instance.sh" \
+    CHECK_SCRIPT="64_check_oud_instance.sh" 
+
+# set OUD specific parameters
+ENV OUD_BASE_PKG="p26270957_122130_Generic.zip" \
+    OUD_PATCH_PKG="p28569189_122130_Generic.zip" \
+    OUD_OPATCH_PKG="p28186730_139400_Generic.zip"
+
+# stuff to setup and run an OUD instance
+ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
+    OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
+    USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
+    OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
+    ORACLE_HOME_NAME="fmw12.2.1.3.0" \
+    PORT="${PORT:-1389}" \
+    PORT_SSL="${PORT_SSL:-1636}" \
+    PORT_HTTP="${PORT_HTTP:-8080}" \
+    PORT_HTTPS="${PORT_HTTPS:-10443}" \
+    PORT_REP="${PORT_REP:-8989}" \
+    PORT_ADMIN="${PORT_ADMIN:-4444}" \
+    PORT_ADMIN_HTTP="${PORT_ADMIN_HTTP:-8444}"
+
+# same same but different...
+# third ENV so that variable get substituted
+ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
+    ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
 # New stage for installing the oud binaries
 # ----------------------------------------------------------------------
