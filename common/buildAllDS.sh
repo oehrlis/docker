@@ -42,6 +42,7 @@ echo "### Send build trigger to trivadisbds ####################################
 echo "--------------------------------------------------------------------------------"
 echo "### Build Java #################################################################"
 cd $DOCKER_BUILD_DIR/OracleJava
+time $DOCKER_BUILD_DIR/OracleJava/java-7/build.sh
 time $DOCKER_BUILD_DIR/OracleJava/java-8/build.sh
 
 # build ODSEE
@@ -64,3 +65,4 @@ echo "### Build OUDSM 12.2.1.3.0 ###############################################
 cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
 time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.190416 .
 docker image prune --force
+# --- EOF --------------------------------------------------------------
