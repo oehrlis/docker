@@ -39,18 +39,6 @@ docker pull oraclelinux:7-slim
 #curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "12.2.1.3.180417"}' -X POST https://registry.hub.docker.com/u/trivadisbds/oudsm/trigger/92f5b20b-4d03-4902-91e8-09ba8aaba04e/
 #curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "11.1.1.7.171017"}' -X POST https://registry.hub.docker.com/u/trivadisbds/odsee/trigger/362c8a54-e5f7-43df-8e64-0dee4b4ca70c/
 
-# first build java
-# echo "--------------------------------------------------------------------------------"
-# echo "### Build Java #################################################################"
-# cd $DOCKER_BUILD_DIR/OracleJava
-# time $DOCKER_BUILD_DIR/OracleJava/java-8/build.sh
-
-# build ODSEE
-# echo "### Build ODSEE ################################################################"
-# cd $DOCKER_BUILD_DIR/OracleODSEE/11.1.1.7.0
-# docker rmi oracle/odsee:11.1.1.7.0
-# time docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.181016 .
-
 # build OUD 11.1.2.3.0
 echo "### Build OUD 11.1.2.3.0 #######################################################"
 cd $DOCKER_BUILD_DIR/OracleOUD/11.1.2.3.0
@@ -60,18 +48,4 @@ echo "### Build OUD 12.2.1.3.0 #################################################
 cd $DOCKER_BUILD_DIR/OracleOUD/12.2.1.3.0
 time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_TAG}/oud:12.2.1.3.180829 .
 docker image prune --force
-
-
-# build OUD Containers
-# cd $DOCKER_BUILD_DIR/OracleOUD
-# for version in 1?.?.?.?; do
-#     echo "### Build $version #######################################################"
-#     cd $DOCKER_BUILD_DIR/OracleDatabase/$version
-#     time docker build --add-host=orarepo:${orarepo_ip} --force-rm --no-cache -t oracle/database:$version .
-#     docker image prune --force
-# done
-# build OUDSM
-# echo "### Build OUDSM 12.2.1.3.0 #####################################################"
-# cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
-# time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.181016 .
-# docker image prune --force
+# --- EOF -------------------------------------------------------------------

@@ -3,12 +3,12 @@
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # -----------------------------------------------------------------------------
-# Name.......: buildAllDB.sh 
+# Name.......: pushAllDS.sh 
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.03.13
 # Revision...:  
-# Purpose....: Build script to build all trivadis/xxx docker images
+# Purpose....: Build script to push all directory server Docker images to trivadis/xxx
 # Notes......: 
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as 
