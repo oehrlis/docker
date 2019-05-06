@@ -38,7 +38,6 @@ cd $DOCKER_BUILD_DIR/OracleDatabase
 for version in 1?.?.?.?; do
     echo "### Build $version #######################################################"
     cd $DOCKER_BUILD_DIR/OracleDatabase/$version
-    #time docker build --add-host=orarepo:${orarepo_ip} --force-rm -t ${DOCKER_USER}/${DOCKER_REPO}:$version .
     time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/${DOCKER_REPO}:$version .
     docker image prune --force
 done
