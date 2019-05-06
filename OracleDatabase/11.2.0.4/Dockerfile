@@ -48,6 +48,7 @@ ENV   SETUP_INIT="00_setup_oradba_init.sh" \
       SETUP_OS="01_setup_os_db.sh" \
       SETUP_BASENV="20_setup_basenv.sh" \
       RUN_SCRIPT="50_run_database.sh" \
+      START_SCRIPT="51_start_database.sh" \
       CREATE_SCRIPT="52_create_database.sh" \
       CONFIG_SCRIPT="53_config_database.sh" \
       CHECK_SCRIPT="54_check_database.sh" \
