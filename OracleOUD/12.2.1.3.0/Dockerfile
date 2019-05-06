@@ -93,6 +93,7 @@ ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
     USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
     OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
     ORACLE_HOME_NAME="fmw12.2.1.3.0" \
+    OUD_VERSION="12" \
     PORT="${PORT:-1389}" \
     PORT_SSL="${PORT_SSL:-1636}" \
     PORT_HTTP="${PORT_HTTP:-8080}" \
@@ -103,7 +104,7 @@ ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
 
 # same same but different...
 # third ENV so that variable get substituted
-ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${DOCKER_SCRIPTS}" \
+ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${ORADBA_INIT}:${DOCKER_SCRIPTS}" \
     ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
 # New stage for installing the oud binaries
@@ -147,7 +148,7 @@ EXPOSE   ${PORT} ${PORT_SSL} \
 
 # run container health check
 HEALTHCHECK    --interval=1m --start-period=5m \
-   CMD "${DOCKER_SCRIPTS}/${CHECK_SCRIPT}" >/dev/null || exit 1
+   CMD "${ORADBA_INIT}/${CHECK_SCRIPT}" >/dev/null || exit 1
 
 # Oracle data volume for OUD instance and configuration files
 VOLUME   ["${ORACLE_DATA}"]
@@ -156,5 +157,5 @@ VOLUME   ["${ORACLE_DATA}"]
 WORKDIR  "${ORACLE_BASE}"
 
 # Define default command to start OUD instance
-CMD   exec "${DOCKER_SCRIPTS}/${START_SCRIPT}"
+CMD   exec "${ORADBA_INIT}/${START_SCRIPT}"
 # --- EOF --------------------------------------------------------------

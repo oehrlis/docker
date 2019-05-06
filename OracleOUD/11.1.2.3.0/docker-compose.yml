@@ -1,0 +1,38 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2019.03.16
+# Revision...: --
+# Purpose....: Simple compose file to create an OUDSM container
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+
+# single tenant database
+  oud11g:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:11.1.2.3.181016
+    container_name: oud11g
+    hostname: oud11g
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/oud11g:/u01
+      - ./config:/u01/config
+    ports:
+      - "1389"
+      - "1636"
+      - "4444"
+    environment:
+      INSTANCE_INIT: /u01/config
+# - EOF -----------------------------------------------------------------

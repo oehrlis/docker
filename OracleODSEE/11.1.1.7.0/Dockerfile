@@ -43,8 +43,8 @@ ENV ORAREPO=${ORAREPO:-orarepo} \
     ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
     ORACLE_DATA=${ORACLE_DATA:-/u01} \
     ODSEE_INSTANCE=${ODSEE_INSTANCE:-dsDocker} \
-    PORT=${PORT:-1389} \
-    PORT_SSL=${PORT_SSL:-1636} \
+    PORT="1389" \
+    PORT_SSL="1636" \
     FMW_ODSEE_PKG=p28773949_111170_Linux-x86-64.zip \
     FMW_ODSEE_TAR=dsee.11.1.1.7.181016.Redhat5-opt-64.full.zip.tar.gz \
     FMW_ODSEE=sun-dsee7.zip
@@ -122,7 +122,7 @@ RUN ${DOCKER_SCRIPTS}/setup_oudbase.sh
 # Finalize image
 # ----------------------------------------------------------------------
 # expose the OUD admin, replication and ldap ports
-EXPOSE ${PORT} ${PORT_SSL} 
+EXPOSE ${PORT} ${PORT_SSL}
 
 # run container health check
 HEALTHCHECK --interval=1m --start-period=5m \
