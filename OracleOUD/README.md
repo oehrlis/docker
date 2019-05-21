@@ -125,6 +125,7 @@ Get the IP address of the local HTTP server:
 ```
 orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
 ```
+
 Build the docker image using `docker build` and provide the HTTP server.
 
 ```

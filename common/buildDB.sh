@@ -40,7 +40,7 @@ if [ -d "${DOCKER_BUILD_DIR}" ]; then
     docker pull ${DOCKER_BASE_IMAGE}
     cd ${DOCKER_BUILD_DIR}
     echo " start to build ${BUILD_VERSION}"
-    echo docker build --add-host=orarepo:${ORAREPO} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION .
+    docker build --add-host=orarepo:${ORAREPO} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION .
     #docker image prune --force
     echo "--------------------------------------------------------------------------------"
     exit 0

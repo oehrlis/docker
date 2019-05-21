@@ -20,36 +20,36 @@ version: '3'
 services:
 
 # single tenant database
-  tdb185s:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:18.5.0.0
-    container_name: tdb185s
-    hostname: tdb185s
+  tdb186s:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.6.0.0
+    container_name: tdb186s
+    hostname: tdb186s
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/tdb185s:/u01
+      - ${DOCKER_VOLUME_BASE}/tdb186s:/u01
       - ./config:/u01/config
     ports:
       - "1521"
     environment:
       CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
-      ORACLE_SID: TDB185S
+      ORACLE_SID: TDB186S
 
 # multitenant tenant database
-  # tdb185c:
-  #   image: ${DOCKER_USER}/${DOCKER_REPO}:18.5.0.0
-  #   container_name: tdb185c
-  #   hostname: tdb185c
+  # tdb186c:
+  #   image: ${DOCKER_USER}/${DOCKER_REPO}:18.6.0.0
+  #   container_name: tdb186c
+  #   hostname: tdb186c
   #   restart: unless-stopped
   #   network_mode: bridge
   #   volumes:
-  #     - ${DOCKER_VOLUME_BASE}/tdb185c:/u01
+  #     - ${DOCKER_VOLUME_BASE}/tdb186c:/u01
   #     - ./config:/u01/config
   #   ports:
   #     - "1521"
   #   environment:
   #     CONTAINER: 'TRUE'
   #     INSTANCE_INIT: /u01/config
-  #     ORACLE_SID: TDB185C
+  #     ORACLE_SID: TDB186C
 # - EOF -----------------------------------------------------------------
