@@ -29,6 +29,6 @@ ${ORACLE_HOME}/bin/sqlplus -S -L /nolog <<EOFSQL
 connect / as sysdba
 set linesize 160
 col host_name for a20
-SELECT instance_number,instance_name,host_name,version,status FROM v$instance;
+SELECT instance_number,instance_name,host_name,version,status FROM v\$instance;
 EOFSQL
 # - EOF -----------------------------------------------------------------
