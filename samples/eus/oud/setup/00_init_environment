@@ -30,7 +30,7 @@
 #export ORACLE_HOME="${ORACLE_BASE}/product/oud12.2.1.3.0"
 #export OUD_INSTANCE=ouddd
 #export OUD_INSTANCE_ADMIN=${ORACLE_BASE}/admin/${OUD_INSTANCE}
-#export OUD_INSTANCE_HOME="${ORACLE_BASE}/instances/${OUD_INSTANCE_NAME}"
+#export OUD_INSTANCE_HOME="${ORACLE_BASE}/instances/${OUD_INSTANCE}"
 #export PWD_FILE=${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_pwd.txt
 #export PORT_ADMIN=4444
 #export PORT=1389
