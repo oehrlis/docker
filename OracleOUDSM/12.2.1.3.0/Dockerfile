@@ -85,8 +85,8 @@ ENV   SETUP_OUD="10_setup_oudsm_12c.sh" \
 # set OUD specific parameters
 ENV   OUD_BASE_PKG="p26270957_122130_Generic.zip" \
       FMW_BASE_PKG="p26269885_122130_Generic.zip" \
-      OUD_PATCH_PKG="p28569189_122130_Generic.zip" \
-      FMW_PATCH_PKG="p29016089_122130_Generic.zip" \
+      OUD_PATCH_PKG="p29814384_122130_Generic.zip" \
+      FMW_PATCH_PKG="p29814665_122130_Generic.zip" \
       OUD_OPATCH_PKG="p28186730_139400_Generic.zip"
 
 # stuff to setup and run an OUD instance
