@@ -1,0 +1,105 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2019.03.16
+# Revision...: --
+# Purpose....: Simple compose file to create a 18.5 database conatainer
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+
+# single tenant database
+  tdb187s:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.7.0.0
+    container_name: tdb187s
+    hostname: tdb187s
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/tdb187s:/u01
+      - ./config:/u01/config
+    ports:
+      - "1521"
+    environment:
+      CONTAINER: 'FALSE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB187S
+
+# single tenant database
+  tdb187s_delegated:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.7.0.0
+    container_name: tdb187s_delegated
+    hostname: tdb187s
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/tdb187s_delegated:/u01:rw,delegated
+      - ./config:/u01/config
+    ports:
+      - "1521"
+    environment:
+      CONTAINER: 'FALSE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB187S
+    
+# single tenant database
+  tdb187s_cached:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.7.0.0
+    container_name: tdb187s_cached
+    hostname: tdb187s
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/tdb187s_cached:/u01:rw,cached
+      - ./config:/u01/config
+    ports:
+      - "1521"
+    environment:
+      CONTAINER: 'FALSE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB187S
+
+# single tenant database
+  tdb187s_consistent:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.7.0.0
+    container_name: tdb187s_consistent
+    hostname: tdb187s
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/tdb187s_consistent:/u01:rw,consistent
+      - ./config:/u01/config
+    ports:
+      - "1521"
+    environment:
+      CONTAINER: 'FALSE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB187S
+# multitenant tenant database
+  # tdb187c:
+  #   image: ${DOCKER_USER}/${DOCKER_REPO}:18.7.0.0
+  #   container_name: tdb187c
+  #   hostname: tdb187c
+  #   restart: unless-stopped
+  #   network_mode: bridge
+  #   volumes:
+  #     - ${DOCKER_VOLUME_BASE}/tdb187c:/u01
+  #     - ./config:/u01/config
+  #   ports:
+  #     - "1521"
+  #   environment:
+  #     CONTAINER: 'TRUE'
+  #     INSTANCE_INIT: /u01/config
+  #     ORACLE_SID: TDB187C
+# - EOF -----------------------------------------------------------------
