@@ -79,15 +79,15 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # DB_BASE_PKG="linuxamd64_12102_database_1of2.zip"
 # DB_BASE2_PKG="linuxamd64_12102_database_2of2.zip"
 # DB_EXAMPLE_PKG="linuxamd64_12102_examples.zip"
-# DB_PATCH_PKG="p28729169_121020_Linux-x86-64.zip"
-# DB_OJVM_PKG="p29251241_121020_Linux-x86-64.zip"
+# DB_PATCH_PKG="p29494060_121020_Linux-x86-64.zip"
+# DB_OJVM_PKG="p29774383_121020_Linux-x86-64.zip"
 # DB_OPATCH_PKG="p6880880_121010_Linux-x86-64.zip"
 ENV   SETUP_DB="10_setup_db_12.1.sh" \
       DB_BASE_PKG="linuxamd64_12102_database_1of2.zip" \
       DB_BASE2_PKG="linuxamd64_12102_database_2of2.zip" \
       DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p29141015_121020_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p29251241_121020_Linux-x86-64.zip" \
+      DB_PATCH_PKG="p29494060_121020_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p29774383_121020_Linux-x86-64.zip" \
       DB_OPATCH_PKG="p6880880_121010_Linux-x86-64.zip"
 
 # stuff to run a DB instance
