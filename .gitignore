@@ -21,3 +21,6 @@ samples/19.1.0.0/*
 OracleDatabase/19.1.0.0/*
 # - EOF -----------------------------------------------------------------
 samples/eus/db/setup/02_create_tvd_hr.log
+samples/audit/config/pdb/06_add_pdb_os_user.log
+samples/audit/config/pdb/10_config_PDB_OS_CREDENTIAL.log
+samples/audit/config/test_cases/10_common_audit_issue.log
