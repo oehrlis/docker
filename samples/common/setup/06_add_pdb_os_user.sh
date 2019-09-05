@@ -44,4 +44,5 @@ echo "Install passwd and set password for ${PDB_OS_USER}:"
 yum install -y passwd
 yum clean all
 echo "${PDB_OS_PASSWD}" | passwd orapdb --stdin 
+
 # - EOF -----------------------------------------------------------------
