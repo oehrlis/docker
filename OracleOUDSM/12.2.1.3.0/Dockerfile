@@ -77,17 +77,18 @@ COPY java.security /usr/java/latest/jre/lib/security/java.security
 # Set Version specific stuff
 # ----------------------------------------------------------------------
 # scripts to build and run this container
-ENV   SETUP_OUD="10_setup_oudsm_12c.sh" \
+ENV   SETUP_OUD="10_setup_oud.sh" \
       SETUP_OUDBASE="20_setup_oudbase.sh" \
       START_SCRIPT="70_start_oudsm_domain.sh" \
-      CHECK_SCRIPT="74_check_oudsm_console" 
+      CHECK_SCRIPT="74_check_oudsm_console.sh" 
 
 # set OUD specific parameters
 ENV   OUD_BASE_PKG="p26270957_122130_Generic.zip" \
       FMW_BASE_PKG="p26269885_122130_Generic.zip" \
       OUD_PATCH_PKG="p29814384_122130_Generic.zip" \
       FMW_PATCH_PKG="p29814665_122130_Generic.zip" \
-      OUD_OPATCH_PKG="p28186730_139400_Generic.zip"
+      OUD_OPATCH_PKG="p28186730_139400_Generic.zip" \
+      OUI_PATCH_PKG="p29909359_139400_Generic.zip"
 
 # stuff to setup and run an OUD instance
 ENV   OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
@@ -95,6 +96,7 @@ ENV   OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
       USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
       OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
       ORACLE_HOME_NAME="fmw12.2.1.3.0" \
+      OUD_TYPE="OUDSM12" \
       PORT="${PORT:-7001}" \
       PORT_SSL="${PORT_SSL:-7002}" 
 
