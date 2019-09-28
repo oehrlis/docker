@@ -24,6 +24,8 @@
 # - Default Values ----------------------------------------------------------
 
 DOCKER_BUILD_DIR="$(cd $(dirname $0)/.. 2>&1 >/dev/null; pwd -P)"
+DOCKER_USER=oracle
+DOCKER_REPO=database
 echo "--------------------------------------------------------------------------------"
 echo " Build all image from $DOCKER_BUILD_DIR...."
 orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
@@ -51,18 +53,18 @@ cd $DOCKER_BUILD_DIR/OracleODSEE/11.1.1.7.0
 docker rmi oracle/odsee:11.1.1.7.0
 time docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.181016 .
 
-# build OUD 11.1.2.3.0
-echo "### Build OUD 11.1.2.3.0 #######################################################"
-cd $DOCKER_BUILD_DIR/OracleOUD/11.1.2.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:11.1.2.3.181016 .
-
-echo "### Build OUD 12.2.1.3.0 #######################################################"
-cd $DOCKER_BUILD_DIR/OracleOUD/12.2.1.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oud:12.2.1.3.180829 .
+# build Database Containers
+cd $DOCKER_BUILD_DIR/OracleOUD
+for version in 1?.?.?.?; do
+    echo "### Build $version #######################################################"
+    cd $DOCKER_BUILD_DIR/OracleOUD/$version
+    time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/oud:$version .
+    docker image prune --force
+done
 
 # build OUDSM
 echo "### Build OUDSM 12.2.1.3.0 #####################################################"
 cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.190416 .
+time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.190522 .
 docker image prune --force
 # --- EOF --------------------------------------------------------------
