@@ -77,14 +77,14 @@ COPY  java.security /usr/java/latest/jre/lib/security/java.security
 # Set Version specific stuff
 # ----------------------------------------------------------------------
 # scripts to build and run this container
-ENV   SETUP_OUD="10_setup_oud_11g.sh" \
+ENV   SETUP_OUD="10_setup_oud.sh" \
       SETUP_OUDBASE="20_setup_oudbase.sh" \
       START_SCRIPT="60_start_oud_instance.sh" \
       CHECK_SCRIPT="64_check_oud_instance.sh" 
 
 # set OUD specific parameters
 ENV   OUD_BASE_PKG="ofm_oud_generic_11.1.2.3.0_disk1_1of1.zip" \
-      OUD_PATCH_PKG="p28355703_111230_Generic.zip" \
+      OUD_PATCH_PKG="" \
       OUD_OPATCH_PKG=""
 
 # stuff to setup and run an OUD instance
@@ -94,6 +94,7 @@ ENV   OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
       OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
       ORACLE_HOME_NAME="fmw11.1.2.3.0" \
       OUD_VERSION="11" \
+      OUD_TYPE="OUD11" \
       PORT="${PORT:-1389}" \
       PORT_SSL="${PORT_SSL:-1636}" \
       PORT_HTTP="${PORT_HTTP:-8080}" \
