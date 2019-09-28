@@ -77,15 +77,15 @@ COPY java.security /usr/java/latest/jre/lib/security/java.security
 # Set Version specific stuff
 # ----------------------------------------------------------------------
 # scripts to build and run this container
-ENV SETUP_OUD="10_setup_oud_12c.sh" \
+ENV SETUP_OUD="10_setup_oud.sh" \
     SETUP_OUDBASE="20_setup_oudbase.sh" \
     START_SCRIPT="60_start_oud_instance.sh" \
     CHECK_SCRIPT="64_check_oud_instance.sh" 
 
 # set OUD specific parameters
 ENV OUD_BASE_PKG="p26270957_122130_Generic.zip" \
-    OUD_PATCH_PKG="p29814384_122130_Generic.zip" \
-    OUD_OPATCH_PKG="p28186730_139400_Generic.zip"
+    OUD_PATCH_PKG="" \
+    OUD_OPATCH_PKG=""
 
 # stuff to setup and run an OUD instance
 ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \

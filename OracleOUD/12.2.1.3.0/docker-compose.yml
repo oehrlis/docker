@@ -21,7 +21,7 @@ services:
 
 # single tenant database
   oud12c:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:12.2.1.3.180829
+    image: ${DOCKER_USER}/${DOCKER_REPO}:12.2.1.3.0
     container_name: oud12c
     hostname: oud12c
     restart: unless-stopped
