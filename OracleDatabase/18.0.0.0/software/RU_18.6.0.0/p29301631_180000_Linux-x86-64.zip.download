@@ -1,0 +1,10 @@
+# DATABASE RELEASE UPDATE 18.6.0.0.0 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=29301631
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p29301631_180000_Linux-x86-64.zip?aru=22832106&patch_file=p29301631_180000_Linux-x86-64.zip
+#
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+884E9763D9A7C49B30B49FC1CC74AEE351EEC8B3AC7E97A9EDE4BAEBAF3ED9BC p29301631_180000_Linux-x86-64.zip
