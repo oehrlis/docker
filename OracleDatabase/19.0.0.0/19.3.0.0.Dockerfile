@@ -5,8 +5,8 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.05.06
-# Purpose....: This Dockerfile to build Oracle Database image
+# Date.......: 2019.10.17
+# Purpose....: Dockerfile to build Oracle Database image 19.3.0.0
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
@@ -75,13 +75,7 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # ----------------------------------------------------------------------
 # scripts to build and run this container
 # set DB specific package variables
-# Default Values:
-# DB_BASE_PKG="LINUX.X64_193000_db_home.zip"
-# DB_EXAMPLE_PKG=""
-# DB_PATCH_PKG=""
-# DB_OJVM_PKG=""
-# DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip"
-ENV   SETUP_DB="10_setup_db_19.3.sh" \
+ENV   SETUP_DB="10_setup_db.sh" \
       DB_BASE_PKG="LINUX.X64_193000_db_home.zip" \
       DB_EXAMPLE_PKG="" \
       DB_PATCH_PKG="" \
@@ -89,8 +83,9 @@ ENV   SETUP_DB="10_setup_db_19.3.sh" \
       DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip"
 
 # stuff to run a DB instance
-ENV   ORACLE_SID=${ORACLE_SID:-"TDB193S"} \
+ENV   ORACLE_SID=${ORACLE_SID:-"TDB190S"} \
       ORACLE_HOME_NAME="19.0.0.0" \
+      ORACLE_MAJOR_RELEASE="190" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
       PORT_CONSOLE=${PORT_CONSOLE:-5500}
@@ -100,14 +95,18 @@ ENV   ORACLE_SID=${ORACLE_SID:-"TDB193S"} \
 ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT}:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/:/usr/sbin:$PATH" \
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
-      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
+      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
+      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v19.0.0"
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------
 FROM  base AS builder
 
-# COPY database software if part of the build context
+# COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
+# COPY RU patch if part of the build context
+COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user

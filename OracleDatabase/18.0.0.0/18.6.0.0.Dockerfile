@@ -5,8 +5,8 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.05.06
-# Purpose....: This Dockerfile to build Oracle Database image
+# Date.......: 2019.10.17
+# Purpose....: Dockerfile to build Oracle Database image 18.6.0.0
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
