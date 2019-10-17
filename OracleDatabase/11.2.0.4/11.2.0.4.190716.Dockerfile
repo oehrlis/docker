@@ -76,16 +76,17 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # scripts to build and run this container
 # set DB specific package variables
 ENV   SETUP_DB="10_setup_db.sh" \
-      DB_BASE_PKG="linuxx64_12201_database.zip" \
+      DB_BASE_PKG="p13390677_112040_Linux-x86-64_1of7.zip" \
+      DB_BASE2_PKG="p13390677_112040_Linux-x86-64_2of7.zip" \
       DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p30138470_122010_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p30133625_122010_Linux-x86-64.zip" \
-      DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
+      DB_PATCH_PKG="p28729262_112040_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p28790660_112040_Linux-x86-64.zip" \
+      DB_OPATCH_PKG="p6880880_112000_Linux-x86-64.zip"
 
 # stuff to run a DB instance
-ENV   ORACLE_SID=${ORACLE_SID:-"TDB122S"} \
-      ORACLE_HOME_NAME="12.2.0.1" \
-      ORACLE_MAJOR_RELEASE="122" \
+ENV   ORACLE_SID=${ORACLE_SID:-"TDB112S"} \
+      ORACLE_HOME_NAME="11.2.0.4" \
+      ORACLE_MAJOR_RELEASE="112" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
       PORT_CONSOLE=${PORT_CONSOLE:-5500}
@@ -96,7 +97,7 @@ ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
       CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
-      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v12.2.0"
+      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11.2.0"
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------

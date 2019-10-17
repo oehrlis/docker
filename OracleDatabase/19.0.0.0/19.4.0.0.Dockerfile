@@ -5,7 +5,7 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.05.06
+# Date.......: 2019.07.16
 # Purpose....: This Dockerfile to build Oracle Database image
 # Notes......: --
 # Reference..: --
@@ -75,17 +75,16 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # ----------------------------------------------------------------------
 # scripts to build and run this container
 # set DB specific package variables
-ENV   SETUP_DB="10_setup_db.sh" \
-      DB_BASE_PKG="linuxx64_12201_database.zip" \
+ENV   SETUP_DB="10_setup_db_19.4.sh" \
+      DB_BASE_PKG="LINUX.X64_193000_db_home.zip" \
       DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p30138470_122010_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p30133625_122010_Linux-x86-64.zip" \
-      DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
+      DB_PATCH_PKG="p29834717_190000_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p29834717_190000_Linux-x86-64.zip" \
+      DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip"
 
 # stuff to run a DB instance
-ENV   ORACLE_SID=${ORACLE_SID:-"TDB122S"} \
-      ORACLE_HOME_NAME="12.2.0.1" \
-      ORACLE_MAJOR_RELEASE="122" \
+ENV   ORACLE_SID=${ORACLE_SID:-"TDB194S"} \
+      ORACLE_HOME_NAME="19.0.0.0" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
       PORT_CONSOLE=${PORT_CONSOLE:-5500}
@@ -95,8 +94,7 @@ ENV   ORACLE_SID=${ORACLE_SID:-"TDB122S"} \
 ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT}:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/:/usr/sbin:$PATH" \
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
-      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
-      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v12.2.0"
+      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------

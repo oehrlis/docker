@@ -75,24 +75,18 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # ----------------------------------------------------------------------
 # scripts to build and run this container
 # set DB specific package variables
-# Default Values:
-# DB_BASE_PKG="linuxamd64_12102_database_1of2.zip"
-# DB_BASE2_PKG="linuxamd64_12102_database_2of2.zip"
-# DB_EXAMPLE_PKG="linuxamd64_12102_examples.zip"
-# DB_PATCH_PKG="p29494060_121020_Linux-x86-64.zip"
-# DB_OJVM_PKG="p29774383_121020_Linux-x86-64.zip"
-# DB_OPATCH_PKG="p6880880_121010_Linux-x86-64.zip"
-ENV   SETUP_DB="10_setup_db_12.1.sh" \
+ENV   SETUP_DB="10_setup_db.sh" \
       DB_BASE_PKG="linuxamd64_12102_database_1of2.zip" \
       DB_BASE2_PKG="linuxamd64_12102_database_2of2.zip" \
       DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p29494060_121020_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p29774383_121020_Linux-x86-64.zip" \
+      DB_PATCH_PKG="p29918340_121020_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p30128197_121020_Linux-x86-64.zip" \
       DB_OPATCH_PKG="p6880880_121010_Linux-x86-64.zip"
 
 # stuff to run a DB instance
 ENV   ORACLE_SID=${ORACLE_SID:-"TDB121S"} \
       ORACLE_HOME_NAME="12.1.0.2" \
+      ORACLE_MAJOR_RELEASE="121" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
       PORT_CONSOLE=${PORT_CONSOLE:-5500}
@@ -102,7 +96,8 @@ ENV   ORACLE_SID=${ORACLE_SID:-"TDB121S"} \
 ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT}:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/:/usr/sbin:$PATH" \
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
-      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
+      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
+      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v12.1.0"
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------

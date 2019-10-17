@@ -5,8 +5,8 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.05.06
-# Purpose....: This Dockerfile to build Oracle Database image
+# Date.......: 2019.10.12
+# Purpose....: This Dockerfile is to build Oracle Unifid Directory
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
@@ -45,19 +45,15 @@ ENV   DOWNLOAD="/tmp/download" \
 
 # scripts to build and run this container
 ENV   SETUP_INIT="00_setup_oradba_init.sh" \
-      SETUP_OS="01_setup_os_db.sh" \
-      SETUP_BASENV="20_setup_basenv.sh" \
-      RUN_SCRIPT="50_run_database.sh" \
-      START_SCRIPT="51_start_database.sh" \
-      CREATE_SCRIPT="52_create_database.sh" \
-      CONFIG_SCRIPT="53_config_database.sh" \
-      CHECK_SCRIPT="54_check_database.sh" \
-      ORACLE_ROOT=${ORACLE_ROOT:-"/u00"} \
-      ORACLE_DATA=${ORACLE_DATA:-"/u01"} \
-      ORACLE_ARCH=${ORACLE_ARCH:-"/u01"}
+      SETUP_OS="01_setup_os_oud.sh" \
+      SETUP_JAVA="01_setup_os_java.sh" \
+      ORACLE_ROOT=${ORACLE_ROOT:-/u00} \
+      ORACLE_DATA=${ORACLE_DATA:-/u01} \
+      JAVA_BASE="/usr/java/"
 
 # Use second ENV so that variable get substituted
-ENV   ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle}
+ENV   ORACLE_BASE=${ORACLE_BASE:-$ORACLE_ROOT/app/oracle} \
+      JAVA_HOME="${JAVA_BASE}/default"
 
 # RUN as user root
 # ----------------------------------------------------------------------
@@ -71,48 +67,59 @@ RUN   mkdir -p ${DOWNLOAD} && \
 # Setup OS using OraDBA init script
 RUN   ${ORADBA_INIT}/${SETUP_OS}
 
+# Install Java
+# ----------------------------------------------------------------------
+# Setup JAVA using OraDBA init script
+ENV  JAVA_PKG="p29657250_180221_Linux-x86-64.zip"
+RUN  ${ORADBA_INIT}/${SETUP_JAVA}
+COPY config/java.security /usr/java/latest/jre/lib/security/java.security
+
 # Set Version specific stuff
 # ----------------------------------------------------------------------
 # scripts to build and run this container
-# set DB specific package variables
-ENV   SETUP_DB="10_setup_db.sh" \
-      DB_BASE_PKG="linuxx64_12201_database.zip" \
-      DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p30138470_122010_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p30133625_122010_Linux-x86-64.zip" \
-      DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
+ENV   SETUP_OUD="10_setup_oud.sh" \
+      SETUP_OUDBASE="20_setup_oudbase.sh" \
+      START_SCRIPT="70_start_oudsm_domain.sh" \
+      CHECK_SCRIPT="74_check_oudsm_console.sh" 
 
-# stuff to run a DB instance
-ENV   ORACLE_SID=${ORACLE_SID:-"TDB122S"} \
-      ORACLE_HOME_NAME="12.2.0.1" \
-      ORACLE_MAJOR_RELEASE="122" \
-      DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
-      PORT=${PORT:-1521} \
-      PORT_CONSOLE=${PORT_CONSOLE:-5500}
+# set OUD specific parameters
+ENV   OUD_BASE_PKG="p30188352_122140_Generic.zip" \
+      FMW_BASE_PKG="p30188241_122140_Generic.zip" \
+      OUD_PATCH_PKG="" \
+      FMW_PATCH_PKG="" \
+      OUD_OPATCH_PKG="" \
+      OUI_PATCH_PKG=""
 
-# same same but different ...
+# stuff to setup and run an OUD instance
+ENV   OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
+      OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
+      USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
+      OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
+      ORACLE_HOME_NAME="fmw12.2.1.4.0" \
+      OUD_TYPE="OUDSM12" \
+      PORT="${PORT:-7001}" \
+      PORT_SSL="${PORT_SSL:-7002}" 
+
+# same same but different...
 # third ENV so that variable get substituted
-ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT}:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/:/usr/sbin:$PATH" \
-      ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
-      LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
-      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
-      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v12.2.0"
+ENV   PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/oud/bin:${ORADBA_INIT}:${DOCKER_SCRIPTS}" \
+      ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME}
 
-# New stage for installing the database binaries
+# New stage for installing the oud binaries
 # ----------------------------------------------------------------------
 FROM  base AS builder
 
-# COPY database software if part of the build context
+# COPY oud software 
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
-# Switch to user oracle, oracle software has to be installed as regular user
+# Switch to user oracle, oracle software as to be installed with regular user
 # ----------------------------------------------------------------------
 USER  oracle
-RUN   ${ORADBA_INIT}/${SETUP_DB}
+RUN   ${ORADBA_INIT}/${SETUP_OUD}
 
-# Install BasEnv
-RUN   ${ORADBA_INIT}/${SETUP_BASENV}
+# get the latest OUD base from GitHub and install it
+RUN   ${ORADBA_INIT}/${SETUP_OUDBASE}
 
 # New layer for database runtime
 # ----------------------------------------------------------------------
@@ -126,31 +133,23 @@ COPY  --chown=oracle:oinstall --from=builder $ORACLE_BASE $ORACLE_BASE
 COPY  --chown=oracle:oinstall --from=builder $ORACLE_ROOT/app/oraInventory $ORACLE_ROOT/app/oraInventory
 
 # copy basenv profile stuff
-COPY  --chown=oracle:oinstall --from=builder /home/oracle/.BE_HOME /home/oracle/.TVDPERL_HOME /home/oracle/.bash_profile /home/oracle/
-
-# RUN as root post install scripts
-USER  root
-RUN   $ORACLE_ROOT/app/oraInventory/orainstRoot.sh && \
-      $ORACLE_HOME/root.sh
+COPY  --chown=oracle:oinstall --from=builder /home/oracle/.OUD_BASE /home/oracle/.bash_profile /home/oracle/
 
 # Finalize image
 # ----------------------------------------------------------------------
-# get back to user oracle
-USER  oracle
+# expose the OUDSM http and https ports
+EXPOSE   ${PORT} ${PORT_SSL}
 
-# expose the listener and em console ports
-EXPOSE   ${PORT} ${PORT_CONSOLE}
+# run container health check
+HEALTHCHECK    --interval=1m --start-period=5m \
+   CMD "${ORADBA_INIT}/${CHECK_SCRIPT}" >/dev/null || exit 1
 
-# Oracle data volume for database instance and configuration files
-VOLUME   ["${ORACLE_DATA}"]
+# Oracle data volume for OUD instance and configuration files
+VOLUME ["${ORACLE_DATA}"]
 
 # set workding directory
 WORKDIR  "${ORACLE_BASE}"
 
-# run container health check
-HEALTHCHECK --interval=1m --start-period=5m \
-   CMD ${ORADBA_INIT}/${CHECK_SCRIPT} >/dev/null || exit 1
-
 # Define default command to start OUD instance
-CMD   exec ${ORADBA_INIT}/${RUN_SCRIPT}
+CMD   exec "${ORADBA_INIT}/${START_SCRIPT}"
 # --- EOF --------------------------------------------------------------

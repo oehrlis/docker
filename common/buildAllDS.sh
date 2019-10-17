@@ -53,18 +53,19 @@ cd $DOCKER_BUILD_DIR/OracleODSEE/11.1.1.7.0
 docker rmi oracle/odsee:11.1.1.7.0
 time docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.181016 .
 
+# build OUDSM
+echo "### Build OUDSM 12.2.1.3.0 #####################################################"
+cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
+time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.190522 .
+docker image prune --force
+
 # build Database Containers
 cd $DOCKER_BUILD_DIR/OracleOUD
-for version in 1?.?.?.?; do
+for version in 1?.?.?.?.*; do
     echo "### Build $version #######################################################"
     cd $DOCKER_BUILD_DIR/OracleOUD/$version
     time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/oud:$version .
     docker image prune --force
 done
 
-# build OUDSM
-echo "### Build OUDSM 12.2.1.3.0 #####################################################"
-cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.190522 .
-docker image prune --force
 # --- EOF --------------------------------------------------------------

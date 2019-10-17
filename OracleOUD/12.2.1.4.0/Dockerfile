@@ -5,7 +5,7 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2018.03.19
+# Date.......: 2019.10.12
 # Purpose....: This Dockerfile is to build Oracle Unifid Directory
 # Notes......: --
 # Reference..: --
@@ -24,7 +24,7 @@ FROM  oraclelinux:7-slim AS base
 # ----------------------------------------------------------------------
 LABEL maintainer="stefan.oehrli@trivadis.com"
 
-# Arguments for Oracle Installation
+# Build Argumensts for Oracle Installation
 ARG   ORACLE_ROOT
 ARG   ORACLE_DATA
 ARG   ORACLE_BASE
@@ -72,7 +72,7 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # Setup JAVA using OraDBA init script
 ENV JAVA_PKG="p29657250_180221_Linux-x86-64.zip"
 RUN ${ORADBA_INIT}/${SETUP_JAVA}
-COPY java.security /usr/java/latest/jre/lib/security/java.security
+COPY config/java.security /usr/java/latest/jre/lib/security/java.security
 
 # Set Version specific stuff
 # ----------------------------------------------------------------------
