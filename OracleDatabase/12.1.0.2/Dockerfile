@@ -5,8 +5,9 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.05.06
-# Purpose....: This Dockerfile to build Oracle Database image
+# Date.......: 2019.10.17
+# Purpose....: Dockerfile to build Oracle Database image 12.1.0.2
+#              Patch Set Update PSU 12.1.0.2.191015 October 2019
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
@@ -84,7 +85,7 @@ ENV   SETUP_DB="10_setup_db.sh" \
       DB_OPATCH_PKG="p6880880_121010_Linux-x86-64.zip"
 
 # stuff to run a DB instance
-ENV   ORACLE_SID=${ORACLE_SID:-"TDB121S"} \
+ENV   ORACLE_SID=${ORACLE_SID:-"TDB120S"} \
       ORACLE_HOME_NAME="12.1.0.2" \
       ORACLE_MAJOR_RELEASE="121" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
@@ -103,8 +104,11 @@ ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT
 # ----------------------------------------------------------------------
 FROM  base AS builder
 
-# COPY database software if part of the build context
+# COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
+# COPY RU patch if part of the build context
+COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
