@@ -29,10 +29,8 @@ LABEL maintainer="stefan.oehrli@trivadis.com"
 ARG   ORACLE_ROOT
 ARG   ORACLE_DATA
 ARG   ORACLE_BASE
-ARG   ORAREPO
-
 # just my environment variable for the software repository host
-ENV   ORAREPO=${ORAREPO:-orarepo}
+ARG   ORAREPO=orarepo
 
 # Environment variables required for this build 
 # Change them carefully and wise!

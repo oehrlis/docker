@@ -6,7 +6,8 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2019.10.17
-# Purpose....: Dockerfile to build Oracle Database image 19.5.0.0
+# Purpose....: Dockerfile to build Oracle Database image 12.2.0.1 
+#              Release Update RU 12.2.0.1.190416 July 2019
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
@@ -27,7 +28,6 @@ LABEL maintainer="stefan.oehrli@trivadis.com"
 # Arguments for Oracle Installation
 ARG   ORACLE_ROOT
 ARG   ORACLE_DATA
-ARG   ORACLE_BASE
 # just my environment variable for the software repository host
 ARG   ORAREPO=orarepo
 
@@ -74,16 +74,16 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # scripts to build and run this container
 # set DB specific package variables
 ENV   SETUP_DB="10_setup_db.sh" \
-      DB_BASE_PKG="LINUX.X64_193000_db_home.zip" \
+      DB_BASE_PKG="linuxx64_12201_database.zip" \
       DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p30125133_190000_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p30128191_190000_Linux-x86-64.zip" \
-      DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip" 
+      DB_PATCH_PKG="p29314339_122010_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p29249637_122010_Linux-x86-64.zip" \
+      DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
 
 # stuff to run a DB instance
-ENV   ORACLE_SID=${ORACLE_SID:-"TDB190S"} \
-      ORACLE_HOME_NAME="19.0.0.0" \
-      ORACLE_MAJOR_RELEASE="190" \
+ENV   ORACLE_SID=${ORACLE_SID:-"TDB120S"} \
+      ORACLE_HOME_NAME="12.2.0.1" \
+      ORACLE_MAJOR_RELEASE="122" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
       PORT_CONSOLE=${PORT_CONSOLE:-5500}
@@ -94,7 +94,7 @@ ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
       CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
-      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v19.0.0"
+      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v12.2.0"
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------
