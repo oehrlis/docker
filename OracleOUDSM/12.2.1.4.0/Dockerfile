@@ -84,7 +84,7 @@ ENV   SETUP_OUD="10_setup_oud.sh" \
 
 # set OUD specific parameters
 ENV   OUD_BASE_PKG="p30188352_122140_Generic.zip" \
-      FMW_BASE_PKG="p30188241_122140_Generic.zip" \
+      FMW_BASE_PKG="fmw_12.2.1.4.0_infrastructure_Disk1_1of1.zip" \
       OUD_PATCH_PKG="" \
       FMW_PATCH_PKG="" \
       OUD_OPATCH_PKG="" \
