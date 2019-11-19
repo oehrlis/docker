@@ -1,1 +1,1 @@
-This folder contains all files executed on instance start. Currently only bash scripts (.sh) as well SQL scripts (.sql) are supported. 
+This folder contains various scripts that are not executed automatically.
