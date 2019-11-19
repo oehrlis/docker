@@ -20,65 +20,55 @@
 version: '3'
 services:
 # Database service
-  db:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:${DOCKER_DB_VERSION}
+  eusdb:
+    image: oracle/database:19.5.0.0
     container_name: eusdb
-    hostname: db
+    hostname: eusdb
     restart: unless-stopped
     depends_on:
-      - oud
-    cap_add:
-      - SYS_PTRACE
-      - SYS_ADMIN
+      - eusoud
     volumes:
       - ${DOCKER_VOLUME_BASE}/eus/db:/u01
       - ./db:/u01/config
       - ./oud:/u01/oud
     ports:
-      - "6521:1521"
+      - "5521:1521"
     environment:
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TEUS01
 
-  # db192:
-  #   image: ${DOCKER_USER}/${DOCKER_REPO}:19.2.0.0
-  #   container_name: eusdb192
-  #   hostname: db192
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - oud
-  #   cap_add:
-  #     - SYS_PTRACE
-  #     - SYS_ADMIN
-  #   volumes:
-  #     - ${DOCKER_VOLUME_BASE}/eus/db192:/u01
-  #     - ./db:/u01/config
-  #     - ./oud:/u01/oud
-  #   ports:
-  #     - "7521:1521"
-  #   environment:
-  #     INSTANCE_INIT: /u01/config
-  #     ORACLE_SID: TEUS192
-
 # OUD LDAP service
-  oud:
-    image: oracle/oud:${DOCKER_OUD_VERSION}
+  eusoud:
+    image: oracle/oud:12.2.1.4.0
     container_name: eusoud
-    hostname: oud
-    cap_add:
-      - SYS_PTRACE
-      - SYS_ADMIN
+    hostname: eusoud
     restart: unless-stopped
     volumes:
       - ${DOCKER_VOLUME_BASE}/eus/oud:/u01
       - ./oud:/u01/config
     ports:
-      - "6389:1389"
-      - "6636:1636"
-      - "6444:4444"
+      - "5389:1389"
+      - "5636:1636"
+      - "5444:4444" 
     environment:
       OUD_CUSTOM: 'TRUE'
       INSTANCE_INIT: /u01/config
       BASEDN: dc=trivadislabs,dc=com
       OUD_INSTANCE: oud_eus
+
+# OUDSM service
+  eusoudsm:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:12.2.1.4.0
+    container_name: eusoudsm
+    hostname: eusoudsm
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/eus/oudsm:/u01
+      - ./config:/u01/config
+    ports:
+      - "5001:7001"
+      - "5002:7002"
+    environment:
+      INSTANCE_INIT: /u01/config
 # - EOF -----------------------------------------------------------------

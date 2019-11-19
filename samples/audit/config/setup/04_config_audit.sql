@@ -26,7 +26,7 @@ AND parameter_name = 'DB AUDIT TABLESPACE';
  
 --Create TBS AUDIT_DATA
 CREATE TABLESPACE AUDIT_DATA DATAFILE
-  '/u01/oradata/TMOBI01/PDB1/audit_data01TMOBI01.dbf' SIZE 1M AUTOEXTEND 
+  '/u01/oradata/TTVD01/PDB1/audit_data01TTVD01.dbf' SIZE 1M AUTOEXTEND 
   ON NEXT 256M MAXSIZE UNLIMITED;
 
 CREATE TABLESPACE AUDIT_DATA DATAFILE
@@ -106,32 +106,32 @@ select * from audit_unified_enabled_policies order by 2,1;
 --select * from audit_unified_policies
  
 --LOGON_LOGOFF alle, ohne Ausnahmen
-CREATE AUDIT POLICY MOBI_LOGON_LOGOFF
+CREATE AUDIT POLICY TVD_LOGON_LOGOFF
   Actions
     LOGOFF,
     LOGON
   container=all;
 
-audit policy MOBI_LOGON_LOGOFF;
+audit policy TVD_LOGON_LOGOFF;
 
-CREATE AUDIT POLICY MOBI_DBA
+CREATE AUDIT POLICY TVD_DBA
   ROLE DBA container=all;
-audit policy MOBI_DBA;
+audit policy TVD_DBA;
 
 --LOGON_LOGOFF alle, ohne Ausnahmen
-CREATE AUDIT POLICY MOBI_DATAPUMP
+CREATE AUDIT POLICY TVD_DATAPUMP
   ACTIONS COMPONENT=DATAPUMP ALL container=all;
 
-audit policy MOBI_DATAPUMP;
+audit policy TVD_DATAPUMP;
 
 alter session set container=pdb1;
-CREATE AUDIT POLICY MOBI_EMPLOYEES
+CREATE AUDIT POLICY TVD_EMPLOYEES
   ACTIONS ALL on tvd_hr.employees container=current;
-audit policy MOBI_EMPLOYEES;
+audit policy TVD_EMPLOYEES;
 
-CREATE AUDIT POLICY MOBI_SCOTT_EMP
+CREATE AUDIT POLICY TVD_SCOTT_EMP
   ACTIONS ALL on scott.emp container=current;
-audit policy MOBI_SCOTT_EMP;
+audit policy TVD_SCOTT_EMP;
 
 alter session set container=cdb$root;
 

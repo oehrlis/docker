@@ -30,14 +30,11 @@ services:
     dns: 10.0.0.4
     dns_search: trivadislabs.com
     restart: unless-stopped
-    cap_add:
-      - SYS_PTRACE
-      - SYS_ADMIN
     volumes:
       - ${DOCKER_VOLUME_BASE}/cmu/cmudb:/u01
       - ./db:/u01/config
     ports:
-      - 1521
+      - "6521:1521"
     environment:
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TCMU01
