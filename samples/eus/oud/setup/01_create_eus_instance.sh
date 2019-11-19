@@ -9,7 +9,7 @@
 # Date.......: 2018.03.18
 # Revision...: --
 # Purpose....: Script to create the OUD instance with EUS context 
-#              using oud-proxy-setup.
+#              using oud-setup.
 # Notes......: Will skip oud-proxy-setup if config.ldif already exists
 # Reference..: https://github.com/oehrlis/oudbase
 # License....: GPL-3.0+
