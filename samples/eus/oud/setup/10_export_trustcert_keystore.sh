@@ -24,7 +24,7 @@
 export KEYSTOREFILE=${KEYSTOREFILE:-"${OUD_INSTANCE_HOME}/OUD/config/keystore"} 
 export KEYSTOREPIN=${KEYSTOREPIN:-"${OUD_INSTANCE_HOME}/OUD/config/keystore.pin"}
 export KEYSTORE_ALIAS=${KEYSTORE_ALIAS:-"server-cert"}
-export TRUSTED_CERT_FILE=${TRUSTED_CERT_FILE:-"/u01/config/oud_trusted_cert.txt"}
+export TRUSTED_CERT_FILE=${TRUSTED_CERT_FILE:-"/u01/config/etc/oud_trusted_cert.txt"}
 
 # - configure instance --------------------------------------------------
 echo "Export the trusted certificate from OUD instance ${OUD_INSTANCE} keystore using:"

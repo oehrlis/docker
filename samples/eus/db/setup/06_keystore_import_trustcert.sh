@@ -17,9 +17,6 @@
 # see git revision history with git log for more information on changes
 # -----------------------------------------------------------------------
 
-# - load instance environment -------------------------------------------
-. "$(dirname $0)/00_init_environment"
-
 # set default values for keystore if not specified
 export KEYSTOREFILE=${KEYSTOREFILE:-"$ORACLE_BASE/network/admin/keystore.jks"} 
 export KEYSTOREPIN=${KEYSTOREPIN:-"$ORACLE_BASE/network/admin/keystore.pin"}

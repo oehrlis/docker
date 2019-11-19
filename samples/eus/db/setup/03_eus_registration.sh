@@ -19,7 +19,7 @@
 
 export BASEDN=${BASEDN:-"dc=trivadislabs,dc=com"}
 #export OUD_HOST=${OUD_HOST:-"oud.trivadislabs.com"}
-export OUD_HOST=${OUD_HOST:-"oud"}
+export OUD_HOST=${OUD_HOST:-"eusoud"}
 export ORACLE_SID=${ORACLE_SID:-"TEUS01"}
 export EUS_ADMIN=${EUS_ADMIN:-"cn=eusadmin,cn=oraclecontext"}
 export SYS_PWD_FILE=${SYS_PWD_FILE:-"${ORACLE_BASE}/admin/${ORACLE_SID}/etc/${ORACLE_SID}_password.txt"}
@@ -50,6 +50,6 @@ $ORACLE_HOME/bin/dbca -silent -configureDatabase \
 # - unlock system -------------------------------------------------------
 $ORACLE_HOME/bin/sqlplus -S -L /NOLOG <<EOFSQL
 CONNECT / AS SYSDBA
-ALTER USER system IDENTIFIED BY $(cat ${SYS_PWD_FILE}) ACCOUNT UNLOCK;
+ALTER USER system IDENTIFIED BY "$(cat ${SYS_PWD_FILE})" ACCOUNT UNLOCK;
 EOFSQL
 # - EOF -----------------------------------------------------------------

@@ -26,7 +26,7 @@ echo "  BASEDN            : ${BASEDN}"
 echo "  USER              : ${EUS_USER}"
 
 # reuse existing password file
-EUSADMIN_USERS_PWD_FILE=/u01/config/${OUD_INSTANCE}_eusadmin_pwd.txt
+EUSADMIN_USERS_PWD_FILE=/u01/config/etc/${OUD_INSTANCE}_eusadmin_pwd.txt
 if [ -f "$EUSADMIN_USERS_PWD_FILE" ]; then
     echo "    found password file $EUSADMIN_USERS_PWD_FILE"
     export ADMIN_PASSWORD=$(cat $EUSADMIN_USERS_PWD_FILE)

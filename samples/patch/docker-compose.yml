@@ -19,16 +19,16 @@
 version: '3'
 services:
   tcpu01:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:${DOCKER_DB_VERSION}
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.4.0.0
     container_name: tcpu01
     hostname: tcpu01
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/tcpu01:/u01
+      - ${DOCKER_VOLUME_BASE}/patch/tcpu01:/u01
       - ./config:/u01/config
     ports:
-      - "2184:1521"
+      - 1521
     environment:
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TCPU01

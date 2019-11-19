@@ -18,7 +18,7 @@
 # -----------------------------------------------------------------------
 
 export BASEDN=${BASEDN:-"dc=trivadislabs,dc=com"}
-export OUD_HOST=${OUD_HOST:-"oud"}
+export OUD_HOST=${OUD_HOST:-"eusoud"}
 export OUD_PORT=${OUD_PORT:-"1389"}
 export ORACLE_SID=${ORACLE_SID:-"TEUS01"}
 export EUS_ADMIN=${EUS_ADMIN:-"cn=eusadmin,cn=oraclecontext"}
