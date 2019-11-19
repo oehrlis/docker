@@ -25,7 +25,7 @@ services:
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/eng/tua122:/u01
+      - ${DOCKER_VOLUME_BASE}/audit/tua122:/u01
       - ./config:/u01/config
     ports:
       - 1521
@@ -41,7 +41,7 @@ services:
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/eng/tua180:/u01
+      - ${DOCKER_VOLUME_BASE}/audit/tua180:/u01
       - ./config:/u01/config
     ports:
       - 1521
@@ -57,7 +57,7 @@ services:
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/eng/tua190:/u01
+      - ${DOCKER_VOLUME_BASE}/audit/tua190:/u01
       - ./config:/u01/config
     ports:
       - 1521

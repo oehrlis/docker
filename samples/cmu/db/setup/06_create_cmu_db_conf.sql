@@ -60,7 +60,7 @@ END;
 /
 
 -- create the global shared cmu user tvd_global_users
-CREATE USER tvd_global_users IDENTIFIED GLOBALLY AS 'cn=Trivadis LAB Users,ou=Groups,dc=trivadislabs,dc=com';
+CREATE USER tvd_global_users IDENTIFIED GLOBALLY AS 'CN=Trivadislabs Users,OU=Groups,DC=trivadislabs,DC=com';
 GRANT create session TO tvd_global_users ;
 GRANT SELECT ON v_$session TO tvd_global_users ;
 

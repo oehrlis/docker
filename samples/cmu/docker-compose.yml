@@ -20,7 +20,7 @@ version: '3'
 services:
 # Database service
   cmudb:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:${DOCKER_DB_VERSION}
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.5.0.0
     container_name: cmudb
     hostname: cmudb
     networks:

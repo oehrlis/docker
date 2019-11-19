@@ -54,7 +54,7 @@ export KDC_DOMAIN_REALM=${KDC_DOMAIN_REALM:-"TRIVADISLABS.COM"} # KDC realm / AD
 export AD_BASEDN=${AD_BASEDN:-$(echo ${KDC_DOMAIN_NAME}|sed 's/\./,dc=/'|sed 's/^/dc=/')} 
 export AD_USER_NAME=${AD_USER_NAME:-"oracle18c"}
 export AD_DISTINGUISH_NAME=${AD_DISTINGUISH_NAME:-"cn=${AD_USER_NAME},cn=Users,${AD_BASEDN}" }
-export AD_PASSWORD=${AD_PASSWORD:-$(cat "${ORACLE_DATA}/config/network/admin/ad_service_password.txt")}
+export AD_PASSWORD=${AD_PASSWORD:-$(cat "${ORACLE_DATA}/config/etc/ad_service_password.txt")}
 export AD_ROOT_CERT=${AD_ROOT_CERT:-"ad_root.cer"}
 
 # krb5 config file names

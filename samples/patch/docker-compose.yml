@@ -19,7 +19,7 @@
 version: '3'
 services:
   tcpu01:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.4.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.5.0.0
     container_name: tcpu01
     hostname: tcpu01
     restart: unless-stopped
