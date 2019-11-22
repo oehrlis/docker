@@ -64,8 +64,6 @@ Connect to the database via Shell or SQLPlus and check your Oracle Audit Configu
 
 ## Customization
 
-### Customization
-
 By default the volume will be created in the directory specified by the environment variable *DOCKER_VOLUME_BASE*. If the environment variable is not specified, it will use the default value from ``*.env`` which is the current path. Beside the usual changes e.g. container name, hostname, ports etc. you can configure how the DB itself will be created by specify several configuration parameter.
 
 - **ORACLE_SID** Default Oracle SID. Usually it will default to the variable which has been specified during build. A custom SID can / should be specified. Default is either *TUA190*, *TUA180* or *TUA122*.
