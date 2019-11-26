@@ -38,6 +38,7 @@ CONNECT / as SYSDBA
 
 -- set the current
 ALTER SESSION SET CONTAINER=&pdb_db_name;
+ALTER TABLESPACE users ONLINE;
 SELECT * FROM scott.tspitr;
 SELECT * FROM scott.emp;
 EXIT;

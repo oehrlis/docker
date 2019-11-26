@@ -1,0 +1,998 @@
+tspitr    | ---------------------------------------------------------------
+tspitr    |  - DATABASE TRMAN01 IS READY TO USE!
+tspitr    | ---------------------------------------------------------------
+tspitr    | 
+tspitr    | Executing user defined scripts
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/00_prepare_env_tspitr.sh
+tspitr    | = Prepare PDB Environment =============================================
+tspitr    | TNS name entry tspitr1.postgasse.org does exists.
+tspitr    | = Finish PDB Environment ==============================================
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/01_create_pdb_tspitr.sql
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | Pluggable database created.
+tspitr    | 
+tspitr    | 
+tspitr    | Pluggable database altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Pluggable database altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Tablespace created.
+tspitr    | 
+tspitr    | 
+tspitr    | PROPERTY_NAME		       PROPERTY_VALUE
+tspitr    | ------------------------------ ------------------------------
+tspitr    | PATH_PREFIX		       /u01/oradata/TRMAN01/TSPITR/di
+tspitr    | 			       rectories
+tspitr    | 
+tspitr    | DEFAULT_PERMANENT_TABLESPACE   SYSTEM
+tspitr    | 
+tspitr    | 2 rows selected.
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/02_create_scott_tspitr.sql
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | DROP USER SCOTT CASCADE
+tspitr    |           *
+tspitr    | ERROR at line 1:
+tspitr    | ORA-01918: user 'SCOTT' does not exist
+tspitr    | 
+tspitr    | 
+tspitr    | DROP USER ADAMS CASCADE
+tspitr    |           *
+tspitr    | ERROR at line 1:
+tspitr    | ORA-01918: user 'ADAMS' does not exist
+tspitr    | 
+tspitr    | 
+tspitr    | DROP USER JONES CASCADE
+tspitr    |           *
+tspitr    | ERROR at line 1:
+tspitr    | ORA-01918: user 'JONES' does not exist
+tspitr    | 
+tspitr    | 
+tspitr    | DROP USER CLARK CASCADE
+tspitr    |           *
+tspitr    | ERROR at line 1:
+tspitr    | ORA-01918: user 'CLARK' does not exist
+tspitr    | 
+tspitr    | 
+tspitr    | DROP USER BLAKE CASCADE
+tspitr    |           *
+tspitr    | ERROR at line 1:
+tspitr    | ORA-01918: user 'BLAKE' does not exist
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | Grant succeeded.
+tspitr    | 
+tspitr    | 
+tspitr    | User altered.
+tspitr    | 
+tspitr    | DROP PUBLIC SYNONYM PARTS
+tspitr    |                     *
+tspitr    | ERROR at line 1:
+tspitr    | ORA-01432: public synonym to be dropped does not exist
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Table created.
+tspitr    | 
+tspitr    | 
+tspitr    | Table created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | Table created.
+tspitr    | 
+tspitr    | 
+tspitr    | Table created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row created.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/10_cleanup_backups.sh
+tspitr    | Example startup script for Database TRMAN01:
+tspitr    |   ORACLE_SID          :   TRMAN01
+tspitr    |   ORACLE_HOME         :   /u00/app/oracle/product/19.0.0.0
+tspitr    | RMAN backup of Database TRMAN01:
+tspitr    | 
+tspitr    | Recovery Manager: Release 19.0.0.0.0 - Production on Tue Nov 26 07:11:34 2019
+tspitr    | Version 19.5.0.0.0
+tspitr    | 
+tspitr    | Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | connected to target database: TRMAN01 (DBID=3810649330)
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | using target database control file instead of recovery catalog
+tspitr    | allocated channel: ORA_DISK_1
+tspitr    | channel ORA_DISK_1: SID=256 device type=DISK
+tspitr    | List of Archived Log Copies for database with db_unique_name TRMAN01
+tspitr    | =====================================================================
+tspitr    | 
+tspitr    | Key     Thrd Seq     S Low Time 
+tspitr    | ------- ---- ------- - ---------
+tspitr    | 168     1    179     A 26-NOV-19
+tspitr    |         Name: /u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_179_gxsmgcop_.arc
+tspitr    | 
+tspitr    | 169     1    180     A 26-NOV-19
+tspitr    |         Name: /u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_180_gxsmgddq_.arc
+tspitr    | 
+tspitr    | 170     1    181     A 26-NOV-19
+tspitr    |         Name: /u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_181_gxsmhwx7_.arc
+tspitr    | 
+tspitr    | deleted archived log
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_179_gxsmgcop_.arc RECID=168 STAMP=1025334091
+tspitr    | deleted archived log
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_180_gxsmgddq_.arc RECID=169 STAMP=1025334092
+tspitr    | deleted archived log
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_181_gxsmhwx7_.arc RECID=170 STAMP=1025334140
+tspitr    | Deleted 3 objects
+tspitr    | 
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | using channel ORA_DISK_1
+tspitr    | 
+tspitr    | List of Backup Pieces
+tspitr    | BP Key  BS Key  Pc# Cp# Status      Device Type Piece Name
+tspitr    | ------- ------- --- --- ----------- ----------- ----------
+tspitr    | 89      89      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T070038_gxsmdq1o_.bkp
+tspitr    | 90      90      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T070040_gxsmdrxl_.bkp
+tspitr    | 91      91      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/983B6EAF4D0F0162E053030011AC6E58/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T070040_gxsmf0f6_.bkp
+tspitr    | 92      92      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/982DEE183E3918E0E053030011AC2C38/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T070040_gxsmf7c0_.bkp
+tspitr    | 93      93      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/982CF63B04940255E053030011AC32A4/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T070040_gxsmfgmp_.bkp
+tspitr    | 94      94      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T070109_gxsmfowt_.bkp
+tspitr    | 95      95      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/autobackup/2019_11_26/o1_mf_s_1025334071_gxsmfq9j_.bkp
+tspitr    | 96      96      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T070127_gxsmg815_.bkp
+tspitr    | 97      97      1   1   AVAILABLE   DISK        /u01/fast_recovery_area/TRMAN01/autobackup/2019_11_26/o1_mf_s_1025334089_gxsmg9oh_.bkp
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T070038_gxsmdq1o_.bkp RECID=89 STAMP=1025334039
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T070040_gxsmdrxl_.bkp RECID=90 STAMP=1025334040
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/983B6EAF4D0F0162E053030011AC6E58/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T070040_gxsmf0f6_.bkp RECID=91 STAMP=1025334048
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/982DEE183E3918E0E053030011AC2C38/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T070040_gxsmf7c0_.bkp RECID=92 STAMP=1025334055
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/982CF63B04940255E053030011AC32A4/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T070040_gxsmfgmp_.bkp RECID=93 STAMP=1025334062
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T070109_gxsmfowt_.bkp RECID=94 STAMP=1025334069
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/autobackup/2019_11_26/o1_mf_s_1025334071_gxsmfq9j_.bkp RECID=95 STAMP=1025334071
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T070127_gxsmg815_.bkp RECID=96 STAMP=1025334088
+tspitr    | deleted backup piece
+tspitr    | backup piece handle=/u01/fast_recovery_area/TRMAN01/autobackup/2019_11_26/o1_mf_s_1025334089_gxsmg9oh_.bkp RECID=97 STAMP=1025334089
+tspitr    | Deleted 9 objects
+tspitr    | 
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | 
+tspitr    | Recovery Manager complete.
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/11_backup_database.sh
+tspitr    | Example startup script for Database TRMAN01:
+tspitr    |   ORACLE_SID          :   TRMAN01
+tspitr    |   ORACLE_HOME         :   /u00/app/oracle/product/19.0.0.0
+tspitr    | RMAN backup of Database TRMAN01:
+tspitr    | 
+tspitr    | Recovery Manager: Release 19.0.0.0.0 - Production on Tue Nov 26 07:11:41 2019
+tspitr    | Version 19.5.0.0.0
+tspitr    | 
+tspitr    | Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | connected to target database: TRMAN01 (DBID=3810649330)
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | 
+tspitr    | Starting backup at 26-NOV-19
+tspitr    | current log archived
+tspitr    | using target database control file instead of recovery catalog
+tspitr    | allocated channel: ORA_DISK_1
+tspitr    | channel ORA_DISK_1: SID=256 device type=DISK
+tspitr    | channel ORA_DISK_1: starting archived log backup set
+tspitr    | channel ORA_DISK_1: specifying archived log(s) in backup set
+tspitr    | input archived log thread=1 sequence=182 RECID=171 STAMP=1025334703
+tspitr    | channel ORA_DISK_1: starting piece 1 at 26-NOV-19
+tspitr    | channel ORA_DISK_1: finished piece 1 at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T071144_gxsn1jos_.bkp tag=TAG20191126T071144 comment=NONE
+tspitr    | channel ORA_DISK_1: backup set complete, elapsed time: 00:00:01
+tspitr    | channel ORA_DISK_1: deleting archived log(s)
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_182_gxsn1hmg_.arc RECID=171 STAMP=1025334703
+tspitr    | Finished backup at 26-NOV-19
+tspitr    | 
+tspitr    | Starting backup at 26-NOV-19
+tspitr    | using channel ORA_DISK_1
+tspitr    | channel ORA_DISK_1: starting full datafile backup set
+tspitr    | channel ORA_DISK_1: specifying datafile(s) in backup set
+tspitr    | input datafile file number=00001 name=/u01/oradata/TRMAN01/system01TRMAN01.dbf
+tspitr    | input datafile file number=00003 name=/u01/oradata/TRMAN01/sysaux01TRMAN01.dbf
+tspitr    | input datafile file number=00005 name=/u01/oradata/TRMAN01/undotbs01TRMAN01.dbf
+tspitr    | input datafile file number=00007 name=/u01/oradata/TRMAN01/users01TRMAN01.dbf
+tspitr    | channel ORA_DISK_1: starting piece 1 at 26-NOV-19
+tspitr    | channel ORA_DISK_1: finished piece 1 at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T071146_gxsn1lfk_.bkp tag=TAG20191126T071146 comment=NONE
+tspitr    | channel ORA_DISK_1: backup set complete, elapsed time: 00:00:07
+tspitr    | channel ORA_DISK_1: starting full datafile backup set
+tspitr    | channel ORA_DISK_1: specifying datafile(s) in backup set
+tspitr    | input datafile file number=00088 name=/u01/oradata/TRMAN01/TSPITR/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_undotbs1_gxsn0r2t_.dbf
+tspitr    | input datafile file number=00086 name=/u01/oradata/TRMAN01/TSPITR/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_system_gxsn0r24_.dbf
+tspitr    | input datafile file number=00087 name=/u01/oradata/TRMAN01/TSPITR/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_sysaux_gxsn0r2q_.dbf
+tspitr    | input datafile file number=00089 name=/u01/oradata/TRMAN01/TSPITR/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_users_gxsn133m_.dbf
+tspitr    | channel ORA_DISK_1: starting piece 1 at 26-NOV-19
+tspitr    | channel ORA_DISK_1: finished piece 1 at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/983B963B06B00167E053030011AC8DB4/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T071146_gxsn1svf_.bkp tag=TAG20191126T071146 comment=NONE
+tspitr    | channel ORA_DISK_1: backup set complete, elapsed time: 00:00:07
+tspitr    | channel ORA_DISK_1: starting full datafile backup set
+tspitr    | channel ORA_DISK_1: specifying datafile(s) in backup set
+tspitr    | input datafile file number=00010 name=/u01/oradata/TRMAN01/PDB1/undotbs01TRMAN01.dbf
+tspitr    | input datafile file number=00008 name=/u01/oradata/TRMAN01/PDB1/system01TRMAN01.dbf
+tspitr    | input datafile file number=00009 name=/u01/oradata/TRMAN01/PDB1/sysaux01TRMAN01.dbf
+tspitr    | input datafile file number=00011 name=/u01/oradata/TRMAN01/PDB1/users01.dbf
+tspitr    | channel ORA_DISK_1: starting piece 1 at 26-NOV-19
+tspitr    | channel ORA_DISK_1: finished piece 1 at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/982DEE183E3918E0E053030011AC2C38/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T071146_gxsn20tm_.bkp tag=TAG20191126T071146 comment=NONE
+tspitr    | channel ORA_DISK_1: backup set complete, elapsed time: 00:00:07
+tspitr    | channel ORA_DISK_1: starting full datafile backup set
+tspitr    | channel ORA_DISK_1: specifying datafile(s) in backup set
+tspitr    | input datafile file number=00006 name=/u01/oradata/TRMAN01/pdbseed/undotbs01TRMAN01.dbf
+tspitr    | input datafile file number=00002 name=/u01/oradata/TRMAN01/pdbseed/system01TRMAN01.dbf
+tspitr    | input datafile file number=00004 name=/u01/oradata/TRMAN01/pdbseed/sysaux01TRMAN01.dbf
+tspitr    | channel ORA_DISK_1: starting piece 1 at 26-NOV-19
+tspitr    | channel ORA_DISK_1: finished piece 1 at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/982CF63B04940255E053030011AC32A4/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T071146_gxsn2838_.bkp tag=TAG20191126T071146 comment=NONE
+tspitr    | channel ORA_DISK_1: backup set complete, elapsed time: 00:00:08
+tspitr    | Finished backup at 26-NOV-19
+tspitr    | 
+tspitr    | Starting backup at 26-NOV-19
+tspitr    | current log archived
+tspitr    | using channel ORA_DISK_1
+tspitr    | channel ORA_DISK_1: starting archived log backup set
+tspitr    | channel ORA_DISK_1: specifying archived log(s) in backup set
+tspitr    | input archived log thread=1 sequence=183 RECID=172 STAMP=1025334735
+tspitr    | channel ORA_DISK_1: starting piece 1 at 26-NOV-19
+tspitr    | channel ORA_DISK_1: finished piece 1 at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T071215_gxsn2hf8_.bkp tag=TAG20191126T071215 comment=NONE
+tspitr    | channel ORA_DISK_1: backup set complete, elapsed time: 00:00:01
+tspitr    | channel ORA_DISK_1: deleting archived log(s)
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_183_gxsn2h5b_.arc RECID=172 STAMP=1025334735
+tspitr    | Finished backup at 26-NOV-19
+tspitr    | 
+tspitr    | Starting Control File and SPFILE Autobackup at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/autobackup/2019_11_26/o1_mf_s_1025334736_gxsn2jsx_.bkp comment=NONE
+tspitr    | Finished Control File and SPFILE Autobackup at 26-NOV-19
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | 
+tspitr    | Recovery Manager complete.
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/20_create_some_load_tspitr.sql
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | 14 rows updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | 14 rows updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | 14 rows updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | 14 rows updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | 14 rows updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/21_create_scott_tspitr_table_tspitr.sql
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | PL/SQL procedure successfully completed.
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row selected.
+tspitr    | 
+tspitr    | 
+tspitr    | Table created.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | before TSPITR,26.11.2019 07:12:29
+tspitr    | 
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/22_backup_archivelogs.sh
+tspitr    | Example startup script for Database TRMAN01:
+tspitr    |   ORACLE_SID          :   TRMAN01
+tspitr    |   ORACLE_HOME         :   /u00/app/oracle/product/19.0.0.0
+tspitr    | RMAN backup of Database TRMAN01:
+tspitr    | 
+tspitr    | Recovery Manager: Release 19.0.0.0.0 - Production on Tue Nov 26 07:12:30 2019
+tspitr    | Version 19.5.0.0.0
+tspitr    | 
+tspitr    | Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | connected to target database: TRMAN01 (DBID=3810649330)
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | Starting backup at 26-NOV-19
+tspitr    | current log archived
+tspitr    | using target database control file instead of recovery catalog
+tspitr    | allocated channel: ORA_DISK_1
+tspitr    | channel ORA_DISK_1: SID=20 device type=DISK
+tspitr    | channel ORA_DISK_1: starting archived log backup set
+tspitr    | channel ORA_DISK_1: specifying archived log(s) in backup set
+tspitr    | input archived log thread=1 sequence=184 RECID=173 STAMP=1025334738
+tspitr    | input archived log thread=1 sequence=185 RECID=174 STAMP=1025334738
+tspitr    | input archived log thread=1 sequence=186 RECID=175 STAMP=1025334739
+tspitr    | input archived log thread=1 sequence=187 RECID=176 STAMP=1025334739
+tspitr    | input archived log thread=1 sequence=188 RECID=177 STAMP=1025334739
+tspitr    | input archived log thread=1 sequence=189 RECID=178 STAMP=1025334742
+tspitr    | input archived log thread=1 sequence=190 RECID=179 STAMP=1025334745
+tspitr    | input archived log thread=1 sequence=191 RECID=180 STAMP=1025334748
+tspitr    | input archived log thread=1 sequence=192 RECID=181 STAMP=1025334752
+tspitr    | channel ORA_DISK_1: starting piece 1 at 26-NOV-19
+tspitr    | channel ORA_DISK_1: finished piece 1 at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T071233_gxsn32lm_.bkp tag=TAG20191126T071233 comment=NONE
+tspitr    | channel ORA_DISK_1: backup set complete, elapsed time: 00:00:01
+tspitr    | channel ORA_DISK_1: deleting archived log(s)
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_184_gxsn2lno_.arc RECID=173 STAMP=1025334738
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_185_gxsn2lpt_.arc RECID=174 STAMP=1025334738
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_186_gxsn2mjf_.arc RECID=175 STAMP=1025334739
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_187_gxsn2mlz_.arc RECID=176 STAMP=1025334739
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_188_gxsn2mr1_.arc RECID=177 STAMP=1025334739
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_189_gxsn2phm_.arc RECID=178 STAMP=1025334742
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_190_gxsn2sk0_.arc RECID=179 STAMP=1025334745
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_191_gxsn2wmg_.arc RECID=180 STAMP=1025334748
+tspitr    | archived log file name=/u01/fast_recovery_area/TRMAN01/archivelog/2019_11_26/o1_mf_1_192_gxsn30pv_.arc RECID=181 STAMP=1025334752
+tspitr    | Finished backup at 26-NOV-19
+tspitr    | 
+tspitr    | Starting Control File and SPFILE Autobackup at 26-NOV-19
+tspitr    | piece handle=/u01/fast_recovery_area/TRMAN01/autobackup/2019_11_26/o1_mf_s_1025334756_gxsn34bf_.bkp comment=NONE
+tspitr    | Finished Control File and SPFILE Autobackup at 26-NOV-19
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | 
+tspitr    | Recovery Manager complete.
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/23_screw_up_scott_tspitr.sql
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | 14 rows updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 1 row selected.
+tspitr    | 
+tspitr    | 
+tspitr    | INFO
+tspitr    | ---------------------------------
+tspitr    | After TSPITR,26.11.2019 07:12:37
+tspitr    | 
+tspitr    | 1 row selected.
+tspitr    | 
+tspitr    | 
+tspitr    | 14 rows updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Commit complete.
+tspitr    | 
+tspitr    | 
+tspitr    | 14 rows updated.
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | System altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | 
+tspitr    | INFO
+tspitr    | ---------------------------------
+tspitr    | After TSPITR,26.11.2019 07:12:37
+tspitr    | 
+tspitr    | 1 row selected.
+tspitr    | 
+tspitr    | 
+tspitr    |      EMPNO ENAME      JOB	       MGR HIREDATE	    SAL       COMM     DEPTNO
+tspitr    | ---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+tspitr    |       7369 ERROR      CLERK	      7902 17-DEC-80	    800 		   20
+tspitr    |       7499 ERROR      SALESMAN	      7698 20-FEB-81	   1600        300	   30
+tspitr    |       7521 ERROR      SALESMAN	      7698 22-FEB-81	   1250        500	   30
+tspitr    |       7566 ERROR      MANAGER	      7839 02-APR-81	   2975 		   20
+tspitr    |       7654 ERROR      SALESMAN	      7698 28-SEP-81	   1250       1400	   30
+tspitr    |       7698 ERROR      MANAGER	      7839 01-MAY-81	   2850 		   30
+tspitr    |       7782 ERROR      MANAGER	      7839 09-JUN-81	   2450 		   10
+tspitr    |       7788 ERROR      ANALYST	      7566 19-APR-87	   3000 		   20
+tspitr    |       7839 ERROR      PRESIDENT 	   17-NOV-81	   5000 		   10
+tspitr    |       7844 ERROR      SALESMAN	      7698 08-SEP-81	   1500 	 0	   30
+tspitr    |       7876 ERROR      CLERK	      7788 23-MAY-87	   1100 		   20
+tspitr    |       7900 ERROR      CLERK	      7698 03-DEC-81	    950 		   30
+tspitr    |       7902 ERROR      ANALYST	      7566 03-DEC-81	   3000 		   20
+tspitr    |       7934 ERROR      CLERK	      7782 23-JAN-82	   1300 		   10
+tspitr    | 
+tspitr    | 14 rows selected.
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/30_execute_TSPITR_tspitr.sh
+tspitr    | RMAN TSPITR on database TRMAN01:
+tspitr    |   ORACLE_SID              :   TRMAN01
+tspitr    |   ORACLE_PDB              :   TSPITR
+tspitr    |   ORACLE_HOME             :   /u00/app/oracle/product/19.0.0.0
+tspitr    |   PDB_CREATE_FILE_DEST    :   /u01/oradata/TRMAN01/TSPITR
+tspitr    |   Until time              :   26.11.2019 07:12:29
+tspitr    | 
+tspitr    | Recovery Manager: Release 19.0.0.0.0 - Production on Tue Nov 26 07:12:41 2019
+tspitr    | Version 19.5.0.0.0
+tspitr    | 
+tspitr    | Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | connected to target database: TRMAN01 (DBID=3810649330)
+tspitr    | 
+tspitr    | RMAN> 2> 3> 
+tspitr    | Starting recover at 26-NOV-19
+tspitr    | using target database control file instead of recovery catalog
+tspitr    | allocated channel: ORA_DISK_1
+tspitr    | channel ORA_DISK_1: SID=15 device type=DISK
+tspitr    | RMAN-05026: warning: presuming following set of tablespaces applies to specified point-in-time
+tspitr    | 
+tspitr    | List of tablespaces expected to have UNDO segments
+tspitr    | Tablespace SYSTEM
+tspitr    | Tablespace TSPITR:SYSTEM
+tspitr    | Tablespace UNDOTBS1
+tspitr    | Tablespace TSPITR:UNDOTBS1
+tspitr    | 
+tspitr    | Creating automatic instance, with SID='dDth'
+tspitr    | 
+tspitr    | initialization parameters used for automatic instance:
+tspitr    | db_name=TRMAN01
+tspitr    | db_unique_name=dDth_pitr_TSPITR_TRMAN01
+tspitr    | compatible=19.0.0
+tspitr    | db_block_size=8192
+tspitr    | db_files=200
+tspitr    | diagnostic_dest=/u00/app/oracle
+tspitr    | _system_trig_enabled=FALSE
+tspitr    | sga_target=768M
+tspitr    | processes=200
+tspitr    | db_create_file_dest=/u01/oradata/
+tspitr    | log_archive_dest_1='location=/u01/oradata/'
+tspitr    | enable_pluggable_database=true
+tspitr    | _clone_one_pdb_recovery=true
+tspitr    | #No auxiliary parameter file used
+tspitr    | 
+tspitr    | 
+tspitr    | starting up automatic instance TRMAN01
+tspitr    | 
+tspitr    | Oracle instance started
+tspitr    | 
+tspitr    | Total System Global Area     805303848 bytes
+tspitr    | 
+tspitr    | Fixed Size                     9139752 bytes
+tspitr    | Variable Size                218103808 bytes
+tspitr    | Database Buffers             570425344 bytes
+tspitr    | Redo Buffers                   7634944 bytes
+tspitr    | Automatic instance created
+tspitr    | Running TRANSPORT_SET_CHECK on recovery set tablespaces
+tspitr    | TRANSPORT_SET_CHECK completed successfully
+tspitr    | 
+tspitr    | contents of Memory Script:
+tspitr    | {
+tspitr    | # set requested point in time
+tspitr    | set until  time "to_date('26.11.2019 07:12:29','DD.MM.YYYY HH24:MI:SS')";
+tspitr    | # restore the controlfile
+tspitr    | restore clone controlfile;
+tspitr    |  
+tspitr    | # mount the controlfile
+tspitr    | sql clone 'alter database mount clone database';
+tspitr    |  
+tspitr    | # archive current online log 
+tspitr    | sql 'alter system archive log current';
+tspitr    | # avoid unnecessary autobackups for structural changes during TSPITR
+tspitr    | sql 'begin dbms_backup_restore.AutoBackupFlag(FALSE); end;';
+tspitr    | }
+tspitr    | executing Memory Script
+tspitr    | 
+tspitr    | executing command: SET until clause
+tspitr    | 
+tspitr    | Starting restore at 26-NOV-19
+tspitr    | allocated channel: ORA_AUX_DISK_1
+tspitr    | channel ORA_AUX_DISK_1: SID=10 device type=DISK
+tspitr    | 
+tspitr    | channel ORA_AUX_DISK_1: starting datafile backup set restore
+tspitr    | channel ORA_AUX_DISK_1: restoring control file
+tspitr    | channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/autobackup/2019_11_26/o1_mf_s_1025334736_gxsn2jsx_.bkp
+tspitr    | channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/autobackup/2019_11_26/o1_mf_s_1025334736_gxsn2jsx_.bkp tag=TAG20191126T071216
+tspitr    | channel ORA_AUX_DISK_1: restored backup piece 1
+tspitr    | channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:01
+tspitr    | output file name=/u01/oradata/TRMAN01/controlfile/o1_mf_gxsn49r6_.ctl
+tspitr    | Finished restore at 26-NOV-19
+tspitr    | 
+tspitr    | sql statement: alter database mount clone database
+tspitr    | 
+tspitr    | sql statement: alter system archive log current
+tspitr    | 
+tspitr    | sql statement: begin dbms_backup_restore.AutoBackupFlag(FALSE); end;
+tspitr    | 
+tspitr    | contents of Memory Script:
+tspitr    | {
+tspitr    | # set requested point in time
+tspitr    | set until  time "to_date('26.11.2019 07:12:29','DD.MM.YYYY HH24:MI:SS')";
+tspitr    | plsql <<<--
+tspitr    | declare
+tspitr    |   sqlstatement       varchar2(512);
+tspitr    |   pdbname            varchar2(128);
+tspitr    |   offline_not_needed exception;
+tspitr    |   pragma exception_init(offline_not_needed, -01539);
+tspitr    | begin
+tspitr    |    pdbname := 'TSPITR'; -- pdbname
+tspitr    |   sqlstatement := 'alter tablespace '||  'USERS' ||' offline immediate';
+tspitr    |   krmicd.writeMsg(6162, sqlstatement);
+tspitr    |   krmicd.execSql(sqlstatement, 0, pdbname);
+tspitr    | exception
+tspitr    |   when offline_not_needed then
+tspitr    |     null;
+tspitr    | end; >>>;
+tspitr    | # set destinations for recovery set and auxiliary set datafiles
+tspitr    | set newname for clone datafile  1 to new;
+tspitr    | set newname for clone datafile  86 to new;
+tspitr    | set newname for clone datafile  5 to new;
+tspitr    | set newname for clone datafile  88 to new;
+tspitr    | set newname for clone datafile  3 to new;
+tspitr    | set newname for clone datafile  87 to new;
+tspitr    | set newname for clone tempfile  1 to new;
+tspitr    | set newname for clone tempfile  4 to new;
+tspitr    | set newname for datafile  89 to 
+tspitr    |  "/u01/oradata/TRMAN01/TSPITR/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_users_gxsn133m_.dbf";
+tspitr    | # switch all tempfiles
+tspitr    | switch clone tempfile all;
+tspitr    | # restore the tablespaces in the recovery set and the auxiliary set
+tspitr    | restore clone datafile  1, 86, 5, 88, 3, 87, 89;
+tspitr    |  
+tspitr    | switch clone datafile all;
+tspitr    | }
+tspitr    | executing Memory Script
+tspitr    | 
+tspitr    | executing command: SET until clause
+tspitr    | 
+tspitr    | sql statement: alter tablespace USERS offline immediate
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | executing command: SET NEWNAME
+tspitr    | 
+tspitr    | renamed tempfile 1 to /u01/oradata/TRMAN01/datafile/o1_mf_temp_%u_.tmp in control file
+tspitr    | renamed tempfile 4 to /u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_temp_%u_.tmp in control file
+tspitr    | 
+tspitr    | Starting restore at 26-NOV-19
+tspitr    | using channel ORA_AUX_DISK_1
+tspitr    | 
+tspitr    | channel ORA_AUX_DISK_1: starting datafile backup set restore
+tspitr    | channel ORA_AUX_DISK_1: specifying datafile(s) to restore from backup set
+tspitr    | channel ORA_AUX_DISK_1: restoring datafile 00001 to /u01/oradata/TRMAN01/datafile/o1_mf_system_%u_.dbf
+tspitr    | channel ORA_AUX_DISK_1: restoring datafile 00005 to /u01/oradata/TRMAN01/datafile/o1_mf_undotbs1_%u_.dbf
+tspitr    | channel ORA_AUX_DISK_1: restoring datafile 00003 to /u01/oradata/TRMAN01/datafile/o1_mf_sysaux_%u_.dbf
+tspitr    | channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T071146_gxsn1lfk_.bkp
+tspitr    | channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T071146_gxsn1lfk_.bkp tag=TAG20191126T071146
+tspitr    | channel ORA_AUX_DISK_1: restored backup piece 1
+tspitr    | channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:15
+tspitr    | channel ORA_AUX_DISK_1: starting datafile backup set restore
+tspitr    | channel ORA_AUX_DISK_1: specifying datafile(s) to restore from backup set
+tspitr    | channel ORA_AUX_DISK_1: restoring datafile 00086 to /u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_system_%u_.dbf
+tspitr    | channel ORA_AUX_DISK_1: restoring datafile 00088 to /u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_undotbs1_%u_.dbf
+tspitr    | channel ORA_AUX_DISK_1: restoring datafile 00087 to /u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_sysaux_%u_.dbf
+tspitr    | channel ORA_AUX_DISK_1: restoring datafile 00089 to /u01/oradata/TRMAN01/TSPITR/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_users_gxsn133m_.dbf
+tspitr    | channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/983B963B06B00167E053030011AC8DB4/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T071146_gxsn1svf_.bkp
+tspitr    | channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/983B963B06B00167E053030011AC8DB4/backupset/2019_11_26/o1_mf_nnndf_TAG20191126T071146_gxsn1svf_.bkp tag=TAG20191126T071146
+tspitr    | channel ORA_AUX_DISK_1: restored backup piece 1
+tspitr    | channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:07
+tspitr    | Finished restore at 26-NOV-19
+tspitr    | 
+tspitr    | datafile 1 switched to datafile copy
+tspitr    | input datafile copy RECID=7 STAMP=1025334824 file name=/u01/oradata/TRMAN01/datafile/o1_mf_system_gxsn4ksb_.dbf
+tspitr    | datafile 86 switched to datafile copy
+tspitr    | input datafile copy RECID=8 STAMP=1025334824 file name=/u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_system_gxsn50wk_.dbf
+tspitr    | datafile 5 switched to datafile copy
+tspitr    | input datafile copy RECID=9 STAMP=1025334824 file name=/u01/oradata/TRMAN01/datafile/o1_mf_undotbs1_gxsn4kt8_.dbf
+tspitr    | datafile 88 switched to datafile copy
+tspitr    | input datafile copy RECID=10 STAMP=1025334824 file name=/u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_undotbs1_gxsn50w0_.dbf
+tspitr    | datafile 3 switched to datafile copy
+tspitr    | input datafile copy RECID=11 STAMP=1025334824 file name=/u01/oradata/TRMAN01/datafile/o1_mf_sysaux_gxsn4kst_.dbf
+tspitr    | datafile 87 switched to datafile copy
+tspitr    | input datafile copy RECID=12 STAMP=1025334824 file name=/u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_sysaux_gxsn50wz_.dbf
+tspitr    | 
+tspitr    | contents of Memory Script:
+tspitr    | {
+tspitr    | # set requested point in time
+tspitr    | set until  time "to_date('26.11.2019 07:12:29','DD.MM.YYYY HH24:MI:SS')";
+tspitr    | # online the datafiles restored or switched
+tspitr    | sql clone "alter database datafile  1 online";
+tspitr    | sql clone 'TSPITR' "alter database datafile 
+tspitr    |  86 online";
+tspitr    | sql clone "alter database datafile  5 online";
+tspitr    | sql clone 'TSPITR' "alter database datafile 
+tspitr    |  88 online";
+tspitr    | sql clone "alter database datafile  3 online";
+tspitr    | sql clone 'TSPITR' "alter database datafile 
+tspitr    |  87 online";
+tspitr    | sql clone 'TSPITR' "alter database datafile 
+tspitr    |  89 online";
+tspitr    | # recover and open resetlogs
+tspitr    | recover clone database tablespace  "TSPITR":"USERS", "SYSTEM", "TSPITR":"SYSTEM", "UNDOTBS1", "TSPITR":"UNDOTBS1", "SYSAUX", "TSPITR":"SYSAUX" delete archivelog;
+tspitr    | alter clone database open resetlogs;
+tspitr    | }
+tspitr    | executing Memory Script
+tspitr    | 
+tspitr    | executing command: SET until clause
+tspitr    | 
+tspitr    | sql statement: alter database datafile  1 online
+tspitr    | 
+tspitr    | sql statement: alter database datafile  86 online
+tspitr    | 
+tspitr    | sql statement: alter database datafile  5 online
+tspitr    | 
+tspitr    | sql statement: alter database datafile  88 online
+tspitr    | 
+tspitr    | sql statement: alter database datafile  3 online
+tspitr    | 
+tspitr    | sql statement: alter database datafile  87 online
+tspitr    | 
+tspitr    | sql statement: alter database datafile  89 online
+tspitr    | 
+tspitr    | Starting recover at 26-NOV-19
+tspitr    | using channel ORA_AUX_DISK_1
+tspitr    | 
+tspitr    | starting media recovery
+tspitr    | 
+tspitr    | channel ORA_AUX_DISK_1: starting archived log restore to default destination
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=183
+tspitr    | channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T071215_gxsn2hf8_.bkp
+tspitr    | channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T071215_gxsn2hf8_.bkp tag=TAG20191126T071215
+tspitr    | channel ORA_AUX_DISK_1: restored backup piece 1
+tspitr    | channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:01
+tspitr    | archived log file name=/u01/oradata/1_183_1025271858.dbf thread=1 sequence=183
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_183_1025271858.dbf RECID=173 STAMP=1025334828
+tspitr    | channel ORA_AUX_DISK_1: starting archived log restore to default destination
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=184
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=185
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=186
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=187
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=188
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=189
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=190
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=191
+tspitr    | channel ORA_AUX_DISK_1: restoring archived log
+tspitr    | archived log thread=1 sequence=192
+tspitr    | channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T071233_gxsn32lm_.bkp
+tspitr    | channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2019_11_26/o1_mf_annnn_TAG20191126T071233_gxsn32lm_.bkp tag=TAG20191126T071233
+tspitr    | channel ORA_AUX_DISK_1: restored backup piece 1
+tspitr    | channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:01
+tspitr    | archived log file name=/u01/oradata/1_184_1025271858.dbf thread=1 sequence=184
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_184_1025271858.dbf RECID=177 STAMP=1025334830
+tspitr    | archived log file name=/u01/oradata/1_185_1025271858.dbf thread=1 sequence=185
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_185_1025271858.dbf RECID=174 STAMP=1025334830
+tspitr    | archived log file name=/u01/oradata/1_186_1025271858.dbf thread=1 sequence=186
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_186_1025271858.dbf RECID=180 STAMP=1025334830
+tspitr    | archived log file name=/u01/oradata/1_187_1025271858.dbf thread=1 sequence=187
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_187_1025271858.dbf RECID=179 STAMP=1025334830
+tspitr    | archived log file name=/u01/oradata/1_188_1025271858.dbf thread=1 sequence=188
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_188_1025271858.dbf RECID=176 STAMP=1025334830
+tspitr    | archived log file name=/u01/oradata/1_189_1025271858.dbf thread=1 sequence=189
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_189_1025271858.dbf RECID=178 STAMP=1025334830
+tspitr    | archived log file name=/u01/oradata/1_190_1025271858.dbf thread=1 sequence=190
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_190_1025271858.dbf RECID=181 STAMP=1025334830
+tspitr    | archived log file name=/u01/oradata/1_191_1025271858.dbf thread=1 sequence=191
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_191_1025271858.dbf RECID=182 STAMP=1025334830
+tspitr    | archived log file name=/u01/oradata/1_192_1025271858.dbf thread=1 sequence=192
+tspitr    | channel clone_default: deleting archived log(s)
+tspitr    | archived log file name=/u01/oradata/1_192_1025271858.dbf RECID=175 STAMP=1025334830
+tspitr    | media recovery complete, elapsed time: 00:00:03
+tspitr    | Finished recover at 26-NOV-19
+tspitr    | 
+tspitr    | database opened
+tspitr    | 
+tspitr    | contents of Memory Script:
+tspitr    | {
+tspitr    | sql clone 'alter pluggable database  TSPITR open';
+tspitr    | }
+tspitr    | executing Memory Script
+tspitr    | 
+tspitr    | sql statement: alter pluggable database  TSPITR open
+tspitr    | 
+tspitr    | contents of Memory Script:
+tspitr    | {
+tspitr    | # make read only the tablespace that will be exported
+tspitr    | sql clone 'TSPITR' 'alter tablespace 
+tspitr    |  USERS read only';
+tspitr    | # create directory for datapump import
+tspitr    | sql 'TSPITR' "create or replace directory 
+tspitr    | TSPITR_DIROBJ_DPDIR as ''
+tspitr    | /u01/oradata/''";
+tspitr    | # create directory for datapump export
+tspitr    | sql clone 'TSPITR' "create or replace directory 
+tspitr    | TSPITR_DIROBJ_DPDIR as ''
+tspitr    | /u01/oradata/''";
+tspitr    | }
+tspitr    | executing Memory Script
+tspitr    | 
+tspitr    | sql statement: alter tablespace  USERS read only
+tspitr    | 
+tspitr    | sql statement: create or replace directory TSPITR_DIROBJ_DPDIR as ''/u01/oradata/''
+tspitr    | 
+tspitr    | Removing automatic instance
+tspitr    | shutting down automatic instance 
+tspitr    | Oracle instance shut down
+tspitr    | Automatic instance removed
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_temp_gxsn5tv0_.tmp deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/datafile/o1_mf_temp_gxsn5qrn_.tmp deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/onlinelog/o1_mf_3_gxsn5m6m_.log deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/onlinelog/o1_mf_2_gxsn5m1c_.log deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/onlinelog/o1_mf_1_gxsn5lwm_.log deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_sysaux_gxsn50wz_.dbf deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/datafile/o1_mf_sysaux_gxsn4kst_.dbf deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_undotbs1_gxsn50w0_.dbf deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/datafile/o1_mf_undotbs1_gxsn4kt8_.dbf deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_system_gxsn50wk_.dbf deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/datafile/o1_mf_system_gxsn4ksb_.dbf deleted
+tspitr    | auxiliary instance file /u01/oradata/TRMAN01/controlfile/o1_mf_gxsn49r6_.ctl deleted
+tspitr    | RMAN-00571: ===========================================================
+tspitr    | RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+tspitr    | RMAN-00571: ===========================================================
+tspitr    | RMAN-03002: failure of recover command at 11/26/2019 07:14:10
+tspitr    | RMAN-03015: error occurred in stored script Memory Script
+tspitr    | RMAN-03009: failure of sql command on default channel at 11/26/2019 07:14:09
+tspitr    | RMAN-11003: failure during parse/execution of SQL statement: create or replace directory TSPITR_DIROBJ_DPDIR as '/u01/oradata/'
+tspitr    | ORA-65254: invalid path specified for the directory
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | Statement processed
+tspitr    | 
+tspitr    | RMAN> 
+tspitr    | 
+tspitr    | Recovery Manager complete.
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/31_status_scott_tspitr.sql
+tspitr    | 
+tspitr    | Session altered.
+tspitr    | 
+tspitr    | SELECT * FROM scott.tspitr
+tspitr    |                     *
+tspitr    | ERROR at line 1:
+tspitr    | ORA-00376: file 89 cannot be read at this time
+tspitr    | ORA-01110: data file 89: '/u01/oradata/TRMAN01/TSPITR/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_users_gxsn133m_.dbf'
+tspitr    | 
+tspitr    | 
+tspitr    | SELECT * FROM scott.emp
+tspitr    |                     *
+tspitr    | ERROR at line 1:
+tspitr    | ORA-00376: file 89 cannot be read at this time
+tspitr    | ORA-01110: data file 89: '/u01/oradata/TRMAN01/TSPITR/TRMAN01/983B963B06B00167E053030011AC8DB4/datafile/o1_mf_users_gxsn133m_.dbf'
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: running /u01/config/startup/90_drop_pdb_tspitr.sql
+tspitr    | 
+tspitr    | Pluggable database altered.
+tspitr    | 
+tspitr    | 
+tspitr    | Pluggable database dropped.
+tspitr    | 
+tspitr    | 
+tspitr    | 
+tspitr    | /opt/oradba/bin/53_config_database.sh: ignoring /u01/config/startup/README.md
+tspitr    | 
+tspitr    | DONE: Executing user defined scripts
+tspitr    | 
+tspitr    | ---------------------------------------------------------------

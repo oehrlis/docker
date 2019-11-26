@@ -66,7 +66,7 @@ COMMIT;
 SET FEEDBACK OFF
 SET HEADING OFF
 SPOOL &pdb_create_file_dest/before_issue.txt
-SELECT info FROM scott.tspitr;
+SELECT 'before TSPITR,'||to_char(SYSDATE,'DD.MM.YYYY HH24:MI:SS') FROM DUAL;
 SPOOL OFF;
 
 EXIT;

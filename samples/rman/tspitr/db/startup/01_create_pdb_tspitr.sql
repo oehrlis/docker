@@ -64,7 +64,7 @@ CONNECT / as SYSDBA
 -- create a PDB
 CREATE PLUGGABLE DATABASE &pdb_db_name 
     ADMIN USER &pdb_admin_user IDENTIFIED BY &pdb_admin_pwd ROLES=(dba)
-    PATH_PREFIX = '&pdb_path/directories/'
+    --PATH_PREFIX = '&pdb_path/directories/'
     CREATE_FILE_DEST = '&pdb_path';
 
 ---------------------------------------------------------------------------
