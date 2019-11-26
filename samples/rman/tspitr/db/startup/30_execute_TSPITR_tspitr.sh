@@ -47,6 +47,7 @@ connect target /
 RECOVER TABLESPACE "${ORACLE_PDB}":users
 UNTIL time "to_date('${UNTIL}','DD.MM.YYYY HH24:MI:SS')"
 AUXILIARY DESTINATION '/u01/oradata/';
+ALTER TABLESPACE users ONLINE;
 exit;
 EOFRMAN
 else

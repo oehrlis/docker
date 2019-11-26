@@ -7,7 +7,7 @@
 --  Editor....: Stefan Oehrli
 --  Date......: 2019.03.18
 --  Revision..:  
---  Purpose...: Script to create the SCOTT schema
+--  Purpose...: Script to create the SCOTT schema in PDB 
 --  Notes.....:  
 --  Reference.: SYS (or grant manually to a DBA)
 --  License...: Licensed under the Universal Permissive License v 1.0 as 
