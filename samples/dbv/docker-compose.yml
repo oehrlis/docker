@@ -1,0 +1,41 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.11.28
+# Revision...: --
+# Purpose....: Simple compose file to create a 19.5 database including
+#              Oracle Database Vault
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+  dbv:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.5.0.0
+    container_name: dbv
+    hostname: dbv
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/dbv:/u01
+      - ./db:/u01/config
+    ports:
+      - 1521
+    environment:
+      CONTAINER: 'TRUE'
+      ORACLE_SID: TDBV01
+      ORACLE_PDB: PDB0
+      INSTANCE_INIT: /u01/config
+      CUSTOM_RSP: /u01/config/etc
+      ORADBA_DBC_FILE: dbca19.0.0_custom.dbc.tmpl
+      ORADBA_RSP_FILE: dbca19.0.0_custom.rsp.tmpl
+# - EOF -----------------------------------------------------------------
