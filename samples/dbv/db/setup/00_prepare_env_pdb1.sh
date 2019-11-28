@@ -8,7 +8,7 @@
 # Editor.....: Stefan Oehrli
 # Date.......: 2019.11.28
 # Revision...: 
-# Purpose....: Script to add a tnsname entry for the PDB TSPITR.
+# Purpose....: Script to add a tnsname entry for the PDB PDB1.
 # Notes......: ...
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as 

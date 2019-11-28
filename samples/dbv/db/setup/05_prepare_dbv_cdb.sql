@@ -64,7 +64,7 @@ COL description FOR a40
 SELECT * FROM DBA_DV_STATUS;
 SELECT * FROM DBA_OLS_STATUS;
 SELECT * FROM CDB_DV_STATUS;
-SELECT * FROM CDB_OLS_STATUS;
+-- SELECT * FROM CDB_OLS_STATUS;
 
 -- Connect as the backup DV_OWNER user and then grant the 
 -- DV_OWNER role to the primary DV_OWNER user that you created earlier.

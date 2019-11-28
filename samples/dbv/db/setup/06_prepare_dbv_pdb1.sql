@@ -7,7 +7,7 @@
 --  Editor....: Stefan Oehrli
 --  Date......: 2019.11.28
 --  Revision..:  
---  Purpose...: prepare DBV in CDB
+--  Purpose...: prepare DBV in PDB
 --  Notes.....:  
 --  Reference.: SYS (or grant manually to a DBA)
 --  License...: Licensed under the Universal Permissive License v 1.0 as 
