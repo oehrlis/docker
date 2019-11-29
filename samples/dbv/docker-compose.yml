@@ -19,21 +19,42 @@
 # -----------------------------------------------------------------------
 version: '3'
 services:
-  dbv:
+
+# Container based DB Vault setup
+  tdbv01:
     image: ${DOCKER_USER}/${DOCKER_REPO}:19.5.0.0
-    container_name: dbv
-    hostname: dbv
+    container_name: tdbv01
+    hostname: tdbv01
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/dbv:/u01
-      - ./db:/u01/config
+      - ${DOCKER_VOLUME_BASE}/dbv/tdbv01:/u01
+      - ./tdbv01:/u01/config
     ports:
       - 1521
     environment:
       CONTAINER: 'TRUE'
       ORACLE_SID: TDBV01
       ORACLE_PDB: PDB0
+      INSTANCE_INIT: /u01/config
+      CUSTOM_RSP: /u01/config/etc
+      ORADBA_DBC_FILE: dbca19.0.0_custom.dbc.tmpl
+      ORADBA_RSP_FILE: dbca19.0.0_custom.rsp.tmpl
+
+# Regular database based DB Vault setup  
+  tdbv02:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.5.0.0
+    container_name: tdbv02
+    hostname: tdbv02
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/dbv/tdbv02:/u01
+      - ./tdbv02:/u01/config
+    ports:
+      - 1521
+    environment:
+      ORACLE_SID: TDBV02
       INSTANCE_INIT: /u01/config
       CUSTOM_RSP: /u01/config/etc
       ORADBA_DBC_FILE: dbca19.0.0_custom.dbc.tmpl

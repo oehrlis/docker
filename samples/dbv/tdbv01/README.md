@@ -1,4 +1,4 @@
-# Database Configuration
+# Multitenant Database Configuration
 
 This folder contains all files to setup and configure the database. Currently only bash scripts (.sh) as well SQL scripts (.sql) are supported.
 
