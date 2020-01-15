@@ -1,0 +1,10 @@
+# Oracle SERVER JRE 8 Update 241 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=30425892
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p30425892_180241_Linux-x86-64.zip?aru=23312779&patch_file=p30425892_180241_Linux-x86-64.zip
+#
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+D7C9306D8DAEC777584E49A7974F33D275AA301857CFB2B68199F52679267555 p30425892_180241_Linux-x86-64.zip
