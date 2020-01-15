@@ -1,0 +1,885 @@
+execve("/u00/app/oracle/product/19.0.0.0/bin/tnsping", ["tnsping", "TEUS01"], [/* 160 vars */]) = 0
+brk(NULL)                               = 0x116e000
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b99000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/tls/x86_64/libclntsh.so.19.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/u00/app/oracle/product/19.0.0.0/lib/tls/x86_64", 0x7ffd149f9820) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/tls/libclntsh.so.19.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/u00/app/oracle/product/19.0.0.0/lib/tls", 0x7ffd149f9820) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/x86_64/libclntsh.so.19.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/u00/app/oracle/product/19.0.0.0/lib/x86_64", 0x7ffd149f9820) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libclntsh.so.19.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@\265=\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=80092424, ...}) = 0
+mmap(NULL, 67303224, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21f949000
+mprotect(0x7fe22359a000, 2097152, PROT_NONE) = 0
+mmap(0x7fe22379a000, 1802240, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3c51000) = 0x7fe22379a000
+mmap(0x7fe223952000, 157496, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fe223952000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libclntshcore.so.19.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\300T\4\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=8044840, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b98000
+mmap(NULL, 5900168, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21f3a8000
+mprotect(0x7fe21f72e000, 2097152, PROT_NONE) = 0
+mmap(0x7fe21f92e000, 45056, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x386000) = 0x7fe21f92e000
+mmap(0x7fe21f939000, 63368, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fe21f939000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libnnz19.so", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0 O\6\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=6587384, ...}) = 0
+mmap(NULL, 7634216, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21ec60000
+mprotect(0x7fe21f13a000, 2097152, PROT_NONE) = 0
+mmap(0x7fe21f33a000, 446464, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4da000) = 0x7fe21f33a000
+mmap(0x7fe21f3a7000, 3368, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fe21f3a7000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/tls/x86_64/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/usr/lib/tls/x86_64", 0x7ffd149f9790) = -1 ENOENT (No such file or directory)
+open("/usr/lib/tls/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/usr/lib/tls", 0x7ffd149f9790)    = -1 ENOENT (No such file or directory)
+open("/usr/lib/x86_64/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/usr/lib/x86_64", 0x7ffd149f9790) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/usr/lib", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=19080, ...}) = 0
+mmap(NULL, 19080, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe223b93000
+close(3)                                = 0
+open("/lib64/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0P\16\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=19256, ...}) = 0
+mmap(NULL, 2109744, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21ea5c000
+mprotect(0x7fe21ea5e000, 2097152, PROT_NONE) = 0
+mmap(0x7fe21ec5e000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7fe21ec5e000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libm.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libm.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libm.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib64/libm.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0PS\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=1136952, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b92000
+mmap(NULL, 3150136, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21e75a000
+mprotect(0x7fe21e85b000, 2093056, PROT_NONE) = 0
+mmap(0x7fe21ea5a000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x100000) = 0x7fe21ea5a000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib64/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\200m\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=142152, ...}) = 0
+mmap(NULL, 2208904, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21e53e000
+mprotect(0x7fe21e555000, 2093056, PROT_NONE) = 0
+mmap(0x7fe21e754000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x16000) = 0x7fe21e754000
+mmap(0x7fe21e756000, 13448, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fe21e756000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libnsl.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libnsl.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libnsl.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib64/libnsl.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\200@\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=115824, ...}) = 0
+mmap(NULL, 2202296, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21e324000
+mprotect(0x7fe21e33b000, 2093056, PROT_NONE) = 0
+mmap(0x7fe21e53a000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x16000) = 0x7fe21e53a000
+mmap(0x7fe21e53c000, 6840, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fe21e53c000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/librt.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/librt.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/librt.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib64/librt.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0000\"\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=43720, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b91000
+mmap(NULL, 2128952, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21e11c000
+mprotect(0x7fe21e123000, 2093056, PROT_NONE) = 0
+mmap(0x7fe21e322000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6000) = 0x7fe21e322000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libaio.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libaio.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libaio.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib64/libaio.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\240\5\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=6264, ...}) = 0
+mmap(NULL, 2101328, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21df1a000
+mprotect(0x7fe21df1b000, 2093056, PROT_NONE) = 0
+mmap(0x7fe21e11a000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0x7fe21e11a000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libresolv.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libresolv.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libresolv.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib64/libresolv.so.2", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\00009\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=105744, ...}) = 0
+mmap(NULL, 2198016, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21dd01000
+mprotect(0x7fe21dd17000, 2093056, PROT_NONE) = 0
+mmap(0x7fe21df16000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15000) = 0x7fe21df16000
+mmap(0x7fe21df18000, 6656, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fe21df18000
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib64/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0P&\2\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=2156064, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b90000
+mmap(NULL, 3985888, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fe21d933000
+mprotect(0x7fe21daf6000, 2097152, PROT_NONE) = 0
+mmap(0x7fe21dcf6000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1c3000) = 0x7fe21dcf6000
+mmap(0x7fe21dcfc000, 16864, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fe21dcfc000
+close(3)                                = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b8f000
+mmap(NULL, 53248, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b82000
+arch_prctl(ARCH_SET_FS, 0x7fe223b8dc40) = 0
+mprotect(0x7fe21dcf6000, 16384, PROT_READ) = 0
+mprotect(0x7fe21df16000, 4096, PROT_READ) = 0
+mprotect(0x7fe21e11a000, 4096, PROT_READ) = 0
+mprotect(0x7fe21e754000, 4096, PROT_READ) = 0
+mprotect(0x7fe21e322000, 4096, PROT_READ) = 0
+mprotect(0x7fe21e53a000, 4096, PROT_READ) = 0
+mprotect(0x7fe21ea5a000, 4096, PROT_READ) = 0
+mprotect(0x7fe21ec5e000, 4096, PROT_READ) = 0
+mprotect(0x7fe21f92e000, 24576, PROT_READ) = 0
+mprotect(0x7fe21f33a000, 188416, PROT_READ) = 0
+mprotect(0x7fe22379a000, 1531904, PROT_READ) = 0
+mprotect(0x604000, 4096, PROT_READ)     = 0
+mprotect(0x7fe223b9a000, 4096, PROT_READ) = 0
+munmap(0x7fe223b93000, 19080)           = 0
+set_tid_address(0x7fe223b8df10)         = 45721
+set_robust_list(0x7fe223b8df20, 24)     = 0
+rt_sigaction(SIGRTMIN, {0x7fe21e544860, [], SA_RESTORER|SA_SIGINFO, 0x7fe21e54d630}, NULL, 8) = 0
+rt_sigaction(SIGRT_1, {0x7fe21e5448f0, [], SA_RESTORER|SA_RESTART|SA_SIGINFO, 0x7fe21e54d630}, NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+brk(NULL)                               = 0x116e000
+brk(0x118f000)                          = 0x118f000
+brk(NULL)                               = 0x118f000
+mmap(NULL, 143360, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b5f000
+futex(0x7fe21ec5f0d0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libociei.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libociicus.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+stat("/etc/sysconfig/64bit_strstr_via_64bit_strstr_sse2_unaligned", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat("/u00/app/oracle/product/19.0.0.0/env.ora", {st_mode=S_IFREG|0644, st_size=852, ...}) = 0
+open("/u00/app/oracle/product/19.0.0.0/env.ora", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=852, ...}) = 0
+fstat(3, {st_mode=S_IFREG|0644, st_size=852, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b97000
+read(3, "# Copyright (c) 2015, Oracle and"..., 4096) = 852
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+munmap(0x7fe223b97000, 4096)            = 0
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx1boot.nlb", O_RDONLY) = 3
+read(3, "\0\0\0\3\0\0\0\23\350j\0\0\0E\244\1\0\0\0\0\1\0T\0\r\1\23\2\225\2\247\2"..., 48) = 48
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 27320) = 27320
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx00001.nlb", O_RDONLY) = 3
+read(3, "\0\0\0\3\0\0\0\23\267\3\0\0s\2\0\0\0\0\0\0\0\0\0\0\0Z\1\0\0\0\0\0"..., 92) = 92
+read(3, "\3\0\0\0\1\0\1\0\1\0`\0\0\0\4\0\6\0\10\0\n\0\20\0\30\0 \0(\0000\0"..., 859) = 859
+close(3)                                = 0
+brk(NULL)                               = 0x118f000
+brk(0x11c0000)                          = 0x11c0000
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx20369.nlb", O_RDONLY) = 3
+read(3, "\0\0\0\t\0\0\0\23)\357\1\0}\345\1\0\0\0\0\0\2\0\0\0\0Z\1\0\0\0\0\0"..., 92) = 92
+read(3, "i\3\0\0\1@\3\0\0\0\0\0\0\0\0\0 ~?\0\0\0\0\4\0\0\0\0\0\0\0\0"..., 126669) = 126669
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx10001.nlb", O_RDONLY) = 3
+read(3, "\0\0\0\3\0\0\0\23t\4\0\0\220\3\0\0\0\0\0\0\1\0\0\0\0Z\1\0\0\0\0\0"..., 92) = 92
+read(3, "\3\0\0\0\1\0\1\0\0\0\0\0\0\0\4\0\1\0\2\0\2\0\1\0\1\0\0\0\0\0\0\0"..., 1048) = 1048
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx40011.nlb", O_RDONLY) = 3
+read(3, "\0\0\0\t\0\0\0\23i\232\0\0i\232\0\0\0\0\0\0\4\0\0\0\0Z\1\0\0\0\0\0"..., 92) = 92
+read(3, "\0\0\0\0(\1\0\0,\1\0\0000\1\0\0004\1\0\0<U\0\0\\Z\0\0\\\232\0\0"..., 39437) = 39437
+close(3)                                = 0
+socket(AF_INET6, SOCK_DGRAM, IPPROTO_IP) = 3
+bind(3, {sa_family=AF_INET6, sin6_port=htons(0), inet_pton(AF_INET6, "::1", &sin6_addr), sin6_flowinfo=0, sin6_scope_id=0}, 28) = -1 EADDRNOTAVAIL (Cannot assign requested address)
+close(3)                                = 0
+access("/u00/app/oracle/network/admin/sqlnet.ora", F_OK) = 0
+open("/u00/app/oracle/network/admin/sqlnet.ora", O_RDONLY) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0644, st_size=3840, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b97000
+read(3, "#==============================="..., 4096) = 3840
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+munmap(0x7fe223b97000, 4096)            = 0
+lstat("/etc/orabasetab", 0x7ffd149f18b0) = -1 ENOENT (No such file or directory)
+open("/etc/orabasetab", O_RDONLY)       = -1 ENOENT (No such file or directory)
+lstat("/u00/app/oracle/product/19.0.0.0/install/orabasetab", {st_mode=S_IFREG|0660, st_size=139, ...}) = 0
+open("/u00/app/oracle/product/19.0.0.0/install/orabasetab", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0660, st_size=139, ...}) = 0
+fstat(3, {st_mode=S_IFREG|0660, st_size=139, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b97000
+read(3, "#orabasetab file is used to trac"..., 4096) = 139
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+munmap(0x7fe223b97000, 4096)            = 0
+gettimeofday({1574974053, 447964}, NULL) = 0
+open("/etc/localtime", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=118, ...}) = 0
+fstat(3, {st_mode=S_IFREG|0644, st_size=118, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b97000
+read(3, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\1\0\0\0\1\0\0\0\0"..., 4096) = 118
+lseek(3, -62, SEEK_CUR)                 = 56
+read(3, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\1\0\0\0\1\0\0\0\0"..., 4096) = 62
+close(3)                                = 0
+munmap(0x7fe223b97000, 4096)            = 0
+fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b97000
+write(1, "\n", 1)                       = 1
+write(1, "TNS Ping Utility for Linux: Vers"..., 142) = 142
+access("/u00/app/oracle/network/admin/sqlnet.ora", F_OK) = 0
+open("/u00/app/oracle/network/admin/sqlnet.ora", O_RDONLY) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0644, st_size=3840, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(3, "#==============================="..., 4096) = 3840
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+mmap(NULL, 143360, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b3c000
+mmap(NULL, 143360, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b19000
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx20001.nlb", O_RDONLY) = 3
+read(3, "\0\0\0\3\0\0\0\0239\33\0\0\215\21\0\0\0\0\0\0\2\0\0\0\0Z\1\0\0\0\0\0"..., 92) = 92
+read(3, "\1\0\37\0\t\0\2\0\0\0\0\0\0\0\0\0\0\0?\0\0\0\0\1\0\0\0\0\0\0\0\0"..., 6877) = 6877
+close(3)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/oracore/mesg/lrmus.msb", O_RDONLY) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+lseek(3, 0, SEEK_SET)                   = 0
+read(3, "\25\23\"\1\23\3\t\t\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 280) = 280
+open("/u00/app/oracle/product/19.0.0.0/ldap/mesg/ldapus.msb", O_RDONLY) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+lseek(4, 0, SEEK_SET)                   = 0
+read(4, "\1\f\36\35\25\24\6#\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 280) = 280
+lseek(4, 512, SEEK_SET)                 = 512
+read(4, "\325])^\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 512) = 512
+lseek(4, 1024, SEEK_SET)                = 1024
+read(4, "\24\0E\0\367\1<\10\0\t\276\v\313\v\326\v\337\v\352\v\365\v\375\v\214\23\223\23\232\23L\33"..., 512) = 512
+lseek(4, 1536, SEEK_SET)                = 1536
+read(4, "\333]\343]'^)^", 8)            = 8
+open("/u00/app/oracle/product/19.0.0.0/ldap/mesg/ldapus.msb", O_RDONLY) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+lseek(5, 0, SEEK_SET)                   = 0
+read(5, "\1\f\36\35\25\24\6#\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 280) = 280
+lseek(5, 512, SEEK_SET)                 = 512
+read(5, "\325])^\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 512) = 512
+lseek(5, 1024, SEEK_SET)                = 1024
+read(5, "\24\0E\0\367\1<\10\0\t\276\v\313\v\326\v\337\v\352\v\365\v\375\v\214\23\223\23\232\23L\33"..., 512) = 512
+lseek(5, 1536, SEEK_SET)                = 1536
+read(5, "\333]\343]'^)^", 8)            = 8
+gettimeofday({1574974053, 474823}, NULL) = 0
+open("/etc/hostid", O_RDONLY)           = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="eusdb", ...}) = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=38, ...}) = 0
+open("/etc/host.conf", O_RDONLY|O_CLOEXEC) = 6
+fstat(6, {st_mode=S_IFREG|0644, st_size=9, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(6, "multi on\n", 4096)             = 9
+read(6, "", 4096)                       = 0
+close(6)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+futex(0x7fe21dcfe9f0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+open("/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 6
+fstat(6, {st_mode=S_IFREG|0644, st_size=38, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(6, "nameserver 127.0.0.11\noptions nd"..., 4096) = 38
+read(6, "", 4096)                       = 0
+close(6)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+uname({sysname="Linux", nodename="eusdb", ...}) = 0
+socket(AF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 6
+connect(6, {sa_family=AF_LOCAL, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+close(6)                                = 0
+socket(AF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 6
+connect(6, {sa_family=AF_LOCAL, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+close(6)                                = 0
+open("/etc/nsswitch.conf", O_RDONLY|O_CLOEXEC) = 6
+fstat(6, {st_mode=S_IFREG|0644, st_size=1949, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(6, "#\n# /etc/nsswitch.conf\n#\n# An ex"..., 4096) = 1949
+read(6, "", 4096)                       = 0
+close(6)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/u00/app/oracle/product/19.0.0.0/lib/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 6
+fstat(6, {st_mode=S_IFREG|0644, st_size=19080, ...}) = 0
+mmap(NULL, 19080, PROT_READ, MAP_PRIVATE, 6, 0) = 0x7fe223b14000
+close(6)                                = 0
+open("/lib64/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = 6
+read(6, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260!\0\0\0\0\0\0"..., 832) = 832
+fstat(6, {st_mode=S_IFREG|0755, st_size=61568, ...}) = 0
+mmap(NULL, 2173048, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 6, 0) = 0x7fe21d720000
+mprotect(0x7fe21d72c000, 2093056, PROT_NONE) = 0
+mmap(0x7fe21d92b000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 6, 0xb000) = 0x7fe21d92b000
+mmap(0x7fe21d92d000, 22648, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fe21d92d000
+close(6)                                = 0
+mprotect(0x7fe21d92b000, 4096, PROT_READ) = 0
+munmap(0x7fe223b14000, 19080)           = 0
+open("/etc/hosts", O_RDONLY|O_CLOEXEC)  = 6
+fstat(6, {st_mode=S_IFREG|0644, st_size=167, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(6, "127.0.0.1\tlocalhost\n::1\tlocalhos"..., 4096) = 167
+read(6, "", 4096)                       = 0
+close(6)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+getuid()                                = 1000
+socket(AF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 6
+connect(6, {sa_family=AF_LOCAL, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+close(6)                                = 0
+socket(AF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 6
+connect(6, {sa_family=AF_LOCAL, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+close(6)                                = 0
+open("/etc/passwd", O_RDONLY|O_CLOEXEC) = 6
+fstat(6, {st_mode=S_IFREG|0644, st_size=990, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(6, "root:x:0:0:root:/root:/bin/bash\n"..., 4096) = 990
+close(6)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx1boot.nlb", O_RDONLY) = 6
+read(6, "\0\0\0\3\0\0\0\23\350j\0\0\0E\244\1\0\0\0\0\1\0T\0\r\1\23\2\225\2\247\2"..., 48) = 48
+read(6, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 27320) = 27320
+close(6)                                = 0
+brk(NULL)                               = 0x11c0000
+brk(0x11e2000)                          = 0x11e2000
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx00001.nlb", O_RDONLY) = 6
+read(6, "\0\0\0\3\0\0\0\23\267\3\0\0s\2\0\0\0\0\0\0\0\0\0\0\0Z\1\0\0\0\0\0"..., 92) = 92
+read(6, "\3\0\0\0\1\0\1\0\1\0`\0\0\0\4\0\6\0\10\0\n\0\20\0\30\0 \0(\0000\0"..., 859) = 859
+close(6)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx10001.nlb", O_RDONLY) = 6
+read(6, "\0\0\0\3\0\0\0\23t\4\0\0\220\3\0\0\0\0\0\0\1\0\0\0\0Z\1\0\0\0\0\0"..., 92) = 92
+read(6, "\3\0\0\0\1\0\1\0\0\0\0\0\0\0\4\0\1\0\2\0\2\0\1\0\1\0\0\0\0\0\0\0"..., 1048) = 1048
+close(6)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/nls/data/lx20369.nlb", O_RDONLY) = 6
+read(6, "\0\0\0\t\0\0\0\23)\357\1\0}\345\1\0\0\0\0\0\2\0\0\0\0Z\1\0\0\0\0\0"..., 92) = 92
+read(6, "i\3\0\0\1@\3\0\0\0\0\0\0\0\0\0 ~?\0\0\0\0\4\0\0\0\0\0\0\0\0"..., 126669) = 126669
+close(6)                                = 0
+open("/u00/app/oracle/product/19.0.0.0/ldap/admin/fips.ora", O_RDONLY) = -1 ENOENT (No such file or directory)
+brk(NULL)                               = 0x11e2000
+brk(0x1203000)                          = 0x1203000
+gettimeofday({1574974053, 519671}, NULL) = 0
+stat("/var/run/utmp", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+open("/var/run/utmp", O_RDONLY)         = 6
+fstat(6, {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+lseek(6, -4096, SEEK_SET)               = -1 EINVAL (Invalid argument)
+close(6)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+gettimeofday({1574974053, 522631}, NULL) = 0
+getuid()                                = 1000
+getppid()                               = 45719
+gettimeofday({1574974053, 524551}, NULL) = 0
+gettimeofday({1574974053, 524965}, NULL) = 0
+gettimeofday({1574974053, 525299}, NULL) = 0
+gettimeofday({1574974053, 525647}, NULL) = 0
+gettimeofday({1574974053, 526000}, NULL) = 0
+gettimeofday({1574974053, 526673}, NULL) = 0
+gettimeofday({1574974053, 527193}, NULL) = 0
+gettimeofday({1574974053, 527692}, NULL) = 0
+gettimeofday({1574974053, 528186}, NULL) = 0
+gettimeofday({1574974053, 528658}, NULL) = 0
+gettimeofday({1574974053, 529133}, NULL) = 0
+gettimeofday({1574974053, 529617}, NULL) = 0
+gettimeofday({1574974053, 530104}, NULL) = 0
+gettimeofday({1574974053, 530595}, NULL) = 0
+gettimeofday({1574974053, 531068}, NULL) = 0
+gettimeofday({1574974053, 531554}, NULL) = 0
+gettimeofday({1574974053, 532036}, NULL) = 0
+gettimeofday({1574974053, 532501}, NULL) = 0
+gettimeofday({1574974053, 532988}, NULL) = 0
+gettimeofday({1574974053, 533473}, NULL) = 0
+gettimeofday({1574974053, 533941}, NULL) = 0
+gettimeofday({1574974053, 534439}, NULL) = 0
+gettimeofday({1574974053, 534908}, NULL) = 0
+gettimeofday({1574974053, 535386}, NULL) = 0
+gettimeofday({1574974053, 535854}, NULL) = 0
+gettimeofday({1574974053, 536335}, NULL) = 0
+gettimeofday({1574974053, 536816}, NULL) = 0
+gettimeofday({1574974053, 537239}, NULL) = 0
+gettimeofday({1574974053, 537596}, NULL) = 0
+gettimeofday({1574974053, 537917}, NULL) = 0
+gettimeofday({1574974053, 538251}, NULL) = 0
+gettimeofday({1574974053, 538588}, NULL) = 0
+gettimeofday({1574974053, 538877}, NULL) = 0
+gettimeofday({1574974053, 539161}, NULL) = 0
+gettimeofday({1574974053, 540167}, NULL) = 0
+gettimeofday({1574974053, 540778}, NULL) = 0
+gettimeofday({1574974053, 541197}, NULL) = 0
+gettimeofday({1574974053, 541494}, NULL) = 0
+gettimeofday({1574974053, 541813}, NULL) = 0
+gettimeofday({1574974053, 542152}, NULL) = 0
+gettimeofday({1574974053, 542555}, NULL) = 0
+gettimeofday({1574974053, 542972}, NULL) = 0
+gettimeofday({1574974053, 543287}, NULL) = 0
+gettimeofday({1574974053, 543631}, NULL) = 0
+gettimeofday({1574974053, 544338}, NULL) = 0
+gettimeofday({1574974053, 544811}, NULL) = 0
+gettimeofday({1574974053, 545159}, NULL) = 0
+gettimeofday({1574974053, 545520}, NULL) = 0
+gettimeofday({1574974053, 545840}, NULL) = 0
+gettimeofday({1574974053, 546138}, NULL) = 0
+gettimeofday({1574974053, 546476}, NULL) = 0
+gettimeofday({1574974053, 546809}, NULL) = 0
+gettimeofday({1574974053, 547316}, NULL) = 0
+gettimeofday({1574974053, 547742}, NULL) = 0
+gettimeofday({1574974053, 548158}, NULL) = 0
+gettimeofday({1574974053, 548557}, NULL) = 0
+gettimeofday({1574974053, 548996}, NULL) = 0
+gettimeofday({1574974053, 549413}, NULL) = 0
+gettimeofday({1574974053, 549819}, NULL) = 0
+gettimeofday({1574974053, 550228}, NULL) = 0
+gettimeofday({1574974053, 550642}, NULL) = 0
+gettimeofday({1574974053, 551043}, NULL) = 0
+gettimeofday({1574974053, 551633}, NULL) = 0
+gettimeofday({1574974053, 552082}, NULL) = 0
+gettimeofday({1574974053, 552515}, NULL) = 0
+gettimeofday({1574974053, 552938}, NULL) = 0
+gettimeofday({1574974053, 553370}, NULL) = 0
+gettimeofday({1574974053, 553811}, NULL) = 0
+gettimeofday({1574974053, 554212}, NULL) = 0
+gettimeofday({1574974053, 554615}, NULL) = 0
+gettimeofday({1574974053, 555178}, NULL) = 0
+gettimeofday({1574974053, 555581}, NULL) = 0
+gettimeofday({1574974053, 556015}, NULL) = 0
+gettimeofday({1574974053, 556444}, NULL) = 0
+gettimeofday({1574974053, 556846}, NULL) = 0
+gettimeofday({1574974053, 557314}, NULL) = 0
+gettimeofday({1574974053, 557658}, NULL) = 0
+gettimeofday({1574974053, 558036}, NULL) = 0
+gettimeofday({1574974053, 558393}, NULL) = 0
+gettimeofday({1574974053, 558774}, NULL) = 0
+gettimeofday({1574974053, 559164}, NULL) = 0
+gettimeofday({1574974053, 559501}, NULL) = 0
+gettimeofday({1574974053, 559852}, NULL) = 0
+gettimeofday({1574974053, 560218}, NULL) = 0
+gettimeofday({1574974053, 560560}, NULL) = 0
+gettimeofday({1574974053, 560905}, NULL) = 0
+gettimeofday({1574974053, 561233}, NULL) = 0
+gettimeofday({1574974053, 561553}, NULL) = 0
+gettimeofday({1574974053, 561874}, NULL) = 0
+gettimeofday({1574974053, 562219}, NULL) = 0
+gettimeofday({1574974053, 562536}, NULL) = 0
+gettimeofday({1574974053, 563001}, NULL) = 0
+gettimeofday({1574974053, 563402}, NULL) = 0
+gettimeofday({1574974053, 563809}, NULL) = 0
+gettimeofday({1574974053, 564203}, NULL) = 0
+gettimeofday({1574974053, 564623}, NULL) = 0
+gettimeofday({1574974053, 565032}, NULL) = 0
+gettimeofday({1574974053, 565438}, NULL) = 0
+gettimeofday({1574974053, 565870}, NULL) = 0
+gettimeofday({1574974053, 566306}, NULL) = 0
+gettimeofday({1574974053, 566761}, NULL) = 0
+gettimeofday({1574974053, 567224}, NULL) = 0
+gettimeofday({1574974053, 567631}, NULL) = 0
+gettimeofday({1574974053, 568053}, NULL) = 0
+gettimeofday({1574974053, 568474}, NULL) = 0
+gettimeofday({1574974053, 569530}, NULL) = 0
+gettimeofday({1574974053, 570245}, NULL) = 0
+gettimeofday({1574974053, 570689}, NULL) = 0
+gettimeofday({1574974053, 571097}, NULL) = 0
+gettimeofday({1574974053, 571644}, NULL) = 0
+gettimeofday({1574974053, 572059}, NULL) = 0
+gettimeofday({1574974053, 572477}, NULL) = 0
+gettimeofday({1574974053, 572885}, NULL) = 0
+gettimeofday({1574974053, 573311}, NULL) = 0
+gettimeofday({1574974053, 573717}, NULL) = 0
+gettimeofday({1574974053, 574118}, NULL) = 0
+gettimeofday({1574974053, 574595}, NULL) = 0
+gettimeofday({1574974053, 575019}, NULL) = 0
+gettimeofday({1574974053, 575454}, NULL) = 0
+gettimeofday({1574974053, 575857}, NULL) = 0
+gettimeofday({1574974053, 576270}, NULL) = 0
+gettimeofday({1574974053, 576717}, NULL) = 0
+gettimeofday({1574974053, 577513}, NULL) = 0
+gettimeofday({1574974053, 578042}, NULL) = 0
+gettimeofday({1574974053, 578473}, NULL) = 0
+gettimeofday({1574974053, 578874}, NULL) = 0
+gettimeofday({1574974053, 579333}, NULL) = 0
+gettimeofday({1574974053, 579752}, NULL) = 0
+gettimeofday({1574974053, 580241}, NULL) = 0
+gettimeofday({1574974053, 580660}, NULL) = 0
+gettimeofday({1574974053, 581102}, NULL) = 0
+gettimeofday({1574974053, 581536}, NULL) = 0
+gettimeofday({1574974053, 581969}, NULL) = 0
+gettimeofday({1574974053, 582427}, NULL) = 0
+gettimeofday({1574974053, 582837}, NULL) = 0
+gettimeofday({1574974053, 583256}, NULL) = 0
+gettimeofday({1574974053, 583680}, NULL) = 0
+gettimeofday({1574974053, 584083}, NULL) = 0
+gettimeofday({1574974053, 584493}, NULL) = 0
+gettimeofday({1574974053, 584905}, NULL) = 0
+gettimeofday({1574974053, 585327}, NULL) = 0
+gettimeofday({1574974053, 585899}, NULL) = 0
+gettimeofday({1574974053, 586295}, NULL) = 0
+gettimeofday({1574974053, 586739}, NULL) = 0
+gettimeofday({1574974053, 587181}, NULL) = 0
+gettimeofday({1574974053, 587537}, NULL) = 0
+gettimeofday({1574974053, 587912}, NULL) = 0
+gettimeofday({1574974053, 588274}, NULL) = 0
+gettimeofday({1574974053, 588637}, NULL) = 0
+gettimeofday({1574974053, 588998}, NULL) = 0
+gettimeofday({1574974053, 589360}, NULL) = 0
+gettimeofday({1574974053, 589710}, NULL) = 0
+gettimeofday({1574974053, 590049}, NULL) = 0
+gettimeofday({1574974053, 590380}, NULL) = 0
+gettimeofday({1574974053, 590725}, NULL) = 0
+gettimeofday({1574974053, 591350}, NULL) = 0
+gettimeofday({1574974053, 591860}, NULL) = 0
+gettimeofday({1574974053, 592387}, NULL) = 0
+gettimeofday({1574974053, 592892}, NULL) = 0
+gettimeofday({1574974053, 593390}, NULL) = 0
+gettimeofday({1574974053, 593892}, NULL) = 0
+gettimeofday({1574974053, 594391}, NULL) = 0
+gettimeofday({1574974053, 594904}, NULL) = 0
+gettimeofday({1574974053, 595399}, NULL) = 0
+gettimeofday({1574974053, 595897}, NULL) = 0
+gettimeofday({1574974053, 596375}, NULL) = 0
+gettimeofday({1574974053, 596867}, NULL) = 0
+gettimeofday({1574974053, 597402}, NULL) = 0
+gettimeofday({1574974053, 597896}, NULL) = 0
+gettimeofday({1574974053, 598399}, NULL) = 0
+gettimeofday({1574974053, 598911}, NULL) = 0
+gettimeofday({1574974053, 599406}, NULL) = 0
+gettimeofday({1574974053, 599869}, NULL) = 0
+gettimeofday({1574974053, 600330}, NULL) = 0
+gettimeofday({1574974053, 600800}, NULL) = 0
+gettimeofday({1574974053, 601558}, NULL) = 0
+gettimeofday({1574974053, 602061}, NULL) = 0
+gettimeofday({1574974053, 602515}, NULL) = 0
+gettimeofday({1574974053, 602995}, NULL) = 0
+gettimeofday({1574974053, 603498}, NULL) = 0
+gettimeofday({1574974053, 603998}, NULL) = 0
+gettimeofday({1574974053, 604487}, NULL) = 0
+gettimeofday({1574974053, 605099}, NULL) = 0
+gettimeofday({1574974053, 605922}, NULL) = 0
+gettimeofday({1574974053, 606397}, NULL) = 0
+gettimeofday({1574974053, 606951}, NULL) = 0
+gettimeofday({1574974053, 607446}, NULL) = 0
+gettimeofday({1574974053, 607960}, NULL) = 0
+gettimeofday({1574974053, 608493}, NULL) = 0
+gettimeofday({1574974053, 609020}, NULL) = 0
+gettimeofday({1574974053, 609567}, NULL) = 0
+gettimeofday({1574974053, 610059}, NULL) = 0
+gettimeofday({1574974053, 610553}, NULL) = 0
+gettimeofday({1574974053, 611050}, NULL) = 0
+gettimeofday({1574974053, 611545}, NULL) = 0
+gettimeofday({1574974053, 612034}, NULL) = 0
+gettimeofday({1574974053, 612514}, NULL) = 0
+gettimeofday({1574974053, 613034}, NULL) = 0
+gettimeofday({1574974053, 613500}, NULL) = 0
+gettimeofday({1574974053, 613991}, NULL) = 0
+gettimeofday({1574974053, 614452}, NULL) = 0
+gettimeofday({1574974053, 614920}, NULL) = 0
+gettimeofday({1574974053, 615380}, NULL) = 0
+gettimeofday({1574974053, 615839}, NULL) = 0
+gettimeofday({1574974053, 616302}, NULL) = 0
+gettimeofday({1574974053, 616780}, NULL) = 0
+gettimeofday({1574974053, 617233}, NULL) = 0
+gettimeofday({1574974053, 617551}, NULL) = 0
+gettimeofday({1574974053, 617883}, NULL) = 0
+gettimeofday({1574974053, 618240}, NULL) = 0
+gettimeofday({1574974053, 618622}, NULL) = 0
+gettimeofday({1574974053, 619281}, NULL) = 0
+gettimeofday({1574974053, 619885}, NULL) = 0
+gettimeofday({1574974053, 620251}, NULL) = 0
+gettimeofday({1574974053, 620656}, NULL) = 0
+gettimeofday({1574974053, 621092}, NULL) = 0
+gettimeofday({1574974053, 621485}, NULL) = 0
+gettimeofday({1574974053, 621846}, NULL) = 0
+gettimeofday({1574974053, 622257}, NULL) = 0
+gettimeofday({1574974053, 622674}, NULL) = 0
+gettimeofday({1574974053, 623082}, NULL) = 0
+gettimeofday({1574974053, 623470}, NULL) = 0
+gettimeofday({1574974053, 623883}, NULL) = 0
+gettimeofday({1574974053, 624286}, NULL) = 0
+gettimeofday({1574974053, 624764}, NULL) = 0
+gettimeofday({1574974053, 625207}, NULL) = 0
+gettimeofday({1574974053, 625673}, NULL) = 0
+gettimeofday({1574974053, 626112}, NULL) = 0
+gettimeofday({1574974053, 626546}, NULL) = 0
+gettimeofday({1574974053, 626994}, NULL) = 0
+gettimeofday({1574974053, 628114}, NULL) = 0
+gettimeofday({1574974053, 628704}, NULL) = 0
+gettimeofday({1574974053, 629293}, NULL) = 0
+gettimeofday({1574974053, 629991}, NULL) = 0
+gettimeofday({1574974053, 630301}, NULL) = 0
+gettimeofday({1574974053, 630614}, NULL) = 0
+gettimeofday({1574974053, 630918}, NULL) = 0
+gettimeofday({1574974053, 631225}, NULL) = 0
+gettimeofday({1574974053, 632022}, NULL) = 0
+gettimeofday({1574974053, 632370}, NULL) = 0
+gettimeofday({1574974053, 632697}, NULL) = 0
+gettimeofday({1574974053, 633026}, NULL) = 0
+gettimeofday({1574974053, 633338}, NULL) = 0
+gettimeofday({1574974053, 633653}, NULL) = 0
+gettimeofday({1574974053, 634395}, NULL) = 0
+gettimeofday({1574974053, 634778}, NULL) = 0
+gettimeofday({1574974053, 635114}, NULL) = 0
+gettimeofday({1574974053, 635475}, NULL) = 0
+gettimeofday({1574974053, 635801}, NULL) = 0
+gettimeofday({1574974053, 636144}, NULL) = 0
+gettimeofday({1574974053, 636465}, NULL) = 0
+gettimeofday({1574974053, 636744}, NULL) = 0
+gettimeofday({1574974053, 637141}, NULL) = 0
+gettimeofday({1574974053, 637562}, NULL) = 0
+gettimeofday({1574974053, 637959}, NULL) = 0
+gettimeofday({1574974053, 638338}, NULL) = 0
+gettimeofday({1574974053, 638744}, NULL) = 0
+open("/dev/random", O_RDONLY)           = 6
+close(6)                                = 0
+open("entropy", O_RDONLY)               = -1 ENOENT (No such file or directory)
+getppid()                               = 45719
+getuid()                                = 1000
+geteuid()                               = 1000
+getgid()                                = 1010
+getegid()                               = 1010
+gettimeofday({1574974053, 642218}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+getppid()                               = 45719
+getuid()                                = 1000
+geteuid()                               = 1000
+getgid()                                = 1010
+getegid()                               = 1010
+gettimeofday({1574974053, 644372}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\320", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 645998}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\30", 1)                       = 1
+close(6)                                = 0
+gettimeofday({1574974053, 648303}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\266", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 649611}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\r", 1)                        = 1
+close(6)                                = 0
+gettimeofday({1574974053, 651102}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\2", 1)                        = 1
+close(6)                                = 0
+gettimeofday({1574974053, 652484}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+getppid()                               = 45719
+getuid()                                = 1000
+geteuid()                               = 1000
+getgid()                                = 1010
+getegid()                               = 1010
+gettimeofday({1574974053, 654741}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "z", 1)                         = 1
+close(6)                                = 0
+gettimeofday({1574974053, 656162}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\345", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 657550}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+getppid()                               = 45719
+getuid()                                = 1000
+geteuid()                               = 1000
+getgid()                                = 1010
+getegid()                               = 1010
+gettimeofday({1574974053, 660237}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "W", 1)                         = 1
+close(6)                                = 0
+gettimeofday({1574974053, 661553}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\362", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 662919}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\267", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 664487}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\271", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 666105}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "F", 1)                         = 1
+close(6)                                = 0
+gettimeofday({1574974053, 667760}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+getppid()                               = 45719
+getuid()                                = 1000
+geteuid()                               = 1000
+getgid()                                = 1010
+getegid()                               = 1010
+gettimeofday({1574974053, 670657}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\243", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 672470}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\366", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 674925}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+getppid()                               = 45719
+getuid()                                = 1000
+geteuid()                               = 1000
+getgid()                                = 1010
+getegid()                               = 1010
+gettimeofday({1574974053, 677945}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "h", 1)                         = 1
+close(6)                                = 0
+gettimeofday({1574974053, 679883}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, ")", 1)                         = 1
+close(6)                                = 0
+gettimeofday({1574974053, 682270}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\314", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 684417}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "j", 1)                         = 1
+close(6)                                = 0
+gettimeofday({1574974053, 686374}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+open("/dev/random", O_RDONLY|O_NONBLOCK) = 6
+read(6, "\356", 1)                      = 1
+close(6)                                = 0
+gettimeofday({1574974053, 688421}, {tz_minuteswest=0, tz_dsttime=0}) = 0
+stat("/u01/config/ldap.ora", 0x7ffd149f6af0) = -1 ENOENT (No such file or directory)
+stat("/u00/app/oracle/product/19.0.0.0/ldap/admin/ldap.ora", 0x7ffd149f6af0) = -1 ENOENT (No such file or directory)
+stat("/u00/app/oracle/network/admin/ldap.ora", 0x7ffd149f6af0) = -1 ENOENT (No such file or directory)
+stat("/u00/app/oracle/product/19.0.0.0/network/admin/ldap.ora", 0x7ffd149f6af0) = -1 ENOENT (No such file or directory)
+stat("/u00/app/oracle/product/19.0.0.0/network/admin/ldap.ora", 0x7ffd149f6be0) = -1 ENOENT (No such file or directory)
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=38, ...}) = 0
+stat("/etc/", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+access("/etc/resolv.conf", F_OK)        = 0
+statfs("/etc/resolv.conf", {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=34538640, f_bfree=6167288, f_bavail=4405395, f_files=8790016, f_ffree=8146315, f_fsid={2289580234, 2784739652}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+open("/etc/resolv.conf", O_RDONLY)      = 6
+brk(NULL)                               = 0x1203000
+brk(0x1228000)                          = 0x1228000
+read(6, "nameserver 127.0.0.11\noptions nd"..., 57344) = 38
+read(6, "", 57344)                      = 0
+close(6)                                = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=38, ...}) = 0
+stat("/etc/", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+access("/etc/resolv.conf", F_OK)        = 0
+statfs("/etc/resolv.conf", {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=34538640, f_bfree=6167288, f_bavail=4405395, f_files=8790016, f_ffree=8146315, f_fsid={2289580234, 2784739652}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+open("/etc/resolv.conf", O_RDONLY)      = 6
+read(6, "nameserver 127.0.0.11\noptions nd"..., 57344) = 38
+read(6, "", 57344)                      = 0
+close(6)                                = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=38, ...}) = 0
+stat("/etc/", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+access("/etc/resolv.conf", F_OK)        = 0
+statfs("/etc/resolv.conf", {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=34538640, f_bfree=6167288, f_bavail=4405395, f_files=8790016, f_ffree=8146315, f_fsid={2289580234, 2784739652}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+open("/etc/resolv.conf", O_RDONLY)      = 6
+read(6, "nameserver 127.0.0.11\noptions nd"..., 57344) = 38
+read(6, "", 57344)                      = 0
+close(6)                                = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=38, ...}) = 0
+stat("/etc/", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+access("/etc/resolv.conf", F_OK)        = 0
+statfs("/etc/resolv.conf", {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=34538640, f_bfree=6167288, f_bavail=4405395, f_files=8790016, f_ffree=8146315, f_fsid={2289580234, 2784739652}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+open("/etc/resolv.conf", O_RDONLY)      = 6
+read(6, "nameserver 127.0.0.11\noptions nd"..., 57344) = 38
+read(6, "", 57344)                      = 0
+close(6)                                = 0
+access("/home/oracle/.tnsnames.ora", F_OK) = -1 ENOENT (No such file or directory)
+access("/u00/app/oracle/network/admin/tnsnames.ora", F_OK) = 0
+gettimeofday({1574974053, 710629}, NULL) = 0
+stat("/u00/app/oracle/network/admin/tnsnames.ora", {st_mode=S_IFREG|0644, st_size=4500, ...}) = 0
+open("/u00/app/oracle/network/admin/tnsnames.ora", O_RDONLY) = 6
+fcntl(6, F_SETFD, FD_CLOEXEC)           = 0
+fstat(6, {st_mode=S_IFREG|0644, st_size=4500, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(6, "# tnsnames.ora Network Configura"..., 4096) = 4096
+read(6, "    (LOAD_BALANCE = ON)\n        "..., 4096) = 404
+read(6, "", 4096)                       = 0
+close(6)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+open("/u00/app/oracle/product/19.0.0.0/network/mesg/tnsus.msb", O_RDONLY) = 6
+fcntl(6, F_SETFD, FD_CLOEXEC)           = 0
+lseek(6, 0, SEEK_SET)                   = 0
+read(6, "\25\23\"\1\23\3\t\t\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 280) = 280
+lseek(6, 512, SEEK_SET)                 = 512
+read(6, "\2331\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 512) = 512
+lseek(6, 1024, SEEK_SET)                = 1024
+read(6, "\t\0\22\0\32\0&\0-\0F\0N\0U\0\\\0k\0w\0\201\0\212\0\223\0\321\0\334\0"..., 186) = 186
+lseek(6, 28672, SEEK_SET)               = 28672
+read(6, "\16\0\335\t\0\0\\\0\336\t\0\0\214\0\255\r\0\0\270\0\256\r\0\0\272\0\257\r\0\0\366\0"..., 512) = 512
+write(1, "Used parameter files:\n/u00/app/o"..., 65) = 65
+lseek(6, 28672, SEEK_SET)               = 28672
+read(6, "\16\0\335\t\0\0\\\0\336\t\0\0\214\0\255\r\0\0\270\0\256\r\0\0\272\0\257\r\0\0\366\0"..., 512) = 512
+write(1, "Used TNSNAMES adapter to resolve"..., 43) = 43
+getrlimit(RLIMIT_NOFILE, {rlim_cur=1024*1024, rlim_max=1024*1024}) = 0
+open("/u00/app/oracle/product/19.0.0.0/lib/libnque19.so", O_RDONLY|O_CLOEXEC) = 7
+read(7, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\200\n\0\0\0\0\0\0"..., 832) = 832
+fstat(7, {st_mode=S_IFREG|0644, st_size=28632, ...}) = 0
+mmap(NULL, 2109912, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 7, 0) = 0x7fe21d51c000
+mprotect(0x7fe21d51f000, 2093056, PROT_NONE) = 0
+mmap(0x7fe21d71e000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 7, 0x2000) = 0x7fe21d71e000
+close(7)                                = 0
+mprotect(0x7fe21d71e000, 4096, PROT_READ) = 0
+mmap(NULL, 135168, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223af8000
+mmap(NULL, 135168, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223ad7000
+mmap(NULL, 135168, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223ab6000
+mmap(NULL, 135168, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223a95000
+mmap(NULL, 528384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223a14000
+gettimeofday({1574974053, 732166}, NULL) = 0
+lseek(6, 29184, SEEK_SET)               = 29184
+read(6, "\16\0\271\r\0\0\\\0\21\16\0\0u\0\22\16\0\0\233\0\23\16\0\0\317\0\241\17\0\0\t\1"..., 512) = 512
+write(1, "Attempting to contact (DESCRIPTI"..., 156) = 156
+gettimeofday({1574974053, 734828}, NULL) = 0
+open("/etc/hostid", O_RDONLY)           = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="eusdb", ...}) = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=38, ...}) = 0
+open("/etc/hosts", O_RDONLY|O_CLOEXEC)  = 7
+fstat(7, {st_mode=S_IFREG|0644, st_size=167, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(7, "127.0.0.1\tlocalhost\n::1\tlocalhos"..., 4096) = 167
+read(7, "", 4096)                       = 0
+close(7)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+gettimeofday({1574974053, 740956}, NULL) = 0
+stat("/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=38, ...}) = 0
+open("/etc/hosts", O_RDONLY|O_CLOEXEC)  = 7
+fstat(7, {st_mode=S_IFREG|0644, st_size=167, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe223b96000
+read(7, "127.0.0.1\tlocalhost\n::1\tlocalhos"..., 4096) = 167
+read(7, "", 4096)                       = 0
+close(7)                                = 0
+munmap(0x7fe223b96000, 4096)            = 0
+times(NULL)                             = 4339375443
+socket(AF_INET, SOCK_STREAM, IPPROTO_IP) = 7
+fcntl(7, F_SETFL, O_RDONLY|O_NONBLOCK)  = 0
+connect(7, {sa_family=AF_INET, sin_port=htons(1521), sin_addr=inet_addr("172.20.0.3")}, 16) = -1 EINPROGRESS (Operation now in progress)
+times(NULL)                             = 4339375444
+mmap(NULL, 802816, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe21d458000
+poll([{fd=7, events=POLLOUT}], 1, 60000) = 1 ([{fd=7, revents=POLLOUT}])
+getsockopt(7, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
+fcntl(7, F_GETFL)                       = 0x802 (flags O_RDWR|O_NONBLOCK)
+fcntl(7, F_SETFL, O_RDWR)               = 0
+getsockname(7, {sa_family=AF_INET, sin_port=htons(38586), sin_addr=inet_addr("172.20.0.3")}, [16]) = 0
+getsockopt(7, SOL_SOCKET, SO_SNDBUF, [2626560], [4]) = 0
+getsockopt(7, SOL_SOCKET, SO_RCVBUF, [1061808], [4]) = 0
+setsockopt(7, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+fcntl(7, F_SETFD, FD_CLOEXEC)           = 0
+rt_sigaction(SIGPIPE, {SIG_IGN, ~[ILL TRAP ABRT BUS FPE SEGV USR2 TERM XCPU XFSZ SYS RTMIN RT_1], SA_RESTORER|SA_RESTART|SA_SIGINFO, 0x7fe21e54d630}, {SIG_DFL, [], 0}, 8) = 0
+gettimeofday({1574974053, 756282}, NULL) = 0
+write(7, "\0g\0\0\1\0\0\0\1>\1,\0\0 \0\377\377\177\10\0\0\1\0\0\35\0J\0\0\0\0"..., 103) = 103
+read(7, "\0A\1\246\4\0\0\0\"\0\0005(DESCRIPTION=(TMP=)("..., 8208) = 65
+setsockopt(7, SOL_SOCKET, SO_SNDTIMEO, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16) = 0
+setsockopt(7, SOL_SOCKET, SO_RCVTIMEO, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16) = 0
+close(7)                                = 0
+lseek(6, 28672, SEEK_SET)               = 28672
+read(6, "\16\0\335\t\0\0\\\0\336\t\0\0\214\0\255\r\0\0\270\0\256\r\0\0\272\0\257\r\0\0\366\0"..., 512) = 512
+gettimeofday({1574974053, 762150}, NULL) = 0
+write(1, "OK (30 msec)\n", 13)          = 13
+munmap(0x7fe223a95000, 135168)          = 0
+munmap(0x7fe223ab6000, 135168)          = 0
+munmap(0x7fe223ad7000, 135168)          = 0
+munmap(0x7fe223af8000, 135168)          = 0
+munmap(0x7fe223a14000, 528384)          = 0
+munmap(0x7fe21d458000, 802816)          = 0
+munmap(0x7fe21d51c000, 2109912)         = 0
+close(6)                                = 0
+exit_group(0)                           = ?
++++ exited with 0 +++

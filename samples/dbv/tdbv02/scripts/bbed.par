@@ -1,0 +1,3 @@
+blocksize=8192
+listfile=/u01/config/scripts/bbed_listfile.log
+mode=edit

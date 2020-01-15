@@ -27,6 +27,9 @@ services:
     restart: unless-stopped
     depends_on:
       - eusoud
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
     volumes:
       - ${DOCKER_VOLUME_BASE}/eus/db:/u01
       - ./db:/u01/config

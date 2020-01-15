@@ -35,10 +35,10 @@ CONNECT / as SYSDBA
 
 ---------------------------------------------------------------------------
 -- CREATE DV Users
-GRANT CREATE SESSION, SET CONTAINER TO c##sec_admin_owen IDENTIFIED BY &dbv_password CONTAINER = ALL;
-GRANT CREATE SESSION, SET CONTAINER TO c##dbv_owner_root_backup IDENTIFIED BY &dbv_password CONTAINER = ALL;
-GRANT CREATE SESSION, SET CONTAINER TO c##accts_admin_ace IDENTIFIED BY &dbv_password CONTAINER = ALL;
+GRANT CREATE SESSION, SET CONTAINER TO c##sec_admin IDENTIFIED BY &dbv_password CONTAINER = ALL;
+GRANT CREATE SESSION, SET CONTAINER TO c##sec_accts_admin IDENTIFIED BY &dbv_password CONTAINER = ALL;
 GRANT CREATE SESSION, SET CONTAINER TO c##dbv_acctmgr_root_backup IDENTIFIED BY &dbv_password CONTAINER = ALL;
+GRANT CREATE SESSION, SET CONTAINER TO c##dbv_owner_root_backup IDENTIFIED BY &dbv_password CONTAINER = ALL;
 
 -- configure the DV users
 BEGIN
@@ -69,12 +69,12 @@ SELECT * FROM CDB_DV_STATUS;
 -- Connect as the backup DV_OWNER user and then grant the 
 -- DV_OWNER role to the primary DV_OWNER user that you created earlier.
 CONNECT c##dbv_owner_root_backup/&dbv_password
-GRANT DV_OWNER TO c##sec_admin_owen WITH ADMIN OPTION;
+GRANT DV_OWNER TO c##sec_admin WITH ADMIN OPTION;
 
 -- Connect as the backup DV_ACCTMGR user and then grant the 
 -- DV_ACCTMGR role to the backup DV_ACCTMGR user.
 CONNECT c##dbv_acctmgr_root_backup/&dbv_password
-GRANT DV_ACCTMGR TO c##accts_admin_ace WITH ADMIN OPTION;
+GRANT DV_ACCTMGR TO c##sec_accts_admin WITH ADMIN OPTION;
 
 EXIT;
 -- EOF ---------------------------------------------------------------------

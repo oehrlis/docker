@@ -2,12 +2,12 @@
 --  Trivadis AG, Infrastructure Managed Services
 --  Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 ----------------------------------------------------------------------------
---  Name......: 01_create_ts_users.sql
+--  Name......: hashcat.sql
 --  Author....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 --  Editor....: Stefan Oehrli
---  Date......: 2019.11.25
---  Usage.....: @01_create_ts_users
---  Purpose...: Create a TS USERS
+--  Date......: 2019.12.07
+--  Usage.....: @hashcat
+--  Purpose...: Script to dump S:/SHA1 password hashes for hashcat
 --  Notes.....: 
 --  Reference.: 
 --  License...: Licensed under the Universal Permissive License v 1.0 as 
@@ -16,19 +16,18 @@
 --  Modified..:
 --  see git revision history for more information on changes/updates
 ----------------------------------------------------------------------------
-
--- alter the SQL*Plus environment
-SET PAGESIZE 200 LINESIZE 160
-SET FEEDBACK ON
+SET HEAD OFF
+SET FEEDBACK OFF
 SET ECHO OFF
-
----------------------------------------------------------------------------
--- connect as SYSDBA to the root container
-CONNECT / as SYSDBA
-
----------------------------------------------------------------------------
--- create a tablespace USERS
-CREATE TABLESPACE users;
-
-EXIT;
+SET LINESIZE 160 PAGESIZE 200
+SPOOL /u01/config/etc/hash_list.txt
+COLUMN hashcat FORMAT A90
+SELECT
+    name ||':'||
+    substr(regexp_substr(spare4,'S\:(.+);',1,1,'i',1), 1, 40) ||':'||
+    substr(regexp_substr(spare4,'S\:(.+);',1,1,'i',1), 41, 20) hashcat
+FROM user$
+WHERE spare4 IS NOT NULL 
+AND substr(regexp_substr(spare4,'S\:(.+);',1,1,'i',1), 1, 40) <> '0000000000000000000000000000000000000000';
+SPOOL OFF
 -- EOF ---------------------------------------------------------------------

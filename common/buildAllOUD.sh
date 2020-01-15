@@ -46,6 +46,6 @@ time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_TAG}/oud:11.1.2.3
 
 echo "### Build OUD 12.2.1.3.0 #######################################################"
 cd $DOCKER_BUILD_DIR/OracleOUD/12.2.1.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_TAG}/oud:12.2.1.3.180829 .
+time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_TAG}/oud:12.2.1.3.0 .
 docker image prune --force
 # --- EOF -------------------------------------------------------------------

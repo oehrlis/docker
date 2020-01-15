@@ -51,18 +51,21 @@ time $DOCKER_BUILD_DIR/OracleJava/java-8/build.sh
 echo "### Build ODSEE ################################################################"
 cd $DOCKER_BUILD_DIR/OracleODSEE/11.1.1.7.0
 docker rmi oracle/odsee:11.1.1.7.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.181016 .
+time docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.190716 .
 
-# build OUDSM
-echo "### Build OUDSM 12.2.1.3.0 #####################################################"
-cd $DOCKER_BUILD_DIR/OracleOUDSM/12.2.1.3.0
-time docker build --add-host=orarepo:${orarepo_ip} -t oracle/oudsm:12.2.1.3.190522 .
-docker image prune --force
+# build OUDSM Containers
+cd $DOCKER_BUILD_DIR/OracleOUDSM
+for version in 1?.?.?.?.*; do
+    echo "### Build OUDSM $version ####################################################"
+    cd $DOCKER_BUILD_DIR/OracleOUDSM/$version
+    time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/oudsm:$version .
+    docker image prune --force
+done
 
-# build Database Containers
+# build OUD Containers
 cd $DOCKER_BUILD_DIR/OracleOUD
 for version in 1?.?.?.?.*; do
-    echo "### Build $version #######################################################"
+    echo "### Build OUD $version #######################################################"
     cd $DOCKER_BUILD_DIR/OracleOUD/$version
     time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/oud:$version .
     docker image prune --force

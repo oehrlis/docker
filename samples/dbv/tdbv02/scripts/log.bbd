@@ -1,0 +1,79 @@
+
+BBED: Release 2.0.0.0.0 - Limited Production on Fri Nov 29 21:49:37 2019
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+************* !!! For Oracle Internal Use only !!! ***************
+
+show
+set file 1
+show
+set block 208
+find /c SCOTT
+set block 209
+find /c SCOTT
+set block 210
+find /c SCOTT
+set block 211
+find /c SCOTT
+set block 212
+find /c SCOTT
+set block 213
+find /c SCOTT
+dump /v  dba 1,213 offset 1348 count 128
+dump /v  dba 1,213 offset 1348 count 256
+find /c 67BB859CB2D8DC
+find /c 67BB859CB2D8DC72DE4CC84E1D80D0D8D80A6431404DF727D6B57435DD30
+dump /v  dba 1,213 offset 1437 count 60
+modify/c AEB5E691CB0A85AAF0B01C54D8A2A17BF53B55A8404DF727D6B57435DD30 dba 1,213 offset 1437
+#modify /x 363742423835394342324438444337324445344343383445314438304430443844383041363433313430344446373237443642353734333544443330 filename '/u01/oradata/TDBV02/system01TDBV02.dbf' block 213. offset 1437.
+sum dba 1,213
+sum dba 1,213 apply
+dump /v  dba 1,213 offset 1437 count 60
+dump /v  dba 1,213 offset 1437 count 60
+find /c SCOTT
+dump /v  dba 1,213 offset 1681 count 256
+find /c SCOTT
+set block 212
+find /c SCOTT
+set block 214
+find /c SCOTT
+set block 213
+find /c SCOTT
+dump /v  dba 1,213 offset 1681 count 1024
+dump /v  dba 1,213 offset 1681 count 2048
+help find
+find /c AEB5E691CB
+exit
+ 
+
+BBED: Release 2.0.0.0.0 - Limited Production on Fri Nov 29 22:12:18 2019
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+************* !!! For Oracle Internal Use only !!! ***************
+
+set mode edit
+set file 1
+set block 213
+find /c SCOTT
+dump /v  dba 1,213 offset 513 count 256
+find /c AEB5E691CB0A85AAF0B01C54D8A2A17BF53B55A8404DF727D6B57435DD30
+modify/c 67BB859CB2D8DC72DE4CC84E1D80D0D8D80A6431404DF727D6B57435DD30 dba 1,213 offset 602 
+#modify /x 414542354536393143423041383541414630423031433534443841324131374246353342353541383430344446373237443642353734333544443330 filename '/u01/oradata/TDBV02/system01TDBV02.dbf' block 213. offset 602.
+sum dba 1,213
+sum dba 1,213 apply
+dump /v  dba 1,213 offset 602 count 60
+dump /v  dba 1,213 offset 602 count 60
+find /c AEB5E691CB0A85AAF0B01C54D8A2A17BF53B55A8404DF727D6B57435DD30
+set block 214
+[A[B
+find /c AEB5E691CB0A85AAF0B01C54D8A2A17BF53B55A8404DF727D6B57435DD30
+set block 212
+find /c AEB5E691CB0A85AAF0B01C54D8A2A17BF53B55A8404DF727D6B57435DD30
+set block 211
+find /c AEB5E691CB0A85AAF0B01C54D8A2A17BF53B55A8404DF727D6B57435DD30
+set block 210
+find /c AEB5E691CB0A85AAF0B01C54D8A2A17BF53B55A8404DF727D6B57435DD30
+set block 213
+find /c AEB5E691CB0A85AAF0B01C54D8A2A17BF53B55A8404DF727D6B57435DD30

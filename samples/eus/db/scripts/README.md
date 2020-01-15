@@ -1,1 +1,1 @@
-This folder contains various scripts that are not executed automatically.
+This folder contains various SQL scripts.

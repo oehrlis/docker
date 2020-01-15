@@ -38,10 +38,6 @@
          <initParam name="open_cursors" value="300"/>
          <initParam name="nls_language" value="AMERICAN"/>
          <initParam name="db_recovery_file_dest_size" value="6400" unit="MB"/>
-         <initParam name="shared_pool_size" value="800" unit="MB"/>
-         <initParam name="_kgl_large_heap_assert_threshold" value="1524288000"/>
-         <initParam name="_kgl_large_heap_warning_threshold" value="1524288000"/>
-         <initParam name="_cursor_obsolete_threshold" value="1024"/>
       </InitParams>
       <MiscParams>
          <databaseType>MULTIPURPOSE</databaseType>
@@ -118,7 +114,7 @@
          <size unit="MB">200</size>
          <reuse>true</reuse>
          <autoExtend>true</autoExtend>
-         <increment unit="MB">50</increment>
+         <increment unit="KB">5120</increment>
          <maxSize unit="MB">-1</maxSize>
       </DatafileAttributes>
       <TablespaceAttributes id="SYSAUX">

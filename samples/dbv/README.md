@@ -42,6 +42,13 @@ The database is ready when you see the following message in your docker logs.
 ---------------------------------------------------------------
 ```
 
+User and Schemas created during database vault configuration:
+
+- c##sec_admin
+- c##sec_accts_admin
+- c##dbv_acctmgr_root_backup
+- c##dbv_owner_root_backup
+
 You now can shutdown and destroy the container using `docker-compose`. Database will remain since it is stored on a volume / bind-mount folder.
 
 ```bash
@@ -75,6 +82,13 @@ The database is ready when you see the following message in your docker logs.
  - DATABASE TDBV02 IS READY TO USE!
 ---------------------------------------------------------------
 ```
+
+User and Schemas created during database vault configuration:
+
+- sec_admin
+- sec_accts_admin
+- dbv_acctmgr_root_backup
+- dbv_owner_root_backup
 
 You now can shutdown and destroy the container using `docker-compose`. Database will remain since it is stored on a volume / bind-mount folder.
 

@@ -51,8 +51,8 @@ CONNECT / as SYSDBA
 ALTER SESSION SET CONTAINER=&pdb_db_name;
 ---------------------------------------------------------------------------
 -- Grant the CREATE SESSION and SET CONTAINER privileges to the users for this PDB.
-GRANT CREATE SESSION, SET CONTAINER TO c##sec_admin_owen CONTAINER = CURRENT;
-GRANT CREATE SESSION, SET CONTAINER TO c##accts_admin_ace CONTAINER = CURRENT;
+GRANT CREATE SESSION, SET CONTAINER TO c##sec_admin CONTAINER = CURRENT;
+GRANT CREATE SESSION, SET CONTAINER TO c##sec_accts_admin CONTAINER = CURRENT;
 
 -- configure the two backup Database Vault user accounts.
 BEGIN
@@ -79,18 +79,19 @@ SELECT * FROM DBA_DV_STATUS;
 -- Connect as the backup DV_OWNER user and then grant the 
 -- DV_OWNER role to the primary DV_OWNER user that you created earlier.
 CONNECT c##dbv_owner_root_backup/&pdb_admin_pwd@&pdb_db_name
-GRANT DV_OWNER TO c##sec_admin_owen WITH ADMIN OPTION;
+GRANT DV_OWNER TO c##sec_admin WITH ADMIN OPTION;
 
 -- Connect as the backup DV_ACCTMGR user and then grant the 
 -- DV_ACCTMGR role to the backup DV_ACCTMGR user.
 CONNECT c##dbv_acctmgr_root_backup/&pdb_admin_pwd@&pdb_db_name
-GRANT DV_ACCTMGR TO c##accts_admin_ace WITH ADMIN OPTION;
+GRANT DV_ACCTMGR TO c##sec_accts_admin WITH ADMIN OPTION;
 CREATE USER secadmin IDENTIFIED BY &pdb_admin_pwd;
 CREATE USER secacctmgr IDENTIFIED BY &pdb_admin_pwd;
 GRANT DV_ACCTMGR TO secacctmgr WITH ADMIN OPTION;
 
 CONNECT c##dbv_owner_root_backup/&pdb_admin_pwd@&pdb_db_name
 GRANT DV_OWNER TO secadmin WITH ADMIN OPTION;
+
 
 EXIT;
 -- EOF ---------------------------------------------------------------------
