@@ -78,8 +78,8 @@ ENV   SETUP_DB="10_setup_db.sh" \
       DB_BASE_PKG="p13390677_112040_Linux-x86-64_1of7.zip" \
       DB_BASE2_PKG="p13390677_112040_Linux-x86-64_2of7.zip" \
       DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p29913194_112040_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p30132974_112040_Linux-x86-64.zip" \
+      DB_PATCH_PKG="p30298532_112040_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p30503372_112040_Linux-x86-64.zip" \
       DB_OPATCH_PKG="p6880880_112000_Linux-x86-64.zip"
 
 # stuff to run a DB instance
