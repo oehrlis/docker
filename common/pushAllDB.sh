@@ -27,18 +27,22 @@ DOCKER_REPO=${DOCKER_REPO:-"ora_db"}
 DOCKER_LOCAL_USER=${DOCKER_LOCAL_USER:-"oracle"}
 DOCKER_LOCAL_REPO=${DOCKER_LOCAL_REPO:-"database"}
 
-echo "--------------------------------------------------------------------------------"
-echo " Process all ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:* images ...."
+echo "INFO : Process all ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:* images ...."
 
 ORACLE_IMAGES=$(docker images --filter=reference="${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:*" --format "{{.Repository}}:{{.Tag}}")
+# lets count the images
+n=$(docker images --filter=reference="${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:*" --format "{{.Repository}}:{{.Tag}}"|wc -l|sed 's/ *//g')
+j=1
 
 for i in ${ORACLE_IMAGES}; do
     version=$(echo $i|cut -d: -f2)
-    echo " tag image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version"
+    echo "INFO : push image $j of $n"
+    echo "INFO : tag image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version"
     docker tag ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version ${DOCKER_USER}/${DOCKER_REPO}:$version
-    echo " push image ${DOCKER_USER}/${DOCKER_REPO}:$version"
+    echo "INFO : push image ${DOCKER_USER}/${DOCKER_REPO}:$version"
     docker push ${DOCKER_USER}/${DOCKER_REPO}:$version
-    echo " untag image ${DOCKER_USER}/${DOCKER_REPO}:$version"
+    echo "INFO : untag image ${DOCKER_USER}/${DOCKER_REPO}:$version"
     docker rmi ${DOCKER_USER}/${DOCKER_REPO}:$version
+    ((j++))                 # increment counter
 done
 # --- EOF -------------------------------------------------------------------
