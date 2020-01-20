@@ -6,8 +6,8 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2019.10.17
-# Purpose....: Dockerfile to build Oracle Database image 12.2.0.1 
-#              Release Update RU 12.2.0.1.191015 October 2019
+# Purpose....: Dockerfile to build Oracle Database image 11.2.0.4
+#              Patch Set Update PSU 11.2.0.4.191015 October 2019
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
@@ -75,16 +75,17 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # scripts to build and run this container
 # set DB specific package variables
 ENV   SETUP_DB="10_setup_db.sh" \
-      DB_BASE_PKG="linuxx64_12201_database.zip" \
+      DB_BASE_PKG="p13390677_112040_Linux-x86-64_1of7.zip" \
+      DB_BASE2_PKG="p13390677_112040_Linux-x86-64_2of7.zip" \
       DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p30138470_122010_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p30133625_122010_Linux-x86-64.zip" \
-      DB_OPATCH_PKG="p6880880_122010_Linux-x86-64.zip"
+      DB_PATCH_PKG="p30298532_112040_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p30503372_112040_Linux-x86-64.zip" \
+      DB_OPATCH_PKG="p6880880_112000_Linux-x86-64.zip"
 
 # stuff to run a DB instance
-ENV   ORACLE_SID=${ORACLE_SID:-"TDB120S"} \
-      ORACLE_HOME_NAME="12.2.0.1" \
-      ORACLE_MAJOR_RELEASE="122" \
+ENV   ORACLE_SID=${ORACLE_SID:-"TDB112S"} \
+      ORACLE_HOME_NAME="11.2.0.4" \
+      ORACLE_MAJOR_RELEASE="112" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
       PORT_CONSOLE=${PORT_CONSOLE:-5500}
@@ -95,7 +96,7 @@ ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
       CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
-      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v12.2.0"
+      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11.2.0"
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------
@@ -104,8 +105,8 @@ FROM  base AS builder
 # COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 # COPY RU patch if part of the build context
-COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
-COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/PSU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/PSU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
@@ -114,7 +115,7 @@ USER  oracle
 RUN   ${ORADBA_INIT}/${SETUP_DB}
 
 # Install BasEnv
-#RUN   ${ORADBA_INIT}/${SETUP_BASENV}
+RUN   ${ORADBA_INIT}/${SETUP_BASENV}
 
 # New layer for database runtime
 # ----------------------------------------------------------------------
@@ -128,7 +129,7 @@ COPY  --chown=oracle:oinstall --from=builder $ORACLE_BASE $ORACLE_BASE
 COPY  --chown=oracle:oinstall --from=builder $ORACLE_ROOT/app/oraInventory $ORACLE_ROOT/app/oraInventory
 
 # copy basenv profile stuff
-#COPY  --chown=oracle:oinstall --from=builder /home/oracle/.BE_HOME /home/oracle/.TVDPERL_HOME /home/oracle/.bash_profile /home/oracle/
+COPY  --chown=oracle:oinstall --from=builder /home/oracle/.BE_HOME /home/oracle/.TVDPERL_HOME /home/oracle/.bash_profile /home/oracle/
 
 # RUN as root post install scripts
 USER  root
