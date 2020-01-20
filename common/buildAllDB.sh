@@ -19,26 +19,39 @@
 # -----------------------------------------------------------------------------
 
 # - Customization -----------------------------------------------------------
+DOCKER_USER=${DOCKER_USER:-"oracle"}
+DOCKER_REPO=${DOCKER_REPO:-"database"}
+DOCKER_BASE_IMAGE="oraclelinux:7-slim"
+SCRIPT_NAME=$(basename $0)
 # - End of Customization ----------------------------------------------------
 
 # - Default Values ----------------------------------------------------------
-
-DOCKER_BUILD_DIR="$(cd $(dirname $0)/.. 2>&1 >/dev/null; pwd -P)"
-DOCKER_USER=oracle
-DOCKER_REPO=database
-echo "--------------------------------------------------------------------------------"
-echo " Build all image from $DOCKER_BUILD_DIR...."
+DOCKER_BUILD_BASE="$(cd $(dirname $0)/.. 2>&1 >/dev/null; pwd -P)"
 orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo)
+ORAREPO=${ORAREPO:-${orarepo_ip}}
+if [ -n "$ORAREPO" ]; then
+    ORAREPO_FLAG="--add-host=orarepo:${ORAREPO}"
+else
+    ORAREPO_FLAG=""
+fi
+export DOCKER_BUILDKIT=1
+# - EOF Default Values ------------------------------------------------------
 
-# get the latest oraclelinux slim image
-docker pull oraclelinux:7-slim
-
-# build Database Containers
-cd $DOCKER_BUILD_DIR/OracleDatabase
-for version in 1?.?.?.?; do
-    echo "### Build $version #######################################################"
-    cd $DOCKER_BUILD_DIR/OracleDatabase/$version
-    time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/${DOCKER_REPO}:$version .
-    docker image prune --force
+CURRENT_DIR=$(pwd)          # save current directory
+echo "INFO : try to pull latest ${DOCKER_BASE_IMAGE}"
+# get the latest base image
+#docker pull ${DOCKER_BASE_IMAGE}
+i=$(ls -1q $DOCKER_BUILD_BASE/OracleDatabase/*/*.Dockerfile|wc -l|sed 's/ *//g')
+j=1
+for DOCKER_FILE in $(ls $DOCKER_BUILD_BASE/OracleDatabase/*/*.Dockerfile); do
+    BUILD_VERSION=$(basename $DOCKER_FILE .Dockerfile)
+    echo "INFO : Build docker images $BUILD_VERSION [$j/$i]"
+    echo "INFO : from Dockerfile=${DOCKER_FILE}"
+    DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
+    cd ${DOCKER_BUILD_DIR}  # change working directory
+    echo docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
+    echo docker image prune --force
+    ((j++))                 # increment counter
 done
+cd $CURRENT_DIR # go back to initial working directory
 # --- EOF -------------------------------------------------------------------

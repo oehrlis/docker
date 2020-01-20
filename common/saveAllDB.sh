@@ -22,17 +22,17 @@
 # - End of Customization ----------------------------------------------------
 
 # - Default Values ----------------------------------------------------------
-DOCKER_ORA_USER=oracle
-DOCKER_ORA_REPO=database
+DOCKER_LOCAL_USER=${DOCKER_LOCAL_USER:-"oracle"}
+DOCKER_LOCAL_REPO=${DOCKER_LOCAL_REPO:-"database"}
 DOCKER_IMAGES=${DOCKER_VOLUME_BASE}/../images
 echo "--------------------------------------------------------------------------------"
-echo " Process all ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:* images ...."
+echo " Process all ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:* images ...."
 
-ORACLE_IMAGES=$(docker images --filter=reference="${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:*" --format "{{.Repository}}:{{.Tag}}")
+ORACLE_IMAGES=$(docker images --filter=reference="${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:*" --format "{{.Repository}}:{{.Tag}}")
 
 for i in ${ORACLE_IMAGES}; do
     version=$(echo $i|cut -d: -f2)
-    echo " save image ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:$version"
-    docker save ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:$version |gzip -c >${DOCKER_IMAGES}/${DOCKER_ORA_USER}_${DOCKER_ORA_REPO}_$version.tar.gz
+    echo " save image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version"
+    docker save ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${DOCKER_LOCAL_REPO}_$version.tar.gz
 done
 # --- EOF -------------------------------------------------------------------

@@ -22,33 +22,24 @@
 # - End of Customization ----------------------------------------------------
 
 # - Default Values ----------------------------------------------------------
-DOCKER_TVD_USER=trivadis
-DOCKER_ORA_USER=oracle
+DOCKER_USER=${DOCKER_USER:-"trivadis"}
+DOCKER_LOCAL_USER=${DOCKER_LOCAL_USER:-"oracle"}
 LOCAL_REPO="oud oudsm odsee serverjre"
-
-DOCKER_TVD_OUD_REPO=ora_oud
-DOCKER_ORA_OUD_REPO=oud
-DOCKER_TVD_OUDSM_REPO=ora_oudsm
-DOCKER_ORA_OUDSM_REPO=oudsm
-DOCKER_TVD_ODSEE_REPO=ora_odsee
-DOCKER_ORA_ODSEE_REPO=odsee
-DOCKER_TVD_JAVA_REPO=ora_java
-DOCKER_ORA_JAVA_REPO=serverjre
 
 for r in ${LOCAL_REPO}; do
     DOCKER_ORA_REPO=$r
     DOCKER_TVD_REPO="ora_$r"
     echo "--------------------------------------------------------------------------------"
-    echo " Process all ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:* images ...."
-    IMAGES=$(docker images --filter=reference="${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:*" --format "{{.Repository}}:{{.Tag}}")
+    echo " Process all ${DOCKER_LOCAL_USER}/${DOCKER_ORA_REPO}:* images ...."
+    IMAGES=$(docker images --filter=reference="${DOCKER_LOCAL_USER}/${DOCKER_ORA_REPO}:*" --format "{{.Repository}}:{{.Tag}}")
     for i in ${IMAGES}; do
         version=$(echo $i|cut -d: -f2)
-        echo " tag image ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version"
-        docker tag ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version
-        echo " push image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version"
-        docker push ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version
-        echo " untag image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version"
-        docker rmi ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version
+        echo " tag image ${DOCKER_LOCAL_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
+        docker tag ${DOCKER_LOCAL_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
+        echo " push image ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
+        docker push ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
+        echo " untag image ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
+        docker rmi ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
     done
 done
 # --- EOF -------------------------------------------------------------------

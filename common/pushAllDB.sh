@@ -22,23 +22,23 @@
 # - End of Customization ----------------------------------------------------
 
 # - Default Values ----------------------------------------------------------
-DOCKER_TVD_USER=trivadis
-DOCKER_TVD_REPO=ora_db
-DOCKER_ORA_USER=oracle
-DOCKER_ORA_REPO=database
+DOCKER_USER=${DOCKER_USER:-"trivadis"}
+DOCKER_REPO=${DOCKER_REPO:-"ora_db"}
+DOCKER_LOCAL_USER=${DOCKER_LOCAL_USER:-"oracle"}
+DOCKER_LOCAL_REPO=${DOCKER_LOCAL_REPO:-"database"}
 
 echo "--------------------------------------------------------------------------------"
-echo " Process all ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:* images ...."
+echo " Process all ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:* images ...."
 
-ORACLE_IMAGES=$(docker images --filter=reference="${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:*" --format "{{.Repository}}:{{.Tag}}")
+ORACLE_IMAGES=$(docker images --filter=reference="${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:*" --format "{{.Repository}}:{{.Tag}}")
 
 for i in ${ORACLE_IMAGES}; do
     version=$(echo $i|cut -d: -f2)
-    echo " tag image ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:$version"
-    docker tag ${DOCKER_ORA_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version
-    echo " push image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version"
-    docker push ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version
-    echo " untag image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version"
-    docker rmi ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$version
+    echo " tag image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version"
+    docker tag ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version ${DOCKER_USER}/${DOCKER_REPO}:$version
+    echo " push image ${DOCKER_USER}/${DOCKER_REPO}:$version"
+    docker push ${DOCKER_USER}/${DOCKER_REPO}:$version
+    echo " untag image ${DOCKER_USER}/${DOCKER_REPO}:$version"
+    docker rmi ${DOCKER_USER}/${DOCKER_REPO}:$version
 done
 # --- EOF -------------------------------------------------------------------
