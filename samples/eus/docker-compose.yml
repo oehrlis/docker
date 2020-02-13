@@ -21,7 +21,7 @@ version: '3'
 services:
 # Database service
   eusdb:
-    image: oracle/database:19.5.0.0
+    image: oracle/database:19.6.0.0
     container_name: eusdb
     hostname: eusdb
     restart: unless-stopped
