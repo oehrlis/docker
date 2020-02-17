@@ -1,10 +1,10 @@
-# Docker Build Files Oracle Database 19.0.0.0
+# Docker Build Files Oracle Database 20.0.0.0
 
 ## General information
 
 This folder contains the Docker build as well compose files for Oracle Database 20.2.0.0. The Oracle binaries are not included and must be copied separately into the software directory. The following binary packages are required to create a base installation of 20.2.0.0.
 
-* *LINUX.X64_193000_db_home.zip* Oracle Database 19c (20.2.0.0)
+* *LINUX.X64_202000_db_home.zip* Oracle Database 19c (20.2.0.0)
 
 Optionally, the following latest patch set updates can be used.
 
