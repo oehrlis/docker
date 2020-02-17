@@ -1,0 +1,41 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2019.03.16
+# Revision...: --
+# Purpose....: Simple compose file to create a 19.3 databases
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+
+# multitenant tenant database
+  tdb200s:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:20.2.0.0
+    container_name: tdb200c
+    hostname: tdb200c
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/tdb200c:/u01
+      - ./config:/u01/config
+    ports:
+      - "1521"
+    environment:
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB200C
+      CUSTOM_RSP: /u01/config/etc
+      ORADBA_DBC_FILE: dbca20.0.0_custom.dbc.tmpl
+      ORADBA_RSP_FILE: dbca20.0.0_custom.rsp.tmpl
+# - EOF -----------------------------------------------------------------
