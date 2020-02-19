@@ -4,7 +4,7 @@
 
 This folder contains the Docker build as well compose files for Oracle Database 20.2.0.0. The Oracle binaries are not included and must be copied separately into the software directory. The following binary packages are required to create a base installation of 20.2.0.0.
 
-* *LINUX.X64_202000_db_home.zip* Oracle Database 19c (20.2.0.0)
+* *LINUX.X64_202000_db_home.zip* Oracle Database 20c (20.2.0.0)
 
 Optionally, the following latest patch set updates can be used.
 
@@ -36,8 +36,25 @@ Run your Oracle Database Docker image use the **docker run** command as follows:
 ```bash
 docker run --name oud <container name> \
 --hostname <container hostname> -p 1521:1521 
--e ORACLE_SID=TDB194S \
+-e ORACLE_SID=TDB200C \
+-e CONTAINER=TRUE \
 -e INSTANCE_INIT=/u01/config \
+--volume [<host mount point>:]/u01 \
+--volume [<host mount point>:]/u01/config \
+oracle/database:20.2.0.0
+```
+
+Or with a custom dbca template:
+
+```bash
+docker run --name oud <container name> \
+--hostname <container hostname> -p 1521:1521 
+-e ORACLE_SID=TDB200C \
+-e CONTAINER=TRUE \
+-e INSTANCE_INIT=/u01/config \
+-e CUSTOM_RSP: /u01/config/etc \
+-e ORADBA_DBC_FILE: dbca20.0.0_custom.dbc.tmpl \
+-e ORADBA_RSP_FILE: dbca20.0.0_custom.rsp.tmpl \
 --volume [<host mount point>:]/u01 \
 --volume [<host mount point>:]/u01/config \
 oracle/database:20.2.0.0
@@ -46,5 +63,5 @@ oracle/database:20.2.0.0
 Alternatively you can use the provided Docker compose file.
 
 ```bash
-docker-compose up -d tdb194s
+docker-compose up -d tdb200c
 ```
