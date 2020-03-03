@@ -50,8 +50,8 @@ for DOCKER_FILE in $(ls $DOCKER_BUILD_BASE/OracleDatabase/*/*.Dockerfile); do
     echo "INFO : from Dockerfile=${DOCKER_FILE}"
     DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
     cd ${DOCKER_BUILD_DIR}  # change working directory
-    echo docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
-    echo docker image prune --force
+    docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
+    docker image prune --force
     ((j++))                 # increment counter
 done
 cd $CURRENT_DIR # go back to initial working directory
