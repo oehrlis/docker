@@ -1,0 +1,10 @@
+# Coherence 12.2.1.4.3 Cumulative Patch using OPatch (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=30729380
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p30729380_122140_Generic.zip?aru=23313791&patch_file=p30729380_122140_Generic.zip
+#
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+9ED6F6C3D1AE8C0763EBC206B726DAC1A183AB873A5BE5698BC1370F8A41C8B8 p30729380_122140_Generic.zip
