@@ -1,0 +1,75 @@
+
+Recovery Manager: Release 19.0.0.0.0 - Production on Wed Feb 26 23:18:26 2020
+Version 19.5.0.0.0
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+RMAN> 
+RMAN-06005: connected to target database: TRMAN01 (DBID=3810649330)
+
+RMAN> 2> 
+RMAN-03090: Starting recover at 26-FEB-2020 23:18:29
+RMAN-06009: using target database control file instead of recovery catalog
+RMAN-08030: allocated channel: ORA_DISK_1
+RMAN-08500: channel ORA_DISK_1: SID=144 device type=DISK
+RMAN-05026: warning: presuming following set of tablespaces applies to specified point-in-time
+RMAN-05027: 
+List of tablespaces expected to have UNDO segments
+RMAN-05028: Tablespace SYSTEM
+RMAN-05028: Tablespace TSPITR:SYSTEM
+RMAN-05028: Tablespace UNDOTBS1
+RMAN-05028: Tablespace TSPITR:UNDOTBS1
+RMAN-06220: 
+Creating automatic instance, with SID='lzww'
+RMAN-04031: 
+initialization parameters used for automatic instance:
+db_name=TRMAN01
+db_unique_name=lzww_pitr_TSPITR_TRMAN01
+compatible=19.0.0
+db_block_size=8192
+db_files=200
+diagnostic_dest=/u00/app/oracle
+_system_trig_enabled=FALSE
+sga_target=768M
+processes=200
+#No auxiliary destination in use
+enable_pluggable_database=true
+_clone_one_pdb_recovery=true
+#No auxiliary parameter file used
+
+
+RMAN-06223: starting up automatic instance TRMAN01
+
+RMAN-06196: Oracle instance started
+
+Total System Global Area     805303848 bytes
+
+Fixed Size                     9139752 bytes
+Variable Size                218103808 bytes
+Database Buffers             570425344 bytes
+Redo Buffers                   7634944 bytes
+RMAN-06224: Automatic instance created
+RMAN-05070: Running TRANSPORT_SET_CHECK on recovery set tablespaces
+RMAN-05071: TRANSPORT_SET_CHECK completed successfully
+RMAN-06221: 
+Removing automatic instance
+RMAN-06225: shutting down automatic instance 
+RMAN-06402: Oracle instance shut down
+RMAN-06226: Automatic instance removed
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of recover command at 02/26/2020 23:19:02
+RMAN-05002: aborting Tablespace Point-in-Time Recovery
+RMAN-05517: tempfile /u01/oradata/TRMAN01/TSPITR/TRMAN01/9F83CA688D186D6FE053030011AC1BBD/datafile/o1_mf_temp_h5fz1y7v_.dbf conflicts with file used by target database
+RMAN-05517: tempfile /u01/oradata/TRMAN01/temp01TRMAN01.dbf conflicts with file used by target database
+RMAN-05001: auxiliary file name /u01/oradata/TRMAN01/TSPITR/TRMAN01/9F83CA688D186D6FE053030011AC1BBD/datafile/o1_mf_sysaux_h5fz1y7m_.dbf conflicts with a file used by the target database
+RMAN-05001: auxiliary file name /u01/oradata/TRMAN01/sysaux01TRMAN01.dbf conflicts with a file used by the target database
+RMAN-05001: auxiliary file name /u01/oradata/TRMAN01/TSPITR/TRMAN01/9F83CA688D186D6FE053030011AC1BBD/datafile/o1_mf_undotbs1_h5fz1y7p_.dbf conflicts with a file used by the target database
+RMAN-05001: auxiliary file name /u01/oradata/TRMAN01/undotbs01TRMAN01.dbf conflicts with a file used by the target database
+RMAN-05001: auxiliary file name /u01/oradata/TRMAN01/TSPITR/TRMAN01/9F83CA688D186D6FE053030011AC1BBD/datafile/o1_mf_system_h5fz1y7j_.dbf conflicts with a file used by the target database
+RMAN-05001: auxiliary file name /u01/oradata/TRMAN01/system01TRMAN01.dbf conflicts with a file used by the target database
+
+RMAN> 
+
+Recovery Manager complete.

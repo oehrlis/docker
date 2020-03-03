@@ -17,6 +17,8 @@
 # see git revision history with git log for more information on changes
 # -----------------------------------------------------------------------
 export ORACLE_PDB="TSPITR"
+FILENAME="$(dirname $0)/$(basename $0 .sh)"      # LDIF file based on script name
+
 # - get the path for before_issue.txt -----------------------------------
 PDB_CREATE_FILE_DEST=$(${ORACLE_HOME}/bin/sqlplus -S -L /nolog <<EOFSQL 
 connect / as sysdba
@@ -33,23 +35,30 @@ else
 fi
 
 # check if UNTIL is defined
-if [ -n "${UNTIL}" ]; then
-    echo "RMAN TSPITR on database ${ORACLE_SID}:"
-    echo "  ORACLE_SID              :   ${ORACLE_SID}"
-    echo "  ORACLE_PDB              :   ${ORACLE_PDB}"
-    echo "  ORACLE_HOME             :   ${ORACLE_HOME}"
-    echo "  PDB_CREATE_FILE_DEST    :   ${PDB_CREATE_FILE_DEST}"
-    echo "  Until time              :   ${UNTIL}"
+
+if [ -z "${UNTIL}" ]; then
+    echo "No TSPITR on database ${ORACLE_SID}:"
+fi
+
+echo "RMAN TSPITR on database ${ORACLE_SID}:"
+echo "  ORACLE_SID              :   ${ORACLE_SID}"
+echo "  ORACLE_PDB              :   ${ORACLE_PDB}"
+echo "  ORACLE_HOME             :   ${ORACLE_HOME}"
+echo "  PDB_CREATE_FILE_DEST    :   ${PDB_CREATE_FILE_DEST}"
+echo "  Until time              :   ${UNTIL}"
+
+NLS_DATE_FORMAT="DD-MON-RRRR HH24:MI:SS"
+export NLS_DATE_FORMAT
 
 # run TSPITR
-    ${ORACLE_HOME}/bin/rman <<EOFRMAN
+${ORACLE_HOME}/bin/rman debug trace=/u01/config/startup/${FILENAME}.trc msglog=/u01/config/startup/${FILENAME}.log <<EOFRMAN
 connect target /
 RECOVER TABLESPACE "${ORACLE_PDB}":users
 UNTIL time "to_date('${UNTIL}','DD.MM.YYYY HH24:MI:SS')"
-AUXILIARY DESTINATION '/u01/oradata/';
+AUXILIARY DESTINATION '/u01/oradata/TRMAN01/TSPITR/directories';
 exit;
 EOFRMAN
-else
-    echo "No TSPITR on database ${ORACLE_SID}:"
-fi
+
+## 
+# auxiliary_destination
 # - EOF -----------------------------------------------------------------

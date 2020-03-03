@@ -16,7 +16,7 @@
 --  Modified..:
 --  see git revision history for more information on changes/updates
 ----------------------------------------------------------------------------
-
+CONNECT / as SYSDBA
 ---------------------------------------------------------------------------
 -- Define the default values 
 DEFINE def_pdb_admin_user = "pdbadmin"
@@ -54,7 +54,7 @@ SET PAGESIZE 200 LINESIZE 160
 COL PROPERTY_NAME FOR A30
 COL PROPERTY_VALUE FOR A30
 SET FEEDBACK ON
-SET ECHO OFF
+SET ECHO ON
 
 ---------------------------------------------------------------------------
 -- connect as SYSDBA to the root container
@@ -64,7 +64,7 @@ CONNECT / as SYSDBA
 -- create a PDB
 CREATE PLUGGABLE DATABASE &pdb_db_name 
     ADMIN USER &pdb_admin_user IDENTIFIED BY &pdb_admin_pwd ROLES=(dba)
-    --PATH_PREFIX = '&pdb_path/directories/'
+    PATH_PREFIX = '&pdb_path/directories/'
     CREATE_FILE_DEST = '&pdb_path';
 
 ---------------------------------------------------------------------------
@@ -87,6 +87,10 @@ CREATE TABLESPACE users;
 -- select DB properties
 SELECT property_name,property_value 
 FROM database_properties 
+WHERE PROPERTY_NAME='PATH_PREFIX' OR PROPERTY_NAME='DEFAULT_PERMANENT_TABLESPACE';
+
+SELECT property_name,property_value 
+FROM cdb_properties 
 WHERE PROPERTY_NAME='PATH_PREFIX' OR PROPERTY_NAME='DEFAULT_PERMANENT_TABLESPACE';
 
 EXIT;

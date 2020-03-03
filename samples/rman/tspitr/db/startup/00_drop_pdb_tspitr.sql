@@ -17,6 +17,7 @@
 --  see git revision history for more information on changes/updates
 ---------------------------------------------------------------------------
 -- Define the default values 
+CONNECT / as SYSDBA
 DEFINE def_pdb_db_name    = "tspitr"
 
 ---------------------------------------------------------------------------
@@ -31,17 +32,36 @@ DEFINE pdb_db_name    = &1 &def_pdb_db_name
 -- alter the SQL*Plus environment
 SET PAGESIZE 200 LINESIZE 160
 SET FEEDBACK ON
-SET ECHO OFF
+SET SERVEROUTPUT ON
+SET ECHO ON
 
 ---------------------------------------------------------------------------
 -- connect as SYSDBA to the root container
 CONNECT / as SYSDBA
 ---------------------------------------------------------------------------
--- close PDB 
-ALTER PLUGGABLE DATABASE &pdb_db_name CLOSE;
----------------------------------------------------------------------------
--- drop PDB 
-DROP PLUGGABLE DATABASE &pdb_db_name INCLUDING DATAFILES;
+-- close and drop PDB 
+
+DECLARE
+    pdbname   VARCHAR2(128) := '';
+BEGIN
+    SELECT
+        name
+    INTO pdbname
+    FROM
+        v$pdbs
+    WHERE
+        name = upper('&pdb_db_name');
+
+    IF pdbname IS NOT NULL THEN
+      execute immediate 'ALTER PLUGGABLE DATABASE '||pdbname||' CLOSE';
+      execute immediate 'DROP PLUGGABLE DATABASE '||pdbname||' INCLUDING DATAFILES';
+    END IF;
+
+EXCEPTION
+    WHEN no_data_found THEN
+        dbms_output.put_line('No PDB to delete');
+END;
+/
 
 EXIT;
 -- EOF ---------------------------------------------------------------------

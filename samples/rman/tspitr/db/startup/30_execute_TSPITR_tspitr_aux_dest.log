@@ -1,0 +1,358 @@
+
+Recovery Manager: Release 19.0.0.0.0 - Production on Wed Feb 26 23:03:28 2020
+Version 19.5.0.0.0
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+RMAN> 
+RMAN-06005: connected to target database: TRMAN01 (DBID=3810649330)
+
+RMAN> 2> 3> 
+RMAN-03090: Starting recover at 26-FEB-2020 23:03:31
+RMAN-06009: using target database control file instead of recovery catalog
+RMAN-08030: allocated channel: ORA_DISK_1
+RMAN-08500: channel ORA_DISK_1: SID=23 device type=DISK
+RMAN-05026: warning: presuming following set of tablespaces applies to specified point-in-time
+RMAN-05027: 
+List of tablespaces expected to have UNDO segments
+RMAN-05028: Tablespace SYSTEM
+RMAN-05028: Tablespace TSPITR:SYSTEM
+RMAN-05028: Tablespace UNDOTBS1
+RMAN-05028: Tablespace TSPITR:UNDOTBS1
+RMAN-06220: 
+Creating automatic instance, with SID='stee'
+RMAN-04031: 
+initialization parameters used for automatic instance:
+db_name=TRMAN01
+db_unique_name=stee_pitr_TSPITR_TRMAN01
+compatible=19.0.0
+db_block_size=8192
+db_files=200
+diagnostic_dest=/u00/app/oracle
+_system_trig_enabled=FALSE
+sga_target=768M
+processes=200
+db_create_file_dest=/u01/tmp
+log_archive_dest_1='location=/u01/tmp'
+enable_pluggable_database=true
+_clone_one_pdb_recovery=true
+#No auxiliary parameter file used
+
+
+RMAN-06223: starting up automatic instance TRMAN01
+
+RMAN-06196: Oracle instance started
+
+Total System Global Area     805303848 bytes
+
+Fixed Size                     9139752 bytes
+Variable Size                218103808 bytes
+Database Buffers             570425344 bytes
+Redo Buffers                   7634944 bytes
+RMAN-06224: Automatic instance created
+RMAN-05070: Running TRANSPORT_SET_CHECK on recovery set tablespaces
+RMAN-05071: TRANSPORT_SET_CHECK completed successfully
+
+RMAN-08161: contents of Memory Script:
+{
+# set requested point in time
+set until  time "to_date('26.02.2020 23:02:45','DD.MM.YYYY HH24:MI:SS')";
+# restore the controlfile
+restore clone controlfile;
+ 
+# mount the controlfile
+sql clone 'alter database mount clone database';
+ 
+# archive current online log 
+sql 'alter system archive log current';
+# avoid unnecessary autobackups for structural changes during TSPITR
+sql 'begin dbms_backup_restore.AutoBackupFlag(FALSE); end;';
+}
+RMAN-08162: executing Memory Script
+
+RMAN-03023: executing command: SET until clause
+
+RMAN-03090: Starting restore at 26-FEB-2020 23:04:05
+RMAN-08030: allocated channel: ORA_AUX_DISK_1
+RMAN-08500: channel ORA_AUX_DISK_1: SID=10 device type=DISK
+
+RMAN-08016: channel ORA_AUX_DISK_1: starting datafile backup set restore
+RMAN-08021: channel ORA_AUX_DISK_1: restoring control file
+RMAN-08003: channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/autobackup/2020_02_26/o1_mf_s_1033426930_h5fy7lrt_.bkp
+RMAN-08611: channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/autobackup/2020_02_26/o1_mf_s_1033426930_h5fy7lrt_.bkp tag=TAG20200226T230210
+RMAN-08023: channel ORA_AUX_DISK_1: restored backup piece 1
+RMAN-08180: channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:01
+RMAN-08505: output file name=/u01/tmp/TRMAN01/controlfile/o1_mf_h5fyc77r_.ctl
+RMAN-03091: Finished restore at 26-FEB-2020 23:04:08
+
+RMAN-06162: sql statement: alter database mount clone database
+
+RMAN-06162: sql statement: alter system archive log current
+
+RMAN-06162: sql statement: begin dbms_backup_restore.AutoBackupFlag(FALSE); end;
+
+RMAN-08161: contents of Memory Script:
+{
+# set requested point in time
+set until  time "to_date('26.02.2020 23:02:45','DD.MM.YYYY HH24:MI:SS')";
+plsql <<<--
+declare
+  sqlstatement       varchar2(512);
+  pdbname            varchar2(128);
+  offline_not_needed exception;
+  pragma exception_init(offline_not_needed, -01539);
+begin
+   pdbname := 'TSPITR'; -- pdbname
+  sqlstatement := 'alter tablespace '||  'USERS' ||' offline immediate';
+  krmicd.writeMsg(6162, sqlstatement);
+  krmicd.execSql(sqlstatement, 0, pdbname);
+exception
+  when offline_not_needed then
+    null;
+end; >>>;
+# set destinations for recovery set and auxiliary set datafiles
+set newname for clone datafile  1 to new;
+set newname for clone datafile  138 to new;
+set newname for clone datafile  5 to new;
+set newname for clone datafile  140 to new;
+set newname for clone datafile  3 to new;
+set newname for clone datafile  139 to new;
+set newname for clone tempfile  1 to new;
+set newname for clone tempfile  5 to new;
+set newname for datafile  141 to 
+ "/u01/oradata/TRMAN01/TSPITR/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_users_h5fy2g47_.dbf";
+# switch all tempfiles
+switch clone tempfile all;
+# restore the tablespaces in the recovery set and the auxiliary set
+restore clone datafile  1, 138, 5, 140, 3, 139, 141;
+ 
+switch clone datafile all;
+}
+RMAN-08162: executing Memory Script
+
+RMAN-03023: executing command: SET until clause
+
+RMAN-06162: sql statement: alter tablespace USERS offline immediate
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-03023: executing command: SET NEWNAME
+
+RMAN-08185: renamed tempfile 1 to /u01/tmp/TRMAN01/datafile/o1_mf_temp_%u_.tmp in control file
+RMAN-08185: renamed tempfile 5 to /u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_temp_%u_.tmp in control file
+
+RMAN-03090: Starting restore at 26-FEB-2020 23:04:17
+RMAN-12016: using channel ORA_AUX_DISK_1
+
+RMAN-08016: channel ORA_AUX_DISK_1: starting datafile backup set restore
+RMAN-08089: channel ORA_AUX_DISK_1: specifying datafile(s) to restore from backup set
+RMAN-08610: channel ORA_AUX_DISK_1: restoring datafile 00001 to /u01/tmp/TRMAN01/datafile/o1_mf_system_%u_.dbf
+RMAN-08610: channel ORA_AUX_DISK_1: restoring datafile 00005 to /u01/tmp/TRMAN01/datafile/o1_mf_undotbs1_%u_.dbf
+RMAN-08610: channel ORA_AUX_DISK_1: restoring datafile 00003 to /u01/tmp/TRMAN01/datafile/o1_mf_sysaux_%u_.dbf
+RMAN-08003: channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/backupset/2020_02_26/o1_mf_nnndf_TAG20200226T230139_h5fy6n90_.bkp
+RMAN-08611: channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2020_02_26/o1_mf_nnndf_TAG20200226T230139_h5fy6n90_.bkp tag=TAG20200226T230139
+RMAN-08023: channel ORA_AUX_DISK_1: restored backup piece 1
+RMAN-08180: channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:35
+RMAN-08016: channel ORA_AUX_DISK_1: starting datafile backup set restore
+RMAN-08089: channel ORA_AUX_DISK_1: specifying datafile(s) to restore from backup set
+RMAN-08610: channel ORA_AUX_DISK_1: restoring datafile 00138 to /u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_system_%u_.dbf
+RMAN-08610: channel ORA_AUX_DISK_1: restoring datafile 00140 to /u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_undotbs1_%u_.dbf
+RMAN-08610: channel ORA_AUX_DISK_1: restoring datafile 00139 to /u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_sysaux_%u_.dbf
+RMAN-08610: channel ORA_AUX_DISK_1: restoring datafile 00141 to /u01/oradata/TRMAN01/TSPITR/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_users_h5fy2g47_.dbf
+RMAN-08003: channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/9F838DA7E65D6922E053030011AC0F40/backupset/2020_02_26/o1_mf_nnndf_TAG20200226T230139_h5fy6vhj_.bkp
+RMAN-08611: channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/9F838DA7E65D6922E053030011AC0F40/backupset/2020_02_26/o1_mf_nnndf_TAG20200226T230139_h5fy6vhj_.bkp tag=TAG20200226T230139
+RMAN-08023: channel ORA_AUX_DISK_1: restored backup piece 1
+RMAN-08180: channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:15
+RMAN-03091: Finished restore at 26-FEB-2020 23:05:14
+
+RMAN-08015: datafile 1 switched to datafile copy
+RMAN-08507: input datafile copy RECID=7 STAMP=1033427115 file name=/u01/tmp/TRMAN01/datafile/o1_mf_system_h5fycrc7_.dbf
+RMAN-08015: datafile 138 switched to datafile copy
+RMAN-08507: input datafile copy RECID=8 STAMP=1033427115 file name=/u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_system_h5fydvng_.dbf
+RMAN-08015: datafile 5 switched to datafile copy
+RMAN-08507: input datafile copy RECID=9 STAMP=1033427115 file name=/u01/tmp/TRMAN01/datafile/o1_mf_undotbs1_h5fycrd7_.dbf
+RMAN-08015: datafile 140 switched to datafile copy
+RMAN-08507: input datafile copy RECID=10 STAMP=1033427115 file name=/u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_undotbs1_h5fydvmt_.dbf
+RMAN-08015: datafile 3 switched to datafile copy
+RMAN-08507: input datafile copy RECID=11 STAMP=1033427115 file name=/u01/tmp/TRMAN01/datafile/o1_mf_sysaux_h5fycrcr_.dbf
+RMAN-08015: datafile 139 switched to datafile copy
+RMAN-08507: input datafile copy RECID=12 STAMP=1033427115 file name=/u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_sysaux_h5fydvo1_.dbf
+
+RMAN-08161: contents of Memory Script:
+{
+# set requested point in time
+set until  time "to_date('26.02.2020 23:02:45','DD.MM.YYYY HH24:MI:SS')";
+# online the datafiles restored or switched
+sql clone "alter database datafile  1 online";
+sql clone 'TSPITR' "alter database datafile 
+ 138 online";
+sql clone "alter database datafile  5 online";
+sql clone 'TSPITR' "alter database datafile 
+ 140 online";
+sql clone "alter database datafile  3 online";
+sql clone 'TSPITR' "alter database datafile 
+ 139 online";
+sql clone 'TSPITR' "alter database datafile 
+ 141 online";
+# recover and open resetlogs
+recover clone database tablespace  "TSPITR":"USERS", "SYSTEM", "TSPITR":"SYSTEM", "UNDOTBS1", "TSPITR":"UNDOTBS1", "SYSAUX", "TSPITR":"SYSAUX" delete archivelog;
+alter clone database open resetlogs;
+}
+RMAN-08162: executing Memory Script
+
+RMAN-03023: executing command: SET until clause
+
+RMAN-06162: sql statement: alter database datafile  1 online
+
+RMAN-06162: sql statement: alter database datafile  138 online
+
+RMAN-06162: sql statement: alter database datafile  5 online
+
+RMAN-06162: sql statement: alter database datafile  140 online
+
+RMAN-06162: sql statement: alter database datafile  3 online
+
+RMAN-06162: sql statement: alter database datafile  139 online
+
+RMAN-06162: sql statement: alter database datafile  141 online
+
+RMAN-03090: Starting recover at 26-FEB-2020 23:05:18
+RMAN-12016: using channel ORA_AUX_DISK_1
+
+RMAN-08054: starting media recovery
+
+RMAN-08017: channel ORA_AUX_DISK_1: starting archived log restore to default destination
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=361
+RMAN-08003: channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/backupset/2020_02_26/o1_mf_annnn_TAG20200226T230209_h5fy7kc2_.bkp
+RMAN-08611: channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2020_02_26/o1_mf_annnn_TAG20200226T230209_h5fy7kc2_.bkp tag=TAG20200226T230209
+RMAN-08023: channel ORA_AUX_DISK_1: restored backup piece 1
+RMAN-08180: channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:01
+RMAN-08515: archived log file name=/u01/tmp/1_361_1025271858.dbf thread=1 sequence=361
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_361_1025271858.dbf RECID=351 STAMP=1033427129
+RMAN-08017: channel ORA_AUX_DISK_1: starting archived log restore to default destination
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=362
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=363
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=364
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=365
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=366
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=367
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=368
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=369
+RMAN-08022: channel ORA_AUX_DISK_1: restoring archived log
+RMAN-08510: archived log thread=1 sequence=370
+RMAN-08003: channel ORA_AUX_DISK_1: reading from backup piece /u01/fast_recovery_area/TRMAN01/backupset/2020_02_26/o1_mf_annnn_TAG20200226T230251_h5fy8w1n_.bkp
+RMAN-08611: channel ORA_AUX_DISK_1: piece handle=/u01/fast_recovery_area/TRMAN01/backupset/2020_02_26/o1_mf_annnn_TAG20200226T230251_h5fy8w1n_.bkp tag=TAG20200226T230251
+RMAN-08023: channel ORA_AUX_DISK_1: restored backup piece 1
+RMAN-08180: channel ORA_AUX_DISK_1: restore complete, elapsed time: 00:00:02
+RMAN-08515: archived log file name=/u01/tmp/1_362_1025271858.dbf thread=1 sequence=362
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_362_1025271858.dbf RECID=355 STAMP=1033427131
+RMAN-08515: archived log file name=/u01/tmp/1_363_1025271858.dbf thread=1 sequence=363
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_363_1025271858.dbf RECID=352 STAMP=1033427131
+RMAN-08515: archived log file name=/u01/tmp/1_364_1025271858.dbf thread=1 sequence=364
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_364_1025271858.dbf RECID=359 STAMP=1033427131
+RMAN-08515: archived log file name=/u01/tmp/1_365_1025271858.dbf thread=1 sequence=365
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_365_1025271858.dbf RECID=357 STAMP=1033427131
+RMAN-08515: archived log file name=/u01/tmp/1_366_1025271858.dbf thread=1 sequence=366
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_366_1025271858.dbf RECID=354 STAMP=1033427131
+RMAN-08515: archived log file name=/u01/tmp/1_367_1025271858.dbf thread=1 sequence=367
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_367_1025271858.dbf RECID=356 STAMP=1033427131
+RMAN-08515: archived log file name=/u01/tmp/1_368_1025271858.dbf thread=1 sequence=368
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_368_1025271858.dbf RECID=358 STAMP=1033427131
+RMAN-08515: archived log file name=/u01/tmp/1_369_1025271858.dbf thread=1 sequence=369
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_369_1025271858.dbf RECID=360 STAMP=1033427131
+RMAN-08515: archived log file name=/u01/tmp/1_370_1025271858.dbf thread=1 sequence=370
+RMAN-08071: channel clone_default: deleting archived log(s)
+RMAN-08514: archived log file name=/u01/tmp/1_370_1025271858.dbf RECID=353 STAMP=1033427131
+RMAN-08181: media recovery complete, elapsed time: 00:00:03
+RMAN-03091: Finished recover at 26-FEB-2020 23:05:35
+
+RMAN-06400: database opened
+
+RMAN-08161: contents of Memory Script:
+{
+sql clone 'alter pluggable database  TSPITR open';
+}
+RMAN-08162: executing Memory Script
+
+RMAN-06162: sql statement: alter pluggable database  TSPITR open
+
+RMAN-08161: contents of Memory Script:
+{
+# make read only the tablespace that will be exported
+sql clone 'TSPITR' 'alter tablespace 
+ USERS read only';
+# create directory for datapump import
+sql 'TSPITR' "create or replace directory 
+TSPITR_DIROBJ_DPDIR as ''
+/u01/tmp''";
+# create directory for datapump export
+sql clone 'TSPITR' "create or replace directory 
+TSPITR_DIROBJ_DPDIR as ''
+/u01/tmp''";
+}
+RMAN-08162: executing Memory Script
+
+RMAN-06162: sql statement: alter tablespace  USERS read only
+
+RMAN-06162: sql statement: create or replace directory TSPITR_DIROBJ_DPDIR as ''/u01/tmp''
+RMAN-06221: 
+Removing automatic instance
+RMAN-06225: shutting down automatic instance 
+RMAN-06402: Oracle instance shut down
+RMAN-06226: Automatic instance removed
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_temp_h5fyg9v5_.tmp deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/datafile/o1_mf_temp_h5fyg5wl_.tmp deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/onlinelog/o1_mf_3_h5fyg0oz_.log deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/onlinelog/o1_mf_2_h5fyg0k3_.log deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/onlinelog/o1_mf_1_h5fyg0f8_.log deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_sysaux_h5fydvo1_.dbf deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/datafile/o1_mf_sysaux_h5fycrcr_.dbf deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_undotbs1_h5fydvmt_.dbf deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/datafile/o1_mf_undotbs1_h5fycrd7_.dbf deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/9F838DA7E65D6922E053030011AC0F40/datafile/o1_mf_system_h5fydvng_.dbf deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/datafile/o1_mf_system_h5fycrc7_.dbf deleted
+RMAN-06407: auxiliary instance file /u01/tmp/TRMAN01/controlfile/o1_mf_h5fyc77r_.ctl deleted
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of recover command at 02/26/2020 23:05:56
+RMAN-03015: error occurred in stored script Memory Script
+RMAN-03009: failure of sql command on default channel at 02/26/2020 23:05:54
+RMAN-11003: failure during parse/execution of SQL statement: create or replace directory TSPITR_DIROBJ_DPDIR as '/u01/tmp'
+ORA-65254: invalid path specified for the directory
+
+RMAN> 
+
+Recovery Manager complete.

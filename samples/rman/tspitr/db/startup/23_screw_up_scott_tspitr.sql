@@ -16,6 +16,7 @@
 --  Modified..:
 --  see git revision history for more information on changes/updates
 ----------------------------------------------------------------------------
+CONNECT / as SYSDBA
 -- Define the default values 
 DEFINE def_pdb_db_name    = "tspitr"
 

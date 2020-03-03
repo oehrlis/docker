@@ -1,0 +1,30 @@
+#!/bin/bash
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: setup_tspitr
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2019.11.26
+# Revision...: --
+# Purpose....: RMAN backup of archivelogs to flash recovery area.
+# Notes......: --
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+sqlplus /nolog @00_drop_pdb_tspitr.sql
+./00_prepare_env_tspitr.sh
+sqlplus /nolog @01_create_pdb_tspitr.sql
+sqlplus /nolog @02_create_scott_pdbpitr.sql
+sqlplus /nolog @03_create_tvd_hr_tspitr.sql
+./10_cleanup_backups.sh
+./11_backup_database.sh
+sqlplus /nolog @20_create_some_load_tspitr.sql
+sqlplus /nolog @21_create_scott_tspitr_table_tspitr.sql
+./22_backup_archivelogs.sh
+sqlplus /nolog @23_screw_up_scott_tspitr.sql
+# - EOF -----------------------------------------------------------------
