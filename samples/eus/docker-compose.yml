@@ -61,7 +61,7 @@ services:
 
 # OUDSM service
   eusoudsm:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:12.2.1.4.0
+    image: oracle/oudsm:12.2.1.4.0
     container_name: eusoudsm
     hostname: eusoudsm
     restart: unless-stopped
