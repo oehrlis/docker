@@ -2,7 +2,7 @@
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ----------------------------------------------------------------------
-# Name.......: Dockerfile 
+# Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2018.03.19
@@ -10,7 +10,7 @@
 # Purpose....: This Dockerfile is to build Oracle Unifid Directory
 # Notes......: --
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
+# License....: Licensed under the Universal Permissive License v 1.0 as
 #              shown at http://oss.oracle.com/licenses/upl.
 # ----------------------------------------------------------------------
 # Modified...:
@@ -92,6 +92,7 @@ COPY scripts/* "${DOCKER_SCRIPTS}/"
 
 # COPY oud/software and response files
 COPY ${FMW_ODSEE_PKG}* "${DOWNLOAD}/"
+COPY ${FMW_ODSEE}* "${DOWNLOAD}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
@@ -99,16 +100,24 @@ COPY ${FMW_ODSEE_PKG}* "${DOWNLOAD}/"
 USER oracle
 
 # - check if software has been copied [ -s ... ]
-# - alternatively download software with curl from orarepo
-# - unpack software using unzip, tar
+# - alternatively download patched software with curl from orarepo
+# ----------------------------------------------------------------------
+RUN cd ${DOWNLOAD} && \
+    [ -s "${DOWNLOAD}/${FMW_ODSEE_PKG}" ] || [ -s "${DOWNLOAD}/${FMW_ODSEE}" ] || \
+    curl -f http://orarepo/${FMW_ODSEE_PKG} -o ${DOWNLOAD}/${FMW_ODSEE_PKG}
+
+# - unpack patch software using unzip, tar when present
+# -----------------------------------------------------------------
+RUN cd ${DOWNLOAD} && \
+    if [ -s "${DOWNLOAD}/${FMW_ODSEE_PKG}" ]; then \
+        unzip -o ${DOWNLOAD}/${FMW_ODSEE_PKG} && \
+        tar zxvf ${DOWNLOAD}/${FMW_ODSEE_TAR}; \
+    fi
+
 # - install OUDSEE using unzip
 # - clean up and remove unused stuff
-# -----------------------------------------------------------------  
+# -----------------------------------------------------------------
 RUN cd ${DOWNLOAD} && \
-    [ -s "${DOWNLOAD}/${FMW_ODSEE_PKG}" ] || \
-    curl -f http://orarepo/${FMW_ODSEE_PKG} -o ${DOWNLOAD}/${FMW_ODSEE_PKG} && \
-    unzip -o ${DOWNLOAD}/${FMW_ODSEE_PKG} && \
-    tar zxvf ${DOWNLOAD}/${FMW_ODSEE_TAR} && \
     unzip -o ${DOWNLOAD}/${FMW_ODSEE} -d ${ORACLE_BASE}/product/ && \
     rm -rf ${DOWNLOAD}/${FMW_ODSEE_PKG} \
         ${DOWNLOAD}/${FMW_ODSEE_TAR} \
