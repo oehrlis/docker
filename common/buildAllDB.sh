@@ -21,6 +21,10 @@
 # - Customization -----------------------------------------------------------
 DOCKER_USER=${DOCKER_USER:-"oracle"}
 DOCKER_REPO=${DOCKER_REPO:-"database"}
+DOCKER_TVD_USER=${DOCKER_TVD_USER:-"trivadis"}
+DOCKER_TVD_REPO=${DOCKER_TVD_REPO:-"ora_db"}
+KEEP_VERSIONS=${KEEP_VERSIONS:-"11.2.0.4.190115 11.2.0.4.200114 12.1.0.2.200114 12.2.0.1.200114 12.2.0.1.190416 18.9.0.0 19.5.0.0 19.6.0.0 20.2.0.0"}
+DOCKER_IMAGES=${DOCKER_VOLUME_BASE}/../images
 DOCKER_BASE_IMAGE="oraclelinux:7-slim"
 SCRIPT_NAME=$(basename $0)
 # - End of Customization ----------------------------------------------------
@@ -51,7 +55,22 @@ for DOCKER_FILE in $(ls $DOCKER_BUILD_BASE/OracleDatabase/*/*.Dockerfile); do
     DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
     cd ${DOCKER_BUILD_DIR}  # change working directory
     docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
+    echo "INFO : tag image ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION as ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION"
+    docker tag ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
+    echo "INFO : push image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION"
+    docker push ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
+    echo "INFO : untag image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION"
+    docker rmi ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
     docker image prune --force
+    echo "INFO : save image ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION to ${DOCKER_IMAGES}/${DOCKER_USER}_${DOCKER_REPO}_$BUILD_VERSION.tar.gz"
+    docker save ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION |gzip -c >${DOCKER_IMAGES}/${DOCKER_USER}_${DOCKER_REPO}_$BUILD_VERSION.tar.gz
+
+    if [ -n "$BUILD_VERSION" ] && [[ $KEEP_VERSIONS == *"$BUILD_VERSION"* ]]; then
+        echo "INFO : keep version $BUILD_VERSION"
+    else
+        echo "INFO : remove version $BUILD_VERSION"
+        docker rmi ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION 
+    fi
     ((j++))                 # increment counter
 done
 cd $CURRENT_DIR # go back to initial working directory
