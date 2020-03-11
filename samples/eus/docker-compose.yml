@@ -42,7 +42,7 @@ services:
 
 # OUD LDAP service
   eusoud:
-    image: oracle/oud:12.2.1.4.0
+    image: oracle/oud:12.2.1.4.200204
     container_name: eusoud
     hostname: eusoud
     restart: unless-stopped

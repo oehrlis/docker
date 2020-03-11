@@ -51,7 +51,7 @@ services:
       ORACLE_SID: TUA180
 
   tua190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.4.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.6.0.0
     container_name: tua190
     hostname: tua180.trivadislabs.com
     restart: unless-stopped

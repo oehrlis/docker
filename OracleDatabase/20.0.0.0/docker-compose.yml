@@ -20,7 +20,7 @@ version: '3'
 services:
 
 # multitenant tenant database
-  tdb200s:
+  tdb200c:
     image: ${DOCKER_USER}/${DOCKER_REPO}:20.2.0.0
     container_name: tdb200c
     hostname: tdb200c
