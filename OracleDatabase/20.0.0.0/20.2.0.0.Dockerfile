@@ -74,15 +74,15 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # scripts to build and run this container
 # set DB specific package variables
 ENV   SETUP_DB="10_setup_db.sh" \
-      DB_BASE_PKG="LINUX.X64_193000_db_home.zip" \
+      DB_BASE_PKG="LINUX.X64_202000_db_home.zip" \
       DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p30557433_190000_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p30484981_190000_Linux-x86-64.zip" \
-      DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip" 
+      DB_PATCH_PKG="" \
+      DB_OJVM_PKG="" \
+      DB_OPATCH_PKG="" 
 
 # stuff to run a DB instance
-ENV   ORACLE_SID=${ORACLE_SID:-"TDB190S"} \
-      ORACLE_HOME_NAME="19.0.0.0" \
+ENV   ORACLE_SID=${ORACLE_SID:-"TDB200S"} \
+      ORACLE_HOME_NAME="20.0.0.0" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
       PORT_CONSOLE=${PORT_CONSOLE:-5500}
@@ -93,7 +93,7 @@ ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
       CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
-
+      
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------
 FROM  base AS builder
@@ -101,8 +101,8 @@ FROM  base AS builder
 # COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 # COPY RU patch if part of the build context
-COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
-COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
+# COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
+# COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user

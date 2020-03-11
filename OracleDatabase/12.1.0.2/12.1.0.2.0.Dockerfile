@@ -5,7 +5,7 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.10.17
+# Date.......: 2020.03.11
 # Purpose....: Dockerfile to build Oracle Database image 12.1.0.2
 # Notes......: --
 # Reference..: --
@@ -84,7 +84,6 @@ ENV   SETUP_DB="10_setup_db.sh" \
 # stuff to run a DB instance
 ENV   ORACLE_SID=${ORACLE_SID:-"TDB120S"} \
       ORACLE_HOME_NAME="12.1.0.2" \
-      ORACLE_MAJOR_RELEASE="121" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
       PORT_CONSOLE=${PORT_CONSOLE:-5500}
@@ -94,8 +93,7 @@ ENV   ORACLE_SID=${ORACLE_SID:-"TDB120S"} \
 ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT}:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/:/usr/sbin:$PATH" \
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
-      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
-      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v12.1.0"
+      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------
