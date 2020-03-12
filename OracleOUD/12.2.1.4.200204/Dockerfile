@@ -100,7 +100,9 @@ ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
     PORT_HTTPS="${PORT_HTTPS:-10443}" \
     PORT_REP="${PORT_REP:-8989}" \
     PORT_ADMIN="${PORT_ADMIN:-4444}" \
-    PORT_ADMIN_HTTP="${PORT_ADMIN_HTTP:-8444}"
+    PORT_REST_ADMIN="${PORT_REST_ADMIN:-8444}" \
+    PORT_REST_HTTP="${PORT_REST_HTTP:-1080}" \
+    PORT_REST_HTTPS="${PORT_REST_HTTPS:-1081}"
 
 # same same but different...
 # third ENV so that variable get substituted
@@ -143,8 +145,8 @@ COPY  --chown=oracle:oinstall --from=builder /home/oracle/.OUD_BASE /home/oracle
 # administration and http administration
 EXPOSE   ${PORT} ${PORT_SSL} \
          ${PORT_HTTP} ${PORT_HTTPS} \
-         ${PORT_ADMIN} ${PORT_ADMIN_HTTP} \
-         ${PORT_REP}
+         ${PORT_ADMIN} ${PORT_REST_ADMIN} \
+         ${PORT_REP} ${PORT_REST_HTTP} ${PORT_REST_HTTPS} 
 
 # run container health check
 HEALTHCHECK    --interval=1m --start-period=5m \
