@@ -6,7 +6,7 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2020.03.11
-# Purpose....: Dockerfile to build Oracle Database image 19.5.0.0
+# Purpose....: Dockerfile to build Oracle Database image 19.3.0.0
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
@@ -44,6 +44,8 @@ ENV   DOWNLOAD="/tmp/download" \
 # scripts to build and run this container
 ENV   SETUP_INIT="00_setup_oradba_init.sh" \
       SETUP_OS="01_setup_os_db.sh" \
+      SETUP_DB="10_setup_db.sh" \
+      PATCH_DB="11_setup_db_patch.sh" \
       SETUP_BASENV="20_setup_basenv.sh" \
       RUN_SCRIPT="50_run_database.sh" \
       START_SCRIPT="51_start_database.sh" \
@@ -73,19 +75,15 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # ----------------------------------------------------------------------
 # scripts to build and run this container
 # set DB specific package variables
-ENV   SETUP_DB="10_setup_db.sh" \
-      DB_BASE_PKG="LINUX.X64_202000_db_home.zip" \
-      DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="" \
-      DB_OJVM_PKG="" \
-      DB_OPATCH_PKG="" 
+ENV   DB_BASE_PKG="LINUX.X64_202000_db_home.zip"
 
 # stuff to run a DB instance
 ENV   ORACLE_SID=${ORACLE_SID:-"TDB200S"} \
       ORACLE_HOME_NAME="20.0.0.0" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
-      PORT_CONSOLE=${PORT_CONSOLE:-5500}
+      PORT_CONSOLE=${PORT_CONSOLE:-5500} \
+      PATCH_LATER=TRUE
 
 # same same but different ...
 # third ENV so that variable get substituted
@@ -101,17 +99,26 @@ FROM  base AS builder
 # COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 # COPY RU patch if part of the build context
-# COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
-# COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
 # ----------------------------------------------------------------------
 USER  oracle
+# Install Oracle Binaries
 RUN   ${ORADBA_INIT}/${SETUP_DB}
 
 # Install BasEnv
 RUN   ${ORADBA_INIT}/${SETUP_BASENV}
+
+# Define variables for Patch installation
+ENV   DB_PATCH_PKG="" \
+      DB_OJVM_PKG="" \
+      DB_OPATCH_PKG="" 
+
+# Install Oracle Patch's
+RUN   ${ORADBA_INIT}/${PATCH_DB}
 
 # New layer for database runtime
 # ----------------------------------------------------------------------
