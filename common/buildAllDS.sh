@@ -53,21 +53,21 @@ cd $DOCKER_BUILD_DIR/OracleODSEE/11.1.1.7.0
 docker rmi oracle/odsee:11.1.1.7.0
 time docker build --add-host=orarepo:${orarepo_ip} -t oracle/odsee:11.1.1.7.190716 .
 
-# build OUDSM Containers
-cd $DOCKER_BUILD_DIR/OracleOUDSM
-for version in 1?.?.?.?.*; do
-    echo "### Build OUDSM $version ####################################################"
-    cd $DOCKER_BUILD_DIR/OracleOUDSM/$version
-    time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/oudsm:$version .
-    docker image prune --force
-done
-
 # build OUD Containers
 cd $DOCKER_BUILD_DIR/OracleOUD
 for version in 1?.?.?.?.*; do
     echo "### Build OUD $version #######################################################"
     cd $DOCKER_BUILD_DIR/OracleOUD/$version
     time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/oud:$version .
+    docker image prune --force
+done
+
+# build OUDSM Containers
+cd $DOCKER_BUILD_DIR/OracleOUDSM
+for version in 1?.?.?.?.*; do
+    echo "### Build OUDSM $version ####################################################"
+    cd $DOCKER_BUILD_DIR/OracleOUDSM/$version
+    time docker build --add-host=orarepo:${orarepo_ip} -t ${DOCKER_USER}/oudsm:$version .
     docker image prune --force
 done
 
