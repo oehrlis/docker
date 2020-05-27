@@ -37,7 +37,7 @@ for r in ${LOCAL_REPO}; do
         echo " tag image ${DOCKER_LOCAL_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
         docker tag ${DOCKER_LOCAL_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
         echo " push image ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
-        docker push ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
+        time docker push ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
         echo " untag image ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
         docker rmi ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
     done

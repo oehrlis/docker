@@ -35,7 +35,7 @@ for r in ${LOCAL_REPO}; do
     for i in ${IMAGES}; do
         version=$(echo $i|cut -d: -f2)
         echo " save image ${DOCKER_LOCAL_USER}/${r}:$version"
-        docker save ${DOCKER_LOCAL_USER}/${r}:$version |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${r}_$version.tar.gz
+        time docker save ${DOCKER_LOCAL_USER}/${r}:$version |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${r}_$version.tar.gz
     done
 done
 # --- EOF -------------------------------------------------------------------

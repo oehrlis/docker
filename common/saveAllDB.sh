@@ -33,6 +33,6 @@ ORACLE_IMAGES=$(docker images --filter=reference="${DOCKER_LOCAL_USER}/${DOCKER_
 for i in ${ORACLE_IMAGES}; do
     version=$(echo $i|cut -d: -f2)
     echo " save image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version"
-    docker save ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${DOCKER_LOCAL_REPO}_$version.tar.gz
+    time docker save ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${DOCKER_LOCAL_REPO}_$version.tar.gz
 done
 # --- EOF -------------------------------------------------------------------

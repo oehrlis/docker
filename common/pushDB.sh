@@ -45,7 +45,7 @@ else
         echo "INFO : tag image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$TAG"
         docker tag ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$TAG ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$TAG
         echo "INFO : push image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$TAG"
-        docker push ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$TAG
+        time docker push ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$TAG
         echo "INFO : untag image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$TAG"
         docker rmi ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$TAG
     done

@@ -42,7 +42,7 @@ else
     # loop over the build string's from the command line
     for TAG in $(echo $RELEASES|sed s/\,/\ /g); do
         echo " save image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$TAG"
-        docker save ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$TAG |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${DOCKER_LOCAL_REPO}_$TAG.tar.gz
+        time docker save ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$TAG |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${DOCKER_LOCAL_REPO}_$TAG.tar.gz
     done
     cd $CURRENT_DIR # go back to initial working directory
 fi

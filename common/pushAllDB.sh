@@ -40,7 +40,7 @@ for i in ${ORACLE_IMAGES}; do
     echo "INFO : tag image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version"
     docker tag ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version ${DOCKER_USER}/${DOCKER_REPO}:$version
     echo "INFO : push image ${DOCKER_USER}/${DOCKER_REPO}:$version"
-    docker push ${DOCKER_USER}/${DOCKER_REPO}:$version
+    time docker push ${DOCKER_USER}/${DOCKER_REPO}:$version
     echo "INFO : untag image ${DOCKER_USER}/${DOCKER_REPO}:$version"
     docker rmi ${DOCKER_USER}/${DOCKER_REPO}:$version
     ((j++))                 # increment counter

@@ -72,7 +72,7 @@ else
             echo "INFO : from Dockerfile=${DOCKER_FILE}"
             DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
             cd ${DOCKER_BUILD_DIR}  # change working directory
-            docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
+            time docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
             docker image prune --force
         else
             echo "WARN : Dockerfile $DOCKER_FILE not available"
