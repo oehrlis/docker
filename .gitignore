@@ -25,3 +25,4 @@ samples/audit/config/pdb/06_add_pdb_os_user.log
 samples/audit/config/pdb/10_config_PDB_OS_CREDENTIAL.log
 samples/audit/config/test_cases/10_common_audit_issue.log
 samples/cmu/db/etc/opwdintg.exe
+samples/rman/tspitr/db/SR_3-20102119741/*
