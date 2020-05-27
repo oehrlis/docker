@@ -1,0 +1,88 @@
+#!/bin/bash
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: 05_create_root_users.ldif
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.03.18
+# Revision...: --
+# Purpose....: LDIF file to add additional root user realm
+# Notes......: The LDIF file is loaded by the script 05_create_root_users.sh 
+#              If necessary it can also be imported manually.
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: GPL-3.0+
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+
+# - ADD oudadmin --------------------------------------------------------
+# Description: Add an oudadmin user. User will get all default admin privileges.
+# -----------------------------------------------------------------------
+dn: cn=oudadmin,cn=Root DNs,cn=config
+changetype: add
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: top
+objectClass: ds-cfg-root-dn-user
+objectClass: organizationalPerson
+userPassword: GhhYQzPt2C
+description: Account for OUD management
+cn: oudadmin
+sn: Admin
+uid: oudadmin
+ds-cfg-alternate-bind-dn: cn=oudadmin
+ds-pwp-password-policy-dn: cn=Root Password Policy,cn=Password Policies,cn=config
+ds-rlim-lookthrough-limit: 3000
+ds-rlim-size-limit: 3000
+givenName: OUD
+# - End ADD oudadmin user -----------------------------------------------
+
+# - ADD useradmin --------------------------------------------------------
+# Description: Add an oudadmin user. User will get all default admin privileges.
+# -----------------------------------------------------------------------
+dn: cn=useradmin,cn=Root DNs,cn=config
+changetype: add
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: top
+objectClass: ds-cfg-root-dn-user
+objectClass: organizationalPerson
+userPassword: GhhYQzPt2C
+description: Account for user management
+cn: useradmin
+sn: Admin
+uid: useradmin
+ds-cfg-alternate-bind-dn: cn=useradmin
+ds-pwp-password-policy-dn: cn=Root Password Policy,cn=Password Policies,cn=config
+ds-rlim-lookthrough-limit: 3000
+ds-rlim-size-limit: 3000
+ds-privilege-name: ldif-export
+ds-privilege-name: backend-backup
+ds-privilege-name: config-read
+ds-privilege-name: server-restart
+ds-privilege-name: bypass-acl
+ds-privilege-name: -subentry-write
+ds-privilege-name: -bypass-lockdown
+ds-privilege-name: -modify-acl
+ds-privilege-name: -config-write
+ds-privilege-name: -jmx-read
+ds-privilege-name: -jmx-write
+ds-privilege-name: -jmx-notify
+ds-privilege-name: -ldif-import
+ds-privilege-name: -backend-restore
+ds-privilege-name: -server-shutdown
+ds-privilege-name: -proxied-auth
+ds-privilege-name: -disconnect-client
+ds-privilege-name: -cancel-request
+ds-privilege-name: -unindexed-search
+ds-privilege-name: password-reset
+ds-privilege-name: -update-schema
+ds-privilege-name: -privilege-change
+givenName: User
+# - End ADD oudadmin user -----------------------------------------------
+
+# - EOF -----------------------------------------------------------------
