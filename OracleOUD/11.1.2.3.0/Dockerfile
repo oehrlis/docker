@@ -70,7 +70,7 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # Install Java
 # ----------------------------------------------------------------------
 # Setup JAVA using OraDBA init script
-ENV   JAVA_PKG="p30425898_170251_Linux-x86-64.zip"
+ENV   JAVA_PKG="p30884185_170261_Linux-x86-64.zip"
 RUN   ${ORADBA_INIT}/${SETUP_JAVA}
 COPY  java.security /usr/java/latest/jre/lib/security/java.security
 
