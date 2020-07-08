@@ -3,10 +3,10 @@ version: 1
 # Trivadis AG, Infrastructure Managed Services
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ---------------------------------------------------------------------------
-# Name.......: TrivadisLAB.ldif 
+# Name.......: 14_create_demo_users.ldif 
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2018.11.14
+# Date.......: 2020.07.01
 # Revision...: 
 # Purpose....: Trivadis LAB LDIF file for regular LDAP
 # Notes......: 
@@ -20,49 +20,49 @@ version: 1
 
 # - Oraganization -------------------------------------------------------
 # create a couple of Departments / Organisation Units
-# dn: ou=People,dc=trivadislabs,dc=com
+# dn: ou=USER_OU,BASEDN
 # changetype: add
 # ObjectClass: top
 # ObjectClass: organizationalUnit
 # ou: People
 
-dn: ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+dn: ou=Senior Management,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: organizationalUnit
 ou: Senior Management
 
-dn: ou=Human Resources,ou=People,dc=trivadislabs,dc=com
+dn: ou=Human Resources,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: organizationalUnit
 ou: Human Resources
 
-dn: ou=Information Technology,ou=People,dc=trivadislabs,dc=com
+dn: ou=Information Technology,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: organizationalUnit
 ou: Information Technology
 
-dn: ou=Accounting,ou=People,dc=trivadislabs,dc=com
+dn: ou=Accounting,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: organizationalUnit
 ou: Accounting
 
-dn: ou=Research,ou=People,dc=trivadislabs,dc=com
+dn: ou=Research,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: organizationalUnit
 ou: Research
 
-dn: ou=Sales,ou=People,dc=trivadislabs,dc=com
+dn: ou=Sales,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: organizationalUnit
 ou: Sales
 
-dn: ou=Operations,ou=People,dc=trivadislabs,dc=com
+dn: ou=Operations,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: organizationalUnit
@@ -70,7 +70,7 @@ ou: Operations
 
 # - users ---------------------------------------------------------------
 # create a couple of users
-dn: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+dn: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -84,9 +84,8 @@ givenName: Ben
 displayName: Ben King
 departmentNumber: 10
 mail: Ben.King@trivadislabs.com
-userPassword: {SSHA}O4AKSCLcN1YfeTQjvAoXhKEqEcFwRZz66LPjXxln
 
-dn: cn=Honey Rider,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
+dn: cn=Honey Rider,ou=Human Resources,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -96,14 +95,13 @@ cn: Honey Rider
 sn: Rider
 uid: rider
 title: Manager
-manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
 givenName: Honey
 departmentNumber: 70
 displayName: Honey Rider
 mail: Honey.Rider@trivadislabs.com
-userPassword: {SSHA}p1Lfz7FV07OeCbUMMkS9X06IgN014F4+1I3Kz4WD
 
-dn: cn=Vesper Lynd,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
+dn: cn=Vesper Lynd,ou=Human Resources,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -113,14 +111,13 @@ cn: Vesper Lynd
 sn: Lynd
 uid: lynd
 title: Clerk
-manager: cn=Honey Rider,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
+manager: cn=Honey Rider,ou=Human Resources,ou=USER_OU,BASEDN
 givenName: Vesper
 departmentNumber: 70
 displayName: Vesper Lynd
 mail: Vesper.Lynd@trivadislabs.com
-userPassword: {SSHA}0nm2FGJSQlcTi96UaRVlBb3lHcuHxJgU6JNgXLrk
 
-dn: cn=Eugen Tanner,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
+dn: cn=Eugen Tanner,ou=Information Technology,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -130,14 +127,13 @@ cn: Eugen Tanner
 sn: Tanner
 uid: tanner
 title: Administrator
-manager: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ian Fleming,ou=Information Technology,ou=USER_OU,BASEDN
 givenName: Eugen
 departmentNumber: 60
 displayName: Eugen Tanner
 mail: Eugen.Tanner@trivadislabs.com
-userPassword: {SSHA}aev6vTtlV5OXzoe6hzlLu8okD2cX13sv6C9wZEJ7
 
-dn: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
+dn: cn=Ian Fleming,ou=Information Technology,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -147,14 +143,13 @@ cn: Ian Fleming
 sn: Fleming
 uid: fleming
 title: Manager
-manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
 givenName: Ian
 displayName: Ian Fleming
 departmentNumber: 60
 mail: Ian.Fleming@trivadislabs.com
-userPassword: {SSHA}1X/wOh+iSfqyvxSioAZVL2aYFo2beWebv8IPqbzd
 
-dn: cn=John Gartner,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
+dn: cn=John Gartner,ou=Information Technology,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -164,14 +159,13 @@ cn: John Gartner
 sn: Gartner
 uid: gartner
 title: Administrator
-manager: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ian Fleming,ou=Information Technology,ou=USER_OU,BASEDN
 givenName: John
 displayName: John Gartner
 departmentNumber: 60
 mail: John.Gartner@trivadislabs.com
-userPassword: {SSHA}QnCBPUkROI+Sv/5sUR9DNHhz+J9wUnSOIEoG8wb8
 
-dn: cn=Jim Clark,ou=Accounting,ou=People,dc=trivadislabs,dc=com
+dn: cn=Jim Clark,ou=Accounting,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -181,14 +175,13 @@ cn: Jim Clark
 sn: Clark
 uid: clark
 title: Manager
-manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
 givenName: Jim
 displayName: Jim Clark
 departmentNumber: 20
 mail: Jim.Clark@trivadislabs.com
-userPassword: {SSHA}BgiN3vnX44v0wVOrKtsEMGaAx+2PnUCT1IiqAuI8
 
-dn: cn=John Miller,ou=Accounting,ou=People,dc=trivadislabs,dc=com
+dn: cn=John Miller,ou=Accounting,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -198,14 +191,13 @@ cn: John Miller
 sn: Miller
 uid: miller
 title: Clerk
-manager: cn=Jim Clark,ou=Accounting,ou=People,dc=trivadislabs,dc=com
+manager: cn=Jim Clark,ou=Accounting,ou=USER_OU,BASEDN
 givenName: John
 displayName: John Miller
 departmentNumber: 20
 mail: John.Miller@trivadislabs.com
-userPassword: {SSHA}5m1mjSMYwUnpJ9xNhZljk5/lAcM7FD7mFMU0Pamb
 
-dn: cn=Douglas Adams,ou=Research,ou=People,dc=trivadislabs,dc=com
+dn: cn=Douglas Adams,ou=Research,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -215,14 +207,13 @@ cn: Douglas Adams
 sn: Adams
 uid: adams
 title: Clerk
-manager: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ernst Blofeld,ou=Research,ou=USER_OU,BASEDN
 givenName: Douglas
 displayName: Douglas Adams
 departmentNumber: 30
 mail: Douglas.Adams@trivadislabs.com
-userPassword: {SSHA}SKuAbOU4/DdvlYl7gQmJI3z7a391/uPjUugP1FU/
 
-dn: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
+dn: cn=Ernst Blofeld,ou=Research,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -232,14 +223,13 @@ cn: Ernst Blofeld
 sn: Blofeld
 uid: blofeld
 title: Manager
-manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
 givenName: Ernst
 displayName: Ernst Blofeld
 departmentNumber: 30
 mail: Ernst.Blofeld@trivadislabs.com
-userPassword: {SSHA}rvU16x8vjyI+oD9tIRB771I9EqhweKAznDRY5xba
 
-dn: cn=Ford Prefect,ou=Research,ou=People,dc=trivadislabs,dc=com
+dn: cn=Ford Prefect,ou=Research,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -249,14 +239,13 @@ cn: Ford Prefect
 sn: Prefect
 uid: prefect
 title: Analyst
-manager: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ernst Blofeld,ou=Research,ou=USER_OU,BASEDN
 givenName: Ford
 displayName: Ford Prefect
 departmentNumber: 30
 mail: Ford.Prefect@trivadislabs.com
-userPassword: {SSHA}tg3JDoCX55QVPot9Z5K4pQlUVRlLHVIDBwiXQ5Gc
 
-dn: cn=James Scott,ou=Research,ou=People,dc=trivadislabs,dc=com
+dn: cn=James Scott,ou=Research,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -266,14 +255,13 @@ cn: James Scott
 sn: Scott
 uid: scott
 title: Engineer
-manager: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ernst Blofeld,ou=Research,ou=USER_OU,BASEDN
 givenName: James
 displayName: James Scott
 departmentNumber: 30
 mail: James.Scott@trivadislabs.com
-userPassword: {SSHA}M85B9eFso86xrt1DJGwSOG3a+5dRE8CvC7teaVUI
 
-dn: cn=Paul Smith,ou=Research,ou=People,dc=trivadislabs,dc=com
+dn: cn=Paul Smith,ou=Research,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -283,14 +271,13 @@ cn: Paul Smith
 sn: Smith
 uid: smith
 title: Engineer
-manager: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ernst Blofeld,ou=Research,ou=USER_OU,BASEDN
 givenName: Paul
 displayName: Paul Smith
 departmentNumber: 30
 mail: Paul.Smith@trivadislabs.com
-userPassword: {SSHA}ef2FK+hc0aIWwBAuEMP3+sSDF9ECSi0I1JU6NnlP
 
-dn: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
+dn: cn=Eve Moneypenny,ou=Sales,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -300,14 +287,13 @@ cn: Eve Moneypenny
 sn: Moneypenny
 uid: moneypenny
 title: Manager
-manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
 givenName: Eve
 displayName: Eve Moneypenny
 departmentNumber: 40
 mail: Eve.Moneypenny@trivadislabs.com
-userPassword: {SSHA}MJvMK2e8ci+AJoaKLzcJTCgJiFWn4jeLdViYSYjh
 
-dn: cn=Monica Blake,ou=Sales,ou=People,dc=trivadislabs,dc=com
+dn: cn=Monica Blake,ou=Sales,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -317,14 +303,13 @@ cn: Monica Blake
 sn: Blake
 uid: blake
 title: Salesman
-manager: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
+manager: cn=Eve Moneypenny,ou=Sales,ou=USER_OU,BASEDN
 givenName: Monica
 displayName: Monica Blake
 departmentNumber: 40
 mail: Monica.Blake@trivadislabs.com
-userPassword: {SSHA}X9m0AJYI87CXkpTVlPEgp8T77nMc+s7AFvCc25dJ
 
-dn: cn=Paul Ward,ou=Sales,ou=People,dc=trivadislabs,dc=com
+dn: cn=Paul Ward,ou=Sales,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -334,14 +319,13 @@ cn: Paul Ward
 sn: Ward
 uid: ward
 title: Salesman
-manager: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
+manager: cn=Eve Moneypenny,ou=Sales,ou=USER_OU,BASEDN
 givenName: Paul
 displayName: Paul Ward
 departmentNumber: 40
 mail: Paul.Ward@trivadislabs.com
-userPassword: {SSHA}3fE9iTOZXBY36d6LkaCoxaPkETBMsFhkNR7zkNyn
 
-dn: cn=Arthur Dent,ou=Sales,ou=People,dc=trivadislabs,dc=com
+dn: cn=Arthur Dent,ou=Sales,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -351,14 +335,13 @@ cn: Arthur Dent
 sn: Dent
 uid: dent
 title: Salesman
-manager: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
+manager: cn=Eve Moneypenny,ou=Sales,ou=USER_OU,BASEDN
 givenName: Arthur
 displayName: Arthur Dent
 departmentNumber: 40
 mail: Arthur.Dent@trivadislabs.com
-userPassword: {SSHA}0MiFu6TaiXBXclp+5tSqOyNtwYsjOyHxm5K2N3sd
 
-dn: cn=Andy Renton,ou=Operations,ou=People,dc=trivadislabs,dc=com
+dn: cn=Andy Renton,ou=Operations,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -369,13 +352,12 @@ sn: Renton
 uid: renton
 title: Clerk
 givenName: Andy
-manager: cn=Felix Leitner,ou=Operations,ou=People,dc=trivadislabs,dc=com
+manager: cn=Felix Leitner,ou=Operations,ou=USER_OU,BASEDN
 displayName: Andy Renton
 departmentNumber: 50
 mail: Andy.Renton@trivadislabs.com
-userPassword: {SSHA}+6y/Nmt53Ip8XAItcH8U8Hrv4lyN6Enmin0HbRwK
 
-dn: cn=Felix Leitner,ou=Operations,ou=People,dc=trivadislabs,dc=com
+dn: cn=Felix Leitner,ou=Operations,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -385,14 +367,13 @@ cn: Felix Leitner
 sn: Leitner
 uid: leitner
 title: Manager
-manager: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+manager: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
 givenName: Felix
 displayName: Felix Leitner
 departmentNumber: 50
 mail: Felix.Leitner@trivadislabs.com
-userPassword: {SSHA}vGl/SY0ABbTixfWyi2wS56GAIPIo9GM7oGGMRJoM
 
-dn: cn=James Bond,ou=Operations,ou=People,dc=trivadislabs,dc=com
+dn: cn=James Bond,ou=Operations,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -402,14 +383,13 @@ cn: James Bond
 sn: Bond
 uid: bond
 title: Agent
-manager: cn=Felix Leitner,ou=Operations,ou=People,dc=trivadislabs,dc=com
+manager: cn=Felix Leitner,ou=Operations,ou=USER_OU,BASEDN
 givenName: James
 displayName: James Bond
 departmentNumber: 50
 mail: James.Bond@trivadislabs.com
-userPassword: {SSHA}FR6l8tJygV+PlfCup84gxY2TyIvdcU0005gFvFt3
 
-dn: cn=Jason Walters,ou=Operations,ou=People,dc=trivadislabs,dc=com
+dn: cn=Jason Walters,ou=Operations,ou=USER_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: person
@@ -419,84 +399,83 @@ cn: Jason Walters
 sn: Walters
 uid: walters
 title: Agent
-manager: cn=Felix Leitner,ou=Operations,ou=People,dc=trivadislabs,dc=com
+manager: cn=Felix Leitner,ou=Operations,ou=USER_OU,BASEDN
 givenName: Jason
 displayName: Jason  Walters
 departmentNumber: 50
 mail: Jason.Walters@trivadislabs.com
-userPassword: {SSHA}jqaqpfJ2hQy8w+h5cKFsKLhfIv/8OQlpzPhxuuPi
 
 # - groups --------------------------------------------------------------
 # create a couple of groups
-# dn: ou=Groups,dc=trivadislabs,dc=com
+# dn: ou=GROUP_OU,BASEDN
 # changetype: add
 # ObjectClass: top
 # ObjectClass: organizationalUnit
 # ou: Groups
 
-dn: cn=Trivadis LAB Users,ou=Groups,dc=trivadislabs,dc=com
+dn: cn=Trivadis LAB Users,ou=GROUP_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: groupOfUniqueNames
 objectClass: orclGroup
 cn: Trivadis LAB Users
-uniqueMember: cn=Vesper Lynd,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Arthur Dent,ou=Sales,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Paul Ward,ou=Sales,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Paul Smith,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Monica Blake,ou=Sales,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=John Gartner,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=John Miller,ou=Accounting,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Jim Clark,ou=Accounting,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Jason Walters,ou=Operations,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=James Bond,ou=Operations,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=James Scott,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Honey Rider,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ford Prefect,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Felix Leitner,ou=Operations,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Eugen Tanner,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Douglas Adams,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Andy Renton,ou=Operations,ou=People,dc=trivadislabs,dc=com
+uniqueMember: cn=Vesper Lynd,ou=Human Resources,ou=USER_OU,BASEDN
+uniqueMember: cn=Arthur Dent,ou=Sales,ou=USER_OU,BASEDN
+uniqueMember: cn=Paul Ward,ou=Sales,ou=USER_OU,BASEDN
+uniqueMember: cn=Paul Smith,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Monica Blake,ou=Sales,ou=USER_OU,BASEDN
+uniqueMember: cn=John Gartner,ou=Information Technology,ou=USER_OU,BASEDN
+uniqueMember: cn=John Miller,ou=Accounting,ou=USER_OU,BASEDN
+uniqueMember: cn=Jim Clark,ou=Accounting,ou=USER_OU,BASEDN
+uniqueMember: cn=Jason Walters,ou=Operations,ou=USER_OU,BASEDN
+uniqueMember: cn=James Bond,ou=Operations,ou=USER_OU,BASEDN
+uniqueMember: cn=James Scott,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Ian Fleming,ou=Information Technology,ou=USER_OU,BASEDN
+uniqueMember: cn=Honey Rider,ou=Human Resources,ou=USER_OU,BASEDN
+uniqueMember: cn=Ford Prefect,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Felix Leitner,ou=Operations,ou=USER_OU,BASEDN
+uniqueMember: cn=Eve Moneypenny,ou=Sales,ou=USER_OU,BASEDN
+uniqueMember: cn=Eugen Tanner,ou=Information Technology,ou=USER_OU,BASEDN
+uniqueMember: cn=Ernst Blofeld,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Douglas Adams,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
+uniqueMember: cn=Andy Renton,ou=Operations,ou=USER_OU,BASEDN
 displayName: Trivadis LAB Users
 
-dn: cn=Trivadis LAB DB Admins,ou=Groups,dc=trivadislabs,dc=com
+dn: cn=Trivadis LAB DB Admins,ou=GROUP_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: groupOfUniqueNames
 objectClass: orclGroup
 cn: Trivadis LAB DB Admins
-uniqueMember: cn=John Gartner,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
+uniqueMember: cn=John Gartner,ou=Information Technology,ou=USER_OU,BASEDN
+uniqueMember: cn=Ian Fleming,ou=Information Technology,ou=USER_OU,BASEDN
 displayName: Trivadis LAB DB Admins
 
-dn: cn=Trivadis LAB Developers,ou=Groups,dc=trivadislabs,dc=com
+dn: cn=Trivadis LAB Developers,ou=GROUP_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: groupOfUniqueNames
 objectClass: orclGroup
 cn: Trivadis LAB Developers
-uniqueMember: cn=Paul Smith,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=James Scott,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ford Prefect,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Douglas Adams,ou=Research,ou=People,dc=trivadislabs,dc=com
+uniqueMember: cn=Paul Smith,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=James Scott,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Ford Prefect,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Ernst Blofeld,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Douglas Adams,ou=Research,ou=USER_OU,BASEDN
 displayName: Trivadis LAB Developers
 
-dn: cn=Trivadis LAB System Admins,ou=Groups,dc=trivadislabs,dc=com
+dn: cn=Trivadis LAB System Admins,ou=GROUP_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: groupOfUniqueNames
 objectClass: orclGroup
 cn: Trivadis LAB System Admins
-uniqueMember: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Eugen Tanner,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
+uniqueMember: cn=Ian Fleming,ou=Information Technology,ou=USER_OU,BASEDN
+uniqueMember: cn=Eugen Tanner,ou=Information Technology,ou=USER_OU,BASEDN
 displayName: Trivadis LAB System Admins
 
-dn: cn=Trivadis LAB APP Admins,ou=Groups,dc=trivadislabs,dc=com
+dn: cn=Trivadis LAB APP Admins,ou=GROUP_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: groupOfUniqueNames
@@ -504,27 +483,27 @@ objectClass: orclGroup
 cn: Trivadis LAB APP Admins
 displayName: Trivadis LAB APP Admins
 
-dn: cn=Trivadis LAB Management,ou=Groups,dc=trivadislabs,dc=com
+dn: cn=Trivadis LAB Management,ou=GROUP_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: groupOfUniqueNames
 objectClass: orclGroup
 cn: Trivadis LAB Management
-uniqueMember: cn=Jim Clark,ou=Accounting,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ian Fleming,ou=Information Technology,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Honey Rider,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Eve Moneypenny,ou=Sales,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ernst Blofeld,ou=Research,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Ben King,ou=Senior Management,ou=People,dc=trivadislabs,dc=com
+uniqueMember: cn=Jim Clark,ou=Accounting,ou=USER_OU,BASEDN
+uniqueMember: cn=Ian Fleming,ou=Information Technology,ou=USER_OU,BASEDN
+uniqueMember: cn=Honey Rider,ou=Human Resources,ou=USER_OU,BASEDN
+uniqueMember: cn=Eve Moneypenny,ou=Sales,ou=USER_OU,BASEDN
+uniqueMember: cn=Ernst Blofeld,ou=Research,ou=USER_OU,BASEDN
+uniqueMember: cn=Ben King,ou=Senior Management,ou=USER_OU,BASEDN
 displayName: Trivadis LAB Management
 
-dn: cn=Trivadis LAB HR,ou=Groups,dc=trivadislabs,dc=com
+dn: cn=Trivadis LAB HR,ou=GROUP_OU,BASEDN
 changetype: add
 objectClass: top
 objectClass: groupOfUniqueNames
 objectClass: orclGroup
 cn: Trivadis LAB Management
-uniqueMember: cn=Honey Rider,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
-uniqueMember: cn=Vesper Lynd,ou=Human Resources,ou=People,dc=trivadislabs,dc=com
+uniqueMember: cn=Honey Rider,ou=Human Resources,ou=USER_OU,BASEDN
+uniqueMember: cn=Vesper Lynd,ou=Human Resources,ou=USER_OU,BASEDN
 displayName: Trivadis LAB Human Resources
 # - EOF -----------------------------------------------------------------

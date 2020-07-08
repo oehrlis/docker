@@ -1,0 +1,44 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: 04_create_root_user.ldif
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2020.06.25
+# Usage......: 04_create_root_user.ldif
+# Purpose....: LDIF file for ldif
+# Notes......:  
+# Reference..: 
+# License....: Licensed under the Universal Permissive License v 1.0 as 
+#              shown at https://oss.oracle.com/licenses/upl.
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# - ADD oudadmin
+# Description: Create an additional super user for the OUD instance.
+# This will:    - The user is created
+#               - The resources are expanded
+#               - An unsearch index is possible
+#               - A deletion of Trees is possible
+# ---------------------------------------------------------------------------
+dn: cn=oudadmin,cn=Root DNs,cn=config
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: top
+objectClass: ds-cfg-root-dn-user
+objectClass: organizationalPerson
+cn: oudadmin
+sn: oudadmin
+ds-cfg-alternate-bind-dn: cn=oudadmin
+ds-pwp-password-policy-dn: cn=Root Password Policy,cn=Password Policies,cn=config
+ds-privilege-name: unindexed-search
+ds-rlim-lookthrough-limit: 3000
+ds-rlim-size-limit: 3000
+givenName: OUD Admin
+# - End ADD oudadmin ----------------------------------------------------------
+
+# -----------------------------------------------------------------------------

@@ -1,0 +1,45 @@
+#!/bin/bash
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: setup_oud_instance
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2019.09.04
+# Usage......: setup_oud_instance
+# Purpose....: Script to create the OUD instance
+# Notes......: The script will go execute all 0?_*.sh and 1?_*.sh files
+#              to create the instance. All files in sequence after 19_*.sh
+#              have to be executed manually. This includes the replication.
+# Reference..: 
+# License...: Licensed under the Universal Permissive License v 1.0 as 
+#             shown at http://oss.oracle.com/licenses/upl.
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+
+# - load instance environment -------------------------------------------
+. "$(dirname $0)/00_init_environment"
+
+# - create instance -----------------------------------------------------
+echo "Create OUD instance ${OUD_INSTANCE} using:"
+echo "OUD_INSTANCE_HOME : ${OUD_INSTANCE_HOME}"
+echo "PWD_FILE          : ${PWD_FILE}"
+echo "HOSTNAME          : ${HOST}"
+echo "HOST1             : ${HOST1}"
+echo "HOST2             : ${HOST2}"
+echo "HOST3             : ${HOST3}"
+echo "PORT              : ${PORT}"
+echo "PORT_SSL          : ${PORT_SSL}"
+echo "PORT_ADMIN        : ${PORT_ADMIN}"
+echo "DIRMAN            : ${DIRMAN}"
+echo "BASEDN            : ${BASEDN}"
+
+for i in $(dirname $0)/0?_*.sh $(dirname $0)/1?_*.sh; do 
+    echo "######################################################"
+    echo "### RUN $(basename $i)" 
+    $(dirname $0)/$(basename $i)
+done
+# - EOF -----------------------------------------------------------------

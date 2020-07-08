@@ -1,0 +1,84 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: 05_config_eus_realm.ldif
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2020.06.30
+# Revision...: --
+# Purpose....: EUS realm configuration for the user and group search base
+# Notes......: The LDIF file is loaded by the script 03_config_eus_realm.sh 
+#              If necessary it can also be imported manually.
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: Licensed under the Universal Permissive License v 1.0 as 
+#              shown at https://oss.oracle.com/licenses/upl.
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+
+#version: 1
+DN: cn=OracleDBSecurityAdmins,cn=OracleContext
+changetype: modify
+add: uniquemember
+uniquemember: cn=Directory Manager
+uniquemember: cn=oudadmin,cn=Root DNs,cn=config
+uniquemember: ou=role_eus_admins,ou=groups,ou=local,dc=trivadislabs,dc=com
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,dc=trivadislabs,dc=com
+
+# Update common EUS Configuration MOS Note 1996363.1
+dn: cn=OracleContextAdmins,cn=Groups,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+add: uniquemember
+uniquemember: cn=oudadmin,cn=Root DNs,cn=config
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,dc=trivadislabs,dc=com
+uniquemember: ou=role_eus_admins,ou=groups,ou=local,dc=trivadislabs,dc=com
+
+dn: cn=Common,cn=Products,cn=OracleContext
+changetype: modify
+replace: orclSubscriberSearchBase
+orclSubscriberSearchBase: dc=trivadislabs,dc=com
+
+dn: cn=Common,cn=Products,cn=OracleContext
+changetype: modify
+replace: orclSubscriberNickNameAttribute
+orclSubscriberNickNameAttribute: dc
+
+dn: cn=Common,cn=Products,cn=OracleContext
+changetype: modify
+replace: orclDefaultSubscriber
+orclDefaultSubscriber: dc=trivadislabs,dc=com
+
+dn: cn=Common,cn=Products,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+replace: orclCommonUserSearchBase
+orclCommonUserSearchBase: ou=People,dc=trivadislabs,dc=com
+
+dn: cn=Common,cn=Products,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+replace: orclCommonUserCreateBase
+orclCommonUserCreateBase: ou=People,dc=trivadislabs,dc=com
+
+dn: cn=Common,cn=Products,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+replace: orclCommonDefaultUserCreateBase
+orclCommonDefaultUserCreateBase: ou=People,dc=trivadislabs,dc=com
+
+dn: cn=Common,cn=Products,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+replace: orclCommonGroupCreateBase
+orclCommonGroupCreateBase: ou=Groups,dc=trivadislabs,dc=com
+
+dn: cn=Common,cn=Products,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+replace: orclCommonDefaultGroupCreateBase
+orclCommonDefaultGroupCreateBase: ou=Groups,dc=trivadislabs,dc=com
+
+dn: cn=Common,cn=Products,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+replace: orclCommonGroupSearchBase
+orclCommonGroupSearchBase: ou=Groups,dc=trivadislabs,dc=com
+
+# - EOF -----------------------------------------------------------------
