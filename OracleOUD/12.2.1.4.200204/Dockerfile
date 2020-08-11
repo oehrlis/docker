@@ -70,7 +70,7 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # Install Java
 # ----------------------------------------------------------------------
 # Setup JAVA using OraDBA init script
-ENV JAVA_PKG="p30884165_180251_Linux-x86-64.zip"
+ENV JAVA_PKG="p31311329_180261_Linux-x86-64.zip"
 RUN ${ORADBA_INIT}/${SETUP_JAVA}
 COPY config/java.security /usr/java/latest/jre/lib/security/java.security
 
@@ -85,7 +85,7 @@ ENV SETUP_OUD="10_setup_oud.sh" \
 # set OUD specific parameters
 ENV OUD_BASE_PKG="p30188352_122140_Generic.zip" \
     OUD_PATCH_PKG="p30851280_122140_Generic.zip" \
-    OUD_OPATCH_PKG="p28186730_139422_Generic.zip"
+    OUD_OPATCH_PKG="p29909359_139400_Generic.zip
 
 # stuff to setup and run an OUD instance
 ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
