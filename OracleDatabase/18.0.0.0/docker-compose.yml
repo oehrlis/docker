@@ -21,7 +21,7 @@ services:
 
 # single tenant database
   tdb187s:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:18.7.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.11.0.0
     container_name: tdb187s
     hostname: tdb187s
     restart: unless-stopped
@@ -38,7 +38,7 @@ services:
 
 # single tenant database
   tdb187s_delegated:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:18.7.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:18.11.0.0
     container_name: tdb187s_delegated
     hostname: tdb187s
     restart: unless-stopped
