@@ -1,0 +1,10 @@
+# UPDATE PERL IN 18.3.0.0.0 DATABASE ORACLE HOME TO V5.28 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=31225444
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p31225444_180000_Linux-x86-64.zip?aru=23604069&patch_file=p31225444_180000_Linux-x86-64.zip
+#
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+DA2AB5EA955DC231FD7359405067D5E73F57F5EFB9A98B7EC72C7A085E7974F4 p31225444_180000_Linux-x86-64.zip
