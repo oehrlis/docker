@@ -1,10 +1,10 @@
-# OPatch patch of version 11.2.0.3.20 for Oracle software releases 11.2.0.x and 18.x (OCT 2018) (Patch)
+# OPatch patch of version 11.2.0.3.25 for Oracle software releases 11.2.0.x (Apr 2020) (Patch)
 #
 # The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
 # require a valid MOS Account to download Oracle Software from MOS.
 # Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=6880880
-# Direct Download   : https://updates.oracle.com/Orion/Services/download/p6880880_112000_Linux-x86-64.zip?aru=22568495&patch_file=p6880880_112000_Linux-x86-64.zip
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p6880880_112000_Linux-x86-64.zip?aru=23538072&patch_file=p6880880_112000_Linux-x86-64.zip
 #
 # SHA-256                                                        File
 # -------------------------------------------------------------- ---------------------------------
-75C4863C81A454788A81EBBC1E9FBE6798245055F1AA932EA467F8BAA9CD2C38 p6880880_112000_Linux-x86-64.zip
+13E5C1DAF24144FDAD79DE0F75B28E713FBC4B92F81E2C7C150994983D5E7B21 p6880880_112000_Linux-x86-64.zip
