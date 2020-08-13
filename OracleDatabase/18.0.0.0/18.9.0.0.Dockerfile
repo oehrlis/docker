@@ -99,8 +99,8 @@ FROM  base AS builder
 # COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 # COPY RU patch if part of the build context
-COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
-COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/*U_*/${DB_PATCH_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/*U_*/${DB_OJVM_PKG}* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
@@ -115,7 +115,10 @@ RUN   ${ORADBA_INIT}/${SETUP_BASENV}
 # Define variables for Patch installation
 ENV   DB_PATCH_PKG="p30480385_180000_Linux-x86-64.zip" \
       DB_OJVM_PKG="p30501926_180000_Linux-x86-64.zip" \
-      DB_OPATCH_PKG="p6880880_180000_Linux-x86-64.zip"
+      DB_OPATCH_PKG="p6880880_180000_Linux-x86-64.zip" \
+      DB_JDKPATCH_PKG="p31302462_180000_Linux-x86-64.zip" \
+      DB_PERLPATCH_PKG="p31225444_180000_Linux-x86-64.zip" \
+      DB_ONEOFF_PKGS=""
 
 # Install Oracle Patch's
 RUN   ${ORADBA_INIT}/${PATCH_DB}
