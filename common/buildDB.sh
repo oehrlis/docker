@@ -36,7 +36,7 @@ else
     ORAREPO_FLAG=""
 fi
 
-export DOCKER_BUILDKIT=1
+#export DOCKER_BUILDKIT=1
 # - EOF Default Values ------------------------------------------------------
 
 CURRENT_DIR=$(pwd)

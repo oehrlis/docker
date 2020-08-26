@@ -115,7 +115,7 @@ RUN   ${ORADBA_INIT}/${SETUP_BASENV}
 # Define variables for Patch installation
 ENV   DB_PATCH_PKG="" \
       DB_OJVM_PKG="" \
-      DB_OPATCH_PKG="" 
+      DB_OPATCH_PKG="p6880880_200000_Linux-x86-64.zip" 
 
 # Install Oracle Patch's
 RUN   ${ORADBA_INIT}/${PATCH_DB}

@@ -85,7 +85,7 @@ ENV SETUP_OUD="10_setup_oud.sh" \
 # set OUD specific parameters
 ENV OUD_BASE_PKG="p30188352_122140_Generic.zip" \
     OUD_PATCH_PKG="p30851280_122140_Generic.zip" \
-    OUD_OPATCH_PKG="p29909359_139400_Generic.zip
+    OUD_OPATCH_PKG="p29909359_139400_Generic.zip"
 
 # stuff to setup and run an OUD instance
 ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \

@@ -114,8 +114,8 @@ RUN   ${ORADBA_INIT}/${SETUP_DB}
 RUN   ${ORADBA_INIT}/${SETUP_BASENV}
 
 # Define variables for Patch installation
-ENV   DB_PATCH_PKG="p30298532_112040_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p30503372_112040_Linux-x86-64.zip" \
+ENV   DB_PATCH_PKG="p31103343_112040_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p31219953_112040_Linux-x86-64.zip" \
       DB_OPATCH_PKG="p6880880_112000_Linux-x86-64.zip" \
       DB_JDKPATCH_PKG="p31302572_112040_Linux-x86-64.zip" \
       DB_PERLPATCH_PKG="p30508206_112040_Linux-x86-64.zip" \

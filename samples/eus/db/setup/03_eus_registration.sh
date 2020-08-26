@@ -42,7 +42,7 @@ echo "  EUS_ADMIN           :   ${EUS_ADMIN}"
 echo "  SYS_PWD_FILE        :   ${SYS_PWD_FILE}"
 echo "  WALLET_PWD_FILE     :   ${WALLET_PWD_FILE}"
 echo "  EUS_PWD_FILE        :   ${EUS_PWD_FILE}"
-$ORACLE_HOME/bin/dbca -silent -configureDatabase \
+echo $ORACLE_HOME/bin/dbca -silent -configureDatabase \
 -sourceDB ${ORACLE_SID} -sysDBAUserName sys -sysDBAPassword $(cat ${SYS_PWD_FILE}) \
 -registerWithDirService true -dirServiceUserName ${EUS_ADMIN} \
 -dirServicePassword $(cat ${EUS_PWD_FILE}) -walletPassword $(cat ${WALLET_PWD_FILE}) 
