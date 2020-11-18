@@ -84,7 +84,7 @@ ENV SETUP_OUD="10_setup_oud.sh" \
 
 # set OUD specific parameters
 ENV OUD_BASE_PKG="p30188352_122140_Generic.zip" \
-    OUD_PATCH_PKG="p31400392_122140_Generic.zip" \
+    OUD_PATCH_PKG="p31809303_122140_Generic.zip" \
     OUD_OPATCH_PKG="p29909359_139400_Generic.zip"
 
 # stuff to setup and run an OUD instance
