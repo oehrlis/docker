@@ -84,23 +84,23 @@ ENV SETUP_OUD="10_setup_oud.sh" \
 
 # set OUD specific parameters
 ENV OUD_BASE_PKG="p26270957_122130_Generic.zip" \
-    OUD_PATCH_PKG="p31529239_122130_Generic.zip" \
-    OUD_OPATCH_PKG="p28186730_139424_Generic.zip"
+    OUD_PATCH_PKG="" \
+    OUD_OPATCH_PKG=""
 
 # stuff to setup and run an OUD instance
-ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
-    OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
-    USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
-    OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
-    ORACLE_HOME_NAME="fmw12.2.1.3.0" \
-    OUD_VERSION="12" \
-    PORT="${PORT:-1389}" \
-    PORT_SSL="${PORT_SSL:-1636}" \
-    PORT_HTTP="${PORT_HTTP:-8080}" \
-    PORT_HTTPS="${PORT_HTTPS:-10443}" \
-    PORT_REP="${PORT_REP:-8989}" \
-    PORT_ADMIN="${PORT_ADMIN:-4444}" \
-    PORT_ADMIN_HTTP="${PORT_ADMIN_HTTP:-8444}"
+ENV   OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
+      OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
+      USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
+      OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
+      ORACLE_HOME_NAME="fmw12.2.1.3.0" \
+      OUD_VERSION="12" \
+      PORT="${PORT:-1389}" \
+      PORT_SSL="${PORT_SSL:-1636}" \
+      PORT_HTTP="${PORT_HTTP:-8080}" \
+      PORT_HTTPS="${PORT_HTTPS:-10443}" \
+      PORT_REP="${PORT_REP:-8989}" \
+      PORT_ADMIN="${PORT_ADMIN:-4444}" \
+      PORT_ADMIN_HTTP="${PORT_ADMIN_HTTP:-8444}"
 
 # same same but different...
 # third ENV so that variable get substituted
@@ -111,7 +111,7 @@ ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_H
 # ----------------------------------------------------------------------
 FROM  base AS builder
 
-# COPY oud software 
+# COPY base software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
