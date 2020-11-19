@@ -87,7 +87,8 @@ ENV   OUD_BASE_PKG="p26270957_122130_Generic.zip" \
       FMW_BASE_PKG="p26269885_122130_Generic.zip" \
       OUD_PATCH_PKG="p31810579_122130_Generic.zip" \
       FMW_PATCH_PKG="p31961038_122130_Generic.zip" \
-      OUD_OPATCH_PKG="p29909359_139400_Generic.zip" \
+      OUD_OPATCH_PKG="p28186730_139424_Generic.zip" \
+      OUD_ONEOFF_PKGS="p32097173_12213201001_Generic.zip" \
       OUI_PATCH_PKG=""
 
 # stuff to setup and run an OUD instance
