@@ -84,7 +84,7 @@ ENV   SETUP_OUD="10_setup_oud.sh" \
 
 # set OUD specific parameters
 ENV   OUD_BASE_PKG="ofm_oud_generic_11.1.2.3.0_disk1_1of1.zip" \
-      OUD_PATCH_PKG="p31541461_111230_Generic.zip" \
+      OUD_PATCH_PKG="" \
       OUD_OPATCH_PKG=""
 
 # stuff to setup and run an OUD instance
@@ -114,8 +114,6 @@ FROM  base AS builder
 
 # COPY base software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
-# COPY RU patch if part of the build context
-COPY  --chown=oracle:oinstall software/BP_11.1.2.3.181016/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user

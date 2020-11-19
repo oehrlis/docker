@@ -112,8 +112,10 @@ ENV   PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE
 # ----------------------------------------------------------------------
 FROM  base AS builder
 
-# COPY oud software 
+# COPY base software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
+# COPY RU patch if part of the build context
+COPY  --chown=oracle:oinstall software/BP_11.1.2.3.181016/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
