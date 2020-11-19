@@ -5,7 +5,7 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.10.12
+# Date.......: 2018.03.19
 # Purpose....: This Dockerfile is to build Oracle Unifid Directory
 # Notes......: --
 # Reference..: --
@@ -24,7 +24,7 @@ FROM  oraclelinux:7-slim AS base
 # ----------------------------------------------------------------------
 LABEL maintainer="stefan.oehrli@trivadis.com"
 
-# Build Argumensts for Oracle Installation
+# Arguments for Oracle Installation
 ARG   ORACLE_ROOT
 ARG   ORACLE_DATA
 ARG   ORACLE_BASE
@@ -72,7 +72,7 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # Setup JAVA using OraDBA init script
 ENV JAVA_PKG="p31856315_180271_Linux-x86-64.zip"
 RUN ${ORADBA_INIT}/${SETUP_JAVA}
-COPY config/java.security /usr/java/latest/jre/lib/security/java.security
+COPY java.security /usr/java/latest/jre/lib/security/java.security
 
 # Set Version specific stuff
 # ----------------------------------------------------------------------
@@ -84,8 +84,8 @@ ENV SETUP_OUD="10_setup_oud.sh" \
 
 # set OUD specific parameters
 ENV OUD_BASE_PKG="p30188352_122140_Generic.zip" \
-    OUD_PATCH_PKG="p31400392_122140_Generic.zip" \
-    OUD_OPATCH_PKG="p28186730_139424_Generic.zip"
+    OUD_PATCH_PKG="" \
+    OUD_OPATCH_PKG=""
 
 # stuff to setup and run an OUD instance
 ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
@@ -113,7 +113,7 @@ ENV PATH=${PATH}:"${OUD_INSTANCE_HOME}/OUD/bin:${ORACLE_BASE}/product/${ORACLE_H
 # ----------------------------------------------------------------------
 FROM  base AS builder
 
-# COPY oud software 
+# COPY base software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
