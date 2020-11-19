@@ -21,7 +21,7 @@ services:
 
 # single tenant database
   tdb190s:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.8.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.9.0.0
     container_name: tdb190s
     hostname: tdb190s
     restart: unless-stopped
