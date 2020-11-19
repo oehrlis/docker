@@ -115,7 +115,7 @@ FROM  base AS builder
 # COPY base software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 # COPY RU patch if part of the build context
-COPY  --chown=oracle:oinstall software/BP_11.1.2.3.181016/*zip* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/BP_12.2.1.3.190522/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
