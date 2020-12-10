@@ -21,10 +21,12 @@
 # - Customization -----------------------------------------------------------
 DOCKER_USER=${DOCKER_USER:-"oracle"}
 DOCKER_REPO=${DOCKER_REPO:-"oud"}
-DOCKER_PROJECTS="OUD OUDSM Database"
+#DOCKER_PROJECTS="ODSEE OUD OUDSM Database"
+
+DOCKER_PROJECTS="Database"
 DOCKER_TVD_USER=${DOCKER_TVD_USER:-"trivadis"}
 DOCKER_TVD_REPO=${DOCKER_TVD_REPO:-"ora_oud"}
-KEEP_VERSIONS=${KEEP_VERSIONS:-""}
+KEEP_VERSIONS=${KEEP_VERSIONS:-"11.1.1.7.190716 11.1.2.3.200625 12.2.1.4.0 12.2.1.4.200827 12.2.1.3.200827 11.2.0.4.190115 11.2.0.4.201020 12.1.0.2.201020 12.2.0.1.201020 18.12.0.0 19.6.0.0 19.9.0.0 20.2.0.0"}
 DOCKER_IMAGES=${DOCKER_VOLUME_BASE}/../images
 DOCKER_BASE_IMAGE="oraclelinux:7-slim"
 SCRIPT_NAME=$(basename $0)
@@ -58,6 +60,11 @@ for n in ${DOCKER_PROJECTS}; do
     for DOCKER_FILE in $(ls $DOCKER_BUILD_BASE/Oracle${n}/*/*.Dockerfile); do
         BUILD_VERSION=$(basename $DOCKER_FILE .Dockerfile)
         DOCKER_REPO=$(echo "$n" | tr '[:upper:]' '[:lower:]')
+        if [ "${DOCKER_REPO}" == "database" ]; then
+            DOCKER_TVD_REPO="ora_db"
+        else
+            DOCKER_TVD_REPO="ora_${DOCKER_REPO}"
+        fi
 
         echo "################################################################"
         echo "INFO : Build docker images $BUILD_VERSION [$j/$i]"
@@ -65,24 +72,25 @@ for n in ${DOCKER_PROJECTS}; do
         echo "INFO : for repository  ${DOCKER_USER}/${DOCKER_REPO}"
         DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
         cd ${DOCKER_BUILD_DIR}  # change working directory
-    echo    docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
+        docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
         echo "INFO : tag image ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION as ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION"
-    echo    docker tag ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
+        docker tag ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
         echo "INFO : push image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION"
-    echo    docker push ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
+        docker push ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
         echo "INFO : untag image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION"
-    echo    docker rmi ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
-    echo    docker image prune --force
-    echo    echo "INFO : save image ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION to ${DOCKER_IMAGES}/${DOCKER_USER}_${DOCKER_REPO}_$BUILD_VERSION.tar.gz"
-    echo    docker save ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION |gzip -c >${DOCKER_IMAGES}/${DOCKER_USER}_${DOCKER_REPO}_$BUILD_VERSION.tar.gz
+        docker rmi ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
+        docker image prune --force
+        echo "INFO : save image ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION to ${DOCKER_IMAGES}/${DOCKER_USER}_${DOCKER_REPO}_$BUILD_VERSION.tar.gz"
+        docker save ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION |gzip -c >${DOCKER_IMAGES}/${DOCKER_USER}_${DOCKER_REPO}_$BUILD_VERSION.tar.gz
 
         if [ -n "$BUILD_VERSION" ] && [[ $KEEP_VERSIONS == *"$BUILD_VERSION"* ]]; then
             echo "INFO : keep version $BUILD_VERSION"
         else
             echo "INFO : remove version $BUILD_VERSION"
-    echo        docker rmi ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION 
+            docker rmi ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION 
         fi
         ((j++))                 # increment counter
+        docker system prune -f
     done
 done
 cd $CURRENT_DIR # go back to initial working directory
