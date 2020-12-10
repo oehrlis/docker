@@ -99,8 +99,8 @@ FROM  base AS builder
 # COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 # COPY RU patch if part of the build context
-# COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
-# COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
+# COPY  --chown=oracle:oinstall software/*U_*/${DB_PATCH_PKG}* "${SOFTWARE}/"
+# COPY  --chown=oracle:oinstall software/*U_*/${DB_OJVM_PKG}* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
@@ -115,8 +115,10 @@ RUN   ${ORADBA_INIT}/${SETUP_BASENV}
 # Define variables for Patch installation
 ENV   DB_PATCH_PKG="" \
       DB_OJVM_PKG="" \
-      DB_OPATCH_PKG="p6880880_200000_Linux-x86-64.zip" 
-
+      DB_OPATCH_PKG="p6880880_200000_Linux-x86-64.zip" \
+      DB_JDKPATCH_PKG="" \
+      DB_PERLPATCH_PKG="" \
+      DB_ONEOFF_PKGS=""
 # Install Oracle Patch's
 RUN   ${ORADBA_INIT}/${PATCH_DB}
 
@@ -137,7 +139,10 @@ COPY  --chown=oracle:oinstall --from=builder /home/oracle/.BE_HOME /home/oracle/
 # RUN as root post install scripts
 USER  root
 RUN   $ORACLE_ROOT/app/oraInventory/orainstRoot.sh && \
-      $ORACLE_HOME/root.sh
+      $ORACLE_HOME/root.sh && \
+      yum install -y sssd nscd && \
+      yum clean all && \
+      rm -rf /var/cache/yum
 
 # Finalize image
 # ----------------------------------------------------------------------
