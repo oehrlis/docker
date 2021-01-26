@@ -21,6 +21,7 @@
 # - Customization -----------------------------------------------------------
 DOCKER_USER=${DOCKER_USER:-"oracle"}
 DOCKER_REPO=${DOCKER_REPO:-"database"}
+BUILD_FLAG=${BUILD_FLAG:-""}
 DOCKER_BASE_IMAGE="oraclelinux:7-slim"
 SCRIPT_NAME=$(basename $0)
 RELEASES="$@"
