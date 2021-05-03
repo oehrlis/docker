@@ -20,7 +20,7 @@ version: '3'
 services:
 # Database service
   cmudb:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.7.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.11.0.0
     container_name: cmudb
     hostname: cmudb
     networks:
@@ -40,24 +40,24 @@ services:
       ORACLE_SID: TCMU01
 
 # Database service
-  cmucdb:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.7.0.0
-    container_name: cmucdb
-    hostname: cmucdb
-    networks:
-      default:
-        aliases: 
-          - cmucdb.trivadislabs.com
-    dns: 10.0.0.4
-    dns_search: trivadislabs.com
-    restart: unless-stopped
-    volumes:
-      - ${DOCKER_VOLUME_BASE}/cmu/cmucdb:/u01
-      - ./db:/u01/config
-    ports:
-      - "7521:1521"
-    environment:
-      INSTANCE_INIT: /u01/config
-      ORACLE_SID: TCMU02
-      CONTAINER: 'TRUE'
+#  cmucdb:
+#    image: ${DOCKER_USER}/${DOCKER_REPO}:19.11.0.0
+#    container_name: cmucdb
+#    hostname: cmucdb
+#    networks:
+#      default:
+#        aliases: 
+#          - cmucdb.trivadislabs.com
+#    dns: 10.0.0.4
+#    dns_search: trivadislabs.com
+#    restart: unless-stopped
+#    volumes:
+#      - ${DOCKER_VOLUME_BASE}/cmu/cmucdb:/u01
+#      - ./db:/u01/config
+#    ports:
+#      - "7521:1521"
+#    environment:
+#      INSTANCE_INIT: /u01/config
+#      ORACLE_SID: TCMU02
+#      CONTAINER: 'TRUE'
 # - EOF -----------------------------------------------------------------
