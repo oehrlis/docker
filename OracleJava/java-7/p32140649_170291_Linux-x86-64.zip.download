@@ -1,0 +1,10 @@
+# Oracle SERVER JRE 7 Update 291 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=32464080
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p32464080_170301_Linux-x86-64.zip?aru=24176847&patch_file=p32464080_170301_Linux-x86-64.zip
+
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+19CB6DA6AD6924AF7269CBAB2567024EBC436AACD6E23C9BB9A31EF4B8389637 p32464080_170301_Linux-x86-64.zip
