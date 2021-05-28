@@ -38,7 +38,7 @@ if [ -n "$ORAREPO" ]; then
 else
     ORAREPO_FLAG=""
 fi
-export DOCKER_BUILDKIT=1
+export DOCKER_BUILDKIT=0
 # - EOF Default Values ------------------------------------------------------
 
 CURRENT_DIR=$(pwd)          # save current directory
@@ -46,15 +46,15 @@ echo "INFO : try to pull latest ${DOCKER_BASE_IMAGE}"
 # get the latest base image
 docker pull ${DOCKER_BASE_IMAGE}
 # lets count the images
-i=$(ls -1q $DOCKER_BUILD_BASE/OracleDatabase/??.*/*.Dockerfile|wc -l|sed 's/ *//g')
+i=$(ls -1q $DOCKER_BUILD_BASE/OracleDatabase/12.2.*/*.Dockerfile|wc -l|sed 's/ *//g')
 j=1
-for DOCKER_FILE in $(ls $DOCKER_BUILD_BASE/OracleDatabase/??.*/*.Dockerfile); do
+for DOCKER_FILE in $(ls $DOCKER_BUILD_BASE/OracleDatabase/12.2.*/*.Dockerfile); do
     BUILD_VERSION=$(basename $DOCKER_FILE .Dockerfile)
     echo "INFO : Build docker images $BUILD_VERSION [$j/$i]"
     echo "INFO : from Dockerfile=${DOCKER_FILE}"
     DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
     cd ${DOCKER_BUILD_DIR}  # change working directory
-    docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
+    docker build ${ORAREPO_FLAG} --no-cache -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
     echo "INFO : tag image ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION as ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION"
     docker tag ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION
     echo "INFO : push image ${DOCKER_TVD_USER}/${DOCKER_TVD_REPO}:$BUILD_VERSION"

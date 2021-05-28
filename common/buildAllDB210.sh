@@ -46,9 +46,9 @@ echo "INFO : try to pull latest ${DOCKER_BASE_IMAGE}"
 # get the latest base image
 docker pull ${DOCKER_BASE_IMAGE}
 # lets count the images
-i=$(ls -1q $DOCKER_BUILD_BASE/OracleDatabase/??.*/*.Dockerfile|wc -l|sed 's/ *//g')
+i=$(ls -1q $DOCKER_BUILD_BASE/OracleDatabase/21.*/*.Dockerfile|wc -l|sed 's/ *//g')
 j=1
-for DOCKER_FILE in $(ls $DOCKER_BUILD_BASE/OracleDatabase/??.*/*.Dockerfile); do
+for DOCKER_FILE in $(ls $DOCKER_BUILD_BASE/OracleDatabase/21.*/*.Dockerfile); do
     BUILD_VERSION=$(basename $DOCKER_FILE .Dockerfile)
     echo "INFO : Build docker images $BUILD_VERSION [$j/$i]"
     echo "INFO : from Dockerfile=${DOCKER_FILE}"
