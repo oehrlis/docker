@@ -83,26 +83,24 @@ ENV SETUP_OUD="10_setup_oud.sh" \
     CHECK_SCRIPT="64_check_oud_instance.sh" 
 
 # set OUD specific parameters
-ENV OUD_BASE_PKG="p30188352_122140_Generic.zip" \
-    OUD_PATCH_PKG="" \
-    OUD_OPATCH_PKG=""
+ENV OUD_BASE_PKG="p26270957_122130_Generic.zip" \
+    OUD_PATCH_PKG="p32746591_122130_Generic.zip" \
+    OUD_OPATCH_PKG="p28186730_139425_Generic.zip"
 
 # stuff to setup and run an OUD instance
-ENV OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
-    OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
-    USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
-    OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
-    ORACLE_HOME_NAME="fmw12.2.1.4.0" \
-    OUD_VERSION="12" \
-    PORT="${PORT:-1389}" \
-    PORT_SSL="${PORT_SSL:-1636}" \
-    PORT_HTTP="${PORT_HTTP:-8080}" \
-    PORT_HTTPS="${PORT_HTTPS:-10443}" \
-    PORT_REP="${PORT_REP:-8989}" \
-    PORT_ADMIN="${PORT_ADMIN:-4444}" \
-    PORT_REST_ADMIN="${PORT_REST_ADMIN:-8444}" \
-    PORT_REST_HTTP="${PORT_REST_HTTP:-1080}" \
-    PORT_REST_HTTPS="${PORT_REST_HTTPS:-1081}"
+ENV   OUD_INSTANCE_BASE=${OUD_INSTANCE_BASE:-$ORACLE_DATA/instances} \
+      OUD_INSTANCE=${OUD_INSTANCE:-oud_docker} \
+      USER_MEM_ARGS="-Djava.security.egd=file:/dev/./urandom" \
+      OPENDS_JAVA_ARGS="-Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true" \
+      ORACLE_HOME_NAME="fmw12.2.1.3.0" \
+      OUD_VERSION="12" \
+      PORT="${PORT:-1389}" \
+      PORT_SSL="${PORT_SSL:-1636}" \
+      PORT_HTTP="${PORT_HTTP:-8080}" \
+      PORT_HTTPS="${PORT_HTTPS:-10443}" \
+      PORT_REP="${PORT_REP:-8989}" \
+      PORT_ADMIN="${PORT_ADMIN:-4444}" \
+      PORT_ADMIN_HTTP="${PORT_ADMIN_HTTP:-8444}"
 
 # same same but different...
 # third ENV so that variable get substituted
@@ -115,6 +113,8 @@ FROM  base AS builder
 
 # COPY base software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
+# COPY RU patch if part of the build context
+COPY  --chown=oracle:oinstall software/BP_12.2.1.3.200827/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software as to be installed with regular user
@@ -145,8 +145,8 @@ COPY  --chown=oracle:oinstall --from=builder /home/oracle/.OUD_BASE /home/oracle
 # administration and http administration
 EXPOSE   ${PORT} ${PORT_SSL} \
          ${PORT_HTTP} ${PORT_HTTPS} \
-         ${PORT_ADMIN} ${PORT_REST_ADMIN} \
-         ${PORT_REP} ${PORT_REST_HTTP} ${PORT_REST_HTTPS} 
+         ${PORT_ADMIN} ${PORT_ADMIN_HTTP} \
+         ${PORT_REP}
 
 # run container health check
 HEALTHCHECK    --interval=1m --start-period=5m \
