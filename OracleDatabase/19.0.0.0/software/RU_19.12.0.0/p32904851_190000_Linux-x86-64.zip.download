@@ -1,0 +1,10 @@
+# DATABASE RELEASE UPDATE 19.12.0.0.0 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=32904851
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p32904851_190000_Linux-x86-64.zip?aru=24343243&patch_file=p32904851_190000_Linux-x86-64.zip
+
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+364AEEAFF681B6261A3278D8E86BB9A24D6EF0D9C76DF400975C80608541E68E p32904851_190000_Linux-x86-64.zip

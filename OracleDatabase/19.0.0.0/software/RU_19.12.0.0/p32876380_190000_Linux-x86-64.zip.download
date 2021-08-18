@@ -1,0 +1,10 @@
+# OJVM RELEASE UPDATE 19.12.0.0.0 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=32876380
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p32876380_190000_Linux-x86-64.zip?aru=24269510&patch_file=p32876380_190000_Linux-x86-64.zip
+
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+2018B6028A4A1D28C1CAC17C4EB180FA89063AB2925846D2489D6D97291D581E p32876380_190000_Linux-x86-64.zip
