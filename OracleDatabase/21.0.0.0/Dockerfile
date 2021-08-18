@@ -75,7 +75,7 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # ----------------------------------------------------------------------
 # scripts to build and run this container
 # set DB specific package variables
-ENV   DB_BASE_PKG="LINUX.X64_211000_db_home.zip"
+ENV   DB_BASE_PKG="LINUX.X64_213000_db_home.zip"
 
 # stuff to run a DB instance
 ENV   ORACLE_SID=${ORACLE_SID:-"TDB200S"} \
