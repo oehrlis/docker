@@ -31,3 +31,4 @@ WHERE spare4 IS NOT NULL
 AND substr(regexp_substr(spare4,'S\:(.+);',1,1,'i',1), 1, 40) <> '0000000000000000000000000000000000000000';
 SPOOL OFF
 -- EOF ---------------------------------------------------------------------
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
