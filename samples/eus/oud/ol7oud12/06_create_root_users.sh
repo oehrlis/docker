@@ -11,7 +11,8 @@
 # Purpose....: Script to create additional root user.
 # Notes......: The users are created by loading 05_create_root_users.ldif.
 # Reference..: https://github.com/oehrlis/oudbase
-# License....: GPL-3.0+
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------
 # Modified...:
 # see git revision history with git log for more information on changes
