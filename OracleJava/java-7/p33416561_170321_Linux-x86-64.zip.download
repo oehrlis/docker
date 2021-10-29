@@ -1,0 +1,10 @@
+# Oracle SERVER JRE 7 Update 321 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=33416561
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p33416561_170321_Linux-x86-64.zip?aru=24458969&patch_file=p33416561_170321_Linux-x86-64.zip
+
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+5643D83C0C96FEF18D7C5B787B48326D391D44A02F8567E51651511F081AFAF0 p33416561_170321_Linux-x86-64.zip
