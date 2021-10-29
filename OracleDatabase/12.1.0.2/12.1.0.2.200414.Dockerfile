@@ -69,7 +69,9 @@ RUN   mkdir -p ${DOWNLOAD} && \
       ${DOWNLOAD}/${SETUP_INIT}
 
 # Setup OS using OraDBA init script
-RUN   ${ORADBA_INIT}/${SETUP_OS}
+RUN   ${ORADBA_INIT}/${SETUP_OS} && \
+      yum install -y gcc && \
+      rm -rf /var/cache/yum
 
 # Set Version specific stuff
 # ----------------------------------------------------------------------
