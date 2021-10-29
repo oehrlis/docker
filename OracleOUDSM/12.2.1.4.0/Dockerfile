@@ -70,7 +70,7 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # Install Java
 # ----------------------------------------------------------------------
 # Setup JAVA using OraDBA init script
-ENV JAVA_PKG="p32726653_180301_Linux-x86-64.zip"
+ENV JAVA_PKG="p33416544_181311_Linux-x86-64.zip"
 RUN  ${ORADBA_INIT}/${SETUP_JAVA}
 COPY config/java.security /usr/java/latest/jre/lib/security/java.security
 
@@ -85,10 +85,10 @@ ENV   SETUP_OUD="10_setup_oud.sh" \
 # set OUD specific parameters
 ENV   OUD_BASE_PKG="p30188352_122140_Generic.zip" \
       FMW_BASE_PKG="fmw_12.2.1.4.0_infrastructure_Disk1_1of1.zip" \
-      OUD_PATCH_PKG="p32730494_122140_Generic.zip" \
-      FMW_PATCH_PKG="p33059296_122140_Generic.zip" \
-      COHERENCE_PATCH_PKG="p32973297_122140_Generic.zip" \
-      OUD_OPATCH_PKG="p28186730_139426_Generic.zip" \
+      OUD_PATCH_PKG="p33448950_122140_Generic.zip" \
+      FMW_PATCH_PKG="p33416868_122140_Generic.zip" \
+      COHERENCE_PATCH_PKG="p33286160_122140_Generic.zip" \
+      OUD_OPATCH_PKG="p28186730_139427_Generic.zip" \
       OUD_ONEOFF_PKGS="" \
       OUI_PATCH_PKG=""
 
