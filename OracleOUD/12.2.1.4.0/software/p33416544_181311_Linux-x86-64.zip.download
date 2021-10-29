@@ -1,0 +1,9 @@
+# Oracle SERVER JRE 8 Update 311 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=33416544
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p33416544_181311_Linux-x86-64.zip?aru=24458881&patch_file=p33416544_181311_Linux-x86-64.zip
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+8258D28FBAC900CCC2B76D07EAB4805F3C1A6BA484E9C6781425E05F421C892B p33416544_181311_Linux-x86-64.zip
