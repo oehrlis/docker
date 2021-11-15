@@ -102,8 +102,7 @@ FROM  base AS builder
 # COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 # COPY RU patch if part of the build context
-COPY  --chown=oracle:oinstall software/*U_*/${DB_PATCH_PKG}* "${SOFTWARE}/"
-COPY  --chown=oracle:oinstall software/*U_*/${DB_OJVM_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/PSU_12.1.0.2.200114/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
