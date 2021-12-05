@@ -1,6 +1,6 @@
 #!/bin/bash
 # -----------------------------------------------------------------------------
-# Trivadis AG, Infrastructure Managed Services
+# Trivadis - Part of Accenture, Platform Factory - Transactional Data Platform
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # -----------------------------------------------------------------------------
 # Name.......: buildDB.sh 
@@ -11,8 +11,8 @@
 # Purpose....: Build script to build Oracle database Docker image
 # Notes......: 
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
-#              shown at http://oss.oracle.com/licenses/upl.
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates
@@ -21,6 +21,7 @@
 # - Customization -----------------------------------------------------------
 DOCKER_USER=${DOCKER_USER:-"oracle"}
 DOCKER_REPO=${DOCKER_REPO:-"database"}
+BUILD_FLAG=${BUILD_FLAG:-""}
 DOCKER_BASE_IMAGE="oraclelinux:7-slim"
 SCRIPT_NAME=$(basename $0)
 RELEASES="$@"
@@ -35,7 +36,8 @@ if [ -n "$ORAREPO" ]; then
 else
     ORAREPO_FLAG=""
 fi
-export DOCKER_BUILDKIT=1
+
+#export DOCKER_BUILDKIT=1
 # - EOF Default Values ------------------------------------------------------
 
 CURRENT_DIR=$(pwd)
@@ -72,7 +74,7 @@ else
             echo "INFO : from Dockerfile=${DOCKER_FILE}"
             DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
             cd ${DOCKER_BUILD_DIR}  # change working directory
-            docker build ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
+            time docker build ${BUILD_FLAG} ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
             docker image prune --force
         else
             echo "WARN : Dockerfile $DOCKER_FILE not available"
@@ -80,4 +82,5 @@ else
     done
     cd $CURRENT_DIR # go back to initial working directory
 fi
-# --- EOF -------------------------------------------------------------------
+
+# --- EOF --------------------------------------------------------------

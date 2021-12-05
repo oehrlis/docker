@@ -1,6 +1,6 @@
 #!/bin/bash
 # -----------------------------------------------------------------------------
-# Trivadis AG, Infrastructure Managed Services
+# Trivadis - Part of Accenture, Platform Factory - Transactional Data Platform
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # -----------------------------------------------------------------------------
 # Name.......: buildAllDB.sh 
@@ -11,8 +11,8 @@
 # Purpose....: Build script to build all trivadis/xxx docker images
 # Notes......: 
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
-#              shown at http://oss.oracle.com/licenses/upl.
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates
@@ -40,7 +40,7 @@ for i in ${ORACLE_IMAGES}; do
     echo "INFO : tag image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version"
     docker tag ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version ${DOCKER_USER}/${DOCKER_REPO}:$version
     echo "INFO : push image ${DOCKER_USER}/${DOCKER_REPO}:$version"
-    docker push ${DOCKER_USER}/${DOCKER_REPO}:$version
+    time docker push ${DOCKER_USER}/${DOCKER_REPO}:$version
     echo "INFO : untag image ${DOCKER_USER}/${DOCKER_REPO}:$version"
     docker rmi ${DOCKER_USER}/${DOCKER_REPO}:$version
     ((j++))                 # increment counter

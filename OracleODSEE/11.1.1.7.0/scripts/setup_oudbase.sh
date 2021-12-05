@@ -1,6 +1,6 @@
 #!/bin/bash
 # -----------------------------------------------------------------------------
-# Trivadis AG, Infrastructure Managed Services
+# Trivadis - Part of Accenture, Platform Factory - Transactional Data Platform
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # -----------------------------------------------------------------------------
 # Name.......: setup_oudbase.sh 
@@ -12,8 +12,8 @@
 # Notes......: The script does download the latest version of OUD Base from
 #              GitHub and install it in ${ORACLE_BASE}
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
-#              shown at http://oss.oracle.com/licenses/upl.
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates

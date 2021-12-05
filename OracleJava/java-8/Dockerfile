@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------
-# Trivadis AG, Infrastructure Managed Services
+# Trivadis - Part of Accenture, Platform Factory - Transactional Data Platform
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ----------------------------------------------------------------------
 # Name.......: Dockerfile 
@@ -12,8 +12,8 @@
 #              Java 1.8.
 #              Build this image : docker build -t oracle/serverjre:8 .
 # Reference..: https://github.com/oracle/docker-images/tree/master/OracleJava
-# License....: Licensed under the Universal Permissive License v 1.0 as 
-#              shown at http://oss.oracle.com/licenses/upl.
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # ----------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates
@@ -45,7 +45,7 @@ ADD $JAVA_PKG /usr/java/
 
 # Install Java respectively update alternatives for Java
 # ----------------------------------------------------------------------
-RUN export JAVA_DIR=$(ls -1 -d /usr/java/*) && \
+RUN export JAVA_DIR=$(ls -1 -d /usr/java/*|tail -1) && \
     ln -s $JAVA_DIR /usr/java/latest && \
     ln -s $JAVA_DIR /usr/java/default && \
     alternatives --install /usr/bin/java java $JAVA_DIR/bin/java 20000 && \

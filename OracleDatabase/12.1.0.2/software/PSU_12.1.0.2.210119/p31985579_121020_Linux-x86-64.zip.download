@@ -1,0 +1,11 @@
+# DATABASE PATCH SET UPDATE 12.1.0.2.210119 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=31985579
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p31985579_121020_Linux-x86-64.zip?aru=24004970&patch_file=p31985579_121020_Linux-x86-64.zip
+
+#
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+2010180B075C5128E19D546DD40CF18817224AD80B933092810DDD901EA93837 p31985579_121020_Linux-x86-64.zip

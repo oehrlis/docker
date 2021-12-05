@@ -1,5 +1,4 @@
 
-#!/bin/bash
 # -----------------------------------------------------------------------
 # Trivadis AG, Business Development & Support (BDS)
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
@@ -7,31 +6,199 @@
 # Name.......: 02_config_basedn.ldif
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2018.03.18
+# Date.......: 2020.06.30
 # Revision...: --
 # Purpose....: Configure base DN and add ou's for users and groups
 # Notes......: The LDIF file is loaded by the script 02_config_basedn.sh 
 #              If necessary it can also be imported manually.
 #
 # Reference..: https://github.com/oehrlis/oudbase
-# License....: GPL-3.0+
+# License....: Licensed under the Universal Permissive License v 1.0 as 
+#              shown at https://oss.oracle.com/licenses/upl.
 # -----------------------------------------------------------------------
 # Modified...:
 # see git revision history with git log for more information on changes
 # -----------------------------------------------------------------------
 
 #version: 1
-
-dn: ou=People,dc=trivadislabs,dc=com
+# - Update Structure ----------------------------------------------------
+# Description: Add different containers and OUs.
+# -----------------------------------------------------------------------
+# container for regular users
+dn: ou=USER_OU,BASEDN
 changetype: add
 ObjectClass: top
 ObjectClass: organizationalUnit
-ou: People
+ou: USER_OU
+aci: (target = "ldap:///ou=USER_OU,BASEDN")(targetattr != "authpassword || aci || userpassword")(targetscope = "subtree") (version 3.0; acl "Self entry read AD Users"; allow (search,read) userdn = "ldap:///self";)
+aci: (target = "ldap:///ou=USER_OU,BASEDN")(targetattr = "* || +")(targetscope = "subtree") (version 3.0; acl "User/People write access"; allow (compare,read,add,write,delete,search) groupdn = "ldap:///ou=group_people_rw,ou=groups,ou=local,BASEDN";)
+aci: (target = "ldap:///ou=USER_OU,BASEDN")(targetattr = "* || +")(targetscope = "subtree") (version 3.0; acl "User/People read access"; allow (search,read) groupdn = "ldap:///ou=group_people_ro,ou=groups,ou=local,BASEDN";)
 
-dn: ou=Groups,dc=trivadislabs,dc=com
+# container for regular groups
+dn: ou=GROUP_OU,BASEDN
 changetype: add
 ObjectClass: top
 ObjectClass: organizationalUnit
-ou: Groups
+ou: GROUP_OU
+aci: (target = "ldap:///ou=GROUP_OU,BASEDN")(targetattr != "authpassword || aci || userpassword")(targetscope = "subtree") (version 3.0; acl "Self entry read AD Users"; allow (search,read) userdn = "ldap:///self";)
+aci: (target = "ldap:///ou=GROUP_OU,BASEDN")(targetattr = "* || +")(targetscope = "subtree") (version 3.0; acl "Groups write access"; allow (compare,read,add,write,delete,search) groupdn = "ldap:///ou=group_groups_rw,ou=groups,ou=local,BASEDN";)
+aci: (target = "ldap:///ou=GROUP_OU,BASEDN")(targetattr = "* || +")(targetscope = "subtree") (version 3.0; acl "Groups read access"; allow (search,read) groupdn = "ldap:///ou=group_groups_ro,ou=groups,ou=local,BASEDN";)
+
+# local container for user and groups
+dn: ou=local,BASEDN
+changetype: add
+ObjectClass: top
+ObjectClass: organizationalUnit
+Description: local user and groups maintained by OUD
+ou: local
+aci: (target = "ldap:///ou=local,BASEDN")(targetattr != "authpassword || aci || userpassword")(targetscope = "subtree") (version 3.0; acl "Self entry read AD Users"; allow (search,read) userdn = "ldap:///self";)
+aci: (target = "ldap:///ou=local,BASEDN")(targetattr = "* || +")(targetscope = "subtree") (version 3.0; acl "Local/local write access"; allow (compare,read,add,write,delete,search) groupdn = "ldap:///ou=group_int_rw,ou=groups,ou=local,BASEDN";)
+aci: (target = "ldap:///ou=local,BASEDN")(targetattr = "* || +")(targetscope = "subtree") (version 3.0; acl "Local/local read access"; allow (search,read) groupdn = "ldap:///ou=group_int_ro,ou=groups,ou=local,BASEDN";)
+
+# local container for users
+dn: ou=users,ou=local,BASEDN
+changetype: add
+ObjectClass: top
+ObjectClass: organizationalUnit
+Description: local user maintained by OUD
+ou: users
+
+# local container for users
+dn: ou=groups,ou=local,BASEDN
+changetype: add
+ObjectClass: top
+ObjectClass: organizationalUnit
+Description: local groups maintained by OUD
+ou: groups
+
+# - Add groups and roles ------------------------------------------------
+# Description: Add different groups and roles
+# -----------------------------------------------------------------------
+# add role for OUD Admins
+dn: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: role_oud_admins
+description: OUD admin role has password reset, modify acl, bypass acl and unindex search privilege
+ou: role_oud_admins
+uniquemember: cn=Directory Manager
+uniquemember: cn=oudadmin,cn=Root DNs,cn=config
+
+# add role for EUS Admins
+dn: ou=role_eus_admins,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: role_eus_admins
+description: EUS admin role has password reset privilege
+ou: role_eus_admins
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+
+# add role for IAM Admins
+dn: ou=role_iam_admins,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: role_iam_admins
+description: IAM admin role has a couple of privileges
+ou: role_iam_admins
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+
+# add group for int read write
+dn: ou=group_int_rw,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: group_int_rw
+description: Group group_int_rw has all read/write privilges on ou=local,BASEDN
+ou: group_int_rw
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+
+# add group for int read write
+dn: ou=group_int_ro,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: group_int_ro
+description: Group group_int_ro has all read privilges on ou=local,BASEDN
+ou: group_int_ro
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+uniquemember: ou=role_iam_admins,ou=groups,ou=local,BASEDN
+
+# add group for People read write
+dn: ou=group_people_rw,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: group_people_rw
+description: Group group_people_rw has all read/write privilges on ou=People,BASEDN
+ou: group_people_rw
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+uniquemember: ou=role_iam_admins,ou=groups,ou=local,BASEDN
+
+# add group for People read write
+dn: ou=group_people_ro,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: group_people_ro
+description: Group group_people_ro has all read privilges on ou=People,BASEDN
+ou: group_people_ro
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+uniquemember: ou=role_iam_admins,ou=groups,ou=local,BASEDN
+uniquemember: ou=role_eus_admins,ou=groups,ou=local,BASEDN
+
+# add group for Groups read write
+dn: ou=group_groups_rw,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: group_groups_rw
+description: Group group_groups_rw has all read/write privilges on ou=Groups,BASEDN
+ou: group_groups_rw
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+uniquemember: ou=role_iam_admins,ou=groups,ou=local,BASEDN
+
+# add group for int read write
+dn: ou=group_groups_ro,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: group_groups_ro
+description: Group group_groups_ro has all read privilges on ou=Groups,BASEDN
+ou: group_groups_ro
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+uniquemember: ou=role_iam_admins,ou=groups,ou=local,BASEDN
+uniquemember: ou=role_eus_admins,ou=groups,ou=local,BASEDN
+
+# add group for all read write
+dn: ou=group_all_rw,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: group_all_rw
+description: Group group_all_rw has all read/write privilges on BASEDN
+ou: group_all_rw
+uniquemember: cn=Directory Manager
+uniquemember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+
+# add group for all read only
+dn: ou=group_all_ro,ou=groups,ou=local,BASEDN
+objectClass: groupOfUniquenames
+objectClass: top
+cn: group_all_ro
+description: Group group_all_ro has all read privilges on BASEDN
+ou: group_all_ro
+uniqueMember: ou=role_oud_admins,ou=groups,ou=local,BASEDN
+
+# - Add ACIs ------------------------------------------------------------
+# Description: Add different ACIs
+# -----------------------------------------------------------------------
+dn: BASEDN
+changetype: modify
+add: aci
+aci: (target = "ldap:///BASEDN")(targetattr = "* || +")(targetscope = "onelevel") (version 3.0; acl "Authenticated users base tree"; allow (search,read) userdn = "ldap:///all";)
+aci: (target = "ldap:///BASEDN")(targetattr = "* || +")(targetscope = "base") (version 3.0; acl "Anonymous read access to subtree"; allow (search,read) userdn = "ldap:///anyone";)
+aci: (target = "ldap:///BASEDN")(targetattr = "* || +")(targetscope = "subtree") (version 3.0; acl "All full write access"; allow (compare,read,add,write,delete,search) groupdn = "ldap:///ou=group_all_rw,ou=groups,ou=local,BASEDN";)
+aci: (target = "ldap:///BASEDN")(targetattr = "* || +")(targetscope = "subtree") (version 3.0; acl "All full read access"; allow (search,read) groupdn = "ldap:///ou=group_all_ro,ou=groups,ou=local,BASEDN";)
 
 # - EOF -----------------------------------------------------------------

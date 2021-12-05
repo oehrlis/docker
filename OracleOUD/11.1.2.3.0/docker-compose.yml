@@ -11,7 +11,8 @@
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
-# License....: GPL-3.0+
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------
 # Modified...:
 # see git revision history with git log for more information on changes
@@ -21,7 +22,7 @@ services:
 
 # single tenant database
   oud11g:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:11.1.2.3.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:11.1.2.3.200625
     container_name: oud11g
     hostname: oud11g
     restart: unless-stopped

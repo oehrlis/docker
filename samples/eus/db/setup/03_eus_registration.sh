@@ -11,7 +11,8 @@
 # Purpose....: Script to configure the EUS for Database.
 # Notes......: --
 # Reference..: https://github.com/oehrlis/oudbase
-# License....: GPL-3.0+
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------
 # Modified...:
 # see git revision history with git log for more information on changes
@@ -42,7 +43,7 @@ echo "  EUS_ADMIN           :   ${EUS_ADMIN}"
 echo "  SYS_PWD_FILE        :   ${SYS_PWD_FILE}"
 echo "  WALLET_PWD_FILE     :   ${WALLET_PWD_FILE}"
 echo "  EUS_PWD_FILE        :   ${EUS_PWD_FILE}"
-$ORACLE_HOME/bin/dbca -silent -configureDatabase \
+echo $ORACLE_HOME/bin/dbca -silent -configureDatabase \
 -sourceDB ${ORACLE_SID} -sysDBAUserName sys -sysDBAPassword $(cat ${SYS_PWD_FILE}) \
 -registerWithDirService true -dirServiceUserName ${EUS_ADMIN} \
 -dirServicePassword $(cat ${EUS_PWD_FILE}) -walletPassword $(cat ${WALLET_PWD_FILE}) 

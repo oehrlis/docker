@@ -1,0 +1,299 @@
+# 22/Jun/2020:19:59:27 +0000; conn=574; op=49
+dn: cn=File-Based Audit Logger,cn=Loggers,cn=config
+changetype: modify
+replace: ds-cfg-enabled
+ds-cfg-enabled: true
+-
+replace: modifiersName
+modifiersName: cn=Directory Manager
+-
+replace: modifyTimestamp
+modifyTimestamp: 20200622195927Z
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=2
+dn: cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: orclApplicationEntity
+objectClass: orclService
+objectClass: orclDBServer
+objectClass: top
+objectClass: orclDBServer_92
+cn: TEUS01
+orclEntryLevelAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGRuPSJjbj1ldXNhZG1pbixjbj1vcmFjbGVjb250ZXh0IiAoYWRkKSA=
+orclEntryLevelAci:: YWNjZXNzIHRvIGF0dHI9KCopIGJ5IGRuPSJjbj1ldXNhZG1pbixjbj1vcmFjbGVjb250ZXh0IiAocmVhZCwgd3JpdGUpIA==
+orclAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGRuPSJjbj1ldXNhZG1pbixjbj1vcmFjbGVjb250ZXh0IiAoYnJvd3NlLCBhZGQsIGRlbGV0ZSkg
+orclAci:: YWNjZXNzIHRvIGF0dHI9KCopIGJ5IGRuPSJjbj1ldXNhZG1pbixjbj1vcmFjbGVjb250ZXh0IiAoY29tcGFyZSwgc2VhcmNoLCByZWFkLCBzZWxmd3JpdGUsIHdyaXRlKSA=
+orclNetDescString: (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=eusdb)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=TEUS01)))
+orclNetDescName: 000:cn=DESCRIPTION_0
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: 89F0D8C87C8740D59E651E495A19FAAE
+entryUUID: 89f0d8c8-7c87-40d5-9e65-1e495a19faae
+hasSubordinates: false
+nsUniqueId: 89f0d8c8-7c8740d5-9e651e49-5a19faae
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: orclDBServer_92
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=5
+dn: cn=DESCRIPTION_0, cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: top
+objectClass: orclNetDescription
+objectClass: orclNetDescriptionAux1
+orclVersion: v0.0
+cn: DESCRIPTION_0
+orclNetAddrList: 000:cn=ADDRESS_0
+orclNetLoadBalance: NO
+orclNetShared: NO
+orclNetServiceName: TEUS01
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=description_0,cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: 824B1BAFEDA449E5986D53EFACF92F1C
+entryUUID: 824b1baf-eda4-49e5-986d-53efacf92f1c
+hasSubordinates: false
+nsUniqueId: 824b1baf-eda449e5-986d53ef-acf92f1c
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: orclNetDescription
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=8
+dn: cn=ADDRESS_0, cn=DESCRIPTION_0,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: top
+objectClass: orclNetAddress
+orclVersion: v0.0
+cn: ADDRESS_0
+orclNetAddressString: (ADDRESS=(PROTOCOL=TCP)(HOST=eusdb)(PORT=1521))
+orclNetProtocol: TCP
+orclNetShared: NO
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=address_0,cn=description_0,cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: 86C221BDCA5C47BD9242E47E81D2ED74
+entryUUID: 86c221bd-ca5c-47bd-9242-e47e81d2ed74
+hasSubordinates: false
+nsUniqueId: 86c221bd-ca5c47bd-9242e47e-81d2ed74
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: orclNetAddress
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=11
+dn: cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+add: orclServiceType
+orclServiceType: DB
+-
+add: orclOracleHome
+orclOracleHome: /u00/app/oracle/product/19.0.0.0
+-
+add: orclSystemName
+orclSystemName: eusdb
+-
+add: orclSid
+orclSid: TEUS01
+-
+add: orclVersion
+orclVersion: 121000
+-
+replace: modifiersName
+modifiersName: cn=eusadmin,cn=OracleContext
+-
+replace: modifyTimestamp
+modifyTimestamp: 20200622200001Z
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=14
+dn: cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+add: orclDBGlobalName
+orclDBGlobalName: TEUS01
+-
+add: userPassword
+userPassword: *****
+-
+replace: modifiersName
+modifiersName: cn=eusadmin,cn=OracleContext
+-
+replace: modifyTimestamp
+modifyTimestamp: 20200622200001Z
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=17
+dn: cn=OracleDBAdmins,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: orclprivilegegroup
+objectClass: top
+objectClass: groupofuniquenames
+uniquemember: cn=eusadmin,cn=oraclecontext
+cn: OracleDBAdmins
+owner: cn=OracleDBAdmins,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=oracledbadmins,cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: EDF6F25F624A4BCDA8AEBAE1260E292E
+entryUUID: edf6f25f-624a-4bcd-a8ae-bae1260e292e
+hasSubordinates: false
+nsUniqueId: edf6f25f-624a4bcd-a8aebae1-260e292e
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: groupOfUniqueNames
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=20
+dn: cn=OracleDBAdmins,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+add: orclAci
+orclAci: access to entry by * (none)
+orclAci: access to attr=(*) by * (none)
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=22
+dn: cn=OracleDBAgents,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: top
+objectClass: orclContainer
+cn: OracleDBAgents
+orclAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoYnJvd3NlLCBhZGQsIGRlbGV0ZSkg
+orclAci:: YWNjZXNzIHRvIGF0dHI9KCopIGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoY29tcGFyZSwgc2VhcmNoLCByZWFkLCB3cml0ZSkg
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=oracledbagents,cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: B9D45045FE274EAEBD8180E93AC6B830
+entryUUID: b9d45045-fe27-4eae-bd81-80e93ac6b830
+hasSubordinates: false
+nsUniqueId: b9d45045-fe274eae-bd8180e9-3ac6b830
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: orclContainer
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=25
+dn: cn=OracleDBQueues,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: top
+objectClass: orclContainer
+cn: OracleDBQueues
+orclAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoYnJvd3NlLCBhZGQsIGRlbGV0ZSkg
+orclAci:: YWNjZXNzIHRvIGF0dHI9KCopIGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoY29tcGFyZSwgc2VhcmNoLCByZWFkLCB3cml0ZSkg
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=oracledbqueues,cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: EEEEA92FFC454A22A238F116FC1CE2E4
+entryUUID: eeeea92f-fc45-4a22-a238-f116fc1ce2e4
+hasSubordinates: false
+nsUniqueId: eeeea92f-fc454a22-a238f116-fc1ce2e4
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: orclContainer
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=28
+dn: cn=OracleDBQueueTables,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: top
+objectClass: orclContainer
+cn: OracleDBQueueTables
+orclAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoYnJvd3NlLCBhZGQsIGRlbGV0ZSkg
+orclAci:: YWNjZXNzIHRvIGF0dHI9KCopIGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoY29tcGFyZSwgc2VhcmNoLCByZWFkLCB3cml0ZSkg
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=oracledbqueuetables,cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: 7E7A9392FDD7447694CB3E47645B59D8
+entryUUID: 7e7a9392-fdd7-4476-94cb-3e47645b59d8
+hasSubordinates: false
+nsUniqueId: 7e7a9392-fdd74476-94cb3e47-645b59d8
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: orclContainer
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=31
+dn: cn=OracleDBConnections,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: top
+objectClass: orclContainer
+cn: OracleDBConnections
+orclAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoYnJvd3NlLCBhZGQsIGRlbGV0ZSkg
+orclAci:: YWNjZXNzIHRvIGF0dHI9KCopIGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoY29tcGFyZSwgc2VhcmNoLCByZWFkLCB3cml0ZSkg
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=oracledbconnections,cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: EF161FE954434D99B140529F419AA0B2
+entryUUID: ef161fe9-5443-4d99-b140-529f419aa0b2
+hasSubordinates: false
+nsUniqueId: ef161fe9-54434d99-b140529f-419aa0b2
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: orclContainer
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=34
+dn: cn=OracleDBJMSSubscribers,cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: add
+objectClass: top
+objectClass: orclContainer
+cn: OracleDBJMSSubscribers
+orclAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoYnJvd3NlLCBhZGQsIGRlbGV0ZSkg
+orclAci:: YWNjZXNzIHRvIGF0dHI9KCopIGJ5IGRuPSJjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoY29tcGFyZSwgc2VhcmNoLCByZWFkLCB3cml0ZSkg
+creatorsName: cn=eusadmin,cn=OracleContext
+modifyTimestamp: 20200622200001Z
+entryDN: cn=oracledbjmssubscribers,cn=teus01,cn=oraclecontext,dc=trivadislabs,dc=com
+modifiersName: cn=eusadmin,cn=OracleContext
+orclGUID: 618623B2D9AA43A0BE853705481AAE98
+entryUUID: 618623b2-d9aa-43a0-be85-3705481aae98
+hasSubordinates: false
+nsUniqueId: 618623b2-d9aa43a0-be853705-481aae98
+pwdPolicySubentry: cn=Default Password Policy,cn=Password Policies,cn=config
+createTimestamp: 20200622200001Z
+structuralObjectClass: orclContainer
+subschemaSubentry: cn=schema
+numSubordinates: 0
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=37
+dn: cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+add: orclAci
+orclAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGdyb3VwPSJjbj1PcmFjbGVEQkFkbWlucyxjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIihicm93c2UsIGFkZCwgZGVsZXRlKSA=
+orclAci:: YWNjZXNzIHRvIGF0dHI9KCopIGJ5IGdyb3VwPSJjbj1PcmFjbGVEQkFkbWlucyxjbj1URVVTMDEsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoY29tcGFyZSwgc2VhcmNoLCByZWFkLCBzZWxmd3JpdGUsIHdyaXRlKSA=
+orclAci: access to entry by self (browse, noadd, nodelete)
+orclAci: access to attr=(*) by self (read, search, nowrite, compare)
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=40
+dn: cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+add: orclEntryLevelAci
+orclEntryLevelAci:: YWNjZXNzIHRvIGVudHJ5IGJ5IGdyb3VwPSJjbj1PcmFjbGVOZXRBZG1pbnMsY249T3JhY2xlQ29udGV4dCxkYz10cml2YWRpc2xhYnMsZGM9Y29tIiAoYWRkKSA=
+orclEntryLevelAci: access to entry by * (browse, noadd, nodelete)
+orclEntryLevelAci: access to attr=(objectclass) by * (read, nowrite, search, compare)
+
+# 22/Jun/2020:20:00:01 +0000; conn=624; op=43
+dn: cn=OracleDefaultDomain, cn=OracleDBSecurity, cn=Products, cn=OracleContext,dc=trivadislabs,dc=com
+changetype: modify
+add: uniqueMember
+uniqueMember: cn=TEUS01,cn=OracleContext,dc=trivadislabs,dc=com
+-
+replace: modifiersName
+modifiersName: cn=eusadmin,cn=OracleContext
+-
+replace: modifyTimestamp
+modifyTimestamp: 20200622200001Z
+

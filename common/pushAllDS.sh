@@ -1,6 +1,6 @@
 #!/bin/bash
 # -----------------------------------------------------------------------------
-# Trivadis AG, Infrastructure Managed Services
+# Trivadis - Part of Accenture, Platform Factory - Transactional Data Platform
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # -----------------------------------------------------------------------------
 # Name.......: pushAllDS.sh 
@@ -11,8 +11,8 @@
 # Purpose....: Build script to push all directory server Docker images to trivadis/xxx
 # Notes......: 
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
-#              shown at http://oss.oracle.com/licenses/upl.
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates
@@ -37,7 +37,7 @@ for r in ${LOCAL_REPO}; do
         echo " tag image ${DOCKER_LOCAL_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
         docker tag ${DOCKER_LOCAL_USER}/${DOCKER_ORA_REPO}:$version ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
         echo " push image ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
-        docker push ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
+        time docker push ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
         echo " untag image ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version"
         docker rmi ${DOCKER_USER}/${DOCKER_TVD_REPO}:$version
     done

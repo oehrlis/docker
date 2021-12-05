@@ -1,12 +1,12 @@
 # ----------------------------------------------------------------------
-# Trivadis AG, Infrastructure Managed Services
+# Trivadis - Part of Accenture, Platform Factory - Transactional Data Platform
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ----------------------------------------------------------------------
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2019.10.17
-# Purpose....: Dockerfile to build Oracle Database image 19.4.0.0
+# Date.......: 2020.03.11
+# Purpose....: Dockerfile to build Oracle Database image 19.3.0.0
 # Notes......: --
 # Reference..: --
 # License....: Licensed under the Universal Permissive License v 1.0 as
@@ -44,6 +44,8 @@ ENV   DOWNLOAD="/tmp/download" \
 # scripts to build and run this container
 ENV   SETUP_INIT="00_setup_oradba_init.sh" \
       SETUP_OS="01_setup_os_db.sh" \
+      SETUP_DB="10_setup_db.sh" \
+      PATCH_DB="11_setup_db_patch.sh" \
       SETUP_BASENV="20_setup_basenv.sh" \
       RUN_SCRIPT="50_run_database.sh" \
       START_SCRIPT="51_start_database.sh" \
@@ -73,28 +75,22 @@ RUN   ${ORADBA_INIT}/${SETUP_OS}
 # ----------------------------------------------------------------------
 # scripts to build and run this container
 # set DB specific package variables
-ENV   SETUP_DB="10_setup_db.sh" \
-      DB_BASE_PKG="LINUX.X64_193000_db_home.zip" \
-      DB_EXAMPLE_PKG="" \
-      DB_PATCH_PKG="p29834717_190000_Linux-x86-64.zip" \
-      DB_OJVM_PKG="p29834717_190000_Linux-x86-64.zip" \
-      DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip"
+ENV   DB_BASE_PKG="LINUX.X64_193000_db_home.zip"
 
 # stuff to run a DB instance
 ENV   ORACLE_SID=${ORACLE_SID:-"TDB190S"} \
       ORACLE_HOME_NAME="19.0.0.0" \
-      ORACLE_MAJOR_RELEASE="190" \
       DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
       PORT=${PORT:-1521} \
-      PORT_CONSOLE=${PORT_CONSOLE:-5500}
+      PORT_CONSOLE=${PORT_CONSOLE:-5500} \
+      PATCH_LATER=TRUE
 
 # same same but different ...
 # third ENV so that variable get substituted
 ENV   PATH=${PATH}:"${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/bin:${ORADBA_INIT}:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/OPatch/:/usr/sbin:$PATH" \
       ORACLE_HOME=${ORACLE_BASE}/product/${ORACLE_HOME_NAME} \
       LD_LIBRARY_PATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/lib:/usr/lib" \
-      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib" \
-      RESPONSFILE_VERSION="oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v19.0.0"
+      CLASSPATH="${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/jlib:${ORACLE_BASE}/product/${ORACLE_HOME_NAME}/rdbms/jlib"
 
 # New stage for installing the database binaries
 # ----------------------------------------------------------------------
@@ -103,17 +99,28 @@ FROM  base AS builder
 # COPY base database software if part of the build context
 COPY  --chown=oracle:oinstall software/*zip* "${SOFTWARE}/"
 # COPY RU patch if part of the build context
-COPY  --chown=oracle:oinstall software/RU*/${DB_PATCH_PKG}* "${SOFTWARE}/"
-COPY  --chown=oracle:oinstall software/RU*/${DB_OJVM_PKG}* "${SOFTWARE}/"
+COPY  --chown=oracle:oinstall software/RU_19.4.0.0/*zip* "${SOFTWARE}/"
 
 # RUN as oracle
 # Switch to user oracle, oracle software has to be installed as regular user
 # ----------------------------------------------------------------------
 USER  oracle
+# Install Oracle Binaries
 RUN   ${ORADBA_INIT}/${SETUP_DB}
 
 # Install BasEnv
 RUN   ${ORADBA_INIT}/${SETUP_BASENV}
+
+# Define variables for Patch installation
+ENV   DB_PATCH_PKG="p29834717_190000_Linux-x86-64.zip" \
+      DB_OJVM_PKG="p29834717_190000_Linux-x86-64.zip" \
+      DB_OPATCH_PKG="p6880880_190000_Linux-x86-64.zip" \
+      DB_JDKPATCH_PKG="p31301460_190000_Linux-x86-64.zip" \
+      DB_PERLPATCH_PKG="p29511771_190000_Linux-x86-64.zip" \
+      DB_ONEOFF_PKGS=""
+      
+# Install Oracle Patch's
+RUN   ${ORADBA_INIT}/${PATCH_DB}
 
 # New layer for database runtime
 # ----------------------------------------------------------------------

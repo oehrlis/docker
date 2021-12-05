@@ -11,7 +11,8 @@
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
-# License....: GPL-3.0+
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------
 # Modified...:
 # see git revision history with git log for more information on changes
@@ -21,7 +22,7 @@ services:
 
 # single tenant database
   tdb190s:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.5.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.9.0.0
     container_name: tdb190s
     hostname: tdb190s
     restart: unless-stopped
@@ -38,7 +39,7 @@ services:
 
 # multitenant tenant database
   tdb190c:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.5.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.8.0.0
     container_name: tdb190c
     hostname: tdb190c
     restart: unless-stopped

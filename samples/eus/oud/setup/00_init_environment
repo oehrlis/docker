@@ -6,7 +6,7 @@
 # Name.......: 00_init_environment
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2018.03.20
+# Date.......: 2020.06.30
 # Revision...: --
 # Purpose....: File for setting the instance-specific environment. 
 #              The setup scripts are based on the OUD Base environment. 
@@ -15,7 +15,8 @@
 #              environment variables"
 # Notes......: --
 # Reference..: https://github.com/oehrlis/oudbase
-# License....: GPL-3.0+
+# License....: Licensed under the Universal Permissive License v 1.0 as 
+#              shown at https://oss.oracle.com/licenses/upl.
 # -----------------------------------------------------------------------
 # Modified...:
 # see git revision history with git log for more information on changes
@@ -36,24 +37,41 @@
 #export PORT=1389
 #export PORT_SSL=1636
 #export PORT_REP=8989
+#export PORT_REP=8989
+#export PORT_REST_ADMIN=8444
+#export PORT_REST_HTTP=1080
+#export PORT_REST_HTTPS=1081
 # - End of default environment variables --------------------------------
 
 # - Customization -------------------------------------------------------
 # - Instance information
 export DIRMAN="cn=Directory Manager"
 export REPMAN=admin
-export BASEDN="dc=trivadislabs,dc=com"
+export BASEDN=${BASEDN:-"dc=trivadislabs,dc=com"}
+export BASEDN_STRING=$(echo $BASEDN|sed 's/\(dc\|o\|ou\)=//g; s/,/_/g;')
+export DEFAULT_PASSWORD="LAB01schulung"         # default password for ldap users (none admin users)
+export DEFAULT_ADMIN_PASSWORD="LAB01schulung"   # default password for ldap admin users
 
-# group OU below base DN in active directory eg ou=groups,dc=postgasse,dc=org
-export GROUP_OU="ou=Groups,dc=trivadislabs,dc=com"
-# user OU below base DN in active directory eg ou=people,dc=postgasse,dc=org
-export USER_OU="ou=People,dc=trivadislabs,dc=com"
+export GROUP_OU="Groups"                        # group OU below base DN eg ou=groups,dc=postgasse,dc=org
+export USER_OU="People"                         # user OU below base DN eg ou=people,dc=postgasse,dc=org
 
 # - Certificates and password
 export KEYSTOREFILE=${OUD_INSTANCE_HOME}/OUD/config/keystore
 export KEYSTOREPIN=${OUD_INSTANCE_HOME}/OUD/config/keystore.pin
 #export NICKNAME="NICKNAME"
 #export PIN="PIN"
+
+# EUS Configuration
+export EUS_USER_NAME="eusadmin"
+export EUS_USER_DN="cn=${EUS_USER_NAME},cn=oraclecontext"
+export COMMON_FILES="/u01/common"
+export EUSADMIN_USERS_PWD_FILE=${COMMON_FILES}/etc/${EUS_USER_NAME}_pwd.txt
+export EUSADMIN_USERS_DN_FILE=${COMMON_FILES}/etc/${EUS_USER_NAME}_dn.txt
+echo ${EUS_USER_DN} >${EUSADMIN_USERS_DN_FILE}
+export TRUSTED_CERT_FILE=${COMMON_FILES}/etc/oud_trusted_cert.txt
+
+# Password files
+export DEFAULT_USERS_PWD_FILE=${OUD_INSTANCE_ADMIN}/etc/${OUD_INSTANCE}_default_user_pwd.txt
 
 # - Hosts
 export DEFAULT_HOST=$(hostname 2>/dev/null ||cat /etc/hostname ||echo $HOSTNAME)   # Hostname

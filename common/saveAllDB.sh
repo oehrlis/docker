@@ -1,6 +1,6 @@
 #!/bin/bash
 # -----------------------------------------------------------------------------
-# Trivadis AG, Infrastructure Managed Services
+# Trivadis - Part of Accenture, Platform Factory - Transactional Data Platform
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # -----------------------------------------------------------------------------
 # Name.......: saveAllDS.sh 
@@ -11,8 +11,8 @@
 # Purpose....: Scripts to save / export all Oracle Directory Server images
 # Notes......: 
 # Reference..: --
-# License....: Licensed under the Universal Permissive License v 1.0 as 
-#              shown at http://oss.oracle.com/licenses/upl.
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
 # -----------------------------------------------------------------------------
 # Modified...:
 # see git revision history for more information on changes/updates
@@ -33,6 +33,6 @@ ORACLE_IMAGES=$(docker images --filter=reference="${DOCKER_LOCAL_USER}/${DOCKER_
 for i in ${ORACLE_IMAGES}; do
     version=$(echo $i|cut -d: -f2)
     echo " save image ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version"
-    docker save ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${DOCKER_LOCAL_REPO}_$version.tar.gz
+    time docker save ${DOCKER_LOCAL_USER}/${DOCKER_LOCAL_REPO}:$version |gzip -c >${DOCKER_IMAGES}/${DOCKER_LOCAL_USER}_${DOCKER_LOCAL_REPO}_$version.tar.gz
 done
 # --- EOF -------------------------------------------------------------------

@@ -1,0 +1,10 @@
+# UPDATE PERL IN 19C DATABASE ORACLE HOME TO V5.32 (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=31732095
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p31732095_190000_Linux-x86-64.zip?aru=23834218&patch_file=p31732095_190000_Linux-x86-64.zip
+
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+B7036A117EFE002D36255D13562A766DE9CC1A52DD73E7A298612FB0CD2291D1 p31732095_190000_Linux-x86-64.zip

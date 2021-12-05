@@ -1,0 +1,10 @@
+# UPDATE PERL IN 19.3.0.0.0 DATABASE ORACLE HOME (Patch)
+#
+# The following link is a My Oracle Support (http://support.oracle.com) wget download link. You 
+# require a valid MOS Account to download Oracle Software from MOS.
+# Patch Download URL: https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=29511771
+# Direct Download   : https://updates.oracle.com/Orion/Services/download/p29511771_190000_Linux-x86-64.zip?aru=22812571&patch_file=p29511771_190000_Linux-x86-64.zip
+# 
+# SHA-256                                                        File
+# -------------------------------------------------------------- ---------------------------------
+3900E8D3E92EEB8CDB92255FFEEBD52B6F51A2F04B4FCA5AA08CB5824CBA9092 p29511771_190000_Linux-x86-64.zip

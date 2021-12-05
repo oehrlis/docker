@@ -1,0 +1,68 @@
+# -----------------------------------------------------------------------
+# Trivadis AG, Business Development & Support (BDS)
+# Saegereistrasse 29, 8152 Glattbrugg, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: 02_config_basedn.conf
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
+# Editor.....: Stefan Oehrli
+# Date.......: 2020.06.25
+# Usage......: dsconfig -h $(hostname) -p $PORT_ADMIN -D "cn=Directory Manager" \
+#             -j $PWD_FILE -X -v -n --batchFilePath  02_config_basedn.conf
+# Purpose....: Instance batch file for configuration via dsconfig --batchFilePath
+# Notes......: The following configurations are set in batch mode. At
+#              However, if required, these can also be executed individually.
+# Reference..: 
+# License....: Licensed under the Universal Permissive License v 1.0 as 
+#              shown at https://oss.oracle.com/licenses/upl.
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+
+# -- Configure Virtual Attributes ---------------------------------------
+# Create virtual attribute to set admin privileges for directory administrators
+create-virtual-attribute \
+  --type user-defined --name "Directory Administrators root privileges" \
+  --set attribute-type:ds-privilege-name --set enabled:true \
+  --set value:password-reset \
+  --set value:modify-acl \
+  --set value:bypass-acl \
+  --set value:unindexed-search \
+  --set base-dn:"ou=local,dc=trivadislabs,dc=com" \
+  --set group-dn:"ou=role_oud_admins,ou=groups,ou=local,dc=trivadislabs,dc=com"
+
+# Create virtual attribute to set admin privileges for EUS administrators
+create-virtual-attribute \
+  --type user-defined --name "EUS Administrators root privileges" \
+  --set attribute-type:ds-privilege-name --set enabled:true \
+  --set value:password-reset \
+  --set base-dn:"ou=local,dc=trivadislabs,dc=com" \
+  --set group-dn:"ou=role_eus_admins,ou=groups,ou=local,dc=trivadislabs,dc=com"
+
+# Create virtual attribute to set admin privileges for IAM administrators
+create-virtual-attribute \
+  --type user-defined --name "IAM Administrators root privileges" \
+  --set attribute-type:ds-privilege-name --set enabled:true \
+  --set value:password-reset \
+  --set base-dn:"ou=local,dc=trivadislabs,dc=com" \
+  --set group-dn:"ou=role_iam_admins,ou=groups,ou=local,dc=trivadislabs,dc=com"
+
+# Create virtual attribute to set custom password policy for directory administrators
+create-virtual-attribute \
+  --type user-defined --name "Custom Password Policy to Admin Users" \
+  --set attribute-type:ds-pwp-password-policy-dn \
+  --set enabled:true \
+  --set value:"cn=Custom Default Password Policy,cn=Password Policies,cn=config" \
+  --set base-dn:"ou=local,dc=trivadislabs,dc=com" \
+  --set group-dn:"ou=role_oud_admins,ou=groups,ou=local,dc=trivadislabs,dc=com"
+
+# Create virtual attribute to set custom password policy for EUS administrators
+create-virtual-attribute \
+  --type user-defined --name "EUS Password Policy to EUS Admin" \
+  --set attribute-type:ds-pwp-password-policy-dn \
+  --set enabled:true \
+  --set value:"cn=EUS Password Policy,cn=Password Policies,cn=config" \
+  --set base-dn:"ou=local,dc=trivadislabs,dc=com" \
+  --set group-dn:"ou=role_eus_admins,ou=groups,ou=local,dc=trivadislabs,dc=com"
+
+# - EOF ---------------------------------------------------------------------
