@@ -51,19 +51,35 @@ services:
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TUA180
 
+  cdbua190:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.19.0.0arm
+    container_name: cdbua190
+    hostname: cdbua190.trivadislabs.com
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/audit/cdbua190:/u01
+      - ./config/cdbua190:/u01/config
+    ports:
+      - 1521:1521
+    environment:
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: CDBUA190
+
   tua190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.6.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.19.0.0arm
     container_name: tua190
-    hostname: tua180.trivadislabs.com
+    hostname: tua190.trivadislabs.com
     restart: unless-stopped
     network_mode: bridge
     volumes:
       - ${DOCKER_VOLUME_BASE}/audit/tua190:/u01
-      - ./config:/u01/config
+      - ./config/tua190:/u01/config
     ports:
       - 1521
     environment:
-      CONTAINER: 'TRUE'
+      CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TUA190
 # - EOF -----------------------------------------------------------------

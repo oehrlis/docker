@@ -1,0 +1,26 @@
+
+POLICY_NAME                              ENABLED_OPTION  ENTITY_NAME                    ENTITY_ SUC FAI                                                         
+---------------------------------------- --------------- ------------------------------ ------- --- ---                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYS                            USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYSKM                          USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYSRAC                         USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         PUBLIC                         USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DBA                            ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DATAPUMP_EXP_FULL_DATABASE     ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE IMP_FULL_DATABASE              ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE EXP_FULL_DATABASE              ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DATAPUMP_IMP_FULL_DATABASE     ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_NAMED_USR             BY USER         SCOTT                          USER    YES YES                                                         
+ORA_SECURECONFIG                         BY USER         ALL USERS                      USER    YES YES                                                         
+ORA_LOGON_FAILURES                       BY USER         ALL USERS                      USER    NO  YES                                                         
+ORADBA_LOC_ALL_LOGON_EVENTS              BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PROXY_USR             BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_DIRECT_ACC            BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_DP_EVENTS                 BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_DIR_ACC                       BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ACC_MGMT                      BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_CRITICAL_DB_ACT               BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_DB_SCHEMA_CHANGES             BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_INST_CONFIG                   BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_SECURE_CONFIG                 BY USER         ALL USERS                      USER    YES YES                                                         
+SQL> exit

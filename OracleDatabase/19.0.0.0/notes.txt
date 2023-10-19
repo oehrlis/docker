@@ -1,0 +1,105 @@
+SQL> show parameter FILESYSTEMIO_OPTIONS
+
+NAME				     TYPE	 VALUE
+------------------------------------ ----------- ------------------------------
+filesystemio_options		     string	 none
+SQL> show parameter FILESYSTEMIO_OPTIONS
+
+NAME				     TYPE	 VALUE
+------------------------------------ ----------- ------------------------------
+filesystemio_options		     string	 none
+SQL> set long 10000 lines 140 pages 50 timing on echo on
+set serveroutput on size 1000000
+declare
+     l_latency   integer;
+     l_iops      integer;
+     l_mbps      integer;
+ begin
+    dbms_resource_manager.calibrate_io (
+         1, /* # of disks */
+         20, /* max latency */
+         l_iops, /* I/O Ops/sec */
+         l_mbps, /* MBytes/sec */
+         l_latency /* actual latency */
+     );
+     dbms_output.put_line ('I/O Ops/sec = '  || l_iops);
+     dbms_output.put_line ('Actual Latency = '  || l_latency);
+     dbms_output.put_line('MB/sec = '  || l_mbps);
+end;
+/SQL> SQL>   2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17  
+max_iops = 9445
+latency  = 0
+max_mbps = 720
+I/O Ops/sec = 9445
+Actual Latency = 0
+MB/sec = 720
+
+PL/SQL procedure successfully completed.
+
+Elapsed: 00:03:31.26
+SQL>    
+SQL> 
+SQL> set long 10000 lines 140 pages 50 timing on echo on
+set serveroutput on size 1000000
+declare
+     l_latency   integer;
+     l_iops      integer;
+     l_mbps      integer;
+ begin
+    dbms_resource_manager.calibrate_io (
+         1, /* # of disks */
+         20, /* max latency */
+         l_iops, /* I/O Ops/sec */
+         l_mbps, /* MBytes/sec */
+         l_latency /* actual latency */
+     );
+     dbms_output.put_line ('I/O Ops/sec = '  || l_iops);
+     dbms_output.put_line ('Actual Latency = '  || l_latency);
+     dbms_output.put_line('MB/sec = '  || l_mbps);
+end;
+/SQL> SQL>   2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17  
+max_iops = 16170
+latency  = 0
+max_mbps = 823
+I/O Ops/sec = 16170
+Actual Latency = 0
+MB/sec = 823
+
+PL/SQL procedure successfully completed.
+
+Elapsed: 00:07:02.94
+SQL> exit
+
+
+
+
+set long 10000 lines 140 pages 50 timing on echo on
+SQL> set serveroutput on size 1000000
+declare
+SQL>   2       l_latency   integer;
+  3       l_iops      integer;
+  4       l_mbps      integer;
+  5   begin
+  6      dbms_resource_manager.calibrate_io (
+  7           1, /* # of disks */
+  8           20, /* max latency */
+  9           l_iops, /* I/O Ops/sec */
+ 10           l_mbps, /* MBytes/sec */
+ 11           l_latency /* actual latency */
+ 12       );
+ 13       dbms_output.put_line ('I/O Ops/sec = '  || l_iops);
+ 14       dbms_output.put_line ('Actual Latency = '  || l_latency);
+ 15       dbms_output.put_line('MB/sec = '  || l_mbps);
+ 16  end;
+ 17  /
+
+max_iops = 1679787
+latency  = 0
+max_mbps = 25673
+I/O Ops/sec = 1679787
+Actual Latency = 0
+MB/sec = 25673
+
+PL/SQL procedure successfully completed.
+
+Elapsed: 00:09:01.33

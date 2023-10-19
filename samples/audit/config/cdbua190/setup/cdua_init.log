@@ -1,0 +1,68 @@
+Setup and initialize audit configuration                                                                                                                        
+- Create AUDIT_DATA Tablespace... already exists                                                                                                                
+Set location to AUDIT_DATA for Unified Audit                                                                                                                    
+Set location to AUDIT_DATA for Standard and FGA Audit Trail                                                                                                     
+Set partition interval to 1 day                                                                                                                                 
+Create archive timestamp jobs                                                                                                                                   
+- Unified Audit Trail........... created                                                                                                                        
+Create archive purge jobs                                                                                                                                       
+- Unified Audit Trail............ already exists                                                                                                                
+
+AUDIT_TRAIL          PARAMETER_NAME                 PARAMETER_VALUE                                                                                             
+-------------------- ------------------------------ --------------------                                                                                        
+FGA AUDIT TRAIL      DB AUDIT CLEAN BATCH SIZE      10000                                                                                                       
+FGA AUDIT TRAIL      DB AUDIT TABLESPACE            AUDIT_DATA                                                                                                  
+OS AUDIT TRAIL       AUDIT FILE MAX AGE             5                                                                                                           
+OS AUDIT TRAIL       OS FILE CLEAN BATCH SIZE       1000                                                                                                        
+OS AUDIT TRAIL       AUDIT FILE MAX SIZE            10000                                                                                                       
+STANDARD AUDIT TRAIL DB AUDIT CLEAN BATCH SIZE      10000                                                                                                       
+STANDARD AUDIT TRAIL DB AUDIT TABLESPACE            AUDIT_DATA                                                                                                  
+UNIFIED AUDIT TRAIL  AUDIT WRITE MODE               QUEUED WRITE MODE                                                                                           
+UNIFIED AUDIT TRAIL  AUDIT FILE MAX AGE             5                                                                                                           
+UNIFIED AUDIT TRAIL  AUDIT FILE MAX SIZE            10000                                                                                                       
+UNIFIED AUDIT TRAIL  DB AUDIT TABLESPACE            AUDIT_DATA                                                                                                  
+XML AUDIT TRAIL      OS FILE CLEAN BATCH SIZE       1000                                                                                                        
+XML AUDIT TRAIL      AUDIT FILE MAX SIZE            10000                                                                                                       
+XML AUDIT TRAIL      AUDIT FILE MAX AGE             5                                                                                                           
+
+JOB_NAME                       JOB_STAT AUDIT_TRAIL          JOB_FREQUENCY                                                                                      
+------------------------------ -------- -------------------- ----------------------------------------                                                           
+DAILY_UNIFIED_AUDIT_PURGE_JOB  ENABLED  UNIFIED AUDIT TRAIL  FREQ=HOURLY;INTERVAL=24                                                                            
+
+JOB_NAME                       REPEAT_INTERVAL                                                                                                                  
+------------------------------ --------------------------------------------------------------------------------                                                 
+COMMENTS                                                                                                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+DAILY_UNIFIED_AUDIT_TIMESTAMP  FREQ=HOURLY;INTERVAL=24                                                                                                          
+Archive timestamp for unified audit to sysdate-30                                                                                                               
+                                                                                                                                                                
+DAILY_UNIFIED_AUDIT_PURGE_JOB  FREQ=HOURLY;INTERVAL=24                                                                                                          
+Audit clean job = 'Daily_Unified_Audit_Purge_Job'                                                                                                               
+                                                                                                                                                                
+DAILY_UNIFIED_AUDIT_TIMESTAMP  FREQ=HOURLY;INTERVAL=24                                                                                                          
+Archive timestamp for unified audit to sysdate-30                                                                                                               
+                                                                                                                                                                
+
+POLICY_NAME                              ENABLED_OPTION  ENTITY_NAME                    ENTITY_ SUC FAI                                                         
+---------------------------------------- --------------- ------------------------------ ------- --- ---                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYS                            USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYSKM                          USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYSRAC                         USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         PUBLIC                         USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DBA                            ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DATAPUMP_EXP_FULL_DATABASE     ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE IMP_FULL_DATABASE              ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE EXP_FULL_DATABASE              ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DATAPUMP_IMP_FULL_DATABASE     ROLE    YES YES                                                         
+ORA_SECURECONFIG                         BY USER         ALL USERS                      USER    YES YES                                                         
+ORA_LOGON_FAILURES                       BY USER         ALL USERS                      USER    NO  YES                                                         
+ORADBA_LOC_ALL_LOGON_EVENTS              BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PROXY_USR             BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_DIRECT_ACC            BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_DP_EVENTS                 BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_DIR_ACC                       BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ACC_MGMT                      BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_CRITICAL_DB_ACT               BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_DB_SCHEMA_CHANGES             BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_INST_CONFIG                   BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_SECURE_CONFIG                 BY USER         ALL USERS                      USER    YES YES                                                         

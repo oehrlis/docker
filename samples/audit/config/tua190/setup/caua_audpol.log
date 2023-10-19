@@ -1,0 +1,120 @@
+
+CON_NAME                                                                                                                                                        
+------------------------------                                                                                                                                  
+TUA190                                                                                                                                                          
+CREATE AUDIT POLICY oradba_loc_all_act_priv_usr
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_ALL_ACT_PRIV_USR already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_all_act_direct_acc
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_ALL_ACT_DIRECT_ACC already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_all_act_proxy_usr
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_ALL_ACT_PROXY_USR already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_all_act_named_usr
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_ALL_ACT_NAMED_USR already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_all_logon_events
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_ALL_LOGON_EVENTS already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_all_dp_events
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_ALL_DP_EVENTS already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_dir_acc
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_DIR_ACC already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_acc_mgmt
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_ACC_MGMT already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_inst_config
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_INST_CONFIG already exists. 
+
+
+        ALL ON AUDSYS.DBMS_AUDIT_MGMT
+                      *
+ERROR at line 12:
+ORA-46358: Audit policy ORADBA_LOC_SECURE_CONFIG already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_critical_db_act
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_CRITICAL_DB_ACT already exists. 
+
+
+CREATE AUDIT POLICY oradba_loc_db_schema_changes
+*
+ERROR at line 1:
+ORA-46358: Audit policy ORADBA_LOC_DB_SCHEMA_CHANGES already exists. 
+
+
+
+POLICY_NAME                              ENABLED_OPTION  ENTITY_NAME                    ENTITY_ SUC FAI                                                         
+---------------------------------------- --------------- ------------------------------ ------- --- ---                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYS                            USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYSKM                          USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         SYSRAC                         USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY USER         PUBLIC                         USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DBA                            ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DATAPUMP_EXP_FULL_DATABASE     ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE IMP_FULL_DATABASE              ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE EXP_FULL_DATABASE              ROLE    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PRIV_USR              BY GRANTED ROLE DATAPUMP_IMP_FULL_DATABASE     ROLE    YES YES                                                         
+ORA_SECURECONFIG                         BY USER         ALL USERS                      USER    YES YES                                                         
+ORA_LOGON_FAILURES                       BY USER         ALL USERS                      USER    NO  YES                                                         
+ORADBA_LOC_ALL_LOGON_EVENTS              BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_PROXY_USR             BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_ACT_DIRECT_ACC            BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ALL_DP_EVENTS                 BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_DIR_ACC                       BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_ACC_MGMT                      BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_CRITICAL_DB_ACT               BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_DB_SCHEMA_CHANGES             BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_INST_CONFIG                   BY USER         ALL USERS                      USER    YES YES                                                         
+ORADBA_LOC_SECURE_CONFIG                 BY USER         ALL USERS                      USER    YES YES                                                         
+
+POLICY_NAME                              COMMENTS                                                                                                               
+---------------------------------------- --------------------------------------------------------------------------------                                       
+ORADBA_LOC_ACC_MGMT                      OraDBA local audit policy to audit account management actions                                                          
+ORADBA_LOC_ALL_ACT_DIRECT_ACC            OraDBA local audit policy to audit all actions through direct access                                                   
+ORADBA_LOC_ALL_ACT_NAMED_USR             OraDBA local audit policy to audit all actions of specific named users                                                 
+ORADBA_LOC_ALL_ACT_PRIV_USR              OraDBA local audit policy to audit all actions by priviledged users                                                    
+ORADBA_LOC_ALL_ACT_PROXY_USR             OraDBA local audit policy to audit all actions of proxy user access                                                    
+ORADBA_LOC_ALL_DP_EVENTS                 OraDBA local audit policy to audit all datapump events                                                                 
+ORADBA_LOC_ALL_LOGON_EVENTS              OraDBA local audit policy to audit all logon events                                                                    
+ORADBA_LOC_CRITICAL_DB_ACT               OraDBA audit policy to audit all critical database activity                                                            
+ORADBA_LOC_DB_SCHEMA_CHANGES             OraDBA local audit policy to audit database schema changes                                                             
+ORADBA_LOC_DIR_ACC                       OraDBA local audit policy to audit all directory access events                                                         
+ORADBA_LOC_INST_CONFIG                   OraDBA local audit policy to audit instance configuration                                                              
+ORADBA_LOC_SECURE_CONFIG                 OraDBA local audit policy to audit secure configuration                                                                
+ORA_ACCOUNT_MGMT                         Audit policy containing audit options for auditing account management actions                                          
+ORA_CIS_RECOMMENDATIONS                  Audit policy containing audit options as per CIS recommendations                                                       
+ORA_DATABASE_PARAMETER                    Audit policy containing audit options to audit changes  in database parameters                                        
+ORA_LOGON_FAILURES                       Audit policy containing audit options to capture logon failures                                                        
+ORA_SECURECONFIG                         Audit policy containing audit options as per database security best practices                                          
