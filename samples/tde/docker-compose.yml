@@ -1,0 +1,52 @@
+# -----------------------------------------------------------------------
+# OraDBA - Oracle Database Infrastructure and Security, 5630 Muri, Switzerland
+# -----------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
+# Editor.....: Stefan Oehrli
+# Date.......: 2018.12.10
+# Revision...: --
+# Purpose....: Simple compose file to create a 12.2 database
+# Notes......: --
+#
+# Reference..: https://github.com/oehrlis/oudbase
+# License....: Apache License Version 2.0, January 2004 as shown
+#              at http://www.apache.org/licenses/
+# -----------------------------------------------------------------------
+# Modified...:
+# see git revision history with git log for more information on changes
+# -----------------------------------------------------------------------
+version: '3'
+services:
+  cenc190:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.19.0.0arm
+    container_name: cenc190
+    hostname: cenc190.trivadislabs.com
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/cenc190:/u01
+      - ./config/cenc190:/u01/config
+    ports:
+      - 2521:1521
+    environment:
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: CENC190
+
+  tenc190:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.19.0.0arm
+    container_name: tenc190
+    hostname: tenc190.trivadislabs.com
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/tenc190:/u01
+      - ./config/tenc190:/u01/config
+    ports:
+      - 3521:1521
+    environment:
+      CONTAINER: 'FALSE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TENC190
+# - EOF -----------------------------------------------------------------

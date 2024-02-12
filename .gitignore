@@ -27,3 +27,4 @@ samples/audit/config/test_cases/10_common_audit_issue.log
 samples/cmu/db/etc/opwdintg.exe
 samples/rman/tspitr/db/SR_3-20102119741/*
 samples/audit/audit/*
+samples/tde/data/*
