@@ -23,13 +23,16 @@ services:
 # single tenant database
   oud12c:
     image: ${DOCKER_USER}/${DOCKER_REPO}:12.2.1.4.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: oud12c
     hostname: oud12c
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/oud12c:/u01
-      - ./config:/u01/config
+      - ${DOCKER_VOLUME_BASE}/data:/u01
+      - ${DOCKER_VOLUME_BASE}/config:/u01/config
     ports:
       - "1389"
       - "1636"

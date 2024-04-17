@@ -52,7 +52,7 @@ services:
       ORACLE_SID: TUA180
 
   cdbua190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.19.0.0arm
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.19.0.0
     container_name: cdbua190
     hostname: cdbua190.trivadislabs.com
     restart: unless-stopped
@@ -68,7 +68,7 @@ services:
       ORACLE_SID: CDBUA190
 
   tua190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.19.0.0arm
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.19.0.0
     container_name: tua190
     hostname: tua190.trivadislabs.com
     restart: unless-stopped
