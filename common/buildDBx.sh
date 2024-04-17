@@ -19,10 +19,10 @@
 # -----------------------------------------------------------------------------
 
 # - Customization -----------------------------------------------------------
-DOCKER_USER=${DOCKER_USER:-"oracle"}
-DOCKER_REPO=${DOCKER_REPO:-"database"}
+DOCKER_USER=${DOCKER_USER:-"trivadis"}
+DOCKER_REPO=${DOCKER_REPO:-"ora_db"}
 BUILD_FLAG=${BUILD_FLAG:-""}
-DOCKER_BASE_IMAGE=${DOCKER_BASE_IMAGE:-"oraclelinux:7-slim"}
+DOCKER_BASE_IMAGE=${DOCKER_BASE_IMAGE:-"oraclelinux:8"}
 SCRIPT_NAME=$(basename $0)
 RELEASES="$@"
 # - End of Customization ----------------------------------------------------
@@ -37,7 +37,6 @@ else
     ORAREPO_FLAG=""
 fi
 
-#export DOCKER_BUILDKIT=1
 # - EOF Default Values ------------------------------------------------------
 
 CURRENT_DIR=$(pwd)
@@ -56,10 +55,6 @@ if [ $# -eq 0 ]; then
     done
     echo
 else
-    echo "INFO : try to pull latest ${DOCKER_BASE_IMAGE}"
-    # get the latest base image
-    docker pull ${DOCKER_BASE_IMAGE}
-
     # loop over the build string's from the command line
     for BUILD_VERSION in $(echo $RELEASES|sed s/\,/\ /g); do
         # get the DOCKER_FILES based on the build / release string
@@ -74,8 +69,11 @@ else
             echo "INFO : from Dockerfile=${DOCKER_FILE}"
             DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
             cd ${DOCKER_BUILD_DIR}  # change working directory
-            time docker build ${BUILD_FLAG} ${ORAREPO_FLAG} -t ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION -f $DOCKER_FILE .
-            docker image prune --force
+            time docker buildx build ${DOCKER_BUILD_DIR} ${BUILD_FLAG} --push \
+                --tag ${DOCKER_USER}/${DOCKER_REPO}:${BUILD_VERSION} \
+                --platform=linux/amd64,linux/arm64 --file $DOCKER_FILE
+            docker pull ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION
+            docker buildx prune --force
         else
             echo "WARN : Dockerfile $DOCKER_FILE not available"
         fi
