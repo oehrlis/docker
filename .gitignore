@@ -30,3 +30,5 @@ samples/audit/audit/*
 samples/tde/data/*
 samples/audit/audit.orig/*
 samples/audit/data/*
+samples/tde/config/tencs2old/*
+samples/tde/config/tencs3/*
