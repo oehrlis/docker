@@ -16,48 +16,9 @@
 # Modified...:
 # see git revision history with git log for more information on changes
 # -----------------------------------------------------------------------
-version: '3'
 services:
-  cenc190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.22.0.0
-    container_name: cenc190
-    hostname: cenc190
-    networks:
-      default:
-        aliases: 
-          - tencs1.trivadislabs.com
-    restart: unless-stopped
-    volumes:
-      - ${DOCKER_VOLUME_BASE}/data/cenc190:/u01
-      - ./config/cenc190:/u01/config
-    ports:
-      - 2521:1521
-    environment:
-      CONTAINER: 'TRUE'
-      INSTANCE_INIT: /u01/config
-      ORACLE_SID: CENC190
-
-  tenc190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.22.0.0
-    container_name: tenc190
-    hostname: tenc190
-    networks:
-      default:
-        aliases: 
-          - tenc190.trivadislabs.com
-    restart: unless-stopped
-    volumes:
-      - ${DOCKER_VOLUME_BASE}/data/tenc190:/u01
-      - ./config/tenc190:/u01/config
-    ports:
-      - 3521:1521
-    environment:
-      CONTAINER: 'FALSE'
-      INSTANCE_INIT: /u01/config
-      ORACLE_SID: TENC190
-
   tencs1:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.22.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.24.0.0
     container_name: tencs1
     hostname: tencs1
     networks:
@@ -74,9 +35,9 @@ services:
       CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
       ORACLE_SID: TENCS1
-  
+
   tencs2:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.22.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.24.0.0
     container_name: tencs2
     hostname: tencs2
     networks:

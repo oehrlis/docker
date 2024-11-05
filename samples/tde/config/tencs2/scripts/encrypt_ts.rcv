@@ -1,0 +1,25 @@
+connect target /
+run {
+    ALLOCATE CHANNEL eugen DEVICE TYPE DISK;
+    ALLOCATE CHANNEL hans DEVICE TYPE DISK;
+    ALLOCATE CHANNEL fritz DEVICE TYPE DISK;
+    ALLOCATE CHANNEL hanni DEVICE TYPE DISK;
+    
+    ALTER SESSION SET nls_date_format="dd.mm.yyyy hh24:mi:ss";
+    SELECT sysdate FROM dual;
+    SELECT file#,status,bytes,encrypted FROM v$datafile_header WHERE tablespace_name=upper('&1');
+    BACKUP TABLESPACE &1 SECTION SIZE 500M TAG '&1_local';
+    
+    SELECT sysdate FROM dual;
+    ALTER DATABASE RECOVER MANAGED STANDBY DATABASE CANCEL;
+    
+    SELECT sysdate FROM dual;
+    RESTORE TABLESPACE &1 SECTION SIZE 500M AS ENCRYPTED;
+   
+    SELECT sysdate FROM dual;
+    ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT NODELAY;
+
+    SELECT sysdate FROM dual;
+    SELECT file#,status,bytes,encrypted FROM v$datafile_header WHERE tablespace_name=upper('&1');
+    DELETE NOPROMPT BACKUP OF TABLESPACE &1 TAG '&1_local';
+}

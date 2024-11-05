@@ -3,7 +3,7 @@
 # Trivadis - Part of Accenture, Platform Factory - Transactional Data Platform
 # Saegereistrasse 29, 8152 Glattbrugg, Switzerland
 # ------------------------------------------------------------------------------
-# Name.......: buildDB.sh 
+# Name.......: buildDBx_arm64.sh 
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
 # Date.......: 2019.05.06
@@ -28,7 +28,7 @@ SCRIPT_NAME=$(basename $0)
 RELEASES="$@"
 #BUILD_PLATFORMS="arm64"
 #BUILD_PLATFORMS="amd64"
-BUILD_PLATFORMS="arm64 amd64"
+BUILD_PLATFORMS="arm64"
 # - End of Customization -------------------------------------------------------
 
 # - Default Values -------------------------------------------------------------
@@ -42,7 +42,6 @@ else
 fi
 
 # - EOF Default Values ---------------------------------------------------------
-
 CURRENT_DIR=$(pwd)
 if [ $# -eq 0 ]; then
     echo "INFO : Usage, ${SCRIPT_NAME} <RELEASES>"
@@ -71,28 +70,26 @@ else
         if [ -f $DOCKER_FILE ]; then
             DOCKER_BUILD_DIR=$(dirname $DOCKER_FILE)
             cd ${DOCKER_BUILD_DIR}  # change working directory
-            #for p in ${BUILD_PLATFORMS}; do
-                echo "INFO : -----------------------------------------------------------------"
-                echo "INFO : Build docker images $BUILD_VERSION for plattform linux/arm64,linux/amd64"
-                echo "INFO : from Dockerfile   => ${DOCKER_FILE}"
-                echo "INFO : with base image   => ${DOCKER_BASE_IMAGE}"
-                echo "INFO : using build flags => ${BUILD_FLAG}"
-                echo "INFO : as Docker TAG ${DOCKER_USER}/${DOCKER_REPO}"
-                echo "INFO : ORAREPO           => ${ORAREPO}"
-                echo "INFO : -----------------------------------------------------------------"
-                time docker buildx build ${DOCKER_BUILD_DIR} ${BUILD_FLAG} --push \
-                    --build-arg "BASE_IMAGE=${DOCKER_BASE_IMAGE}" \
-                    --build-arg "ORAREPO=${ORAREPO}" \
-                    --tag ${DOCKER_USER}/${DOCKER_REPO}:${BUILD_VERSION} \
-                    --platform=linux/arm64 --file $DOCKER_FILE
-                docker pull ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION
-                docker tag ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION oracle/database:$BUILD_VERSION
-                docker buildx prune --force
-            #done
+            echo "INFO : -----------------------------------------------------------------"
+            echo "INFO : Build docker images $BUILD_VERSION for plattform linux/$BUILD_PLATFORMS"
+            echo "INFO : from Dockerfile   => ${DOCKER_FILE}"
+            echo "INFO : with base image   => ${DOCKER_BASE_IMAGE}"
+            echo "INFO : using build flags => ${BUILD_FLAG}"
+            echo "INFO : as Docker TAG ${DOCKER_USER}/${DOCKER_REPO}"
+            echo "INFO : ORAREPO           => ${ORAREPO}"
+            echo "INFO : -----------------------------------------------------------------"
+            time docker buildx build ${DOCKER_BUILD_DIR} ${BUILD_FLAG} --push \
+                --build-arg "BASE_IMAGE=${DOCKER_BASE_IMAGE}" \
+                --build-arg "ORAREPO=${ORAREPO}" \
+                --tag ${DOCKER_USER}/${DOCKER_REPO}:${BUILD_VERSION} \
+                --platform=linux/arm64 --file $DOCKER_FILE
+            docker pull ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION
+            docker tag ${DOCKER_USER}/${DOCKER_REPO}:$BUILD_VERSION oracle/database:$BUILD_VERSION
+            docker buildx prune --force
         else
             echo "WARN : Dockerfile $DOCKER_FILE not available"
         fi
     done
     cd -
 fi
-# --- EOF --------------------------------------------------------------
+# - EOF ------------------------------------------------------------------------

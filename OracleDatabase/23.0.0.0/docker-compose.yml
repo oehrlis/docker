@@ -5,9 +5,9 @@
 # Name.......: docker-compose.yml
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@trivadis.com
 # Editor.....: Stefan Oehrli
-# Date.......: 2018.12.10
+# Date.......: 2019.03.16
 # Revision...: --
-# Purpose....: Simple compose file to create a 12.2 database
+# Purpose....: Simple compose file to create a 19.3 databases
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
@@ -17,36 +17,40 @@
 # Modified...:
 # see git revision history with git log for more information on changes
 # -----------------------------------------------------------------------
+version: '3'
 services:
-  cdbua190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.24.0.0
-    container_name: cdbua190
-    hostname: cdbua190.trivadislabs.com
-    restart: unless-stopped
-    network_mode: bridge
-    volumes:
-      - ${DOCKER_VOLUME_BASE}/data/cdbua190:/u01
-      - ./config/cdbua190:/u01/config
-    ports:
-      - 1521:1521
-    environment:
-      CONTAINER: 'TRUE'
-      INSTANCE_INIT: /u01/config
-      ORACLE_SID: CDBUA190
 
-  tua190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.24.0.0
-    container_name: tua190
-    hostname: tua190.trivadislabs.com
+# single tenant database
+  tdb190s:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.9.0.0
+    container_name: tdb190s
+    hostname: tdb190s
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - ${DOCKER_VOLUME_BASE}/data/tua190:/u01
-      - ./config/tua190:/u01/config
+      - ${DOCKER_VOLUME_BASE}/tdb190s:/u01
+      - ./config:/u01/config
     ports:
-      - 1521
+      - "1521"
     environment:
       CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
-      ORACLE_SID: TUA190
+      ORACLE_SID: TDB190S
+
+# multitenant tenant database
+  tdb190c:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.8.0.0
+    container_name: tdb190c
+    hostname: tdb190c
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/tdb190c:/u01
+      - ./config:/u01/config
+    ports:
+      - "1521"
+    environment:
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: TDB190C
 # - EOF -----------------------------------------------------------------
