@@ -29,3 +29,4 @@ samples/rman/tspitr/db/SR_3-20102119741/*
 samples/audit/audit/*
 samples/tde/data/*
 samples/audit/audit.orig/*
+samples/audit/data/*
