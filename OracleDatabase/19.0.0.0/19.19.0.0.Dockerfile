@@ -4,7 +4,7 @@
 # Name.......: Dockerfile
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
 # Editor.....: Stefan Oehrli
-# Date.......: 2024.02.13
+# Date.......: 2024.10.10
 # Purpose....: Dockerfile to build Oracle Database image 19.0.0.0 plus available RU
 # Notes......: --
 # Reference..: --
@@ -15,7 +15,8 @@
 # Pull base image
 # ------------------------------------------------------------------------------
 # Use oraclelinux:8 as the base image for both build and runtime stages
-FROM oraclelinux:8.9 as base
+ARG BASE_IMAGE=oraclelinux:8
+FROM ${BASE_IMAGE} AS base
 
 # Global ARGs available in all stages
 # ------------------------------------------------------------------------------
@@ -30,6 +31,9 @@ ARG ORACLE_BASE=/u00/app/oracle
 ARG ORAREPO=orarepo
 ARG ORACLE_RELEASE="19.0.0.0"
 ARG ORACLE_RELEASE_UPDATE="19.19.0.0"
+ARG DEFAULT_DOMAIN="postgasse.org"
+ARG PORT=1521
+ARG PORT_CONSOLE=5500
 
 # Maintainer
 # ------------------------------------------------------------------------------
@@ -48,13 +52,13 @@ LABEL provider="stefan.oehrli@oradba.ch" \
 # Software stage area, repository, binary packages and patchs
 ENV   DOWNLOAD="/tmp/download" \
       SOFTWARE="/opt/stage" \
-      SOFTWARE_REPO="http://$ORAREPO" \
+      SOFTWARE_REPO="$ORAREPO" \
       ORADBA_INIT="/opt/oradba/bin" \
       ORACLE_ROOT=${ORACLE_ROOT} \
       ORACLE_DATA=${ORACLE_DATA} \
-      DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-"postgasse.org"}  \
-      PORT=${PORT:-1521} \
-      PORT_CONSOLE=${PORT_CONSOLE:-5500} \
+      DEFAULT_DOMAIN=${DEFAULT_DOMAIN}  \
+      PORT=${PORT} \
+      PORT_CONSOLE=${PORT_CONSOLE} \
       PATCH_LATER=TRUE \
       SLIMMING=$SLIMMING
 
@@ -115,14 +119,14 @@ USER  oracle
 # copy binaries
 COPY  --chown=oracle:oinstall --from=builder "${ORACLE_BASE}" "${ORACLE_BASE}"
 # copy oracle inventory
-COPY  --chown=oracle:oinstall --from=builder "${ORACLE_ROOT}"/app/oraInventory "${ORACLE_ROOT}"/app/oraInventory
+COPY  --chown=oracle:oinstall --from=builder "${ORACLE_ROOT}/app/oraInventory" "${ORACLE_ROOT}/app/oraInventory"
 # copy basenv profile stuff
 COPY  --chown=oracle:oinstall --from=builder /home/oracle/.BE_HOME /home/oracle/.TVDPERL_HOME /home/oracle/.bash_profile /home/oracle/
 
 # RUN as root post install scripts
 USER  root
-RUN   "${ORACLE_ROOT}"/app/oraInventory/orainstRoot.sh && \
-      "${ORACLE_HOME}"/root.sh
+RUN   "${ORACLE_ROOT}/app/oraInventory/orainstRoot.sh" && \
+      "${ORACLE_HOME}/root.sh"
 
 # Finalize target image
 # ------------------------------------------------------------------------------
