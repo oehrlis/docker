@@ -30,6 +30,7 @@ VERBOSE=0
 DRY_RUN=0
 SOFTWARE_REPO=""
 BUILDER="default"
+DOCKER_BUILD_BASE="$(cd $(dirname $0)/.. 2>&1 >/dev/null; pwd -P)"
 # - End of Customization -------------------------------------------------------
 
 # - Functions ------------------------------------------------------------------
@@ -53,8 +54,8 @@ usage() {
 
 list_versions() {
     echo "Available Oracle versions:"
-    for i in $(ls ${DOCKER_BUILD_BASE}/OracleDatabase/*/*Dockerfile); do
-        version=$(basename $(dirname $i))
+    for i in $(ls ${DOCKER_BUILD_BASE}/OracleDatabase/*/*.Dockerfile); do
+        version=$(basename $i .Dockerfile)
         echo "  $version"
     done
     exit 0
@@ -93,7 +94,6 @@ if [ $DRY_RUN -eq 1 ]; then
 fi
 
 # - Main Build Logic -----------------------------------------------------------
-DOCKER_BUILD_BASE="$(cd $(dirname $0)/.. 2>&1 >/dev/null; pwd -P)"
 orarepo_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' orarepo 2>/dev/null)
 ORAREPO=${ORAREPO:-${orarepo_ip}}
 ORAREPO_FLAG="--add-host=orarepo:${ORAREPO}"
