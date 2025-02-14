@@ -57,7 +57,6 @@ if [[ -d "$ORACLE_BASE/local/oradba" ]]; then
     
     if [[ "$LOCAL_VERSION" == "$GITHUB_VERSION" ]]; then
         echo "INFO: OraDBA is up to date. Version: $LOCAL_VERSION"
-        exit 0
     else
         echo "INFO: OraDBA version mismatch. Local: $LOCAL_VERSION, GitHub: $GITHUB_VERSION"
         echo "INFO: Updating OraDBA from GitHub..."
