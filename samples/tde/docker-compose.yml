@@ -1,6 +1,6 @@
-# -----------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # OraDBA - Oracle Database Infrastructure and Security, 5630 Muri, Switzerland
-# -----------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name.......: docker-compose.yml
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
 # Editor.....: Stefan Oehrli
@@ -10,15 +10,14 @@
 # Notes......: --
 #
 # Reference..: https://github.com/oehrlis/oudbase
-# License....: Apache License Version 2.0, January 2004 as shown
-#              at http://www.apache.org/licenses/
-# -----------------------------------------------------------------------
+# License....: Apache License Version 2.0
+# ------------------------------------------------------------------------------
 # Modified...:
 # see git revision history with git log for more information on changes
-# -----------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 services:
   tencs1:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.24.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
     container_name: tencs1
     hostname: tencs1
     networks:
@@ -28,16 +27,20 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKER_VOLUME_BASE}/data/tencs1:/u01
-      - ./config/tencs1:/u01/config
+      - ./config/tenc/tencs1:/u01/config
+      - ./config/tenc/shared:/u01/shared
+      - ./config/common:/u01/common
     ports:
       - 4521:1521
     environment:
       CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
-      ORACLE_SID: TENCS1
+      ORACLE_DBNAME: TENC
+      ORACLE_DB_UNIQUE_NAME: TENCS1
+      ORACLE_SID: TENCS1     
 
   tencs2:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.24.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
     container_name: tencs2
     hostname: tencs2
     networks:
@@ -47,11 +50,60 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKER_VOLUME_BASE}/data/tencs2:/u01
-      - ./config/tencs2:/u01/config
+      - ./config/tenc/tencs2:/u01/config
+      - ./config/tenc/shared:/u01/shared
+      - ./config/common:/u01/common
     ports:
       - 5521:1521
     environment:
       CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
-      ORACLE_SID: TENCS2
+      ORACLE_DBNAME: TENC
+      ORACLE_DB_UNIQUE_NAME: TENCS2
+      ORACLE_SID: TENCS2  
+      NO_DATABASE: TRUE   
+  
+  tencs3:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    container_name: tencs3
+    hostname: tencs3
+    networks:
+      default:
+        aliases: 
+          - tencs3.trivadislabs.com
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/tencs3:/u01
+      - ./config/tenc/tencs3:/u01/config
+      - ./config/tenc/shared:/u01/shared
+      - ./config/common:/u01/common
+    ports:
+      - 6521:1521
+    environment:
+      CONTAINER: 'FALSE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_DBNAME: TENC
+      ORACLE_DB_UNIQUE_NAME: TENCS3
+      ORACLE_SID: TENCS3
+      NO_DATABASE: TRUE    
+
+  cdbenc19:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    container_name: cdbenc19
+    hostname: cdbenc19
+    networks:
+      default:
+        aliases: 
+          - cdbenc19.trivadislabs.com
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/cdbenc19:/u01
+      - ./config/cdbenc19:/u01/config
+      - ./config/common:/u01/common
+    ports:
+      - 5521:1521
+    environment:
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_SID: CDBENC19
 # - EOF -----------------------------------------------------------------

@@ -19,7 +19,7 @@
 # -----------------------------------------------------------------------
 services:
   cdbua190:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.24.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.25.0.0
     container_name: cdbua190
     hostname: cdbua190.trivadislabs.com
     restart: unless-stopped
