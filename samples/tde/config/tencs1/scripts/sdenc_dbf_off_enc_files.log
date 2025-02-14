@@ -1,8 +1,0 @@
-ALTER DATABASE DATAFILE 7 ENCRYPT;                                                                                                                              
-ALTER DATABASE DATAFILE 5 ENCRYPT;                                                                                                                              
-
-PL/SQL procedure successfully completed.
-
-
-Type dropped.
-
