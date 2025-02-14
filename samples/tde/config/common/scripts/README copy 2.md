@@ -1,0 +1,1 @@
+This folder contains various scripts that are not executed automatically.

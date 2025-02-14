@@ -1,0 +1,23 @@
+run {
+allocate channel eugen type disk;
+allocate channel hans type disk;
+allocate channel fritz type disk;
+allocate channel freni type disk;
+allocate auxiliary channel hanni type disk;
+duplicate target database for standby from active database
+spfile
+parameter_value_convert 'tencs1','tencs2','TENCS1','TENCS2'
+set db_unique_name='TENCS2'
+set db_file_name_convert='tencs1','tencs2','TENCS1','TENCS2'
+set log_file_name_convert='tencs1','tencs2','TENCS1','TENCS2'
+set control_files='/u01/oradata/TENCS2/control01TENCS2.dbf','/u02/fast_recovery_area/TENCS2/control01TENCS2.dbf'
+set log_archive_max_processes='5'
+set fal_client='TENCS2'
+set fal_server='TENCS1'
+set standby_file_management='MANUAL'
+set log_archive_config='dg_config=(tencs1,tencs2)'
+set log_archive_dest_2='service=TENCS1 ASYNC valid_for=(ONLINE_LOGFILE,PRIMARY_ROLE) db_unique_name=TENCS1'
+;
+}
+
+alter system set LOG_ARCHIVE_DEST_2='SERVICE=tencs1 LGWR ASYNC VALID_FOR=(ONLINE_LOGFILE,PRIMARY_ROLE) DB_UNIQUE_NAME=tencs1';
