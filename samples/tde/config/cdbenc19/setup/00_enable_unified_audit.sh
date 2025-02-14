@@ -1,7 +1,7 @@
 #!/bin/bash
-# -----------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # OraDBA - Oracle Database Infrastructure and Security, 5630 Muri, Switzerland
-# -----------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name.......: 03_eus_config.sh
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
 # Editor.....: Stefan Oehrli
@@ -10,12 +10,11 @@
 # Purpose....: Script to enable unified audit.
 # Notes......: --
 # Reference..: https://github.com/oehrlis/oudbase
-# License....: Apache License Version 2.0, January 2004 as shown
-#              at http://www.apache.org/licenses/
-# -----------------------------------------------------------------------
+# License....: Apache License Version 2.0
+# ------------------------------------------------------------------------------
 # Modified...:
 # see git revision history with git log for more information on changes
-# -----------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # - configure SQLNet ----------------------------------------------------
 

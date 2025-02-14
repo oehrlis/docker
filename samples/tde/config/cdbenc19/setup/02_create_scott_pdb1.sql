@@ -1,6 +1,6 @@
-----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- OraDBA - Oracle Database Infrastructure and Security, 5630 Muri, Switzerland
-----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --  Name......: 03_create_scott_pdb1.sql
 --  Author....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
 --  Editor....: Stefan Oehrli
@@ -11,10 +11,10 @@
 --  Reference.: SYS (or grant manually to a DBA)
 --  License...: Licensed under the Universal Permissive License v 1.0 as 
 --              shown at http://oss.oracle.com/licenses/upl.
-----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --  Modified..:
 --  see git revision history for more information on changes/updates
-----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- set the current
 ALTER PLUGGABLE DATABASE pdb1 OPEN READ WRITE;
 ALTER PLUGGABLE DATABASE pdb1 SAVE STATE;
