@@ -38,3 +38,4 @@ samples/tde/config/tencs1/etc/orapwTENCS1
 samples/tde/config/tencs2/etc/orapwTENCS1
 samples/tde/config/tencs2/scripts/temp.tmp
 samples/tde/docker-compose.yml.orig
+samples/tde/config/tenc/shared/*
