@@ -15,7 +15,32 @@
 # Modified...:
 # see git revision history with git log for more information on changes
 # ------------------------------------------------------------------------------
+
 services:
+  tenc19:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    container_name: tenc19
+    hostname: tenc19
+    networks:
+      default:
+        aliases: 
+          - tenc19.trivadislabs.com
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/tenc19:/u01
+      - ./config/tenc19:/u01/config
+      - ./config/tenc19/etc:/u01/shared
+      - ./config/common:/u01/common
+    ports:
+      - 4721:1521
+      - 4723:1523
+    environment:
+      CONTAINER: 'FALSE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_DBNAME: TENC19
+      ORACLE_DB_UNIQUE_NAME: TENC19
+      ORACLE_SID: TENC19     
+      
   tencs1:
     image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
     container_name: tencs1
@@ -32,6 +57,7 @@ services:
       - ./config/common:/u01/common
     ports:
       - 4521:1521
+      - 4523:1523
     environment:
       CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
@@ -55,6 +81,7 @@ services:
       - ./config/common:/u01/common
     ports:
       - 5521:1521
+      - 5523:1523
     environment:
       CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
@@ -79,12 +106,87 @@ services:
       - ./config/common:/u01/common
     ports:
       - 6521:1521
+      - 6523:1523
     environment:
       CONTAINER: 'FALSE'
       INSTANCE_INIT: /u01/config
       ORACLE_DBNAME: TENC
       ORACLE_DB_UNIQUE_NAME: TENCS3
       ORACLE_SID: TENCS3
+      NO_DATABASE: TRUE    
+
+  cdbencs1:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    container_name: cdbencs1
+    hostname: cdbencs1
+    networks:
+      default:
+        aliases: 
+          - cdbencs1.trivadislabs.com
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/cdbencs1:/u01
+      - ./config/cdbenc/cdbencs1:/u01/config
+      - ./config/cdbenc/shared:/u01/shared
+      - ./config/common:/u01/common
+    ports:
+      - 4621:1521
+      - 4623:1523
+    environment:
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_DBNAME: CDBENC
+      ORACLE_DB_UNIQUE_NAME: CDBENCS1
+      ORACLE_SID: CDBENCS1     
+
+  cdbencs2:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    container_name: cdbencs2
+    hostname: cdbencs2
+    networks:
+      default:
+        aliases: 
+          - cdbencs2.trivadislabs.com
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/cdbencs2:/u01
+      - ./config/cdbenc/cdbencs2:/u01/config
+      - ./config/cdbenc/shared:/u01/shared
+      - ./config/common:/u01/common
+    ports:
+      - 5621:1521
+      - 5623:1523
+    environment:
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_DBNAME: CDBENC
+      ORACLE_DB_UNIQUE_NAME: CDBENCS2
+      ORACLE_SID: CDBENCS2  
+      NO_DATABASE: TRUE   
+  
+  cdbencs3:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    container_name: cdbencs3
+    hostname: cdbencs3
+    networks:
+      default:
+        aliases: 
+          - cdbencs3.trivadislabs.com
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/cdbencs3:/u01
+      - ./config/cdbenc/cdbencs3:/u01/config
+      - ./config/cdbenc/shared:/u01/shared
+      - ./config/common:/u01/common
+    ports:
+      - 6621:1521
+      - 6623:1523
+    environment:
+      CONTAINER: 'TRUE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_DBNAME: CDBENC
+      ORACLE_DB_UNIQUE_NAME: CDBENCS3
+      ORACLE_SID: CDBENCS3
       NO_DATABASE: TRUE    
 
   cdbenc19:

@@ -40,3 +40,5 @@ samples/tde/config/tencs2/scripts/temp.tmp
 samples/tde/docker-compose.yml.orig
 samples/tde/config/tenc/shared/*
 samples/tde/dev/*
+**/dbsat/*
+samples/tde/config/common/primus/*
