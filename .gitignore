@@ -42,3 +42,7 @@ samples/tde/config/tenc/shared/*
 samples/tde/dev/*
 **/dbsat/*
 samples/tde/config/common/primus/*
+# ignore credential files and config files
+samples/tdehsm/config/hsm/SBX01_credentials_HVHFWEORXGMC_20250416.txt
+samples/tdehsm/config/hsm/primus.cfg
+samples/tdehsm/config/hsm/.secrets.cfg
