@@ -6,8 +6,8 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
 # Date.......: 2025.01.17
 # Version....: v1.0.0
-# Purpose....: Start configuration for tencs1 and set lock file to "running"
-# Notes......: This script initializes the configuration for tencs1
+# Purpose....: Start configuration for tdehsm01 and set lock file to "running"
+# Notes......: This script initializes the configuration for tdehsm01
 # Reference..: --
 # License....: Apache License Version 2.0
 # ------------------------------------------------------------------------------

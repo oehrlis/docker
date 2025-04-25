@@ -41,9 +41,9 @@ SID_LIST_LISTENER =
 EOF
 
 cat << EOF > /u00/app/oracle/network/admin/tnsnames.ora
-TENCS1.trivadislabs.com=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = tencs1)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = TENCS1.trivadislabs.com))(UR=A))
-TENCS2.trivadislabs.com=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = tencs2)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = TENCS2.trivadislabs.com))(UR=A))
-TENCS3.trivadislabs.com=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = tencs3)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = TENCS3.trivadislabs.com))(UR=A))
+TDEHSM01.trivadislabs.com=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = tdehsm01)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = TDEHSM01.trivadislabs.com))(UR=A))
+TDEHSM02.trivadislabs.com=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = tdehsm02)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = TDEHSM02.trivadislabs.com))(UR=A))
+TDEHSM03.trivadislabs.com=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = tdehsm03)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = TDEHSM03.trivadislabs.com))(UR=A))
 EOF
 
 cat << EOF > /u00/app/oracle/network/admin/sqlnet.ora

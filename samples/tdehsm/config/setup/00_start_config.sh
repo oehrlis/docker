@@ -17,8 +17,8 @@
 
 # - Customization --------------------------------------------------------------
 # - just add/update any kind of customized environment variable here
-EXPECTED_HOST="tencs1"
-COMMON_DIR="/u01/shared"
+EXPECTED_HOST="tdehsm01"
+COMMON_DIR="/u01/config/shared"
 # - End of Customization -------------------------------------------------------
 
 # - Default Values -------------------------------------------------------------

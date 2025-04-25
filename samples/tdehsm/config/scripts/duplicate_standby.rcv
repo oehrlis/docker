@@ -1,6 +1,6 @@
 
-connect auxiliary sys/s9GiawE4aCfR@tencs2:1521/TENCS2_DGMGRL.trivadislabs.com
-connect target sys/s9GiawE4aCfR@tencs1:1521/TENCS1_DGMGRL.trivadislabs.com
+connect auxiliary sys/s9GiawE4aCfR@tdehsm02:1521/TDEHSM02_DGMGRL.trivadislabs.com
+connect target sys/s9GiawE4aCfR@tdehsm01:1521/TDEHSM01_DGMGRL.trivadislabs.com
 startup clone nomount;
 
 
@@ -10,15 +10,15 @@ allocate auxiliary channel hanni type disk;
 
 duplicate target database for standby from active database
 spfile
-  parameter_value_convert 'tencs1','tencs2','TENCS1','TENCS2'
-  set db_unique_name='TENCS2'
-  set db_file_name_convert='tencs1','tencs2','TENCS1','TENCS2'
-  set log_file_name_convert='tencs1','tencs2','TENCS1','TENCS2'
-  set control_files='/u01/oradata/TENCS2/control01TENCS2.dbf','/u01/fast_recovery_area/TENCS2/control02TENCS2.dbf'
+  parameter_value_convert 'tdehsm01','tdehsm02','TDEHSM01','TDEHSM02'
+  set db_unique_name='TDEHSM02'
+  set db_file_name_convert='tdehsm01','tdehsm02','TDEHSM01','TDEHSM02'
+  set log_file_name_convert='tdehsm01','tdehsm02','TDEHSM01','TDEHSM02'
+  set control_files='/u01/oradata/TDEHSM02/control01TDEHSM02.dbf','/u01/fast_recovery_area/TDEHSM02/control02TDEHSM02.dbf'
   set log_archive_max_processes='5'
-  set fal_client='tencs2'
-  set fal_server='tencs1'
+  set fal_client='tdehsm02'
+  set fal_server='tdehsm01'
   set standby_file_management='MANUAL'
-  set log_archive_config='dg_config=(tencs1,tencs2)'
-  set log_archive_dest_2='service=TENCS1 ASYNC valid_for=(ONLINE_LOGFILE,PRIMARY_ROLE) db_unique_name=TENCS1';
+  set log_archive_config='dg_config=(tdehsm01,tdehsm02)'
+  set log_archive_dest_2='service=TDEHSM01 ASYNC valid_for=(ONLINE_LOGFILE,PRIMARY_ROLE) db_unique_name=TDEHSM01';
 }

@@ -1,4 +1,4 @@
-# config/etc
+# config/shared
 
 This folder contains runtime network and Oracle Net configuration files.
 

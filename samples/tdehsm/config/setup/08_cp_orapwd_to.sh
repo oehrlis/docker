@@ -16,7 +16,7 @@
 
 # - Customization --------------------------------------------------------------
 # - just add/update any kind of customized environment variable here
-COMMON_DIR="/u01/shared"
+COMMON_DIR="/u01/config/shared"
 # - End of Customization -------------------------------------------------------
 
 # - configure instance ---------------------------------------------------------

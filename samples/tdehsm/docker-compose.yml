@@ -10,16 +10,13 @@
 #              configured for TDE with Securosys CloudHSM via PKCS#11
 # Notes......: Requires HSM credentials and Primus PKCS#11 library in config/hsm
 #
-# Reference..: https://github.com/oehrlis/oci-sec-ws
+# Reference..: https://github.com/oehrlis/docker
 # License....: Apache License Version 2.0
 # ------------------------------------------------------------------------------
 # Modified...:
 # 2025.04.24 oehrli - initial version for TDEHSM01 with HSM integration
 # see git revision history with git log for more information on changes
 # ------------------------------------------------------------------------------
-
-version: "3.8"
-
 services:
   tdehsm01:
     image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0

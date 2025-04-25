@@ -46,3 +46,7 @@ samples/tde/config/common/primus/*
 samples/tdehsm/config/hsm/SBX01_credentials_HVHFWEORXGMC_20250416.txt
 samples/tdehsm/config/hsm/primus.cfg
 samples/tdehsm/config/hsm/.secrets.cfg
+samples/tdehsm/config/etc/*_password.txt
+samples/tdehsm/data/*
+samples/tdehsm/config/shared/*_password_*.txt
+samples/tdehsm/config/shared/orapw_file_src

@@ -17,8 +17,8 @@ SQL> alter database open resetlogs;
 
 
 
-connect target sys/LAB42-Schulung@TENCS1
-connect auxiliary sys/LAB42-Schulung@TENCS2
+connect target sys/LAB42-Schulung@TDEHSM01
+connect auxiliary sys/LAB42-Schulung@TDEHSM02
 
 run {
 allocate channel eugen type disk;
@@ -36,8 +36,8 @@ ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 11 ('/u01/app/oracle/oradata/D
 ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 12 ('/u01/app/oracle/oradata/DB11G/standby_redo03.log') SIZE 50M;
 ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 13 ('/u01/app/oracle/oradata/DB11G/standby_redo04.log') SIZE 50M;
 
-create configuration 'dg_tenc' as  primary database is 'TENCS1' connect identifier is tencs1;
-add database 'TENCS2' as connect identifier is tencs2;
+create configuration 'dg_tenc' as  primary database is 'TDEHSM01' connect identifier is tdehsm01;
+add database 'TDEHSM02' as connect identifier is tdehsm02;
 enable configuration;
 
 
