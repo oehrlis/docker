@@ -1,0 +1,47 @@
+# ------------------------------------------------------------------------------
+# OraDBA - Oracle Database Infrastructure and Security, 5630 Muri, Switzerland
+# ------------------------------------------------------------------------------
+# Name.......: docker-compose.yml
+# Author.....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
+# Editor.....: Stefan Oehrli
+# Date.......: 2025.04.24
+# Revision...: 0.1
+# Purpose....: Compose file to run a 19c Oracle test database (TDEHSM01) 
+#              configured for TDE with Securosys CloudHSM via PKCS#11
+# Notes......: Requires HSM credentials and Primus PKCS#11 library in config/hsm
+#
+# Reference..: https://github.com/oehrlis/oci-sec-ws
+# License....: Apache License Version 2.0
+# ------------------------------------------------------------------------------
+# Modified...:
+# 2025.04.24 oehrli - initial version for TDEHSM01 with HSM integration
+# see git revision history with git log for more information on changes
+# ------------------------------------------------------------------------------
+
+version: "3.8"
+
+services:
+  tdehsm01:
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    container_name: tdehsm01
+    hostname: tdehsm01
+    networks:
+      default:
+        aliases: 
+          - tdehsm01.trivadislabs.com
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_VOLUME_BASE}/data/tdehsm01:/u01
+      - ./config:/u01/config
+      - ./config/hsm/primus.cfg:/etc/primus/primus.cfg:ro
+      - ./config/hsm/.secrets.cfg:/etc/primus/.secrets.cfg:ro
+    ports:
+      - 4821:1521
+      - 4823:1523
+    environment:
+      CONTAINER: 'FALSE'
+      INSTANCE_INIT: /u01/config
+      ORACLE_DBNAME: TDEHSM01
+      ORACLE_DB_UNIQUE_NAME: TDEHSM01
+      ORACLE_SID: TDEHSM01
+# - EOF -----------------------------------------------------------------

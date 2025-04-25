@@ -1,0 +1,15 @@
+--------------------------------------------------------------------------------
+--  OraDBA - Oracle Database Infrastructure and Security, 5630 Muri, Switzerland
+--------------------------------------------------------------------------------
+--  Name......: 12_oradba_caua_pol.sql
+--  Author....: Stefan Oehrli (oes) stefan.oehrli@accenture.com
+--  Editor....: Stefan Oehrli
+--  Date......: 2025.01.17
+--  Version...: v1.0.0
+--  Purpose...: Run script caua_pol.sql from OraDBA to configure unified audit
+--  Notes.....: SYS (or grant manually to a DBA)
+--  Reference.: --
+--  License...: Apache License Version 2.0
+--------------------------------------------------------------------------------
+@/u00/app/oracle/local/oradba/sql/caua_pol.sql
+-- EOF -------------------------------------------------------------------------

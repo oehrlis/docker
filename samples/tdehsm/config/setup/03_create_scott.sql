@@ -1,0 +1,15 @@
+--------------------------------------------------------------------------------
+--  OraDBA - Oracle Database Infrastructure and Security, 5630 Muri, Switzerland
+--------------------------------------------------------------------------------
+--  Name......: 03_create_scott.sql
+--  Author....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
+--  Editor....: Stefan Oehrli
+--  Date......: 2025.01.17
+--  Version...: v1.0.0 
+--  Purpose...: Script to create the SCOTT schema
+--  Notes.....: SYS (or grant manually to a DBA)
+--  Reference.: --
+--  License...: Apache License Version 2.0
+--------------------------------------------------------------------------------
+@?/rdbms/admin/utlsampl.sql
+-- EOF -------------------------------------------------------------------------
