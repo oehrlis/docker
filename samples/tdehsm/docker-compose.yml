@@ -41,4 +41,5 @@ services:
       ORACLE_DBNAME: TDEHSM01
       ORACLE_DB_UNIQUE_NAME: TDEHSM01
       ORACLE_SID: TDEHSM01
+      DEMO_MODE: 'FALSE'     # <--- Enable DEMO MODE and execute scripts during startup
 # - EOF -----------------------------------------------------------------
