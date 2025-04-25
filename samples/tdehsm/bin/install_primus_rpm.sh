@@ -37,6 +37,9 @@ docker cp "$RPM" "$CONTAINER_NAME:/tmp/primus.rpm"
 echo "💡 Installing Primus PKCS#11 library inside container..."
 docker exec -u root $CONTAINER_NAME rpm -ivh /tmp/primus.rpm
 
+echo "🛠 Add user oracle to Primus group to allow access ..."
+docker exec -u root $CONTAINER_NAME usermod -aG primus oracle
+
 echo "🛠 Copying Primus PKCS#11 library for Oracle TDE..."
 REAL_LIB=$(docker exec -u root $CONTAINER_NAME readlink -f /usr/local/primus/lib/libprimusP11.so)
 
@@ -46,11 +49,11 @@ docker exec -u root $CONTAINER_NAME bash -c "
   chown oracle:oinstall /opt/oracle/extapi/64/hsm/primus/2.3.4/libprimusP11.so
 "
 
-echo "🛠 Installing useful tools (file, pkcs11-tool)..."
+echo "🛠 Installing useful tools (file, lsof, pkcs11-tool)..."
 docker exec -u root $CONTAINER_NAME bash -c "
-  dnf -y install file opensc &&
+  dnf -y install file lsof opensc &&
   dnf -y clean all &&
-  echo '✅ Tools installed: file, pkcs11-tool (via opensc)'
+  echo '✅ Tools installed: file, lsof, pkcs11-tool (via opensc)'
 "
 
 echo "✅ Installation complete. You may now configure sqlnet.ora for PKCS#11 access and use pkcs11-tool to inspect the token."
