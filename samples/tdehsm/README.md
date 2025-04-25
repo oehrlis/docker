@@ -22,6 +22,7 @@ This project provides a containerized **Oracle Database 19c test environment** d
 │   ├── setup/      # Scripts executed once after DB creation
 │   └── startup/    # Scripts executed at every container startup
 ├── data/           # Oracle database files (mounted to /u01)
+├── doc/            # Additional TDE configuration and use case documentation
 ├── docker-compose.yml
 └── README.md
 ```
@@ -71,7 +72,7 @@ docker-compose logs -f
 
 The container is fully ready when you see the following message:
 
-```
+```text
 tdehsm01  |  ---------------------------------------------------------------
 tdehsm01  |  - DATABASE TENC19 IS READY TO USE!
 tdehsm01  |  ---------------------------------------------------------------
@@ -93,25 +94,20 @@ tdehsm01  |  ---------------------------------------------------------------
 
 ## 🧪 TDE Use Case Documentation
 
-This test environment supports the evaluation of different TDE configurations:
+This project supports multiple TDE deployment scenarios with both **software keystores** and **external HSMs**. The following use cases are documented in detail and can be used for testing, demos, or production reference.
 
-### 🔸 1. File-Based Wallet (default)
-- Uses a standard `ewallet.p12` file (fallback)
-- Configure via `ENCRYPTION_WALLET_LOCATION` in `sqlnet.ora`
-- Useful for comparing baseline vs HSM-backed setup
+### 🔐 Documented Use Cases
 
-### 🔸 2. HSM-Backed Wallet via PKCS#11
-- Uses `Securosys Primus PKCS#11` interface
-- Configuration:
-  - Mount `primus.cfg` and `.secrets.cfg`
-  - Adjust `sqlnet.ora` with `ENCRYPTION_KEYSTORE_TYPE = HSM` and `ENCRYPTION_KEYSTORE_LOCATION = PKCS11`
-- Execute TDE setup via `config/scripts/14_config_tde.sh`
+| Use Case                                                             | Description                                                  |
+|----------------------------------------------------------------------|--------------------------------------------------------------|
+| [1. Software Keystore](doc/tde_software_keystore.md)                 | Configure and use a basic file-based software keystore       |
+| [2. HSM Migration + Auto Login](doc/tde_hsm_migration.md)            | Migrate existing keys to HSM and enable HSM-based auto-login |
+| [3. Rekey on HSM](doc/tde_hsm_rekey.md)                              | Generate a new master encryption key directly in the HSM     |
+| [4. Reverse Migration to Software](doc/tde_hsm_reverse_migration.md) | Move the master key back to a software keystore              |
 
-### 🔸 3. Dual Keystore (Hybrid) [Optional Advanced]
-- Combine software and HSM keystores for layered security
-- Requires Wallet Manager or CLI key transfer operations
+Each use case includes step-by-step instructions, copy/paste SQL and shell code, and DBA-level guidance for safe execution.
 
-> 📘 Each test case can be configured interactively using scripts in `config/scripts/`, or by modifying the automation logic in `config/setup/`.
+> 📁 The use cases are documented in separate markdown files located in the `doc/` folder.
 
 ## 🛠 Troubleshooting
 
