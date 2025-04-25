@@ -6,7 +6,7 @@
 # Author.....: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
 # Editor.....: Stefan Oehrli
 # Date.......: 2025.04.24
-# Revision...: 0.2
+# Version....: v0.2.0
 # Purpose....: Check for required HSM config files before starting the container
 # Notes......: Verifies presence of primus.cfg and .secrets.cfg in config/hsm
 # Reference..: https://github.com/oehrlis/docker
