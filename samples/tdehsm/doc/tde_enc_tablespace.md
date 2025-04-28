@@ -1,13 +1,13 @@
-## 🧪 Use Case: Online encrypt Tablespaces
+# 🧪 Use Case: Online encrypt Tablespaces
 
 This guide explains how to create a new master encryption key directly within the Hardware Security Module (HSM), ensuring that the key material never leaves the secure keystore.
 
 > 📘 Prerequisites:
-> 
+>
 > - Database is configured for TDE either using a software keystore or HSM-based
 > - Keystore is open and accessible
 
-### 🔄 Steps Overview
+## 🔄 Steps Overview
 
 1. Online encrytion of the tablespace **USERS** and **AUDIT_DATA**. 
 2. Verify TDE configuration and key.
