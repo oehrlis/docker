@@ -1,4 +1,4 @@
-# 🧪 Use Case: Software Keystore
+# 🧪 Use Case 1: Software Keystore
 
 This guide describes how to configure **Oracle TDE** using a standard **software keystore** (`ewallet.p12`). This setup is ideal for evaluation, local development, and as a foundation for migrating to an HSM-backed configuration.
 

@@ -98,12 +98,15 @@ This project supports multiple TDE deployment scenarios with both **software key
 
 ### 🔐 Documented Use Cases
 
-| Use Case                                                             | Description                                                  |
-|----------------------------------------------------------------------|--------------------------------------------------------------|
-| [1. Software Keystore](doc/tde_software_keystore.md)                 | Configure and use a basic file-based software keystore       |
-| [2. HSM Migration + Auto Login](doc/tde_hsm_migration.md)            | Migrate existing keys to HSM and enable HSM-based auto-login |
-| [3. Rekey on HSM](doc/tde_hsm_rekey.md)                              | Generate a new master encryption key directly in the HSM     |
-| [4. Reverse Migration to Software](doc/tde_hsm_reverse_migration.md) | Move the master key back to a software keystore              |
+| Document                                                                      | Description                                                                          |
+|-------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| [1. Software Keystore](doc/tde_software_keystore.md)                          | Setup of a traditional file-based software keystore                                  |
+| [2. Migrate to HSM with Auto-Login](doc/tde_hsm_migration.md)                 | Migration of TDE keys from software keystore to HSM                                  |
+| [3. Oline encrypt Tablespaces](doc/tde_enc_tablespace.md)                     | Online encrypt Tablespaces                                                           |
+| [4. Enable Auto-Login Functionality for HSM](doc/tde_hsm_autologin.md)        | Enable auto-login for HSM by storing the partition password in a local SEPS keystore |
+| [5. Rekey on HSM](doc/tde_hsm_rekey.md)                                       | Creating a new master encryption key directly on the HSM                             |
+| [6. Reverse Migration to Software Keystore](doc/tde_hsm_reverse_migration.md) | Migrating master keys from HSM back to software keystore                             |
+| [7. Clean Up HSM Partition](doc/tde_hsm_cleanup.md)                           | Clean up unused keys and data objects from HSM partitions using `pkcs11-tool`        |
 
 Each use case includes step-by-step instructions, copy/paste SQL and shell code, and DBA-level guidance for safe execution.
 

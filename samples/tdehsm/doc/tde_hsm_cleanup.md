@@ -1,4 +1,4 @@
-# 🧪 Use Case 5: Clean Up HSM Partition Using `pkcs11-tool`
+# 🧪 Use Case 7: Clean Up HSM Partition Using `pkcs11-tool`
 
 > ⚠️ **DANGER ZONE:** Deleting objects from an HSM partition can lead to permanent loss of TDE master keys or data if the keys are still in use. Ensure that keys are no longer associated with any active Oracle instance or backups before proceeding.
 

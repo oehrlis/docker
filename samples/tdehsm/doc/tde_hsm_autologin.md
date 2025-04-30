@@ -1,4 +1,4 @@
-# 🧪 Use Case: Enable Auto-Login Functionality for HSM
+# 🧪 Use Case 4: Enable Auto-Login Functionality for HSM
 
 This guide describes how to simulate auto-login functionality for an HSM by using an additional software keystore to store the HSM partition password.
 
