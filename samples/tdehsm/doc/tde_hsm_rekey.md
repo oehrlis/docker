@@ -50,7 +50,7 @@ This will help you identify the current key in use before rekeying.
 Use the following command to generate a new master key directly in the HSM:
 
 ```sql
-ADMINISTER KEY MANAGEMENT SET KEY IDENTIFIED BY EXTERNAL STORE WITH BACKUP USING 'new_mek_wallet';
+ADMINISTER KEY MANAGEMENT SET KEY FORCE KEYSTORE IDENTIFIED BY EXTERNAL STORE WITH BACKUP USING 'new_mek_wallet';
 ```
 
 > 💡 The keyword `EXTERNAL STORE` uses the password from the secure external keystore (SEPS).

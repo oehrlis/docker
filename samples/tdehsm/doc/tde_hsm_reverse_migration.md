@@ -10,11 +10,10 @@ This guide describes how to safely migrate the TDE master encryption key from an
 ## 🔄 Steps Overview
 
 1. Switch `TDE_CONFIGURATION` to allow FILE|HSM
-2. Restart the database and mount
-3. Reverse migrate the encryption key from HSM to software keystore
-4. Set `TDE_CONFIGURATION` to FILE only
-5. Restart the database
-6. Verify wallet and encryption key status
+2. Reverse migrate the encryption key from HSM to software keystore
+3. Set `TDE_CONFIGURATION` to FILE only
+4. Restart the database
+5. Verify wallet and encryption key status
 
 ## 🔧 Step 1: Temporarily Enable Dual Keystore Mode
 
@@ -24,16 +23,7 @@ Allow use of both FILE and HSM-based keystores, whereby we change order back to 
 ALTER SYSTEM SET TDE_CONFIGURATION = 'KEYSTORE_CONFIGURATION=FILE|HSM' SCOPE=SPFILE;
 ```
 
-## 🔄 Step 2: Restart the Database in MOUNT Mode
-
-Restart the database to make sure the Software keystore is now the primary wallet.
-
-```sql
-SHUTDOWN IMMEDIATE;
-STARTUP;
-```
-
-## 🔁 Step 3: Reverse Migrate the Master Key to Software Keystore
+## 🔁 Step 2: Reverse Migrate the Master Key to Software Keystore
 
 ```sql
 ADMINISTER KEY MANAGEMENT SET ENCRYPTION KEY IDENTIFIED BY "<KeystorePassword>" REVERSE MIGRATE USING "<HSMPassword>"
@@ -42,7 +32,7 @@ WITH BACKUP USING 'reverce_migrate_from_HSM';
 
 > 🛡️ This will copy the current master encryption key from the HSM to the software keystore.
 
-## ⚙️ Step 4: Switch to Software Keystore Only
+## ⚙️ Step 3: Switch to Software Keystore Only
 
 After successful migration, restrict usage to the software wallet:
 
@@ -50,7 +40,7 @@ After successful migration, restrict usage to the software wallet:
 ALTER SYSTEM SET TDE_CONFIGURATION = 'KEYSTORE_CONFIGURATION=FILE' SCOPE=SPFILE;
 ```
 
-## 🔄 Step 5: Restart the Database Normally
+## 🔄 Step 4: Restart the Database Normally
 
 Restart the database to make sure the Software keystore is now used.
 
@@ -59,7 +49,7 @@ SHUTDOWN IMMEDIATE;
 STARTUP;
 ```
 
-## 📋 Step 6: Verify Wallet and Encryption Keys
+## 📋 Step 5: Verify Wallet and Encryption Keys
 
 Check the current status of the software keystore
 
@@ -96,6 +86,5 @@ Check TDE configuration using the script *ssenc_info.sql*
 ```sql
 @/u01/config/scripts/demo/ssenc_info.sql
 ```
-
 
 > ✅ TDE is now fully backed by a software keystore. The HSM is no longer required for key access.

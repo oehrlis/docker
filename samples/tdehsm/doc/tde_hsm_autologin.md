@@ -9,6 +9,7 @@ This guide describes how to simulate auto-login functionality for an HSM by usin
 >
 > - HSM configured and accessible
 > - Database instance has HSM wallet open and operational
+> - Skip step 2-4 if there is already a sofware keystore with *AUTOLOGIN* and *EXTERNAL STORE*
 
 ## 🔄 Steps Overview
 
@@ -61,7 +62,7 @@ ADMINISTER KEY MANAGEMENT CREATE LOCAL AUTO_LOGIN KEYSTORE FROM KEYSTORE '&walle
 Change the *TDE_CONFIGURATION* parameter to cover the software keystore as well the HSM.
 
 ```sql
-ALTER SYSTEM SET TDE_CONFIGURATION = 'KEYSTORE_CONFIGURATION=FILE|HSM' SCOPE=SPFILE;
+ALTER SYSTEM SET TDE_CONFIGURATION = 'KEYSTORE_CONFIGURATION=FILE|HSM' SCOPE=BOTH;
 ```
 
 ## 🔄 Step 6: Restart the Database
