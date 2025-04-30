@@ -37,7 +37,8 @@ COL wrl_type FOR A10
 COL wrl_parameter FOR A50
 COL status FOR A20
 COL wallet_type FOR A20
-SELECT wrl_type, wrl_parameter, status, wallet_type FROM v$encryption_wallet;
+COL wallet_order FOR A20
+SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 
 Check TDE configuration using the script *ssenc_info.sql*

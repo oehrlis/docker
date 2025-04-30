@@ -12,11 +12,10 @@ This guide outlines how to migrate an existing TDE environment using a software 
 
 1. Check PKCS#11 library installation and registration
 2. Set wallet type to `HSM` in TDE configuration
-3. Restart database
-4. Migrate keys from software to HSM
-5. Create an EXTERNAL STORE for the HSM password
-6. Restart database
-7. Verify wallet and key status
+3. Migrate keys from software to HSM
+4. Create an EXTERNAL STORE for the HSM password
+5. Restart database
+6. Verify wallet and key status
 
 ## 🔍 Step 1: Check PKCS#11 Library
 
@@ -31,19 +30,10 @@ ls -l /opt/oracle/extapi/64/hsm/primus/2.3.4/libprimusP11.so
 Change the *TDE_CONFIGURATION* parameter to cover the software keystore as well the HSM, whereby we will use HSM as first keystore.
 
 ```sql
-ALTER SYSTEM SET TDE_CONFIGURATION = 'KEYSTORE_CONFIGURATION=HSM|FILE' SCOPE=SPFILE;
+ALTER SYSTEM SET TDE_CONFIGURATION = 'KEYSTORE_CONFIGURATION=HSM|FILE' SCOPE=BOTH;
 ```
 
-## 🔄 Step 3: Restart the Database
-
-Restart the database to make sure the HSM keystore is now the primary wallet. We just start into MOUNT mode, as we will have to restart in a few steps.
-
-```sql
-SHUTDOWN IMMEDIATE;
-STARTUP;
-```
-
-## 🔐 Step 4: Migrate the Master Key to the HSM
+## 🔐 Step 3: Migrate the Master Key to the HSM
 
 Now migrate the current master encryption key from software keystore to the HSM.
 
@@ -60,7 +50,7 @@ Verify new key:
 SELECT * FROM v$encryption_keys ORDER BY creation_time;
 ```
 
-## ⚙️ Step 5: Create an EXTERNAL STORE for the HSM password
+## ⚙️ Step 4: Create an EXTERNAL STORE for the HSM password
 
 Determine admin directory and get the corresponding directory path as a *SQL\*Plus* variable for later use:
 
@@ -77,23 +67,23 @@ ADMINISTER KEY MANAGEMENT ADD SECRET '<HSMPassword>'
   TO LOCAL AUTO_LOGIN KEYSTORE '&wallet_root/tde_seps';
 ```
 
-## 🔄 Step 6: Restart the Database
+## 🔄 Step 5: Restart the Database
 
 Restart the database to make sure the HS keystore is now the primary wallet. As we do not have autologin configred the HSM based keystore does have to be opened manually.
 
 ```sql
 SHUTDOWN IMMEDIATE;
 STARTUP MOUNT;
-ADMINISTER KEY MANAGEMENT SET KEYSTORE OPEN IDENTIFIED BY '<HSMPassword>';
+ADMINISTER KEY MANAGEMENT SET KEYSTORE OPEN IDENTIFIED BY EXTERNAL STORE;
+ALTER DATABASE OPEN;
 ```
 
-## 📋 Step 7: Verify Final Wallet and Key Status
+## 📋 Step 6: Verify Final Wallet and Key Status
 
 Check if the library has been successfully loaded by the Oracle process:
 
 ```bash
-ps -ef | grep ora_gen0
-pmap $(pgrep -f ora_gen0_.*) | grep -v " grep " | grep libprimusP11
+host pmap $(pgrep -f ora_gen0_.*) | grep -v " grep " | grep libprimusP11
 ```
 
 > ✅ If the library appears in the memory map, it's been loaded correctly by the Oracle engine.
@@ -106,7 +96,8 @@ COL wrl_type FOR A10
 COL wrl_parameter FOR A50
 COL status FOR A20
 COL wallet_type FOR A20
-SELECT wrl_type, wrl_parameter, status, wallet_type FROM v$encryption_wallet;
+COL wallet_order FOR A20
+SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 
 Check the status of encryption keys:

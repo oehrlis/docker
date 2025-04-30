@@ -100,19 +100,21 @@ ADMINISTER KEY MANAGEMENT CREATE LOCAL AUTO_LOGIN KEYSTORE FROM KEYSTORE '&walle
 is displayed in the 'v$encryption_wallet' view. The wallet type is only
 displayed correctly after restarting the database.
 
-At this stage we restart the database to make sure it is start using the Restart *AUTO_LOGIN* functionality. 
-
-```sql
-SHUTDOWN IMMEDIATE;
-STARTUP;
-```
-
 ## 🔑 Step 4: Create Master Encryption Key
 
 Create a master encryption key by using the *EXTERNAL STORE*. As the keystore is configured using *AUTO_LOGIN* we also have to specify *FORCE KEYSTORE*.
 
 ```sql
 ADMINISTER KEY MANAGEMENT SET ENCRYPTION KEY USING TAG 'initial' FORCE KEYSTORE IDENTIFIED BY EXTERNAL STORE WITH BACKUP USING 'initial_mek_backup';
+```
+
+## 🔄 Step 5: Restart the Database
+
+Restart the database to make sure the software keystore is now correctly used / displayed.
+
+```sql
+SHUTDOWN IMMEDIATE;
+STARTUP;
 ```
 
 ## 🔑 Step 5: Check the TDE Configuration and Key
@@ -125,7 +127,8 @@ COL wrl_type FOR A10
 COL wrl_parameter FOR A50
 COL status FOR A20
 COL wallet_type FOR A20
-SELECT wrl_type, wrl_parameter, status, wallet_type FROM v$encryption_wallet;
+COL wallet_order FOR A20
+SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 
 Check TDE configuration using the script *ssenc_info.sql*
