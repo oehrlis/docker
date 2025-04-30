@@ -40,7 +40,7 @@ Restart the database to make sure the HSM keystore is now the primary wallet. We
 
 ```sql
 SHUTDOWN IMMEDIATE;
-STARTUP MOUNT;
+STARTUP;
 ```
 
 ## 🔐 Step 4: Migrate the Master Key to the HSM
