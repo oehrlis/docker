@@ -51,7 +51,7 @@ pkcs11-tool \
   --module /opt/oracle/extapi/64/hsm/primus/2.3.4/libprimusP11.so \
   --pin <HSMPassword> \
   --delete-object \
-  --label "ORACLE.SECURITY.KM.ENCRYPTION.30363641394237323144384330453446413242463941304537313038443344384133" \
+  --label "ORACLE.TDE.HSM.MK.0633D7714BF4054FA3BF61BFF38C3FC4B8" \
   --type secrkey
 ```
 
