@@ -19,7 +19,7 @@
 # ------------------------------------------------------------------------------
 services:
   tdehsm01:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: tdehsm01
     hostname: tdehsm01
     networks:
