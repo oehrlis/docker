@@ -14,6 +14,12 @@ This guide explains how to create a new master encryption key directly within th
 
 ## 🔑 Step 1: Online encrypt Tablespaces
 
+Verify if there are already encrypted tablespaces:
+
+```sql
+SELECT tablespace_name, encrypted FROM dba_tablespaces;
+```
+
 Manual encrypt tablespace **USERS** and **AUDIT_DATA**.
 
 ```sql
@@ -27,7 +33,37 @@ Optional use the script *15_encrypt_ts.sql*
 @/u01/config/scripts/15_encrypt_ts.sql
 ```
 
-## 🔑 Step 2: Check the TDE Configuration and Key
+## 🔑 Step 2: New encrypt Tablespaces
+
+Manual encrypt tablespace **USERS** and **AUDIT_DATA**.
+
+```sql
+CREATE TABLESPACE enc_aes192 DATAFILE '/u01/oradata/TDEHSM01/enc_aes19201TDEHSM01.dbf' 
+SIZE 10M ENCRYPTION USING 'AES192' DEFAULT STORAGE (ENCRYPT); 
+```
+
+It is also possible to configure the database that all new tablespaces are encrypted. For this set the parameter *ENCRYPT_NEW_TABLESPACES* to **ALWAYS**. This way the tablespace will be transparently encrypted if the *ENCRYPTION … ENCRYPT* clause is not specified in the *CREATE TABLESPACE* statement.
+
+```sql
+ALTER SYSTEM SET encrypt_new_tablespaces = 'ALWAYS' SCOPE = BOTH;
+```
+
+Create a new tablespace *ENC_ALWAYS*.
+
+```sql
+CREATE TABLESPACE enc_always DATAFILE '/u01/oradata/TDEHSM01/enc_always01TDEHSM01.dbf' 
+SIZE 10M; 
+```
+
+Verify if there are already encrypted tablespaces:
+
+```sql
+SELECT tablespace_name, encrypted FROM dba_tablespaces;
+```
+
+The default encryption algorithm can be controlled by setting the hidden parameter *_tablespace_encryption_default_algorithm*.
+
+## 🔑 Step 3: Check the TDE Configuration and Key
 
 Check the current status of the software keystore
 
