@@ -20,7 +20,7 @@ This guide describes how to safely migrate the TDE master encryption key from an
 Allow use of both FILE and HSM-based keystores, whereby we change order back to software keystore as primary keystore:
 
 ```sql
-ALTER SYSTEM SET TDE_CONFIGURATION = 'KEYSTORE_CONFIGURATION=FILE|HSM' SCOPE=SPFILE;
+ALTER SYSTEM SET TDE_CONFIGURATION = 'KEYSTORE_CONFIGURATION=FILE|HSM' SCOPE=BOTH;
 ```
 
 ## 🔁 Step 2: Reverse Migrate the Master Key to Software Keystore
