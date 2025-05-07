@@ -113,6 +113,15 @@ COL wallet_order FOR A20
 SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 
+If the software keystore was created solely to support HSM auto-login, its status will be **OPEN_NO_MASTER_KEY** — which is expected, as it only stores the *HSMPassword*. However, if the keystore was previously used and migrated to the HSM, it may still contain an old master encryption key, and its status will show as **OPEN**.
+
+```sql
+WRL_TYPE  WRL_PARAMETER                               STATUS              WALLET_TYPE      WALLET_ORDER
+--------- ------------------------------------------- ------------------- ---------------- ------------
+FILE      /u00/app/oracle/admin/TDEHSM01/wallet/tde/  OPEN_NO_MASTER_KEY  LOCAL_AUTOLOGIN  SINGLE
+HSM       OPEN                                        HSM                                  SINGLE
+```
+
 Check TDE configuration using the script *ssenc_info.sql*
 
 ```sql
