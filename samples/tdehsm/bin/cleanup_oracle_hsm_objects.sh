@@ -60,5 +60,8 @@ while read -r line; do
   fi
 done <<< "$OBJECTS_OUTPUT"
 
+echo "🔐 list of PKCS#11 objects from container $CONTAINER_NAME..."
+docker exec -u oracle "$CONTAINER_NAME" pkcs11-tool --module "$MODULE" --login --list-objects --pin "$PIN"
+
 echo "✅ HSM cleanup complete."
 # - EOF ------------------------------------------------------------------------
