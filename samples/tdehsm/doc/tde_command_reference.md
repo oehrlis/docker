@@ -19,7 +19,7 @@ Based on Oracle Database 19c documentation:
 | `SET ENCRYPTION KEY ... WITH BACKUP`      | ✅                 | ✅¹           | ✅¹           |
 | `BACKUP KEYSTORE`                         | ✅                 | ❌²           | ❌²           |
 | `EXPORT KEYS`                             | ✅                 | ❌²           | ❌²           |
-| `MERGE KEYSTORE`                          | ✅                 | ❌            | ❌³   |
+| `MERGE KEYSTORE`                          | ✅                 | ❌            | ❌³           |
 | `ALTER KEYSTORE PASSWORD`                 | ✅                 | ❌            | ❌            |
 | `ADD SECRET TO LOCAL AUTO_LOGIN KEYSTORE` | ✅                 | ✅            | ✅            |
 | `UPDATE SECRET`                           | ✅                 | ✅            | ✅            |
@@ -30,6 +30,8 @@ Based on Oracle Database 19c documentation:
 
 - HSM vendor tools (e.g., Securosys, Thales, Luna)
 - OKV management interface or CLI
+
+³ Use OKV console to configure, copy, merge keystores.
 
 ## 🔎 Notes by Keystore Type
 
