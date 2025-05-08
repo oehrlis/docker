@@ -57,4 +57,6 @@ The following advanced scenarios require additional planning or testing and are 
 * **Database Backup and Restore**: Recovery scenarios when encryption keys are not auto-available; RMAN key handling
 * **Keystore Backup Strategy**: Software wallet vs. HSM-native backup tools, when to snapshot vs. export keys
 
+The document [Oracle TDE ADMINISTER KEY MANAGEMENT Command Reference](tde_command_reference.md) is a first attempt to better break down the possibilities of ADMINISTER KEY MANAGEMENT in connection with the different keystores.
+
 > 🧠 These areas often require environment-specific implementation. Reach out to your Oracle Security Architect or test in a non-production environment before proceeding.
