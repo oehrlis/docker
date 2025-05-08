@@ -78,16 +78,20 @@ ADMINISTER KEY MANAGEMENT SET ENCRYPTION KEY IDENTIFIED BY EXTERNAL STORE WITH B
 
 -- EXTERNAL STORE and add secret to SEPS to simplify key commands
 ADMINISTER KEY MANAGEMENT ADD SECRET '<HSMPassword>' FOR CLIENT 'HSM_PASSWORD' TO LOCAL AUTO_LOGIN KEYSTORE '<wallet_root>/tde_seps';
+```
 
 ## 📚 References
 
-- 📘 Oracle SQL Language Reference 19c - [`ADMINISTER KEY MANAGEMENT`](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/ADMINISTER-KEY-MANAGEMENT.html)
-- 📘 Oracle Database Security Guide 19c - Chapter on Transparent Data Encryption (TDE)
-- 📘 Oracle Key Vault Administrator Guide
+- 📘 Oracle® SQL Language Reference 19c - [ADMINISTER KEY MANAGEMENT](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/ADMINISTER-KEY-MANAGEMENT.html)
+- 📘 Oracle® Database Security Guide 19c - [Part I Using Transparent Data Encryption](https://docs.oracle.com/en/database/oracle/oracle-database/19/asoag/asopart1.html)
+- 📘 Oracle® Key Vault - [Administrator's Guide Release 21.10](https://docs.oracle.com/en/database/oracle/key-vault/21.10/okvag/index.html)
 - 📘 Oracle Support (MOS) Notes:
 
-  - [1228046.1 - TDE Wallet and Keystore Concepts](https://support.oracle.com/epmos/faces/DocumentDisplay?id=1228046.1)
-  - [2331567.1 - Oracle TDE Integration with Hardware Security Module (HSM)](https://support.oracle.com/epmos/faces/DocumentDisplay?id=2331567.1)
-  - [2482971.1 - Using Secure External Password Store (SEPS) with HSM or OKV](https://support.oracle.com/epmos/faces/DocumentDisplay?id=2482971.1)
+  - [1228046.1](https://support.oracle.com/epmos/faces/DocumentDisplay?id=1228046.1) - Primary Note For Transparent Data Encryption (TDE)
+  - [2253348.1](https://support.oracle.com/epmos/faces/DocumentDisplay?id=2253348.1) - TDE 12c : Frequently Asked Questions
+  - [2310066.1](https://support.oracle.com/epmos/faces/DocumentDisplay?id=2310066.1) - Oracle TDE Support With 3rd Party HSM Vendors
+  - [1251597.1](https://support.oracle.com/epmos/faces/DocumentDisplay?id=1251597.1) - Quick TDE Setup and FAQ
+  - [3031638.1](https://support.oracle.com/epmos/faces/DocumentDisplay?id=3031638.1) - How to Verify TDE Actually Encrypted Data
+  - [1560327.1](https://support.oracle.com/epmos/faces/DocumentDisplay?id=1560327.1) - RMAN Duplicate Using TDE Encrypted Backups
 
 > 🧠 Use this reference to design secure, compliant TDE implementations across environments and manage lifecycle operations safely.
