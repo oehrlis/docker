@@ -107,9 +107,9 @@ Check the current status of the software keystore
 SET LINESIZE 160 PAGESIZE 200
 COL wrl_type FOR A10
 COL wrl_parameter FOR A50
-COL status FOR A20
-COL wallet_type FOR A20
-COL wallet_order FOR A20
+COL status FOR A18
+COL wallet_type FOR A16
+COL wallet_order FOR A16
 SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 

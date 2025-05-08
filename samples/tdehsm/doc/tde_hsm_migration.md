@@ -47,7 +47,19 @@ ADMINISTER KEY MANAGEMENT SET ENCRYPTION KEY
 Verify new key:
 
 ```sql
-SELECT * FROM v$encryption_keys ORDER BY creation_time;
+SET LINESIZE 160 PAGESIZE 200
+ALTER SESSION SET nls_timestamp_tz_format="DD.MM.YYYY HH24:MI:SS";
+COL key_id FOR A52
+COL tag FOR A10
+COL creation_time FOR A19
+COL activation_time FOR A19
+COL creator FOR A10
+COL user FOR A10
+COL key_use FOR A7
+COL creator_dbname FOR A10
+COL backed_up FOR A8
+
+SELECT key_id, tag, creation_time, activation_time, creator, user, key_use, backed_up, creator_dbname FROM v$encryption_keys;
 ```
 
 ## ⚙️ Step 4: Create an EXTERNAL STORE for the HSM password
@@ -94,9 +106,9 @@ Check the current status of the software keystore
 SET LINESIZE 160 PAGESIZE 200
 COL wrl_type FOR A10
 COL wrl_parameter FOR A50
-COL status FOR A20
-COL wallet_type FOR A20
-COL wallet_order FOR A20
+COL status FOR A18
+COL wallet_type FOR A16
+COL wallet_order FOR A16
 SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 

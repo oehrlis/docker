@@ -115,9 +115,9 @@ Check the current status of the hardware keystore
 SET LINESIZE 160 PAGESIZE 200
 COL wrl_type FOR A10
 COL wrl_parameter FOR A50
-COL status FOR A20
-COL wallet_type FOR A20
-COL wallet_order FOR A20
+COL status FOR A18
+COL wallet_type FOR A16
+COL wallet_order FOR A16
 SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 
@@ -125,7 +125,7 @@ The wallet status is now set to HSM and open without master encryption key. See 
 
 ```sql
 WRL_TYPE   WRL_PARAMETER  STATUS             WALLET_TYPE      WALLET_ORDER
----------- -------------- ------------------ ---------------- --------------------
+---------- -------------- ------------------ ---------------- ---------------
 HSM                       OPEN_NO_MASTER_KEY HSM              SINGLE
 ```
 
@@ -143,9 +143,9 @@ Now check the status once more to see if we have master encryption key.
 SET LINESIZE 160 PAGESIZE 200
 COL wrl_type FOR A10
 COL wrl_parameter FOR A50
-COL status FOR A20
-COL wallet_type FOR A20
-COL wallet_order FOR A20
+COL status FOR A18
+COL wallet_type FOR A16
+COL wallet_order FOR A16
 SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 
@@ -204,9 +204,9 @@ Check the current status of the software keystore
 SET LINESIZE 160 PAGESIZE 200
 COL wrl_type FOR A10
 COL wrl_parameter FOR A50
-COL status FOR A20
-COL wallet_type FOR A20
-COL wallet_order FOR A20
+COL status FOR A18
+COL wallet_type FOR A16
+COL wallet_order FOR A16
 SELECT wrl_type, wrl_parameter, status, wallet_type,wallet_order FROM v$encryption_wallet;
 ```
 
