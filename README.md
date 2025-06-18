@@ -1,30 +1,47 @@
-# Docker Images from OraDBA
+# Docker Automation for Oracle Products
 
-This repository contains Dockerfiles and samples to build Docker images mainly for Oracle Directory Server products and open source projects. The different Dockerfiles and build scripts are maintained by [OraDBA](http://www.oradba.ch) respectively [Trivadis AG](http://www.trivadis.com) and *do not* represent official Oracle Build scripts. Oracle has its own official repository for [Oracle Docker images](https://github.com/oracle/docker-images) on GitHub. 
+This repository provides **unofficial Docker-based automation** for Oracle software, focusing on Oracle Database. It includes build scripts, patch automation, configuration templates, and Docker Compose examples to streamline image creation, patching, and testing across multiple platforms.
 
-Just to clarify these Docker build scripts are **unofficial** Oracle Build scripts. See [Oracle Docker images](https://github.com/oracle/docker-images) on GitHub for the official Oracle Docker build scripts.
+This project is maintained by [OraDBA](https://www.oradba.ch) and is not affiliated with Oracle Corporation. For official Oracle Docker images, refer to [oracle/docker-images](https://github.com/oracle/docker-images).
 
-This project offers Dockerfiles to build Docker images for:
-* Standalone Oracle Unified Directory 12.2.1.3.0 to setup and run Oracle Unified Directory [OUD](https://github.com/oehrlis/docker/tree/master/oud).
-* Collocated Oracle Unified Directory 12.2.1.3.0 and Oracle Fusion Middleware Infrastructure 12.2.1.3.0 to setup and run an Oracle Unified Directory Server Manager [OUDSM](https://github.com/oehrlis/docker/tree/master/oudsm).
-* Oracle Directory Server Enterprise Edition 11.1.1.7.2 to setup and run Oracle Directory Server Enterprise Edition [ODSEE](https://github.com/oehrlis/docker/tree/master/odsee).
-* Oracle Java Server JRE 1.8.0 u162 (which includes necessary JDK bits for backend Java based solutions) [Java](https://github.com/oehrlis/docker/tree/master/java)
+## Supported Oracle Components
 
-And Open Source projects:
+- Oracle Database (multi-version, multi-platform builds)
+- Oracle Unified Directory (OUD) and Directory Services Manager (OUDSM)
+- Oracle Java Runtime
+- Oracle Cloud Infrastructure CLI in a Docker environment
+- Sample environments using Docker Compose
 
- - [OUD Base](https://github.com/oehrlis/docker/tree/master/oudbase)
- - [Trivadis Base](https://github.com/oehrlis/docker/tree/master/tvd)
+## Key Features
 
-## Pre-built Images with Commercial Software
+- Patch automation using Oracle AutoUpgrade
+- Platform-aware Docker builds for x86\_64 and ARM
+- Structured configuration per version and platform
+- Sample setups for Data Guard, TLS, and single-instance deployments
+- Clean separation of software, config, and logic
 
-Due to the licensing conditions of Oracle there are no pre-built images with commercial software available. Nevertheless the Dockerfiles in this repository depend on Oracle Linux image with is either available via [Oracle Container Registry](https://container-registry.oracle.com) server or on the [Docker Store](https://store.docker.com/search?certification_status=certified&q=oracle&source=verified&type=image).
+## Repository Structure
+
+| Folder            | Description                                           |
+| ----------------- | ----------------------------------------------------- |
+| `OracleDatabase/` | Oracle Database builds, patch metadata, Compose files |
+| `OracleOUD/`      | Oracle Unified Directory container setup              |
+| `OracleOUDSM/`    | Oracle Directory Services Manager setup               |
+| `OracleJava/`     | Oracle Java runtime configuration                     |
+| `oci-cli/`        | Docker-based Oracle Cloud CLI environment             |
+| `samples/`        | Docker Compose setups (e.g., Data Guard, TLS)         |
+| `common/`         | Shared logic/scripts like `buildDB.sh`, `.env` files  |
+| `doc/`            | Markdown-based documentation and diagrams             |
+| `legacy/`         | Deprecated or archived builds                         |
+| `FAQ.md`          | Frequently asked questions                            |
+| `LICENSE`         | Apache 2.0 License                                    |
+
+Each folder includes a `README.md` with more detailed information.
+
+## Oracle Software Licensing
+
+Due to Oracle licensing, no prebuilt images or binaries are provided. You must manually download Oracle software and accept the license terms before using it in a containerized environment.
 
 ## Support
 
-There is no official support for the Dockerfiles and build scripts within this repository. They basically are provided as they are. Nevertheless, a [GitHub issue](https://github.com/oehrlis/docker/issues) can be opened for questions and problems around the Dockerfiles and build script.
-
-For support and certification information, please consult the documentation for each product. eg. [Oracle Unified Directory 12.2.1.3.0](https://https://docs.oracle.com/middleware/12213/oud/docs.htm) and [Oracle Directory Server Enterprise Edition](https://docs.oracle.com/cd/E29127_01/index.htm) Alternatiely you may visit the [OTN Community OUD & ODSEE Space](https://community.oracle.com/community/fusion_middleware/identity_management/oracle_directory_server_enterprise_edition_sun_dsee) to get community support. Official Oracle product support is available through [My Oracle Support](https://support.oracle.com/). 
-
-## License
-
-To download and run Oracle Unified Directory, Oracle Directory Server Enterprise Edition and Oracle JDK, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page.
+This repository is provided as-is. For community support, open a GitHub issue. For product-related support, refer to Oracle My Support.
