@@ -1,12 +1,38 @@
-# Common Scripts
+# Folder: common
 
-Common scripts to build the miscellaneous Docker images.
+This folder contains **shared scripts and resources** used across multiple Oracle Docker image builds. These scripts help standardize how images are created and configured across platforms and Oracle versions.
 
-- [buildAllDB.sh](buildAllDB.sh) Script to build all Oracle database images e.g. Dockerfiles in ./OracleDatabase/1?.?.?.? 
-- [buildAllDS.sh](buildAllDS.sh) Script to build all Oracle directory server e.g. Dockerfiles in ./OracleJava, ./OracleODSEE, ./OracleOUD and ./OracleOUDSM folder.
-- [buildAllOUD.sh](buildAllOUD.sh) Script to build all Oracle Unified Directory images e.g. Dockerfiles in ./OracleOUD and ./OracleOUDSM folder.
-- [buildDB.sh](buildDB.sh) Script to build specific Oracle database images. Release can be specified as parameter. If omitted a list of possible releases will be displayed.
-- [pushAllDB.sh](pushAllDB.sh) Script to push all local Oracle database images to the trivadis Docker Hub respository. Other repository can be specified by defining the environment variables `DOCKER_USER` and `DOCKER_REPO`.
-- [pushAllDS.sh](pushAllDS.sh) Script to push all Oracle directory server images to the trivadis Docker Hub respository. Other repository can be specified by defining the environment variable `DOCKER_USER`.
-- [saveAllDB.sh](saveAllDB.sh) Script to save / export Oracle database images to `${DOCKER_VOLUME_BASE}/../images`.
-- [saveAllDS.sh](saveAllDS.sh) Script to save / export Oracle directory server images to `${DOCKER_VOLUME_BASE}/../images`.
+## Included Scripts
+
+### `buildDB.sh`
+
+Builds Oracle Database Docker images for one or more releases and platforms.
+
+**Usage:**
+
+```bash
+./buildDB.sh -r 19.27.0.0,23.5.0.0 -p amd64,arm64
+```
+
+**Parameters:**
+
+* `-r <releases>`  Comma-separated list of Oracle release tags (e.g., `19.27.0.0`)
+* `-p <platforms>`  Comma-separated list of target platforms (default: both `amd64` and `arm64`)
+
+If no release is specified, the script lists supported versions.
+
+### `buildDBx_arm64.sh`
+
+Optional ARM-specific wrapper for `buildDB.sh` to simplify builds on M1/M2 Macs or ARM servers.
+
+## Notes
+
+* These scripts rely on the structured layout of `OracleDatabase/<version>/software/<arch>/RU_<version>/` for patch and base package info.
+* The actual Dockerfile used is version-independent; image metadata is injected using `ARG` parameters.
+
+## See Also
+
+* `OracleDatabase/README.md` for structure and usage of database build folders.
+* `doc/database_builds.md` (to be added) for the full documentation on building Oracle DB images.
+
+Feel free to extend or customize the build logic to suit additional use cases.
