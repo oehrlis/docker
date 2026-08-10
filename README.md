@@ -1,47 +1,98 @@
-# Docker Automation for Oracle Products
+# Oracle Docker Build Repository
 
-This repository provides **unofficial Docker-based automation** for Oracle software, focusing on Oracle Database. It includes build scripts, patch automation, configuration templates, and Docker Compose examples to streamline image creation, patching, and testing across multiple platforms.
+This repository provides a modular and automated framework to build **Oracle-related Docker images**, including:
 
-This project is maintained by [OraDBA](https://www.oradba.ch) and is not affiliated with Oracle Corporation. For official Oracle Docker images, refer to [oracle/docker-images](https://github.com/oracle/docker-images).
+- Oracle Database (19c, 23ai)
+- Oracle Unified Directory (OUD)
+- OUD Service Manager (OUDSM)
+- Java-based containers
+- OCI CLI container setups
 
-## Supported Oracle Components
+> ⚠️ This is a **community-maintained project** by [OraDBA](https://www.oradba.ch). It is **not affiliated with Oracle Corporation**.  
+> For official Oracle container builds, visit [oracle/docker-images](https://github.com/oracle/docker-images)
 
-- Oracle Database (multi-version, multi-platform builds)
-- Oracle Unified Directory (OUD) and Directory Services Manager (OUDSM)
-- Oracle Java Runtime
-- Oracle Cloud Infrastructure CLI in a Docker environment
-- Sample environments using Docker Compose
+## 🧱 Repository Structure
 
-## Key Features
+```text
 
-- Patch automation using Oracle AutoUpgrade
-- Platform-aware Docker builds for x86\_64 and ARM
-- Structured configuration per version and platform
-- Sample setups for Data Guard, TLS, and single-instance deployments
-- Clean separation of software, config, and logic
+.
+├── README.md              # This file
+├── LICENSE
+├── FAQ.md                 # Frequently asked questions
 
-## Repository Structure
+├── common/                # Shared build scripts (e.g., buildDB.sh)
+│   ├── buildDB.sh
+│   └── buildDBx\_arm64.sh
 
-| Folder            | Description                                           |
-| ----------------- | ----------------------------------------------------- |
-| `OracleDatabase/` | Oracle Database builds, patch metadata, Compose files |
-| `OracleOUD/`      | Oracle Unified Directory container setup              |
-| `OracleOUDSM/`    | Oracle Directory Services Manager setup               |
-| `OracleJava/`     | Oracle Java runtime configuration                     |
-| `oci-cli/`        | Docker-based Oracle Cloud CLI environment             |
-| `samples/`        | Docker Compose setups (e.g., Data Guard, TLS)         |
-| `common/`         | Shared logic/scripts like `buildDB.sh`, `.env` files  |
-| `doc/`            | Markdown-based documentation and diagrams             |
-| `legacy/`         | Deprecated or archived builds                         |
-| `FAQ.md`          | Frequently asked questions                            |
-| `LICENSE`         | Apache 2.0 License                                    |
+├── database/              # Oracle Database image builds
+│   ├── 19/                # Oracle 19c builds
+│   │   ├── docker/        # Base Dockerfile templates
+│   │   ├── config/        # Setup/startup scripts
+│   │   ├── software/      # Patches, ZIPs, metadata
+│   │   ├── docker-compose.yml
+│   │   └── README.md
+│   ├── 23/                # Oracle 23ai builds
+│   └── README.md
 
-Each folder includes a `README.md` with more detailed information.
+├── java/                  # Oracle Java-based containers
+├── oud/                   # Oracle Unified Directory builds
+├── oudsm/                 # Oracle Unified Directory Service Manager
+├── oci-cli/               # OCI CLI in container
 
-## Oracle Software Licensing
+├── samples/               # Example environments and topologies
+│   ├── single-instance/
+│   ├── data-guard/
+│   ├── tde/
+│   ├── rman/
+│   └── README.md
 
-Due to Oracle licensing, no prebuilt images or binaries are provided. You must manually download Oracle software and accept the license terms before using it in a containerized environment.
+├── doc/                   # Markdown-based documentation
+├── legacy/                # Older build structures kept for reference
 
-## Support
+```
 
-This repository is provided as-is. For community support, open a GitHub issue. For product-related support, refer to Oracle My Support.
+## 🛠️ Features
+
+- Multi-platform support for `amd64` and `arm64`
+- Patch ZIP management and release metadata per RU
+- Scripted and repeatable image builds
+- Docker Compose setups for development, test, and HA scenarios
+- Centralized and extensible documentation
+
+## 🚀 Getting Started
+
+Build an Oracle 19c image for `amd64`:
+
+```bash
+cd common
+./buildDB.sh -r 19.27.0.0 -p amd64
+```
+
+Launch a container from a Compose example:
+
+```bash
+cd samples/single-instance
+docker-compose up -d
+```
+
+## 📦 Patch and Metadata Layout
+
+Example:
+
+```text
+database/19/software/amd64/RU_19.27.0.0/oracle_package_names_amd64
+```
+
+Each file defines which patch ZIPs to include for the specified release and platform.
+Used by `buildDB.sh` to build the final image.
+
+## 🤝 Contributing
+
+- Fork and submit pull requests
+- Use GitHub Issues for feedback, bugs, or enhancements
+- All Oracle ACE and community contributions are welcome
+
+## 🔐 License
+
+Code is licensed under [Apache 2.0](LICENSE).
+Oracle binaries must be obtained separately and used according to Oracle's license terms.

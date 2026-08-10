@@ -42,7 +42,7 @@ delete_object() {
   local label="$1"
   local type="$2"
   echo "🗑 Deleting object: $label (type: $type)"
-  docker exec -u oracle "$CONTAINER_NAME" pkcs11-tool --module "$MODULE" --login --pin "$PIN" --label "$label" --type "$type" --delete-object
+  docker exec -u oracle "$CONTAINER_NAME" pkcs11-tool --module "$MODULE" --login --label "$label" --type "$type" --delete-object --pin "$PIN" 
 }
 
 # Read and parse each label

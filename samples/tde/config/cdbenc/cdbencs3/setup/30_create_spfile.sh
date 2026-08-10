@@ -63,6 +63,7 @@ cat <<EOF > ${ORACLE_BASE}/admin/${ORACLE_SID_DST}/pfile/init${ORACLE_SID_DST}.o
 *.log_file_name_convert='${ORACLE_SID_SRC,,}','${ORACLE_SID_DST,,}','${ORACLE_SID_SRC}','${ORACLE_SID_DST}'
 *.nls_language='AMERICAN'
 *.nls_territory='AMERICA'
+*.enable_pluggable_database=true
 *.open_cursors=300
 *.pga_aggregate_target=256m
 *.processes=300

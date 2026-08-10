@@ -18,7 +18,7 @@
 
 services:
   tenc19:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: tenc19
     hostname: tenc19
     networks:
@@ -42,7 +42,7 @@ services:
       ORACLE_SID: TENC19     
       
   tencs1:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: tencs1
     hostname: tencs1
     networks:
@@ -66,7 +66,7 @@ services:
       ORACLE_SID: TENCS1     
 
   tencs2:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: tencs2
     hostname: tencs2
     networks:
@@ -91,7 +91,7 @@ services:
       NO_DATABASE: TRUE   
   
   tencs3:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: tencs3
     hostname: tencs3
     networks:
@@ -116,7 +116,7 @@ services:
       NO_DATABASE: TRUE    
 
   cdbencs1:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: cdbencs1
     hostname: cdbencs1
     networks:
@@ -140,7 +140,7 @@ services:
       ORACLE_SID: CDBENCS1     
 
   cdbencs2:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: cdbencs2
     hostname: cdbencs2
     networks:
@@ -165,7 +165,7 @@ services:
       NO_DATABASE: TRUE   
   
   cdbencs3:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: cdbencs3
     hostname: cdbencs3
     networks:
@@ -190,7 +190,7 @@ services:
       NO_DATABASE: TRUE    
 
   cdbenc19:
-    image: ${DOCKER_USER}/${DOCKER_REPO}:19.26.0.0
+    image: ${DOCKER_USER}/${DOCKER_REPO}:19.27.0.0
     container_name: cdbenc19
     hostname: cdbenc19
     networks:
@@ -203,7 +203,8 @@ services:
       - ./config/cdbenc19:/u01/config
       - ./config/common:/u01/common
     ports:
-      - 5521:1521
+      - 4821:1521
+      - 4823:1523
     environment:
       CONTAINER: 'TRUE'
       INSTANCE_INIT: /u01/config

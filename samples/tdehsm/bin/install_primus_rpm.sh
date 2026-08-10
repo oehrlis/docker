@@ -51,7 +51,7 @@ docker exec -u root $CONTAINER_NAME bash -c "
 
 echo "🛠 Installing useful tools (file, lsof, pkcs11-tool)..."
 docker exec -u root $CONTAINER_NAME bash -c "
-  dnf -y install file lsof opensc &&
+  dnf -y install file lsof tree opensc &&
   dnf -y clean all &&
   echo '✅ Tools installed: file, lsof, pkcs11-tool (via opensc)'
 "
