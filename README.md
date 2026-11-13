@@ -1,5 +1,7 @@
 # Oracle Docker Build Repository
 
+> **Legacy - frozen.** Superseded by oradba-docker (planned) and [oradba-labs](https://github.com/oehrlis/oradba-labs). Do not build new things here.
+
 This repository provides a modular and automated framework to build **Oracle-related Docker images**, including:
 
 - Oracle Database (19c, 23ai)
@@ -10,6 +12,19 @@ This repository provides a modular and automated framework to build **Oracle-rel
 
 > ⚠️ This is a **community-maintained project** by [OraDBA](https://www.oradba.ch). It is **not affiliated with Oracle Corporation**.  
 > For official Oracle container builds, visit [oracle/docker-images](https://github.com/oracle/docker-images)
+
+## Role in the lab architecture
+
+**Legacy, frozen.** This repository is not developed any further; do not build new things here.
+
+- Moving out: DB Dockerfiles go to `oradba-docker/database` (M2, planned), samples to
+  [oradba-labs](https://github.com/oehrlis/oradba-labs) (M3), OUD and the rest to `oradba-docker/oud` or are
+  dropped. Then the repo is archived.
+- Is not: a source for new images or labs, and no place for lab content or host automation.
+- Neighbours: oradba-docker (successor, planned), oradba-labs (samples and labs), odb_autoupgrade (home engine),
+  oci-labs and oradba-ansible (VM/OCI hosts, not containers), oradba (runtime).
+
+See the [lab architecture overview](https://github.com/oehrlis/oradba-labs/blob/main/docs/architecture.md).
 
 ## 🧱 Repository Structure
 
